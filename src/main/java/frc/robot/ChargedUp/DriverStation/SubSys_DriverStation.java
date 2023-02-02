@@ -5,8 +5,6 @@
 package frc.robot.ChargedUp.DriverStation;
 
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -22,22 +20,6 @@ public class SubSys_DriverStation extends SubsystemBase {
   // AuxDriver Controller
   private XboxController m_AuxDriverController = new XboxController(2);
 
-  public JoystickButton IntakeArmLowPosButton = new JoystickButton(m_CoDriverController, 2);
-  public JoystickButton IntakeArmHighPosButton = new JoystickButton(m_CoDriverController, 4);
-  public JoystickButton IntakeArmDownPosButton = new JoystickButton(m_CoDriverController, 3);
-
-  public JoystickButton LimeLightAutoRotateButton = new JoystickButton(m_AuxDriverController, 2);
-  public JoystickButton LimeLightAutoRangeButton = new JoystickButton(m_AuxDriverController, 3);
-  
-  public JoystickButton LimeLightAutoRotate2HubButton = new JoystickButton(m_DriverController, 10);
-  public JoystickButton LimeLightAutoShootButton = new JoystickButton(m_CoDriverController, 10);
-
-  public JoystickButton LiftFwdPosButton = new JoystickButton(m_AuxDriverController, 1);
-  //public JoystickButton LiftRevPosButton = new JoystickButton(m_AuxDriverController, 4);
-
-  public JoystickButton ClimbEnableButton = new JoystickButton(m_AuxDriverController, 5);
-  public JoystickButton ClimbResetButton = new JoystickButton(m_AuxDriverController, 6);
-
   public JoystickButton GyroResetButton = new JoystickButton(m_AuxDriverController, 4);
 
   public SubSys_DriverStation() {
@@ -49,7 +31,7 @@ public class SubSys_DriverStation extends SubsystemBase {
   }
     
   /**
-  ****** Control System Components
+  ****** Library
   */
 
   // ---- Drive Subsystem

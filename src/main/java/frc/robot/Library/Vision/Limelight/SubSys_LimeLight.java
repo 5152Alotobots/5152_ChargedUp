@@ -28,7 +28,7 @@ public class SubSys_LimeLight extends SubsystemBase {
 	// +y = right of robot
 	// +z = down
 	
-	private TargetInterpolation m_TargetInterpolation;
+
 
 	private double limelight_x_Offset = 0.0;
 	private double limelight_y_Offset = 0.0;
@@ -47,7 +47,7 @@ public class SubSys_LimeLight extends SubsystemBase {
   
   public SubSys_LimeLight() {
     m_TargetDistance = 0.0;
-	m_TargetInterpolation= new TargetInterpolation();
+	
   }
 
   @Override
@@ -60,14 +60,6 @@ public class SubSys_LimeLight extends SubsystemBase {
 	updateLimelightTargetDistance();
 	SmartDashboard.putNumber("TargetDistance",m_TargetDistance);
 	SmartDashboard.putNumber("TargetDistance_Feet",Units.metersToFeet(m_TargetDistance));
-
-	m_TargetInterpolation.calcInterpIndexAndFrac(m_TargetDistance);
-	double ArmAngle = m_TargetInterpolation.calcArmAngle();
-	double InNOutVel = m_TargetInterpolation.calcInNOutVel();
-	double InNOutLwrVel = m_TargetInterpolation.calcInNOutLwrVel();
-	SmartDashboard.putNumber("ArmAngleTarget", ArmAngle);
-	SmartDashboard.putNumber("InNOutVelTarget", InNOutVel);
-	SmartDashboard.putNumber("InNOutLwrVelTarget", InNOutLwrVel);
 
   }
 
