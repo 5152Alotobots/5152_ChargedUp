@@ -159,6 +159,38 @@ public class SwrNStr_FalconPG71_Module {
         driveMotor.setSelectedSensorPosition(0);
     }
 
+    /** getSteerSensorAbsolutePosCnts
+    *   Returns the Absolute Position Measurement Cnts
+    * @return double Absolute Steer Sensor Positions Measurement (Counts) 
+    */
+    public double getSteerSensorAbsolutePosCnts(){
+        return steerMotor.getSelectedSensorPosition();
+    }
+    
+    /** getSteerSensorAbsolutePos
+    *   Returns the Absolute Position Measurement
+    * @return double Absolute Steer Sensor Positions Measurement (Degrees) 
+    */
+    public double getSteerSensorAbsolutePos(){
+        //TalonSRX_Conversions.ma3ToDegrees(
+        //    steerSensorCntsCorrected(),
+        //    SwrNStr_FalconPG71_Module_Constants.SteerMotor.steerGearRatio);
+        return getSteerSensorAbsolutePosCnts()*360/1024;
+    }
+
+    /** getSteerSensorPos
+     *   Returns the Position Measurement
+     * @return double Steer Sensor Position Measurement 
+     */
+    public double getSteerSensorPos(){
+        return 0; //steerAngleEncoder.getPosition();
+    }
+
+    /***********************************************************************************/
+    /* ***** Steer Motor Methods *****                                                 */
+    /***********************************************************************************/
+
+
     private void configSteerMotor(SwerveModuleConstants moduleConstants){
         steerMotor.configFactoryDefault();
         steerMotor.configAllSettings(SwrNStr_FalconPG71_Module_Constants.SteerTalonSRXConfig);
