@@ -88,6 +88,7 @@ public final class MK4i_FalconFalcon_Module_Constants {
         /** Drive Motor Wheel Circumference  */
         public static final double driveWheelDiameter = Units.inchesToMeters(4.0);  // meters
         public static final double driveWheelCircumference = driveWheelDiameter * Math.PI; // meters
+        public static final double invDriveWheelCircumference = 1/driveWheelCircumference; // 1/meters
 
         /** Drive Motor Gear Ratio */
         public static final double driveGearRatio = (6.75);             // 6.75:1

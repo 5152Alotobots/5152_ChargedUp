@@ -7,8 +7,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 
@@ -34,52 +32,6 @@ public final class Constants {
       // Drive Trajectory Max Speeds
       public static final double kTrajMaxVel = 1.85;    // m/s
       public static final double kTrajMaxAccel = 0.35; // m/s/s
-    }
-
-    public static final class Intake{
-      // Intake
-      public static final double kArmIntakeAngle = 0; // 0.1 Degrees
-      //public static final double kIntakeVel = 0.4;  // % output
-      //public static final double kIntakeLwrVel = 0.0; // % output
-      public static final double kIntakeVel = 7000;  // Raw Encoder Cnts /100ms
-      public static final double kIntakeLwrVel = 0.0; // Raw Encoder Cnts /100ms
-    }
-
-    public static final class Shooting{
-    
-      // Low Goal
-      public static final double kArmLowGoalAngle = 880; // 0.1 Degrees
-      public static final double kShootLowGoalVel = -5000;  // Raw Encoder Cnts /100ms
-      public static final double kShootLwrLowGoalVel = -17000; // Raw Encoder Cnts /100ms
-
-      // High Goal0
-      public static final double kArmHighGoalAngle = 950; //950 // 0.1 Degrees
-      public static final double kShootHighGoalVel = -15000;  //-15000 // Raw Encoder Cnts /100ms
-      public static final double kShootLwrHighGoalVel = -19000; // Raw Encoder Cnts /100ms
-
-      // Shooting Tables
-      public static final double[] kShootDistance = {
-        2,
-        2.9972,  // T's
-        3.86,    // Limelight on Target
-        4.5};    // Hanger
-
-      public static final double[] kShootingAngle = {
-        950,  // 950
-        950,  // 900 // T's
-        900,  // 850 // Limelight on Target
-        880};        // Hanger
-
-      public static final double[] kShootingInNOutVel = {
-        -12000,
-        -15000,  //-19000 // T's
-        -17000,  //-19000 // Limelight on Target
-        -19000};          // Hanger
-      public static final double[] kShootingInNOutLwrVel = {
-        -16000,
-        -19000,  //-19000 // T's
-        -19000,  //-19000 // Limelight on Target
-        -19000};          // Hanger
     }
 
    public static final class Limelight{
@@ -128,24 +80,6 @@ public final class Constants {
           Units.inchesToMeters(221),
           Units.inchesToMeters(108));
     }
-
-    public static final class Balls{
-      
-      public static final Translation2d kB2 = 
-      new Translation2d(
-        Units.inchesToMeters(199),
-        Units.inchesToMeters(174));
-    }
-
-    public static final class StartingPos{
-
-      public static final Pose2d kT13_Start = 
-      new Pose2d(
-        new Translation2d(
-          Units.inchesToMeters(241),
-          Units.inchesToMeters(108)),
-        new Rotation2d(Units.degreesToRadians(30)));
-    }
   }
     
   public static final class CAN_IDs {
@@ -154,6 +88,11 @@ public final class Constants {
 
     public static final int Pigeon2_ID = 20;
             
+    public static final int ArmShoulderMtr_CAN_ID = 30;
+    public static final int ArmShoulderCANCoder_CAN_ID = 31;
+    public static final int ArmExtensionMtr_CAN_ID = 30;
+    public static final int ArmExtensionCANCoder_CAN_ID = 31;
+
     public static final int FrontLeftDriveMtr_CAN_ID = 51;
     public static final int FrontLeftSteerMtr_CAN_ID = 52;
     public static final int FrontLeftSteerCANCoder_CAN_ID = 53;
@@ -169,14 +108,11 @@ public final class Constants {
   }
 
   public static final class AnalogInput_IDs{
-    public static final int ClimberRotatorEnc_ID = 0;
   }
 
   public static final class DigitalIO_IDs{
   }
 
   public static final class PWM_IDs{
-    public static final int IntakeLeftTrigger_ID = 0;
-    public static final int IntakeRightTrigger_ID = 1;
   }
 }

@@ -105,16 +105,11 @@ public class MK4i_FalconFalcon_Module {
                 double percentOutput = desiredState.speedMetersPerSecond / Constants.RobotSettings.DriveTrain.DriveTrainMaxSpd;
                 driveMotor.set(ControlMode.PercentOutput, percentOutput);
             }
-            // Closed Loop
-            else {
-                double velocity = TalonFX_Conversions.MPSToFalcon(
-                    desiredState.speedMetersPerSecond,
-                    MK4i_FalconFalcon_Module_Constants.DriveMotor.driveWheelCircumference,
-                    MK4i_FalconFalcon_Module_Constants.DriveMotor.driveGearRatio);
-
+            // Closed Loop Velocity (PID Slot 0)
+            else {                    
                 driveMotor.set(
                     ControlMode.Velocity,
-                    velocity,
+                    convertMPSToDriveMtrCntsPer100ms(desiredState.speedMetersPerSecond),
                     DemandType.ArbitraryFeedForward,
                     driveMotorFF.calculate(desiredState.speedMetersPerSecond));
             }
@@ -133,7 +128,7 @@ public class MK4i_FalconFalcon_Module {
             // Set Steet Motor Command to angle
             steerMotor.set(
                 ControlMode.Position,
-                TalonFX_Conversions.degreesToTalonFX(angle));
+                TalonFX_Conversions.degreesToCANCoderCnts(angle));
                 
             // Update last angle         
             lastAngle = angle;
@@ -145,10 +140,8 @@ public class MK4i_FalconFalcon_Module {
      */
     public SwerveModuleState getState(){
         /** Drive Wheel Velocity */
-        double velocity = TalonFX_Conversions.falconToMPS(
-            driveMotor.getSelectedSensorVelocity(),
-            MK4i_FalconFalcon_Module_Constants.DriveMotor.driveWheelCircumference,
-            MK4i_FalconFalcon_Module_Constants.DriveMotor.driveGearRatio);
+        double velocity = convertDriveMtrCntsPer100msToMPS(
+            driveMotor.getSelectedSensorVelocity());
 
         /** Steer Motor Angle */
         Rotation2d angle = getSteerAngle();
@@ -163,7 +156,7 @@ public class MK4i_FalconFalcon_Module {
         SwerveModulePosition swrModulePosition;
         
         swrModulePosition = new SwerveModulePosition(
-            getDriveMotorDistance(),
+            getDriveWheelDistance(),
             getSteerAngle());
 
       return swrModulePosition;
@@ -185,39 +178,86 @@ public class MK4i_FalconFalcon_Module {
         driveMotor.setNeutralMode(MK4i_FalconFalcon_Module_Constants.DriveMotor.neutralMode);
     }
 
-    /** getDriveMotorPosition
+    /** getDriveMotorSensorPosition
      *   Get Drive Motor Sensor Position
      * @return double Integrated Sensor Counts
      */
-    public double getDriveMotorPosition(){
+    public double getDriveMotorSensorPosition(){
         return driveMotor.getSelectedSensorPosition();
     }
 
     /** getDriveWheelRevs
-     *   Get Drive Motor 
-     * @return double Drive Wheel Revs
+     *   Get Drive Wheel Revolutions 
+     * @return double Drive Wheel Revolutions
      */
     public double getDriveWheelRevs(){
-        
-        double wheelRevs = TalonFX_Conversions.talonFXToRevs_GearRatio(
-            getDriveMotorPosition(),
-            MK4i_FalconFalcon_Module_Constants.DriveMotor.invDriveGearRatio);
-        return wheelRevs;
+        //double driveMotorRevs = TalonFX_Conversions.talonFXCntsToRevs(getDriveMotorSensorPosition());
+        //double driveWheelRevs = driveMotorRevs*MK4i_FalconFalcon_Module_Constants.DriveMotor.invDriveGearRatio;
+        //return driveWheelRevs;
+
+        // More efficient
+        return TalonFX_Conversions.talonFXCntsToRevs(getDriveMotorSensorPosition())*
+          MK4i_FalconFalcon_Module_Constants.DriveMotor.invDriveGearRatio;   
     }
 
     /** getDriveWheelDistance
      *   Get Drive Wheel Distance
      * @return double Drive Wheel Distance (m)
      */
-    public double getDriveMotorDistance(){
-        double wheelRevs = TalonFX_Conversions.talonFXToRevs_GearRatio(
-            getDriveMotorPosition(),
-            MK4i_FalconFalcon_Module_Constants.DriveMotor.invDriveGearRatio);
-        return wheelRevs*MK4i_FalconFalcon_Module_Constants.DriveMotor.driveWheelCircumference;
+    public double getDriveWheelDistance(){
+        //double driveWheelRevs = getDriveWheelRevs();
+        //double driveWheelDistance = driveWheelRevs*MK4i_FalconFalcon_Module_Constants.DriveMotor.driveWheelCircumference;
+        //return driveWheelDistance;
+
+        // More efficient
+        return getDriveWheelRevs()*MK4i_FalconFalcon_Module_Constants.DriveMotor.driveWheelCircumference;
     }
 
+    /** setDriveMotorSensorPosition
+     * Sets Drive Motor Sensor Position in counts
+     * @param counts double Counts
+     */
     public void setDriveMotorPos(double counts){
         driveMotor.setSelectedSensorPosition(counts, 0, 0);
+    }
+
+    /** convertDriveMtrCntsPer100msToMPS
+     * Convert Drive Motor Counts Per 100ms to Meters Per Second
+     * @param velocitycounts double Drive Motor Counts per 100ms
+     * @return Velocity in Meters Per Second (mps)
+     */
+    public static double convertDriveMtrCntsPer100msToMPS(double velocitycounts){
+        //double motorRPM = TalonFX_Conversions.talonFXCntsPer100msToRPM(velocitycounts);
+        //double wheelRPM = motorRPM*MK4i_FalconFalcon_Module_Constants.DriveMotor.invDriveGearRatio;
+        //double wheelMPS = (wheelRPM * MK4i_FalconFalcon_Module_Constants.DriveMotor.driveWheelCircumference) / 60;
+        //return wheelMPS;
+
+        // Mathmatically more efficient
+        // 1/60 = 0.0166666666666666666666666666667
+        return TalonFX_Conversions.talonFXCntsPer100msToRPM(velocitycounts)*
+          MK4i_FalconFalcon_Module_Constants.DriveMotor.invDriveGearRatio*
+          MK4i_FalconFalcon_Module_Constants.DriveMotor.driveWheelCircumference*
+          0.016667;
+    }
+
+    /** convertMPSToDriveMtrCntsPer100ms
+     * Convert Meters Per Second to Drive Motor Counts Per 100ms
+     * @param velocity double Velocity in Meters Per Second
+     * @return Velocity in Drive Motor Counts Per 100ms
+     */
+    public static double convertMPSToDriveMtrCntsPer100ms(double velocity){
+        //double wheelRPM = ((velocity*60)/MK4i_FalconFalcon_Module_Constants.DriveMotor.driveWheelCircumference);
+        //double motorRPM = wheelRPM*MK4i_FalconFalcon_Module_Constants.DriveMotor.driveGearRatio;
+        //double motorVelocityCounts = TalonFX_Conversions.rpmToTalonFXCntsPer100ms(motorRPM);
+        //return motorVelocityCounts;
+
+        // Mathmatically more efficient
+        // 1/MK4i_FalconFalcon_Module_Constants.DriveMotor.driveWheelCircumference == MK4i_FalconFalcon_Module_Constants.DriveMotor.invDriveWheelCircumference
+        return TalonFX_Conversions.rpmToTalonFXCntsPer100ms(
+          velocity*60*
+          MK4i_FalconFalcon_Module_Constants.DriveMotor.invDriveWheelCircumference*
+          MK4i_FalconFalcon_Module_Constants.DriveMotor.driveGearRatio);
+
     }
 
     /***********************************************************************************/
