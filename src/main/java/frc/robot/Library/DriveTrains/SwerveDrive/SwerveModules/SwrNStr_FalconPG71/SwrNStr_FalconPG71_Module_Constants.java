@@ -66,10 +66,12 @@ public final class SwrNStr_FalconPG71_Module_Constants {
         /** Drive Motor Wheel Circumference  */
         public static final double driveWheelDiameter = Units.inchesToMeters(3.94);  // meters
         public static final double driveWheelCircumference = driveWheelDiameter * Math.PI; // meters
+        public static final double invDriveWheelCircumference = 1.0/driveWheelCircumference; // 1/meters
 
         /** Drive Motor Gear Ratio */
         public static final double driveGearRatio = (6.86 / 1.0); //6.86:1
-
+        public static final double invDriveGearRatio = (1.0/6.86); //1:6.86
+        
         /** Feedforward Characterization Values */
         public static final double driveKS = (0.667 / 12); //divide by 12 to convert from volts to percent output for CTRE
         public static final double driveKV = (2.44 / 12);

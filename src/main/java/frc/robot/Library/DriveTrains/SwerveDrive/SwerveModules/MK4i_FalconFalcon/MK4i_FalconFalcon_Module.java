@@ -44,11 +44,9 @@ public class MK4i_FalconFalcon_Module {
     private TalonFX driveMotor;
     private TalonFX steerMotor;
     private CANCoder steerAngleEncoder;
-    private double strZeroAngle;  
+    private double steerZeroAngle;  
     private double lastAngle;
     private MK4i_FalconFalcon_Module_Constants mk4i_Module_Constants;
-
-    //public int moduleNumber;
 
     SimpleMotorFeedforward driveMotorFF = new SimpleMotorFeedforward(
         DriveMotor.driveKS,
@@ -65,7 +63,7 @@ public class MK4i_FalconFalcon_Module {
         SwerveModuleConstants moduleConstants)
         {
             this.moduleName = moduleName;
-            this.strZeroAngle = moduleConstants.zeroAngle;
+            this.steerZeroAngle = moduleConstants.zeroAngle;
             this.mk4i_Module_Constants = new MK4i_FalconFalcon_Module_Constants();
 
             /* Drive Motor Config */
@@ -263,6 +261,7 @@ public class MK4i_FalconFalcon_Module {
     /***********************************************************************************/
     /* ***** Steer Angle Encoder Methods *****                                         */
     /***********************************************************************************/
+    
     /**  configSteerAngleEncoder
      *      Configure Steer Angle Encoder
      * @param moduleConstants
@@ -270,33 +269,34 @@ public class MK4i_FalconFalcon_Module {
     private void configSteerAngleEncoder(SwerveModuleConstants moduleConstants){
         steerAngleEncoder.configSensorInitializationStrategy(SensorInitializationStrategy.BootToAbsolutePosition);
         steerAngleEncoder.configSensorDirection(moduleConstants.SteerCANcoderInvert);
-        double strAngleInit = steerAngleEncoder.getAbsolutePosition()-this.strZeroAngle;
+        double strAngleInit = steerAngleEncoder.getAbsolutePosition()-this.steerZeroAngle;
         SmartDashboard.putNumber("strAngleInit", strAngleInit);
-        //steerAngleEncoder.setPosition((steerAngleEncoder.getAbsolutePosition()-this.strZeroAngle));
+        //steerAngleEncoder.setPosition((steerAngleEncoder.getAbsolutePosition()-this.steerZeroAngle));
         steerAngleEncoder.setPosition(strAngleInit);
     }
     
-    /** getSteerSensorAbsolutePos
-     *   Returns the Absolute Position Measurement
+    /** getSteerSensorAbsPosDegrees
+     *   Returns the Absolute Position Measurement in Degrees
      * @return double Absolute Steer Sensor Positions Measurement (Degrees) 
      */
-    public double getSteerSensorAbsolutePos(){
+    public double getSteerSensorAbsPosDegrees(){
         return steerAngleEncoder.getAbsolutePosition();
     }
 
-    /** getSteerSensorPos
+    /** getSteerSensorPosDegrees
      *   Returns the Position Measurement
      * @return double Steer Sensor Position Measurement 
      */
-    public double getSteerSensorPos(){
+    public double getSteerSensorPosDegrees(){
         return steerAngleEncoder.getPosition();
     }
 
     /***********************************************************************************/
     /* ***** Steer Motor Methods *****                                                 */
     /***********************************************************************************/
+    
     /** configSteerMotor
-     * 
+     * Config Steer Motor 
      * @param moduleConstants
      */
     private void configSteerMotor(SwerveModuleConstants moduleConstants){
@@ -327,11 +327,11 @@ public class MK4i_FalconFalcon_Module {
         steerMotor.config_kP(0, 0.6, 0);
     }
 
-    /** getSteerMotorPos
-     *      Return Steer Motor Position 
+    /** getSteerMotorPosCounts
+     *      Return Steer Motor Position Counts 
      * @return double Steer Motor Position (Raw sensor units)
      */
-    public double getSteerMotorPos(){
+    public double getSteerMotorPosCounts(){
         return steerMotor.getSelectedSensorPosition();
     }
 
@@ -340,8 +340,12 @@ public class MK4i_FalconFalcon_Module {
      * @return Rotation2d Steer Motor Angle
      */
     public Rotation2d getSteerAngle(){
-        double steerAngleRADS = Units.degreesToRadians(getSteerMotorPos()*360/4096);
-        Rotation2d steerAngle = new Rotation2d(steerAngleRADS);
-        return steerAngle;
+        //double steerAngleDegs = TalonFX_Conversions.canCoderCntsToDegrees(getSteerMotorPosCounts());
+        //double steerAngleRADS = Units.degreesToRadians(steerAngleDegs);
+        //Rotation2d steerAngle = new Rotation2d(steerAngleRADS);
+        //return steerAngle;
+
+        // More efficient
+        return new Rotation2d(Units.degreesToRadians(TalonFX_Conversions.canCoderCntsToDegrees(getSteerMotorPosCounts())));
     }
 }

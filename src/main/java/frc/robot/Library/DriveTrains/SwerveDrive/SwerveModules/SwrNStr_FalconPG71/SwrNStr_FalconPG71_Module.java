@@ -40,10 +40,11 @@ public class SwrNStr_FalconPG71_Module {
     public String moduleName;
     private TalonFX driveMotor;
     private TalonSRX steerMotor;
-    private double strAngleOffset;  
+    private double steerAngleOffset;
+    private double steerZeroAngle;  
     private double lastAngle;
+    private SwrNStr_FalconPG71_Module_Constants swrNStr_FalconPG71_Module_Constants;
 
-    //public int moduleNumber;
 
     SimpleMotorFeedforward driveMotorFF = new SimpleMotorFeedforward(
         DriveMotor.driveKS,
@@ -55,25 +56,30 @@ public class SwrNStr_FalconPG71_Module {
         SwerveModuleConstants moduleConstants)
         {
             this.moduleName = moduleName;
+            this.steerAngleOffset = moduleConstants.zeroAngle;
+            this.swrNStr_FalconPG71_Module_Constants = new SwrNStr_FalconPG71_Module_Constants();
 
             /* Drive Motor Config */
             this.driveMotor = new TalonFX(moduleConstants.driveMotorID);
-            //configDriveMotor(moduleConstants);
+            configDriveMotor(moduleConstants);
 
             /* Steer Motor Config */
             this.steerMotor = new TalonSRX(moduleConstants.steerMotorID);
-            //configSteerMotor(moduleConstants);
-
-        
-            this.strAngleOffset = moduleConstants.zeroAngle;
-        
-            /* Angle Encoder Config */
-            //angleEncoder = new CANCoder(moduleConstants.cancoderID);
-            //configAngleEncoder();
+            configSteerMotor(moduleConstants);
 
             lastAngle = getState().angle.getDegrees();
         }
 
+    /***********************************************************************************/
+    /* ***** Swerve Module Methods *****                                               */
+    /***********************************************************************************/        
+    
+    /** setDesiredState
+     *   Sets the desired state of the Swerve Module
+     * 
+     * @param desiredState SwerveModuleState Desired state
+     * @param isOpenLoop boolean Open Loop control for Drive
+     */
     public void setDesiredState(
         SwerveModuleState desiredState,
         boolean isOpenLoop)
@@ -86,16 +92,12 @@ public class SwrNStr_FalconPG71_Module {
                 double percentOutput = desiredState.speedMetersPerSecond / Constants.RobotSettings.DriveTrain.DriveTrainMaxSpd;
                 driveMotor.set(ControlMode.PercentOutput, percentOutput);
             }
-            // Closed Loop
+            // Closed Loop Velocity (PID Slot 0)
             else {
-                double velocity = TalonFX_Conversions.MPSToFalcon(
-                    desiredState.speedMetersPerSecond,
-                    SwrNStr_FalconPG71_Module_Constants.DriveMotor.driveWheelCircumference,
-                    SwrNStr_FalconPG71_Module_Constants.DriveMotor.driveGearRatio);
 
                 driveMotor.set(
                     ControlMode.Velocity,
-                    velocity,
+                    convertMPSToDriveMtrCntsPer100ms(desiredState.speedMetersPerSecond),
                     DemandType.ArbitraryFeedForward,
                     driveMotorFF.calculate(desiredState.speedMetersPerSecond));
             }
@@ -121,15 +123,17 @@ public class SwrNStr_FalconPG71_Module {
             lastAngle = angle;
         }
 
+    /** getState
+    *    Gets the current state of the module
+    * @return SwerveModuleState State of the Module
+    */
     public SwerveModuleState getState(){
         /** Drive Wheel Velocity */
-        double velocity = TalonFX_Conversions.falconToMPS(
-            driveMotor.getSelectedSensorVelocity(),
-            SwrNStr_FalconPG71_Module_Constants.DriveMotor.driveWheelCircumference,
-            SwrNStr_FalconPG71_Module_Constants.DriveMotor.driveGearRatio);
+        double velocity = convertDriveMtrCntsPer100msToMPS(
+            driveMotor.getSelectedSensorVelocity());
 
         /** Steer Motor Angle */
-        Rotation2d angle = steerAngle();
+        Rotation2d angle = getSteerAngle();
         return new SwerveModuleState(velocity, angle);
     }
 
@@ -140,17 +144,23 @@ public class SwrNStr_FalconPG71_Module {
   
     public SwerveModulePosition getPosition(){
         SwerveModulePosition swrModulePosition;
-        double drvDistance;
-        Rotation2d strAngle;
 
-        drvDistance = driveMotor.getSelectedSensorPosition();
-        strAngle = steerAngle();
+        swrModulePosition = new SwerveModulePosition(
+            getDriveWheelDistance(),
+            getSteerAngle());
 
-    swrModulePosition = new SwerveModulePosition(drvDistance, strAngle);
+      return swrModulePosition;
+    }
 
-    return swrModulePosition;
-  }
+    /***********************************************************************************/
+    /* ***** Drive Motor Methods *****                                                 */  
+    /***********************************************************************************/
 
+    /** configDriveMotor
+     *    Configurations for the Drive Motor are defined in SubSys_SwerveDrive_Constants.java
+     *    This is basic information like Motor and Sensor CAN ID's, Inverted and Steer Zero Angle
+     * @param moduleConstants Module Constants
+     */
     private void configDriveMotor(SwerveModuleConstants moduleConstants){        
         driveMotor.configFactoryDefault();
         driveMotor.configAllSettings(SwrNStr_FalconPG71_Module_Constants.DriveTalonFXConfig);
@@ -158,6 +168,137 @@ public class SwrNStr_FalconPG71_Module {
         driveMotor.setNeutralMode(SwrNStr_FalconPG71_Module_Constants.DriveMotor.neutralMode);
         driveMotor.setSelectedSensorPosition(0);
     }
+
+    /** getDriveMotorSensorPosition
+     *   Get Drive Motor Sensor Position
+     * @return double Integrated Sensor Counts
+    */
+    public double getDriveMotorSensorPosition(){
+        return driveMotor.getSelectedSensorPosition();
+    }
+
+    /** getDriveWheelRevs
+     *   Get Drive Wheel Revolutions 
+     * @return double Drive Wheel Revolutions
+     */
+    public double getDriveWheelRevs(){
+        //double driveMotorRevs = TalonFX_Conversions.talonFXCntsToRevs(getDriveMotorSensorPosition());
+        //double driveWheelRevs = driveMotorRevs*MK4i_FalconFalcon_Module_Constants.DriveMotor.invDriveGearRatio;
+        //return driveWheelRevs;
+
+        // More efficient
+        return TalonFX_Conversions.talonFXCntsToRevs(getDriveMotorSensorPosition())*
+        SwrNStr_FalconPG71_Module_Constants.DriveMotor.invDriveGearRatio;   
+    }
+
+    /** getDriveWheelDistance
+     *   Get Drive Wheel Distance
+     * @return double Drive Wheel Distance (m)
+     */
+    public double getDriveWheelDistance(){
+        //double driveWheelRevs = getDriveWheelRevs();
+        //double driveWheelDistance = driveWheelRevs*MK4i_FalconFalcon_Module_Constants.DriveMotor.driveWheelCircumference;
+        //return driveWheelDistance;
+
+        // More efficient
+        return getDriveWheelRevs()*SwrNStr_FalconPG71_Module_Constants.DriveMotor.driveWheelCircumference;
+    }
+
+    /** setDriveMotorSensorPosition
+     * Sets Drive Motor Sensor Position in counts
+     * @param counts double Counts
+     */
+    public void setDriveMotorPos(double counts){
+        driveMotor.setSelectedSensorPosition(counts, 0, 0);
+    }
+
+    /** convertDriveMtrCntsPer100msToMPS
+     * Convert Drive Motor Counts Per 100ms to Meters Per Second
+     * @param velocitycounts double Drive Motor Counts per 100ms
+     * @return Velocity in Meters Per Second (mps)
+     */
+    public static double convertDriveMtrCntsPer100msToMPS(double velocitycounts){
+        //double motorRPM = TalonFX_Conversions.talonFXCntsPer100msToRPM(velocitycounts);
+        //double wheelRPM = motorRPM*MK4i_FalconFalcon_Module_Constants.DriveMotor.invDriveGearRatio;
+        //double wheelMPS = (wheelRPM * MK4i_FalconFalcon_Module_Constants.DriveMotor.driveWheelCircumference) / 60;
+        //return wheelMPS;
+
+        // Mathmatically more efficient
+        // 1/60 = 0.0166666666666666666666666666667
+        return TalonFX_Conversions.talonFXCntsPer100msToRPM(velocitycounts)*
+          SwrNStr_FalconPG71_Module_Constants.DriveMotor.invDriveGearRatio*
+          SwrNStr_FalconPG71_Module_Constants.DriveMotor.driveWheelCircumference*
+          0.016667;
+    }
+
+    /** convertMPSToDriveMtrCntsPer100ms
+     * Convert Meters Per Second to Drive Motor Counts Per 100ms
+     * @param velocity double Velocity in Meters Per Second
+     * @return Velocity in Drive Motor Counts Per 100ms
+     */
+    public static double convertMPSToDriveMtrCntsPer100ms(double velocity){
+        //double wheelRPM = ((velocity*60)/MK4i_FalconFalcon_Module_Constants.DriveMotor.driveWheelCircumference);
+        //double motorRPM = wheelRPM*MK4i_FalconFalcon_Module_Constants.DriveMotor.driveGearRatio;
+        //double motorVelocityCounts = TalonFX_Conversions.rpmToTalonFXCntsPer100ms(motorRPM);
+        //return motorVelocityCounts;
+
+        // Mathmatically more efficient
+        // 1/MK4i_FalconFalcon_Module_Constants.DriveMotor.driveWheelCircumference == MK4i_FalconFalcon_Module_Constants.DriveMotor.invDriveWheelCircumference
+        return TalonFX_Conversions.rpmToTalonFXCntsPer100ms(
+          velocity*60*
+          SwrNStr_FalconPG71_Module_Constants.DriveMotor.invDriveWheelCircumference*
+          SwrNStr_FalconPG71_Module_Constants.DriveMotor.driveGearRatio);
+
+    }
+
+    /***********************************************************************************/
+    /* ***** Steer Angle Encoder Methods *****                                         */
+    /***********************************************************************************/   
+
+    // Analog MA3 Steer Angle Encoder
+
+    /***********************************************************************************/
+    /* ***** Steer Motor Methods *****                                                 */
+    /***********************************************************************************/
+
+     /** configSteerMotor
+     * Config Steer Motor 
+     * @param moduleConstants
+     */
+    private void configSteerMotor(SwerveModuleConstants moduleConstants){
+        steerMotor.configFactoryDefault();
+        steerMotor.configAllSettings(SwrNStr_FalconPG71_Module_Constants.SteerTalonSRXConfig);
+        steerMotor.setInverted(moduleConstants.steerMotorInvert);
+        steerMotor.setNeutralMode(SwrNStr_FalconPG71_Module_Constants.SteerMotor.neutralMode);
+
+        steerMotor.configSelectedFeedbackSensor(SwrNStr_FalconPG71_Module_Constants.SteerMotor.selectedFeedbackSensor);
+        steerMotor.configSelectedFeedbackCoefficient(SwrNStr_FalconPG71_Module_Constants.SteerMotor.selectedFeedbackCoefficient);
+        steerMotor.configFeedbackNotContinuous(SwrNStr_FalconPG71_Module_Constants.SteerMotor.feedbackNotContinuous, 0);
+        steerMotor.setSensorPhase(SwrNStr_FalconPG71_Module_Constants.SteerMotor.sensorPhase);
+    }
+
+
+    /** getSteerMotorPosCounts
+     *      Return Steer Motor Position Counts 
+     * @return double Steer Motor Position (Raw sensor units)
+     */
+    public double getSteerMotorPosCounts(){
+        return steerMotor.getSelectedSensorPosition();
+    }
+
+    /** getSteerAngle
+     * Return Steer Motor Angle in Rotation2d 
+     * @return Rotation2d Steer Motor Angle
+     */
+    public Rotation2d getSteerAngle(){
+        Rotation2d strAng = Rotation2d.fromDegrees(steerAngleRaw());
+        return strAng;
+    } 
+
+
+    /***********************************************************************************/
+    /* ***** Are These Needed? *****                                                   */
+    /***********************************************************************************/
 
     /** getSteerSensorAbsolutePosCnts
     *   Returns the Absolute Position Measurement Cnts
@@ -186,30 +327,13 @@ public class SwrNStr_FalconPG71_Module {
         return 0; //steerAngleEncoder.getPosition();
     }
 
-    /***********************************************************************************/
-    /* ***** Steer Motor Methods *****                                                 */
-    /***********************************************************************************/
-
-
-    private void configSteerMotor(SwerveModuleConstants moduleConstants){
-        steerMotor.configFactoryDefault();
-        steerMotor.configAllSettings(SwrNStr_FalconPG71_Module_Constants.SteerTalonSRXConfig);
-        steerMotor.setInverted(moduleConstants.steerMotorInvert);
-        steerMotor.setNeutralMode(SwrNStr_FalconPG71_Module_Constants.SteerMotor.neutralMode);
-
-        steerMotor.configSelectedFeedbackSensor(SwrNStr_FalconPG71_Module_Constants.SteerMotor.selectedFeedbackSensor);
-        steerMotor.configSelectedFeedbackCoefficient(SwrNStr_FalconPG71_Module_Constants.SteerMotor.selectedFeedbackCoefficient);
-        steerMotor.configFeedbackNotContinuous(SwrNStr_FalconPG71_Module_Constants.SteerMotor.feedbackNotContinuous, 0);
-        steerMotor.setSensorPhase(SwrNStr_FalconPG71_Module_Constants.SteerMotor.sensorPhase);
-    }
-
     public double steerSensorCnts(){
         double mSteerSensorCnts = steerMotor.getSelectedSensorPosition();
         return mSteerSensorCnts;
     }
 
     public double steerSensorCntsCorrected(){
-        double mSteerSensorCntsCorrected = steerSensorCnts()-this.strAngleOffset;
+        double mSteerSensorCntsCorrected = steerSensorCnts()-this.steerAngleOffset;
         return mSteerSensorCntsCorrected;
     }
 
@@ -220,8 +344,5 @@ public class SwrNStr_FalconPG71_Module {
         return mSteerAngleRaw;
     }
 
-    public Rotation2d steerAngle(){
-        Rotation2d strAng = Rotation2d.fromDegrees(steerAngleRaw());
-        return strAng;
-    }    
+   
 }
