@@ -32,6 +32,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
+import frc.robot.Library.DriveTrains.SubSys_DriveTrain_Constants;
 import frc.robot.Library.DriveTrains.SwerveDrive.SwerveModules.CTREModuleState;
 import frc.robot.Library.DriveTrains.SwerveDrive.SwerveModules.SwerveModuleConstants;
 import frc.robot.Library.DriveTrains.SwerveDrive.SwerveModules.MK4i_FalconFalcon.MK4i_FalconFalcon_Module_Constants.*;
@@ -100,7 +101,7 @@ public class MK4i_FalconFalcon_Module {
             /* Drive Motor Command */
             // Open Loop 
             if(isOpenLoop){
-                double percentOutput = desiredState.speedMetersPerSecond / Constants.RobotSettings.DriveTrain.DriveTrainMaxSpd;
+                double percentOutput = desiredState.speedMetersPerSecond / SubSys_DriveTrain_Constants.DriveTrainMaxSpd;
                 driveMotor.set(ControlMode.PercentOutput, percentOutput);
             }
             // Closed Loop Velocity (PID Slot 0)
@@ -119,7 +120,7 @@ public class MK4i_FalconFalcon_Module {
 
             // Set default angle to lastAngle
             double angle = lastAngle;
-            if (Math.abs(desiredState.speedMetersPerSecond) > (Constants.RobotSettings.DriveTrain.DriveTrainMaxSpd * 0.01)){
+            if (Math.abs(desiredState.speedMetersPerSecond) > (SubSys_DriveTrain_Constants.DriveTrainMaxSpd * 0.01)){
                 angle = desiredState.angle.getDegrees();
             }
             

@@ -20,21 +20,8 @@ import edu.wpi.first.math.util.Units;
  */
 public final class Constants {
   public static final class RobotSettings{
-    public static final class DriveTrain{
-      // Drive SubSys
-    
-      // Drive Max Speeds
-      public static final double DriveTrainMaxSpd   = 2;                  // m/s
-      public static final double DriveTrainMaxAccel = 0.35;                  // m/s^2
-      public static final double MaxDriveSubSysRotSpeed = 270*Math.PI/180;    // rad/s
-      public static final double MaxDriveSubSysRotAccel = 180*Math.PI/180;   // rad/s^2
-    
-      // Drive Trajectory Max Speeds
-      public static final double kTrajMaxVel = 1.85;    // m/s
-      public static final double kTrajMaxAccel = 0.35; // m/s/s
-    }
 
-   public static final class Limelight{
+    public static final class Limelight{
       public static final double kCameraHeight = Units.inchesToMeters(35);  // m
       public static final double kCameraAngle = 29.0; // Degrees
     }

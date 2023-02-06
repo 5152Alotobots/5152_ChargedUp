@@ -11,8 +11,6 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
-import frc.robot.Constants.RobotSettings;
 import frc.robot.Library.DriveTrains.SwerveDrive.SubSys_SwerveDrive;
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
 
@@ -81,7 +79,7 @@ public class SubSys_DriveTrain extends SubsystemBase {
    * @return double DriveTrain Maximum Speed (m/s)
    */
   public double getMaxDriveSubSysSpd(){
-    return Constants.RobotSettings.DriveTrain.DriveTrainMaxSpd;
+    return SubSys_DriveTrain_Constants.DriveTrainMaxSpd;
   }
 
   /** getMaxDriveSubSysRotSpd
@@ -89,7 +87,7 @@ public class SubSys_DriveTrain extends SubsystemBase {
    * @return double DriveTrain Maximum Speed (rads/s)
    */
   public double getMaxDriveSubSysRotSpd(){
-    return Constants.RobotSettings.DriveTrain.MaxDriveSubSysRotSpeed;
+    return SubSys_DriveTrain_Constants.DriveTrainMaxRotSpeed;
   }
 
   // ***** Drive Methods *****
@@ -114,9 +112,9 @@ public class SubSys_DriveTrain extends SubsystemBase {
     boolean rotateRightPtCmd) {
       
     //Limit Cmds to Chassis Limits
-    driveXDirCmd = Math.min(Math.max(xSpdCmd,-RobotSettings.DriveTrain.DriveTrainMaxSpd),RobotSettings.DriveTrain.DriveTrainMaxSpd);
-    driveYDirCmd = Math.min(Math.max(ySpdCmd,-RobotSettings.DriveTrain.DriveTrainMaxSpd),RobotSettings.DriveTrain.DriveTrainMaxSpd);
-    driveZRotCmd = Math.min(Math.max(rotSpdCmd,-RobotSettings.DriveTrain.MaxDriveSubSysRotSpeed),RobotSettings.DriveTrain.MaxDriveSubSysRotSpeed);
+    driveXDirCmd = Math.min(Math.max(xSpdCmd,-SubSys_DriveTrain_Constants.DriveTrainMaxSpd),SubSys_DriveTrain_Constants.DriveTrainMaxSpd);
+    driveYDirCmd = Math.min(Math.max(ySpdCmd,-SubSys_DriveTrain_Constants.DriveTrainMaxSpd),SubSys_DriveTrain_Constants.DriveTrainMaxSpd);
+    driveZRotCmd = Math.min(Math.max(rotSpdCmd,-SubSys_DriveTrain_Constants.DriveTrainMaxRotSpeed),SubSys_DriveTrain_Constants.DriveTrainMaxRotSpeed);
     driveFieldOriented = fieldRelative;
     driveRotateLeftPtCmd = rotateLeftPtCmd;
     driveRotateRightPtCmd = rotateRightPtCmd;

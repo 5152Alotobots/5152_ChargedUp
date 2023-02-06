@@ -28,6 +28,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import frc.robot.Constants;
+import frc.robot.Library.DriveTrains.SubSys_DriveTrain_Constants;
 import frc.robot.Library.DriveTrains.SwerveDrive.SwerveModules.CTREModuleState;
 import frc.robot.Library.DriveTrains.SwerveDrive.SwerveModules.SwerveModuleConstants;
 import frc.robot.Library.DriveTrains.SwerveDrive.SwerveModules.SwrNStr_FalconPG71.SwrNStr_FalconPG71_Module_Constants.DriveMotor;
@@ -89,7 +90,7 @@ public class SwrNStr_FalconPG71_Module {
             /** Drive Motor Command */
             // Open Loop 
             if(isOpenLoop){
-                double percentOutput = desiredState.speedMetersPerSecond / Constants.RobotSettings.DriveTrain.DriveTrainMaxSpd;
+                double percentOutput = desiredState.speedMetersPerSecond / SubSys_DriveTrain_Constants.DriveTrainMaxSpd;
                 driveMotor.set(ControlMode.PercentOutput, percentOutput);
             }
             // Closed Loop Velocity (PID Slot 0)
@@ -109,7 +110,7 @@ public class SwrNStr_FalconPG71_Module {
 
             // Set default angle to lastAngle
             double angle = lastAngle;
-            if (Math.abs(desiredState.speedMetersPerSecond) > (Constants.RobotSettings.DriveTrain.DriveTrainMaxSpd * 0.01)){
+            if (Math.abs(desiredState.speedMetersPerSecond) > (SubSys_DriveTrain_Constants.DriveTrainMaxSpd * 0.01)){
                 angle = desiredState.angle.getDegrees();
             }
             

@@ -26,8 +26,16 @@ public class Cmd_SubSys_DriveTrain_JoysticDefault extends CommandBase {
   private final BooleanSupplier rotateLeftPt;
   private final BooleanSupplier rotateRightPt;
 
-  // Max Speed Command is 4.7mps
-
+ /** Cmd_SubSys_DriveTrain_JoysticDefault
+  * Joystick Drive Command
+  * @param driveSubSys
+  * @param fwdCmd
+  * @param strCmd
+  * @param rotCmd
+  * @param fieldOriented
+  * @param rotateLeftPt
+  * @param rotateRightPt
+  */
   public Cmd_SubSys_DriveTrain_JoysticDefault(
     SubSys_DriveTrain driveSubSys,
     DoubleSupplier fwdCmd,

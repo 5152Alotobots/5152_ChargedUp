@@ -14,7 +14,7 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import frc.robot.Library.DriveTrains.SubSys_DriveTrain_Constants;
 import frc.robot.Library.DriveTrains.SwerveDrive.SwerveModules.MK4i_FalconFalcon.MK4i_FalconFalcon_Module;
 import frc.robot.Library.DriveTrains.SwerveDrive.SwerveModules.SwrNStr_FalconPG71.SwrNStr_FalconPG71_Module;
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
@@ -197,7 +197,7 @@ public class SubSys_SwerveDrive extends SubsystemBase {
                 rotationPt);
             SwerveDriveKinematics.desaturateWheelSpeeds(
                 swerveModuleStates,
-                Constants.RobotSettings.DriveTrain.DriveTrainMaxSpd);
+                SubSys_DriveTrain_Constants.DriveTrainMaxSpd);
 
         // Set Swerve Modules to Calculated States
         swerveModules[0].setDesiredState(swerveModuleStates[0], isOpenLoop);  // FL
@@ -292,17 +292,17 @@ public class SubSys_SwerveDrive extends SubsystemBase {
 
         return swerveModulePositions;
     }
-
-    private SwerveModuleState[] getStates(){
-        SwerveModuleState[] states = new SwerveModuleState[4];
-
-        states[0] = swerveModules[0].getState();  // FL
-        states[1] = swerveModules[1].getState();  // FR
-        states[2] = swerveModules[2].getState();  // BL
-        states[3] = swerveModules[3].getState();  // BR
-
-        return states;
-    }
+    
+    //private SwerveModuleState[] getStates(){
+    //    SwerveModuleState[] states = new SwerveModuleState[4];
+    //
+    //    states[0] = swerveModules[0].getState();  // FL
+    //    states[1] = swerveModules[1].getState();  // FR
+    //    states[2] = swerveModules[2].getState();  // BL
+    //    states[3] = swerveModules[3].getState();  // BR
+    //
+    //    return states;
+    //}
  
 
     /* Used by SwerveControllerCommand in Auto */
