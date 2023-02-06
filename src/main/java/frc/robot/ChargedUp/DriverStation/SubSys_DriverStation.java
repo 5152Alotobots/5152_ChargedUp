@@ -7,7 +7,7 @@ package frc.robot.ChargedUp.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class SubSys_DriverStation extends SubsystemBase {
   /** Creates a new DriverStationSubSys. */
 
@@ -21,7 +21,8 @@ public class SubSys_DriverStation extends SubsystemBase {
   private XboxController m_AuxDriverController = new XboxController(2);
 
   public JoystickButton GyroResetButton = new JoystickButton(m_AuxDriverController, 4);
-
+  public JoystickButton CloseHandButton = new JoystickButton(m_CoDriverController, 6);
+  public JoystickButton OpenHandButton = new JoystickButton(m_CoDriverController, 5);
   public SubSys_DriverStation() {
   }
 
@@ -133,5 +134,10 @@ public class SubSys_DriverStation extends SubsystemBase {
 
   public boolean ClimberLiftRotatorNegativeBtn(){
     return m_DriverController.getRawButton(3);
+  }
+  public double HandSensorBtn() {
+    boolean buttonValue = m_AuxDriverController.getRawButton(0);
+    SmartDashboard.putBoolean("Hand Ready", buttonValue);
+    if (buttonValue == true) return 1; else return 0;
   }
 }

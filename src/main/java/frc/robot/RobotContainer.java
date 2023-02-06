@@ -17,6 +17,14 @@ import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmd_SubSys_DriveTrain_JoysticDefault;
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
 import frc.robot.Library.Vision.Limelight.SubSys_LimeLight;
+import frc.robot.ChargedUp.Arm.SubSys_Arm;
+import frc.robot.ChargedUp.ColorSensor.SubSys_ColorSensor;
+import frc.robot.ChargedUp.DistanceSensor.SubSys_DistanceSensor;
+import frc.robot.ChargedUp.MecanumDrive.SubSys_MecanumDrive;
+import frc.robot.ChargedUp.Hand.SubSys_Hand;
+import frc.robot.ChargedUp.Hand.Cmd.Cmd_HandWithSensor;
+import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.ChargedUp.MecanumDrive.Cmd.Cmd_MecanumDriveDefault;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -46,6 +54,24 @@ public class RobotContainer {
 
   // ---- Drive Subsystem (Swerve)
   public final SubSys_DriveTrain driveSubSys = new SubSys_DriveTrain(gyroSubSys);
+  // private final PDPSubSys m_PDPSubSys = new PDPSubSys();
+
+  //public final NavXGyroSubSys m_NavXGyroSubSys = new NavXGyroSubSys();
+
+
+  // private final SubSys_LimeLight limeLightSubSys = new SubSys_LimeLight();
+
+  public final SubSys_MecanumDrive mecanumDriveSubSys = new SubSys_MecanumDrive();
+
+
+  public final SubSys_ColorSensor colorSubSys = new SubSys_ColorSensor();
+ 
+  public final SubSys_DistanceSensor distanceSubsys = new SubSys_DistanceSensor();
+  // ---- Driver Station
+
+  // ---- Hand
+  public final SubSys_Hand handSubSys = new SubSys_Hand();
+  
 
   /*
   ***** Charged Up Componentes
@@ -83,7 +109,16 @@ public class RobotContainer {
     /**
     ****** Control System Components
     */
+    // mecanumDriveSubSys.setDefaultCommand(
+    //   new Cmd_MecanumDriveDefault(
+    //     mecanumDriveSubSys, 
+    //     () -> m_driverController.getLeftX(), 
+    //     () -> m_driverController.getLeftY(),
+    //     () -> m_driverController.getRightX()
+    //   )
+    // ); 
 
+    handSubSys.setDefaultCommand(new Cmd_HandWithSensor(handSubSys, colorSubSys, distanceSubsys, () ->  driverStation.HandSensorBtn()));
     // ---- Drive Subsystem Default Command
     driveSubSys
       .setDefaultCommand(new Cmd_SubSys_DriveTrain_JoysticDefault(
@@ -122,8 +157,9 @@ public class RobotContainer {
   private void configureButtonBindings() {
  
     // Gyro Reset Command Button
-    driverStation.GyroResetButton.onTrue(
-        new InstantCommand(driveSubSys::setGyroYawToZero, driveSubSys));
+    driverStation.GyroResetButton.onTrue(new InstantCommand(driveSubSys::setGyroYawToZero, driveSubSys));
+    driverStation.OpenHandButton.onTrue(new InstantCommand(handSubSys::OpenHand, handSubSys));
+    driverStation.CloseHandButton.onTrue(new InstantCommand(handSubSys::CloseHand, handSubSys));
   }
 
   /**
