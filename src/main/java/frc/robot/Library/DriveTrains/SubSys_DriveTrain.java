@@ -10,6 +10,7 @@ package frc.robot.Library.DriveTrains;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Library.DriveTrains.SwerveDrive.SubSys_SwerveDrive;
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
@@ -65,6 +66,11 @@ public class SubSys_DriveTrain extends SubsystemBase {
       false,
       driveRotateLeftPtCmd,
       driveRotateRightPtCmd);
+
+      // Put pose and Heading to smart dashboard
+      SmartDashboard.putNumber("Pose X", getPose().getX());
+      SmartDashboard.putNumber("Pose Y", getPose().getY());
+      SmartDashboard.putNumber("Heading (Degrees)", getHeading().getDegrees());
   }
 
   /***********************************************************************************/
