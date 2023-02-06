@@ -10,6 +10,7 @@ package frc.robot.Library.DriveTrains;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Library.DriveTrains.SwerveDrive.SubSys_SwerveDrive;
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
@@ -57,6 +58,9 @@ public class SubSys_DriveTrain extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     
+    SmartDashboard.putNumber("driveXDirCmd", driveXDirCmd);
+    SmartDashboard.putNumber("driveYDirCmd", driveYDirCmd);
+    SmartDashboard.putNumber("driveZRotCmd", driveZRotCmd);
     // Send Drive Commands
     driveTrain.drive(
       new Translation2d(driveXDirCmd, driveYDirCmd),
