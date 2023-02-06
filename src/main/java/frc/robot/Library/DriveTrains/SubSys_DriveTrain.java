@@ -10,8 +10,8 @@ package frc.robot.Library.DriveTrains;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Constants.RobotSettings;
 import frc.robot.Library.DriveTrains.SwerveDrive.SubSys_SwerveDrive;
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
@@ -42,16 +42,12 @@ public class SubSys_DriveTrain extends SubsystemBase {
   private boolean driveRotateLeftPtCmd = false;
   private boolean driveRotateRightPtCmd = false;
 
-  // DriveSubSys Shuffleboard
-  //private DriveSubSys_Shuffleboard m_DriveSubSys_Shuffleboard =
-  //  new DriveSubSys_Shuffleboard();
-
   // GyroScope
   private SubSys_PigeonGyro gyroSubSys; 
 
 
   /**
-   * DriveSubSys Constructor
+   * SubSys_DriveTrain Constructor
    * @param gyroSubSys SubSys_PigeonGyro
    */
   public SubSys_DriveTrain(SubSys_PigeonGyro gyroSubSys) {
@@ -71,90 +67,34 @@ public class SubSys_DriveTrain extends SubsystemBase {
       false,
       driveRotateLeftPtCmd,
       driveRotateRightPtCmd);
-
-    /*
-    SmartDashboard.putNumber("Xdistance", m_DriveSubSys.getPose().getX());
-    SmartDashboard.putNumber("Ydistance", m_DriveSubSys.getPose().getY());
-    SmartDashboard.putNumber("Heading", m_DriveSubSys.getHeading().getDegrees());
-
-    // Display Drive SubSys Shuffleboard
-    if(DriveSubSys_Constants.DriveSubSys_Shuffleboard_Enable){
-      m_DriveSubSys_Shuffleboard.Display_DriveSubSys(
-        m_GyroSubSys,
-        m_DriveXDirCmd,
-        m_DriveYDirCmd,
-        m_DriveZRotCmd,
-        m_DriveFieldOriented,
-        m_DriveRotateLeftPt,
-        m_DriveRotateRightPt,
-        m_DriveSubSys.getPose());
-    }
-    */
   }
 
-  /**
-  * Returns the currently-estimated pose of the robot.
-  *
-  * @return The pose.
-  */
-  public Pose2d getPose() {
-    return driveTrain.getPose();
-  }
+  /***********************************************************************************/
+  /* ***** Public DriveTrain Methods *****                                               */
+  /***********************************************************************************/
 
-  /**
-  * Returns the currently heading robot.
-  *
-  * @return The heading.
-  */
-  public Rotation2d getHeading() {
-    return driveTrain.getHeading();
-  }
-  
-  /**
-  * Resets the odometry to the specified pose.
-  *
-  * @param pose The pose to which to set the odometry.
-  */
-  public void resetOdometry(Pose2d pose) {
-    driveTrain.resetOdometry(pose);
-  }
-    
-  /**
-  * Resets the Gyro angle to specified heading
-  *
-  */
-  public void zeroGyro() {
-    gyroSubSys.zeroYaw();
-  }
+  // ***** DriveTrain Info *****
 
-  /**
-  * Returns Drive SubSystem Kinematics
-  *
-  * @return Drive SubSystem Kinematics
-  */
-  public SwerveDriveKinematics getSwerveDriveKinematics() {
-    return driveTrain.getSwerveDriveKinematics();
-  }
-
-  /**
+  /** getMaxDriveSubSysSpd
    * Returns Max Drive SubSystem Speed
    * 
    * @return double DriveTrain Maximum Speed (m/s)
    */
   public double getMaxDriveSubSysSpd(){
-    return RobotSettings.DriveTrain.DriveTrainMaxSpd;
+    return Constants.RobotSettings.DriveTrain.DriveTrainMaxSpd;
   }
 
-  /**
+  /** getMaxDriveSubSysRotSpd
    * Returns Max Drive Subsystem Rotation
    * @return double DriveTrain Maximum Speed (rads/s)
    */
   public double getMaxDriveSubSysRotSpd(){
-    return RobotSettings.DriveTrain.MaxDriveSubSysRotSpeed;
+    return Constants.RobotSettings.DriveTrain.MaxDriveSubSysRotSpeed;
   }
 
-
-  /**
+  // ***** Drive Methods *****
+  
+  /** Drive
   * Method to drive the robot using setpoint.
   *
   * @param xSpdCmd       Speed Cmd of the robot in the x direction (forward) m/s.
@@ -180,5 +120,46 @@ public class SubSys_DriveTrain extends SubsystemBase {
     driveFieldOriented = fieldRelative;
     driveRotateLeftPtCmd = rotateLeftPtCmd;
     driveRotateRightPtCmd = rotateRightPtCmd;
+  }
+
+  // ***** Odometry *****
+ 
+  /** getHeading
+   * Get Swerve Drive Heading in Rotation2d
+   * @return Rotation2d Heading of the drive train
+   */
+  public Rotation2d getHeading() {
+      return this.driveTrain.getHeading();
+  }
+
+  /** setGyroYaw
+   * set Gyro Yaw Value
+   * @param degrees
+   */
+  public void setGyroYaw(double degrees){
+    this.driveTrain.setGyroYaw(degrees);  
+  }
+
+  /** setGyroYawToZero
+   * set Gyro Yaw Value to Zero
+   */ 
+  public void setGyroYawToZero(){
+    this.driveTrain.setGyroYawToZero();  
+  }
+
+  /** getPose
+   * Get the X and Y position of the drivetrain from the DriveTrain
+   * @return Pose2d X and Y position of the drivetrain
+   */
+  public Pose2d getPose() {
+    return this.driveTrain.getPose();
+  }
+
+  /** setPose
+   * Set Pose of the drivetrain
+   * @param pose Pose2d X and Y position of the drivetrain
+   */
+  public void setPose(Pose2d pose){
+      this.driveTrain.setPose(pose);
   }
 }
