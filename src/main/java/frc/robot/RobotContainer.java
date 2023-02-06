@@ -123,7 +123,7 @@ public class RobotContainer {
  
     // Gyro Reset Command Button
     driverStation.GyroResetButton.onTrue(
-        new InstantCommand(driveSubSys::zeroGyro, driveSubSys));
+        new InstantCommand(driveSubSys::setGyroYawToZero, driveSubSys));
   }
 
   /**
