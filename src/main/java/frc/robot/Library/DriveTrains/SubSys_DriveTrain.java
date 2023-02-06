@@ -69,6 +69,11 @@ public class SubSys_DriveTrain extends SubsystemBase {
       false,
       driveRotateLeftPtCmd,
       driveRotateRightPtCmd);
+
+      // Put pose and Heading to smart dashboard
+      SmartDashboard.putNumber("Pose X", getPose().getX());
+      SmartDashboard.putNumber("Pose Y", getPose().getY());
+      SmartDashboard.putNumber("Heading (Degrees)", getHeading().getDegrees());
   }
 
   /***********************************************************************************/
