@@ -17,6 +17,7 @@ import frc.robot.ChargedUp.DriverStation.SubSys_DriverStation;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmd_SubSys_DriveTrain_JoysticDefault;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmd_SubSys_DriveTrain_Rotate2Heading;
+import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmd_SubSyst_DriveTrain_Drive4Distance;
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
 import frc.robot.Library.Vision.Limelight.SubSys_LimeLight;
 
@@ -127,8 +128,10 @@ public class RobotContainer {
     driverStation.GyroResetButton.onTrue(
         new InstantCommand(driveSubSys::setGyroYawToZero, driveSubSys));
     driverStation.TestButton.onTrue(
-        new Cmd_SubSys_DriveTrain_Rotate2Heading(driveSubSys, 90));
+        new Cmd_SubSyst_DriveTrain_Drive4Distance(driveSubSys, 0.5, 0));
   }
+
+  //when test button is pressed run the rotate to heading command to a random number between 0 and 360
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

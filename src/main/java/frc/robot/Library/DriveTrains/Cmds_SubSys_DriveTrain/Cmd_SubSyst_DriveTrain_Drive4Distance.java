@@ -8,6 +8,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain_Constants;
@@ -36,7 +37,7 @@ public class Cmd_SubSyst_DriveTrain_Drive4Distance extends CommandBase {
     this.initialXDistance = 0.0;
     this.targetYDistance = targetYDistance;
     this.initialYDistance = 0.0;
-    this.targetHeadingDegrees =0.0;
+    this.targetHeadingDegrees = 0.0;
     
     this.xDistancePID = new PIDController(
       SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.Pgain,
@@ -63,6 +64,8 @@ public class Cmd_SubSyst_DriveTrain_Drive4Distance extends CommandBase {
 
     this.profiledRotationPID.enableContinuousInput(-180, 180);
     this.profiledRotationPID.setTolerance(1, 1);
+    this.xDistancePID.setTolerance(0.05);
+    this.yDistancePID.setTolerance(0.05);
     this.profiledRotationPID.setIntegratorRange(-.3, 0.3);
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(this.subSys_DriveTrain);
@@ -71,6 +74,8 @@ public class Cmd_SubSyst_DriveTrain_Drive4Distance extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+
+
     Pose2d currPose = this.subSys_DriveTrain.getPose();
     this.initialXDistance = currPose.getX();
     this.xDistancePID.reset();
@@ -102,10 +107,23 @@ public class Cmd_SubSyst_DriveTrain_Drive4Distance extends CommandBase {
     this.subSys_DriveTrain.Drive(
       xCmd,
       yCmd,
-      rotCmd,
+      0,
       false,
       false,
       false);
+
+
+      SmartDashboard.putNumber("Drive4Dist_Goal", this.profiledRotationPID.getGoal().position);
+      SmartDashboard.putNumber("Drive4Dist_Setpoint_Position", this.profiledRotationPID.getSetpoint().position);
+      SmartDashboard.putNumber("Drive4Dist_SetPoint_Velocity",this.profiledRotationPID.getSetpoint().velocity);
+      SmartDashboard.putNumber("Drive4Dist_Error", this.profiledRotationPID.getPositionError());
+      
+      //SmartDashboard.putNumber("Drive4Dist_rotPIDCmd", xCmd);
+      //SmartDashboard.putNumber("Drive4Dist_rotFFCmd", rotFFCmd);
+      //SmartDashboard.putNumber("Drive4Dist_rotCmd", rotCmd);
+  
+      //Test to see if finished
+      SmartDashboard.putBoolean("Drive4Dist Finished", this.profiledRotationPID.atGoal());
   }
 
   // Called once the command ends or is interrupted.
@@ -125,7 +143,7 @@ public class Cmd_SubSyst_DriveTrain_Drive4Distance extends CommandBase {
   public boolean isFinished() {
     if (this.xDistancePID.atSetpoint() &&
          this.yDistancePID.atSetpoint() &&
-         this.profiledRotationPID.atSetpoint()){
+         this.profiledRotationPID.atGoal()){
       return true;
     }else{
       return false;
