@@ -23,7 +23,7 @@ public class SubSys_PigeonGyro extends SubsystemBase {
 
   public SubSys_PigeonGyro() {
     m_Pigeon2Gyro = new Pigeon2(Constants.CAN_IDs.Pigeon2_ID);
-    m_Pigeon2Gyro.setYaw(0);
+    //m_Pigeon2Gyro.setYaw(0);
   }
 
 

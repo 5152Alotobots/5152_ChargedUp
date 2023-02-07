@@ -5,7 +5,9 @@
 package frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain;
 
 import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
@@ -16,9 +18,10 @@ public class Cmd_SubSys_DriveTrain_Rotate2Heading extends CommandBase {
 
   private final SubSys_DriveTrain subSys_DriveTrain;
   private final double targetHeadingDegrees;
+  private final SimpleMotorFeedforward feedForward;
   private final ProfiledPIDController profiledRotationPID;
   private final TrapezoidProfile.Constraints profiledRotationConstraints;
-
+    
   public Cmd_SubSys_DriveTrain_Rotate2Heading(
     SubSys_DriveTrain subSys_DriveTrain,
     double targetHeadingDegrees) {
@@ -27,8 +30,13 @@ public class Cmd_SubSys_DriveTrain_Rotate2Heading extends CommandBase {
     this.targetHeadingDegrees = targetHeadingDegrees;
 
     this.profiledRotationConstraints = new TrapezoidProfile.Constraints(
-      SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrainTrajMaxRotSpeed,
-      SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrainTrajMaxRotAccel);
+      Units.radiansToDegrees(SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrainTrajMaxRotSpeed),
+      Units.radiansToDegrees(SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrainTrajMaxRotAccel));
+
+    this.feedForward = new SimpleMotorFeedforward(
+      SubSys_DriveTrain_Constants.DriveTrainTrajSettings.RotationTrajectoryFF.kS,
+      SubSys_DriveTrain_Constants.DriveTrainTrajSettings.RotationTrajectoryFF.kV);
+
     this.profiledRotationPID = new ProfiledPIDController(
       SubSys_DriveTrain_Constants.DriveTrainTrajSettings.RotationTrajectoryPID.Pgain,
       SubSys_DriveTrain_Constants.DriveTrainTrajSettings.RotationTrajectoryPID.Igain,
@@ -36,7 +44,7 @@ public class Cmd_SubSys_DriveTrain_Rotate2Heading extends CommandBase {
       this.profiledRotationConstraints);
 
     this.profiledRotationPID.enableContinuousInput(-180, 180);
-    this.profiledRotationPID.setTolerance(1, 1);
+    this.profiledRotationPID.setTolerance(2, 4);
     this.profiledRotationPID.setIntegratorRange(-.3, 0.3);
     
     // Use addRequirements() here to declare subsystem dependencies.
@@ -51,15 +59,19 @@ public class Cmd_SubSys_DriveTrain_Rotate2Heading extends CommandBase {
 
     //log target to dashboard
     SmartDashboard.putData(profiledRotationPID);
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    double rotCmd = this.profiledRotationPID.calculate(
+    
+    double rotFFCmd = this.feedForward.calculate(this.profiledRotationPID.getSetpoint().velocity); 
+    double rotPIDCmd = this.profiledRotationPID.calculate(
       this.subSys_DriveTrain.getHeading().getDegrees(),
       this.targetHeadingDegrees);
+    double rotCmd = rotFFCmd+rotPIDCmd;
+
     this.subSys_DriveTrain.Drive(
       0,
       0,
@@ -68,11 +80,17 @@ public class Cmd_SubSys_DriveTrain_Rotate2Heading extends CommandBase {
       false,
       false);
 
-    //Log rotation command to dash
-    SmartDashboard.putNumber("Rotate2Heading Rotation Speed", rotCmd);
+    SmartDashboard.putNumber("Rotate2Heading_Goal", this.profiledRotationPID.getGoal().position);
+    SmartDashboard.putNumber("Rotate2Heading_Setpoint_Position", this.profiledRotationPID.getSetpoint().position);
+    SmartDashboard.putNumber("Rotate2Heading_SetPoint_Velocity",this.profiledRotationPID.getSetpoint().velocity);
+    SmartDashboard.putNumber("Rotate2Heading_Error", this.profiledRotationPID.getPositionError());
+    
+    SmartDashboard.putNumber("Rotate2Heading_rotPIDCmd", rotPIDCmd);
+    SmartDashboard.putNumber("Rotate2Heading_rotFFCmd", rotFFCmd);
+    SmartDashboard.putNumber("Rotate2Heading_rotCmd", rotCmd);
 
     //Test to see if finished
-    SmartDashboard.putBoolean("Rotate2Heading Finished", this.profiledRotationPID.atSetpoint());
+    SmartDashboard.putBoolean("Rotate2Heading Finished", this.profiledRotationPID.atGoal());
   }
 
   // Called once the command ends or is interrupted.
@@ -90,13 +108,16 @@ public class Cmd_SubSys_DriveTrain_Rotate2Heading extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    /*
-    if (this.profiledRotationPID.atSetpoint()){
+    //if (Math.abs(this.targetHeadingDegrees-this.subSys_DriveTrain.getHeading().getDegrees())< 1){
+    //  return true;
+    //}else{
+    //  return false;
+    //}
+
+    if(this.profiledRotationPID.atGoal()){
       return true;
     }else{
       return false;
     }
-    */
-    return false;
   }
 }
