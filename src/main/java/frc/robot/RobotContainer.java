@@ -18,11 +18,13 @@ import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmd_SubSys_DriveTrai
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
 import frc.robot.Library.Vision.Limelight.SubSys_LimeLight;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
+import frc.robot.ChargedUp.Arm.Cmd.Cmd_RotateArm;
 import frc.robot.ChargedUp.ColorSensor.SubSys_ColorSensor;
 import frc.robot.ChargedUp.DistanceSensor.SubSys_DistanceSensor;
 import frc.robot.ChargedUp.MecanumDrive.SubSys_MecanumDrive;
 import frc.robot.ChargedUp.Hand.SubSys_Hand;
 import frc.robot.ChargedUp.Hand.Cmd.Cmd_HandWithSensor;
+import frc.robot.ChargedUp.Arm.Cmd.Cmd_RotateArm;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.ChargedUp.MecanumDrive.Cmd.Cmd_MecanumDriveDefault;
 
@@ -72,13 +74,14 @@ public class RobotContainer {
   // ---- Hand
   public final SubSys_Hand handSubSys = new SubSys_Hand();
   
-
+  //Arm 
+  public final SubSys_Arm armSubSys = new SubSys_Arm();
   /*
   ***** Charged Up Componentes
   */
  
   // ---- Driver Station
-  public final SubSys_DriverStation driverStation = new SubSys_DriverStation();
+  public final SubSys_DriverStation driverStationSubSys = new SubSys_DriverStation();
   // SetUp Auto
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -117,18 +120,24 @@ public class RobotContainer {
     //     () -> m_driverController.getRightX()
     //   )
     // ); 
+    armSubSys.setDefaultCommand(new Cmd_RotateArm(
+      armSubSys, 
+      () -> driverStationSubSys.ArmR));
 
-    handSubSys.setDefaultCommand(new Cmd_HandWithSensor(handSubSys, colorSubSys, distanceSubsys, () ->  driverStation.HandSensorBtn()));
-    // ---- Drive Subsystem Default Command
-    driveSubSys
-      .setDefaultCommand(new Cmd_SubSys_DriveTrain_JoysticDefault(
+    handSubSys.setDefaultCommand(new Cmd_HandWithSensor(
+      handSubSys, 
+      colorSubSys, 
+      distanceSubsys, 
+      () ->  driverStationSubSys.HandSensorBtn()));
+
+    driveSubSys.setDefaultCommand(new Cmd_SubSys_DriveTrain_JoysticDefault(
         driveSubSys,
-        () -> driverStation.DriveFwdAxis(),
-        () -> driverStation.DriveStrAxis(),
-        () -> driverStation.DriveRotAxis(),
+        () -> driverStationSubSys.DriveFwdAxis(),
+        () -> driverStationSubSys.DriveStrAxis(),
+        () -> driverStationSubSys.DriveRotAxis(),
         false,
-        () -> driverStation.RotateLeftPt(),
-        () -> driverStation.RotateRightPt()));
+        () -> driverStationSubSys.RotateLeftPt(),
+        () -> driverStationSubSys.RotateRightPt()));
 
     // Sendable Chooser
     //m_chooser.setDefaultOption("Auto_BasicRevHighGoalRev_Cmd", m_Auto_BasicRevHighGoalRev_Cmd);
@@ -157,9 +166,9 @@ public class RobotContainer {
   private void configureButtonBindings() {
  
     // Gyro Reset Command Button
-    driverStation.GyroResetButton.onTrue(new InstantCommand(driveSubSys::setGyroYawToZero, driveSubSys));
-    driverStation.OpenHandButton.onTrue(new InstantCommand(handSubSys::OpenHand, handSubSys));
-    driverStation.CloseHandButton.onTrue(new InstantCommand(handSubSys::CloseHand, handSubSys));
+    driverStationSubSys.GyroResetButton.onTrue(new InstantCommand(driveSubSys::setGyroYawToZero, driveSubSys));
+    driverStationSubSys.OpenHandButton.onTrue(new InstantCommand(handSubSys::OpenHand, handSubSys));
+    driverStationSubSys.CloseHandButton.onTrue(new InstantCommand(handSubSys::CloseHand, handSubSys));
   }
 
   /**
