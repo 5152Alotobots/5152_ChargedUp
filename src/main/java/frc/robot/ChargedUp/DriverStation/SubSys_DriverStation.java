@@ -21,6 +21,7 @@ public class SubSys_DriverStation extends SubsystemBase {
   private XboxController m_AuxDriverController = new XboxController(2);
 
   public JoystickButton GyroResetButton = new JoystickButton(m_AuxDriverController, 4);
+  public JoystickButton TestButton = new JoystickButton(m_DriverController, 3);
 
   public SubSys_DriverStation() {
   }
@@ -133,5 +134,8 @@ public class SubSys_DriverStation extends SubsystemBase {
 
   public boolean ClimberLiftRotatorNegativeBtn(){
     return m_DriverController.getRawButton(3);
+
+  // ---- TEST POSE
+
   }
 }

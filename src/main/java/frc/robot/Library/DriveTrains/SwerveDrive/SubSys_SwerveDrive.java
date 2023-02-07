@@ -140,8 +140,8 @@ public class SubSys_SwerveDrive extends SubsystemBase {
         SmartDashboard.putNumber("BR_DriveSensor_Pos", swerveModules[3].getDriveMotorSensorPosition());
 
         // Odometry
-        SmartDashboard.putNumber("Xdistance", swerveOdometry.getPoseMeters().getX());
-        SmartDashboard.putNumber("Ydistance", swerveOdometry.getPoseMeters().getY());
+        //SmartDashboard.putNumber("Xdistance", swerveOdometry.getPoseMeters().getX());
+        //SmartDashboard.putNumber("Ydistance", swerveOdometry.getPoseMeters().getY());
     }
 
     /***********************************************************************************/

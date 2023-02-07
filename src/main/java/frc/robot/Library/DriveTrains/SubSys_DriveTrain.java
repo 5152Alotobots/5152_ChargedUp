@@ -57,10 +57,7 @@ public class SubSys_DriveTrain extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    
-    SmartDashboard.putNumber("driveXDirCmd", driveXDirCmd);
-    SmartDashboard.putNumber("driveYDirCmd", driveYDirCmd);
-    SmartDashboard.putNumber("driveZRotCmd", driveZRotCmd);
+  
     // Send Drive Commands
     driveTrain.drive(
       new Translation2d(driveXDirCmd, driveYDirCmd),
@@ -74,6 +71,11 @@ public class SubSys_DriveTrain extends SubsystemBase {
       SmartDashboard.putNumber("Pose X", getPose().getX());
       SmartDashboard.putNumber("Pose Y", getPose().getY());
       SmartDashboard.putNumber("Heading (Degrees)", getHeading().getDegrees());
+
+      // Put Drive Commands to smart dashboard
+      SmartDashboard.putNumber("driveXDirCmd", driveXDirCmd);
+      SmartDashboard.putNumber("driveYDirCmd", driveYDirCmd);
+      SmartDashboard.putNumber("driveZRotCmd", driveZRotCmd);
   }
 
   /***********************************************************************************/

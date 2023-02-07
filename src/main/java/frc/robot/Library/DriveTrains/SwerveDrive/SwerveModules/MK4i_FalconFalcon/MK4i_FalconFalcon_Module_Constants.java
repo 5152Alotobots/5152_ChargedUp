@@ -83,7 +83,7 @@ public final class MK4i_FalconFalcon_Module_Constants {
     public static final class DriveMotor {
 
         /** Neutral Mode */
-        public static final NeutralMode neutralMode = NeutralMode.Coast; 
+        public static final NeutralMode neutralMode = NeutralMode.Brake; 
 
         /** Drive Motor Wheel Circumference  */
         public static final double driveWheelDiameter = Units.inchesToMeters(4.0);  // meters

@@ -6,6 +6,7 @@ package frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain;
 
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain_Constants;
@@ -47,6 +48,9 @@ public class Cmd_SubSys_DriveTrain_Rotate2Heading extends CommandBase {
   public void initialize() {
     this.profiledRotationPID.reset(this.subSys_DriveTrain.getHeading().getDegrees());
     this.profiledRotationPID.setGoal(this.targetHeadingDegrees);
+
+    //log target to dashboard
+    SmartDashboard.putData(profiledRotationPID);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -63,6 +67,12 @@ public class Cmd_SubSys_DriveTrain_Rotate2Heading extends CommandBase {
       false,
       false,
       false);
+
+    //Log rotation command to dash
+    SmartDashboard.putNumber("Rotate2Heading Rotation Speed", rotCmd);
+
+    //Test to see if finished
+    SmartDashboard.putBoolean("Rotate2Heading Finished", this.profiledRotationPID.atSetpoint());
   }
 
   // Called once the command ends or is interrupted.
@@ -80,10 +90,13 @@ public class Cmd_SubSys_DriveTrain_Rotate2Heading extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    /*
     if (this.profiledRotationPID.atSetpoint()){
       return true;
     }else{
       return false;
     }
+    */
+    return false;
   }
 }
