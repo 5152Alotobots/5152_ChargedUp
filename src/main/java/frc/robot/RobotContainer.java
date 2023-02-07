@@ -122,7 +122,7 @@ public class RobotContainer {
     // ); 
     armSubSys.setDefaultCommand(new Cmd_RotateArm(
       armSubSys, 
-      () -> driverStationSubSys.ArmR));
+      () -> driverStationSubSys.GetArmRotateAxis()));
 
     handSubSys.setDefaultCommand(new Cmd_HandWithSensor(
       handSubSys, 

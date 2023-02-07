@@ -23,6 +23,8 @@ public class SubSys_DriverStation extends SubsystemBase {
   public JoystickButton GyroResetButton = new JoystickButton(m_AuxDriverController, 4);
   public JoystickButton CloseHandButton = new JoystickButton(m_CoDriverController, 6);
   public JoystickButton OpenHandButton = new JoystickButton(m_CoDriverController, 5);
+
+
   public SubSys_DriverStation() {
   }
 
@@ -60,6 +62,8 @@ public class SubSys_DriverStation extends SubsystemBase {
   public boolean RotateRightPt(){
     return m_DriverController.getRawButton(6);
   }
+
+   
   
   /*
   ***** Rapid React Components
@@ -79,7 +83,9 @@ public class SubSys_DriverStation extends SubsystemBase {
     return m_CoDriverController.getRawButton(2);
   }
   */
-
+  public double GetArmRotateAxis() {
+    return m_AuxDriverController.getRawAxis(0);
+  }
   // IntakeInOut_ShortShot Axis
   public double IntakeInNOut_ShortShotAxis(){
     return m_CoDriverController.getRightTriggerAxis();

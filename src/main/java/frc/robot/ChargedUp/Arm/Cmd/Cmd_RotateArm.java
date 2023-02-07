@@ -4,32 +4,41 @@
 
 package frc.robot.ChargedUp.Arm.Cmd;
 
+import java.util.function.DoubleSupplier;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
 import frc.robot.ChargedUp.DriverStation.SubSys_DriverStation;
-
+import java.util.function.DoubleSupplier;
 public class Cmd_RotateArm extends CommandBase {
   /** Creates a new Cmd_RotateArm. */
   private final SubSys_Arm ArmSubsys;
-  private final SubSys_DriverStation DriverStationSubsys;
-  public Cmd_RotateArm(SubSys_Arm ArmSubsys, SubSys_DriverStation DriverStationSubSys) {
-    this.ArmSubsys = ArmSubsys;
-    this.DriverStationSubsys = DriverStationSubSys;
 
-    addRequirements(ArmSubsys, DriverStationSubSys);
+  private final DoubleSupplier Axis;
+
+  public Cmd_RotateArm(SubSys_Arm ArmSubsys, DoubleSupplier Axis) {
+    this.ArmSubsys = ArmSubsys;
+    this.Axis = Axis;
+    addRequirements(ArmSubsys);
   }
-  public double CurrentAngle; 
+  public double FalseEncoderValue;
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    FalseEncoderValue = 0;
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    DriverStationSubsys.GetArmAxis();
-    
-    
-
+    SmartDashboard.putNumber("Axis for Arm Rot", Axis.getAsDouble());
+    SmartDashboard.putNumber("False Encoder Value", FalseEncoderValue);
+    SmartDashboard.putNumber("Length Of Arm", ArmSubsys.getLengthOfArmFromeBase(FalseEncoderValue, 3));
+    SmartDashboard.putNumber("Height Of Arm", ArmSubsys.getHeightOfArmFromBase(FalseEncoderValue, 3));
+    if (Axis.getAsDouble() > .05 || Axis.getAsDouble() < -.05){
+    FalseEncoderValue = FalseEncoderValue + Axis.getAsDouble();
+    }
 
   }
 
