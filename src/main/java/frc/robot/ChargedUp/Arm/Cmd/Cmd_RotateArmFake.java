@@ -11,13 +11,13 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
 import frc.robot.ChargedUp.DriverStation.SubSys_DriverStation;
 import java.util.function.DoubleSupplier;
-public class Cmd_RotateArm extends CommandBase {
+public class Cmd_RotateArmFake extends CommandBase {
   /** Creates a new Cmd_RotateArm. */
   private final SubSys_Arm ArmSubsys;
 
   private final DoubleSupplier Axis;
 
-  public Cmd_RotateArm(SubSys_Arm ArmSubsys, DoubleSupplier Axis) {
+  public Cmd_RotateArmFake(SubSys_Arm ArmSubsys, DoubleSupplier Axis) {
     this.ArmSubsys = ArmSubsys;
     this.Axis = Axis;
     addRequirements(ArmSubsys);
@@ -36,8 +36,10 @@ public class Cmd_RotateArm extends CommandBase {
     SmartDashboard.putNumber("False Encoder Value", FalseEncoderValue);
     SmartDashboard.putNumber("Length Of Arm", ArmSubsys.getLengthOfArmFromBase(FalseEncoderValue, 3));
     SmartDashboard.putNumber("Height Of Arm", ArmSubsys.getHeightOfArmFromBase(FalseEncoderValue, 3));
-    
-    ArmSubsys.rotateArmShoulder(Axis.getAsDouble());
+    if (Axis.getAsDouble() > .05 || Axis.getAsDouble() < -.05){
+    FalseEncoderValue = FalseEncoderValue + Axis.getAsDouble();
+    }
+
   }
 
   // Called once the command ends or is interrupted.
