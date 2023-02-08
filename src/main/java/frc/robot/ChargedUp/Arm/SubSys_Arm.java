@@ -66,16 +66,16 @@ public class SubSys_Arm extends SubsystemBase {
     return Const_Arm.kARM_SHOULDER_z + Math.cos(ArmShoulderAngle) * (ArmExtensionLength + Const_Arm.kHAND_LENGTH);
   }
   //*x = offset
-  public double getLengthOfArmFromeBase(double ArmShoulderAngle, double ArmExtensionLength) {
+  public double getLengthOfArmFromBase(double ArmShoulderAngle, double ArmExtensionLength) {
     return Const_Arm.kARM_SHOULDER_x + Math.sin(ArmShoulderAngle) * (ArmExtensionLength + Const_Arm.kHAND_LENGTH);
   }
 
   public void extendUntilOuterBoundry(double percentCommand) {
 
     double currentHeight = getHeightOfArmFromBase(0, 0);
-    double currentLength = getLengthOfArmFromeBase(0, 0);
+    double currentLength = getLengthOfArmFromBase(0, 0);
 
-    if (currentHeight < Const_Arm.k_MAX_EXTENTION_z && currentLength < Const_Arm.k_MAX_EXTENTION_x) {
+    if (currentHeight < Const_Arm.k_MAX_EXTENSION_z && currentLength < Const_Arm.k_MAX_EXTENSION_x) {
       ArmExtensionMotor.set(TalonFXControlMode.PercentOutput, percentCommand);
     }
     else {
