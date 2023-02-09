@@ -69,7 +69,10 @@ public class SubSys_Arm extends SubsystemBase {
   public double getLengthOfArmFromBase(double ArmShoulderAngle, double ArmExtensionLength) {
     return Const_Arm.kARM_SHOULDER_x + Math.sin(ArmShoulderAngle) * (ArmExtensionLength + Const_Arm.kHAND_LENGTH);
   }
+  public void extend(double percentCommand) {
+    ArmExtensionMotor.set(TalonFXControlMode.PercentOutput, percentCommand);
 
+  }
   public void extendUntilOuterBoundry(double percentCommand) {
 
     double currentHeight = getHeightOfArmFromBase(0, 0);
