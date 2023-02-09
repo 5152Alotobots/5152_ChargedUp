@@ -19,6 +19,7 @@ import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
 import frc.robot.Library.Vision.Limelight.SubSys_LimeLight;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
 import frc.robot.ChargedUp.Arm.Cmd.Cmd_RotateArmFake;
+import frc.robot.ChargedUp.Arm.Cmd.Cmd_RotateArm;
 import frc.robot.ChargedUp.ColorSensor.SubSys_ColorSensor;
 import frc.robot.ChargedUp.DistanceSensor.SubSys_DistanceSensor;
 import frc.robot.ChargedUp.MecanumDrive.SubSys_MecanumDrive;
@@ -122,7 +123,8 @@ public class RobotContainer {
     // ); 
     armSubSys.setDefaultCommand(new Cmd_RotateArm(
       armSubSys, 
-      () -> driverStationSubSys.GetArmRotateAxis()));
+      () -> driverStationSubSys.GetArmRotateAxis()
+      () -> driverStationSubSys.GetArmExtendAxis()));
 
     handSubSys.setDefaultCommand(new Cmd_HandWithSensor(
       handSubSys, 

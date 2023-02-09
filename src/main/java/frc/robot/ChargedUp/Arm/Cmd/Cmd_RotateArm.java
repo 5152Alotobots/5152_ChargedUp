@@ -15,11 +15,13 @@ public class Cmd_RotateArm extends CommandBase {
   /** Creates a new Cmd_RotateArm. */
   private final SubSys_Arm ArmSubsys;
 
-  private final DoubleSupplier Axis;
+  private final DoubleSupplier RotAxis;
+  private final DoubleSupplier ExtAxis;
 
-  public Cmd_RotateArm(SubSys_Arm ArmSubsys, DoubleSupplier Axis) {
+  public Cmd_RotateArm(SubSys_Arm ArmSubsys, DoubleSupplier RotAxis, DoubleSupplier ExtAxis) {
     this.ArmSubsys = ArmSubsys;
-    this.Axis = Axis;
+    this.RotAxis = RotAxis;
+    this.ExtAxis = ExtAxis;
     addRequirements(ArmSubsys);
   }
   public double FalseEncoderValue;
@@ -37,7 +39,8 @@ public class Cmd_RotateArm extends CommandBase {
     SmartDashboard.putNumber("Length Of Arm", ArmSubsys.getLengthOfArmFromBase(FalseEncoderValue, 3));
     SmartDashboard.putNumber("Height Of Arm", ArmSubsys.getHeightOfArmFromBase(FalseEncoderValue, 3));
     
-    ArmSubsys.rotateArmShoulder(Axis.getAsDouble());
+    ArmSubsys.rotateArmShoulder(RotAxis.getAsDouble());
+    ArmSubsys.extend(ExtAxis.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.
