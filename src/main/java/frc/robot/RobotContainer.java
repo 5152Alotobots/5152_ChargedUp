@@ -94,7 +94,7 @@ public class RobotContainer {
         () -> driverStation.DriveFwdAxis(),
         () -> driverStation.DriveStrAxis(),
         () -> driverStation.DriveRotAxis(),
-        true,
+        false,
         () -> driverStation.RotateLeftPt(),
         () -> driverStation.RotateRightPt()));
 
@@ -128,7 +128,7 @@ public class RobotContainer {
     driverStation.GyroResetButton.onTrue(
         new InstantCommand(driveSubSys::setGyroYawToZero, driveSubSys));
     driverStation.TestButton.onTrue(
-        new Cmd_SubSyst_DriveTrain_Drive4Distance(driveSubSys, 3, 0));
+        new Cmd_SubSyst_DriveTrain_Drive4Distance(driveSubSys, 1.5, 1.5, 60));
   }
 
   //when test button is pressed run the rotate to heading command to a random number between 0 and 360
