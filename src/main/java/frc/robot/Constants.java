@@ -77,8 +77,8 @@ public final class Constants {
             
     public static final int ArmShoulderMtr_CAN_ID = 30;
     public static final int ArmShoulderCANCoder_CAN_ID = 31;
-    public static final int ArmExtensionMtr_CAN_ID = 30;
-    public static final int ArmExtensionCANCoder_CAN_ID = 31;
+    public static final int ArmExtensionMtr_CAN_ID = 32;
+    public static final int ArmExtensionCANCoder_CAN_ID = 34;
 
     public static final int FrontLeftDriveMtr_CAN_ID = 51;
     public static final int FrontLeftSteerMtr_CAN_ID = 52;

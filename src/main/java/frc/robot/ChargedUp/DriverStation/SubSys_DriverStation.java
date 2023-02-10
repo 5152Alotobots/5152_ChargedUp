@@ -84,10 +84,10 @@ public class SubSys_DriverStation extends SubsystemBase {
   }
   */
   public double GetArmRotateAxis() {
-    return m_AuxDriverController.getRawAxis(0);
+    return m_AuxDriverController.getRawAxis(1);
   }
   public double GetArmExtendAxis() {
-    return m_AuxDriverController.getRawAxis(1);
+    return m_AuxDriverController.getRawAxis(5);
   }
   // IntakeInOut_ShortShot Axis
   public double IntakeInNOut_ShortShotAxis(){

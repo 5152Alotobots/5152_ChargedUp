@@ -56,26 +56,26 @@ public class Cmd_HandWithSensor extends CommandBase {
   @Override
   public void execute() {
 
-    // String seenGameElement = colorSensorSubSys.GetTypeOfGameElement();
+    String seenGameElement = colorSensorSubSys.GetTypeOfGameElement();
 
     double distance = distanceSensorSubSys.GetDistance();
     
     
     if (handisOpen) {
-      // if (seenGameElement == "CONE" && distance == kdistanceToCone) {
-      //   //*Enable LED
-      //   SmartDashboard.putString("Hand Ready", "Hand is ready with a cone"); 
-      //   if (activationButton.getAsDouble() == 1.0) { handSubSys.CloseHand(); handisOpen = false; }
-      // } 
+      if (seenGameElement == "CONE" && distance == kdistanceToCone) {
+        //*Enable LED
+        SmartDashboard.putString("Hand Ready", "Hand is ready with a cone"); 
+        if (activationButton.getAsDouble() == 1.0) { handSubSys.CloseHand(); handisOpen = false; }
+      } 
 
-      // if (seenGameElement == "CUBE" && distance == kdistanceToCube) {
-      //   //*Enable LED 
-      //   SmartDashboard.putString("Hand Ready", "Hand is ready with a cube");
-      //   if (activationButton.getAsDouble() == 1.0) { handSubSys.CloseHand(); handisOpen = false; }
-      // }
-      // else {
-      //   SmartDashboard.putString("Hand Ready", "Hand is not ready");
-      // }
+      if (seenGameElement == "CUBE" && distance == kdistanceToCube) {
+        //*Enable LED 
+        SmartDashboard.putString("Hand Ready", "Hand is ready with a cube");
+        if (activationButton.getAsDouble() == 1.0) { handSubSys.CloseHand(); handisOpen = false; }
+      }
+      else {
+        SmartDashboard.putString("Hand Ready", "Hand is not ready");
+      }
     }
   }
 

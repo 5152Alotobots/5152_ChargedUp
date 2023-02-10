@@ -113,33 +113,36 @@ public class RobotContainer {
     /**
     ****** Control System Components
     */
-    // mecanumDriveSubSys.setDefaultCommand(
-    //   new Cmd_MecanumDriveDefault(
-    //     mecanumDriveSubSys, 
-    //     () -> m_driverController.getLeftX(), 
-    //     () -> m_driverController.getLeftY(),
-    //     () -> m_driverController.getRightX()
-    //   )
-    // ); 
+    
     armSubSys.setDefaultCommand(new Cmd_RotateArm(
       armSubSys, 
-      () -> driverStationSubSys.GetArmRotateAxis()
-      () -> driverStationSubSys.GetArmExtendAxis()));
+      () -> driverStationSubSys.GetArmRotateAxis(),
+      () -> driverStationSubSys.GetArmExtendAxis())
+    );
 
     handSubSys.setDefaultCommand(new Cmd_HandWithSensor(
       handSubSys, 
       colorSubSys, 
       distanceSubsys, 
-      () ->  driverStationSubSys.HandSensorBtn()));
+      () ->  driverStationSubSys.HandSensorBtn())
+    );
+
+    mecanumDriveSubSys.setDefaultCommand(new Cmd_MecanumDriveDefault(
+      mecanumDriveSubSys, 
+      () -> driverStationSubSys.DriveFwdAxis(),
+      () -> driverStationSubSys.DriveStrAxis(),
+      () -> driverStationSubSys.DriveRotAxis() 
+    )); 
 
     driveSubSys.setDefaultCommand(new Cmd_SubSys_DriveTrain_JoysticDefault(
-        driveSubSys,
-        () -> driverStationSubSys.DriveFwdAxis(),
-        () -> driverStationSubSys.DriveStrAxis(),
-        () -> driverStationSubSys.DriveRotAxis(),
+      driveSubSys,
+      () -> driverStationSubSys.DriveFwdAxis(),
+      () -> driverStationSubSys.DriveStrAxis(),
+      () -> driverStationSubSys.DriveRotAxis(),
         false,
-        () -> driverStationSubSys.RotateLeftPt(),
-        () -> driverStationSubSys.RotateRightPt()));
+      () -> driverStationSubSys.RotateLeftPt(),
+      () -> driverStationSubSys.RotateRightPt()
+    ));
 
     // Sendable Chooser
     //m_chooser.setDefaultOption("Auto_BasicRevHighGoalRev_Cmd", m_Auto_BasicRevHighGoalRev_Cmd);

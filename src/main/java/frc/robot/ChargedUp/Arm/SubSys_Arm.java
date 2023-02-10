@@ -6,41 +6,40 @@ package frc.robot.ChargedUp.Arm;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.sensors.CANCoder;
+import com.ctre.phoenix.sensors.CANCoderConfiguration;
+import com.ctre.phoenix.sensors.SensorTimeBase;
 import com.ctre.phoenix.motorcontrol.DemandType;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.ChargedUp.Arm.Const_Arm;
 
 public class SubSys_Arm extends SubsystemBase {
-  /** Creates a new SubSys_Arm. */
-  private WPI_TalonFX ArmShoulderMotor = new WPI_TalonFX(Constants.CAN_IDs.ArmShoulderMtr_CAN_ID);
-  private CANCoder ArmShoulderEncoder;
-  private WPI_TalonFX ArmExtensionMotor = new WPI_TalonFX(Constants.CAN_IDs.ArmExtensionMtr_CAN_ID);
-  private CANCoder ArmExtensionEncoder;
+  private CANCoderConfiguration armExtensionCanCoderConfiguration = new CANCoderConfiguration();
+
+  private TalonFX ArmShoulderMotor = new TalonFX(Constants.CAN_IDs.ArmShoulderMtr_CAN_ID);
+  private CANCoder armShoulderCanCoder = new CANCoder(Constants.CAN_IDs.ArmShoulderCANCoder_CAN_ID);
+
+  private TalonFX ArmExtensionMotor = new TalonFX(Constants.CAN_IDs.ArmExtensionMtr_CAN_ID);
+  private CANCoder armExtensionCanCoder = new CANCoder(Constants.CAN_IDs.ArmExtensionCANCoder_CAN_ID);
 
   public SubSys_Arm() {
-    
-      /* ArmShoulderMotor Config */
-
+    //*motor configs */
       ArmShoulderMotor.configFactoryDefault();
       ArmShoulderMotor.setInverted(false);
       ArmShoulderMotor.setNeutralMode(NeutralMode.Brake);
-              
-      /* ArmShoulder Encoder Config */
-      this.ArmShoulderEncoder = new CANCoder(Constants.CAN_IDs.ArmShoulderCANCoder_CAN_ID);
-    
-      /* ArmExtensionMotor Config */
 
       ArmExtensionMotor.configFactoryDefault();
       ArmExtensionMotor.setInverted(false);
       ArmExtensionMotor.setNeutralMode(NeutralMode.Brake);
-
-      /* ArmExtensionEncoder Config */
-      this.ArmExtensionEncoder = new CANCoder(Constants.CAN_IDs.ArmExtensionCANCoder_CAN_ID);
+     
+      armExtensionCanCoderConfiguration.sensorCoefficient = 2 * Math.PI / 4096.0;
+      armExtensionCanCoderConfiguration.unitString = "rad";
+      armExtensionCanCoderConfiguration.sensorTimeBase = SensorTimeBase.PerSecond;
+      
+      armExtensionCanCoder.configAllSettings(armExtensionCanCoderConfiguration);
   }
 
   /** rotateArmShoulder
@@ -61,11 +60,11 @@ public class SubSys_Arm extends SubsystemBase {
   public void rotateArmShoulder_feedForward(double percentCommand) {
     ArmShoulderMotor.set(TalonFXControlMode.PercentOutput, percentCommand, DemandType.ArbitraryFeedForward, 0);
   }
-  //*z = height
+  //z = height
   public double getHeightOfArmFromBase(double ArmShoulderAngle, double ArmExtensionLength) {
     return Const_Arm.kARM_SHOULDER_z + Math.cos(ArmShoulderAngle) * (ArmExtensionLength + Const_Arm.kHAND_LENGTH);
   }
-  //*x = offset
+  //x = offset
   public double getLengthOfArmFromBase(double ArmShoulderAngle, double ArmExtensionLength) {
     return Const_Arm.kARM_SHOULDER_x + Math.sin(ArmShoulderAngle) * (ArmExtensionLength + Const_Arm.kHAND_LENGTH);
   }

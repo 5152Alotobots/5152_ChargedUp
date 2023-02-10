@@ -34,13 +34,13 @@ public class Cmd_RotateArm extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    SmartDashboard.putNumber("Axis for Arm Rot", Axis.getAsDouble());
+    SmartDashboard.putNumber("Rotate Axis for Arm Rot", RotAxis.getAsDouble());
     SmartDashboard.putNumber("False Encoder Value", FalseEncoderValue);
     SmartDashboard.putNumber("Length Of Arm", ArmSubsys.getLengthOfArmFromBase(FalseEncoderValue, 3));
     SmartDashboard.putNumber("Height Of Arm", ArmSubsys.getHeightOfArmFromBase(FalseEncoderValue, 3));
     
-    ArmSubsys.rotateArmShoulder(RotAxis.getAsDouble());
-    ArmSubsys.extend(ExtAxis.getAsDouble());
+    ArmSubsys.rotateArmShoulder(RotAxis.getAsDouble()*.5);
+    ArmSubsys.extend(ExtAxis.getAsDouble()*.2);
   }
 
   // Called once the command ends or is interrupted.
