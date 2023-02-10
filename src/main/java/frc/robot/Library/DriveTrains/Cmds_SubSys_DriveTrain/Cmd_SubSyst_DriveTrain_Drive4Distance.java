@@ -108,32 +108,30 @@ public class Cmd_SubSyst_DriveTrain_Drive4Distance extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Pose2d currPose = this.subSys_DriveTrain.getPose();
-    double xCmd = 0;
-    double yCmd = 0;  
+    Pose2d currPose = this.subSys_DriveTrain.getPose(); 
 
-    if (!this.xDistancePID.atGoal()){
-     xCmd = this.xDistancePID.calculate(
+     double xCmd = this.xDistancePID.calculate(
       currPose.getX()-this.initialXDistance,
       this.targetXDistance
       );
 
     SmartDashboard.putNumber("xPID", xCmd);
-    }
-    if (!this.yDistancePID.atGoal()){
-     yCmd = this.yDistancePID.calculate(
+    
+     double yCmd = this.yDistancePID.calculate(
         currPose.getY()-this.initialYDistance,
         this.targetYDistance
         );
 
         SmartDashboard.putNumber("yPID", yCmd);
-    }
+    
     double rotFFCmd = this.feedForward.calculate(this.profiledRotationPID.getSetpoint().velocity); 
     double rotPIDCmd = this.profiledRotationPID.calculate(
       this.subSys_DriveTrain.getHeading().getDegrees(),
       this.targetHeadingDegrees);
 
       double rotCmd = rotFFCmd+rotPIDCmd;
+
+      SmartDashboard.putNumber("rotPID", rotCmd);
     this.subSys_DriveTrain.Drive(
       xCmd,
       yCmd,
@@ -143,21 +141,61 @@ public class Cmd_SubSyst_DriveTrain_Drive4Distance extends CommandBase {
       false);
 
 
-      SmartDashboard.putNumber("Drive4Dist_Goal X", this.xDistancePID.getGoal().position);
+      /* SETPOINTS */
+      // X
       SmartDashboard.putNumber("Drive4Dist_Setpoint_Position X", this.xDistancePID.getSetpoint().position);
       SmartDashboard.putNumber("Drive4Dist_SetPoint_Velocity X",this.xDistancePID.getSetpoint().velocity);
-      SmartDashboard.putNumber("Drive4Dist_Error X", this.xDistancePID.getPositionError());
-      SmartDashboard.putNumber("Drive4Dist_Goal Y", this.yDistancePID.getGoal().position);
+      // Y
       SmartDashboard.putNumber("Drive4Dist_Setpoint_Position Y", this.yDistancePID.getSetpoint().position);
       SmartDashboard.putNumber("Drive4Dist_SetPoint_Velocity Y",this.yDistancePID.getSetpoint().velocity);
+      // ROT
+      SmartDashboard.putNumber("Drive4Dist_Setpoint_Position ROT", this.profiledRotationPID.getSetpoint().position);
+      SmartDashboard.putNumber("Drive4Dist_SetPoint_Velocity ROT",this.profiledRotationPID.getSetpoint().velocity);
+
+      /* GOALS */
+      // X
+      SmartDashboard.putNumber("Drive4Dist_Goal_Position X", this.xDistancePID.getGoal().position);
+      SmartDashboard.putNumber("Drive4Dist_Goal_Velocity X", this.xDistancePID.getGoal().velocity);
+      // Y
+      SmartDashboard.putNumber("Drive4Dist_Goal_Position Y", this.yDistancePID.getGoal().position);
+      SmartDashboard.putNumber("Drive4Dist_Goal_Velocity Y", this.yDistancePID.getGoal().velocity);
+      // ROT
+      SmartDashboard.putNumber("Drive4Dist_Goal_Position ROT", this.profiledRotationPID.getGoal().position);
+      SmartDashboard.putNumber("Drive4Dist_Goal_Velocity ROT", this.profiledRotationPID.getGoal().velocity);
+
+      /* ERRORS */
+      // X
+      SmartDashboard.putNumber("Drive4Dist_Velocity Error X", this.xDistancePID.getVelocityError());
+      SmartDashboard.putNumber("Drive4Dist_Error X", this.xDistancePID.getPositionError());
+      // Y
+      SmartDashboard.putNumber("Drive4Dist_Velocity Error Y", this.yDistancePID.getVelocityError());
       SmartDashboard.putNumber("Drive4Dist_Error Y", this.yDistancePID.getPositionError());
-      SmartDashboard.putNumber("Drive4Dist_Rot", rotCmd);
-      //SmartDashboard.putNumber("Drive4Dist_rotPIDCmd", xCmd);
-      //SmartDashboard.putNumber("Drive4Dist_rotFFCmd", rotFFCmd);
-      //SmartDashboard.putNumber("Drive4Dist_rotCmd", rotCmd);
-  
-      //Test to see if finished
-      //SmartDashboard.putBoolean("Drive4Dist Finished", this.profiledRotationPID.atGoal());
+      // ROT
+      SmartDashboard.putNumber("Drive4Dist_Velocity Error ROT", this.profiledRotationPID.getVelocityError());
+      SmartDashboard.putNumber("Drive4Dist_Error ROT", this.profiledRotationPID.getPositionError());
+
+      /* PIDF GAINS */
+      // X
+      SmartDashboard.putNumber("Drive4Dist_Pgain X", this.xDistancePID.getP());
+      SmartDashboard.putNumber("Drive4Dist_Igain X", this.xDistancePID.getI());
+      SmartDashboard.putNumber("Drive4Dist_Dgain X", this.xDistancePID.getD());
+      // Y
+      SmartDashboard.putNumber("Drive4Dist_Pgain Y", this.yDistancePID.getP());
+      SmartDashboard.putNumber("Drive4Dist_Igain Y", this.yDistancePID.getI());
+      SmartDashboard.putNumber("Drive4Dist_Dgain Y", this.yDistancePID.getD());
+      // ROT
+      SmartDashboard.putNumber("Drive4Dist_Pgain ROT", this.profiledRotationPID.getP());
+      SmartDashboard.putNumber("Drive4Dist_Igain ROT", this.profiledRotationPID.getI());
+      SmartDashboard.putNumber("Drive4Dist_Dgain ROT", this.profiledRotationPID.getD());
+
+      /* Is At Goal */
+      // X
+      SmartDashboard.putBoolean("Drive4Dist_IsAtGoal X", this.xDistancePID.atGoal());
+      // Y
+      SmartDashboard.putBoolean("Drive4Dist_IsAtGoal Y", this.yDistancePID.atGoal());
+      // ROT
+      SmartDashboard.putBoolean("Drive4Dist_IsAtGoal ROT", this.profiledRotationPID.atGoal());
+
     }
 
   // Called once the command ends or is interrupted.
