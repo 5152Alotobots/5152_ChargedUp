@@ -41,7 +41,7 @@ public class SwrNStr_FalconPG71_Module {
     public String moduleName;
     private TalonFX driveMotor;
     private TalonSRX steerMotor;
-    private double steerAngleOffset;
+    //private double steerAngleOffset;
     private double steerZeroAngle;  
     private double lastAngle;
     private SwrNStr_FalconPG71_Module_Constants swrNStr_FalconPG71_Module_Constants;
@@ -57,7 +57,7 @@ public class SwrNStr_FalconPG71_Module {
         SwerveModuleConstants moduleConstants)
         {
             this.moduleName = moduleName;
-            this.steerAngleOffset = moduleConstants.zeroAngle;
+            this.steerZeroAngle = moduleConstants.zeroAngle;
             this.swrNStr_FalconPG71_Module_Constants = new SwrNStr_FalconPG71_Module_Constants();
 
             /* Drive Motor Config */
@@ -275,10 +275,10 @@ public class SwrNStr_FalconPG71_Module {
         steerMotor.configSelectedFeedbackSensor(SwrNStr_FalconPG71_Module_Constants.SteerMotor.selectedFeedbackSensor);
         steerMotor.configSelectedFeedbackCoefficient(SwrNStr_FalconPG71_Module_Constants.SteerMotor.selectedFeedbackCoefficient);
         steerMotor.configFeedbackNotContinuous(SwrNStr_FalconPG71_Module_Constants.SteerMotor.feedbackNotContinuous, 0);
-        steerMotor.setSensorPhase(SwrNStr_FalconPG71_Module_Constants.SteerMotor.sensorPhase);
+        steerMotor.setSensorPhase(moduleConstants.SteerCANcoderInvert);
     }
 
-
+    // Works Good!
     /** getSteerMotorPosCounts
      *      Return Steer Motor Position Counts 
      * @return double Steer Motor Position (Raw sensor units)
@@ -287,14 +287,34 @@ public class SwrNStr_FalconPG71_Module {
         return steerMotor.getSelectedSensorPosition();
     }
 
+    public double getSteerAngleRaw(){
+        double strAngRaw = TalonSRX_Conversions.ma3ToDegrees(
+            steerMotor.getSelectedSensorPosition(),
+            1);
+        return strAngRaw;
+    }
+
     /** getSteerAngle
      * Return Steer Motor Angle in Rotation2d 
      * @return Rotation2d Steer Motor Angle
      */
     public Rotation2d getSteerAngle(){
-        Rotation2d strAng = Rotation2d.fromDegrees(steerAngleRaw());
+        Rotation2d strAng = Rotation2d.fromDegrees(getSteerAngleRaw()-this.steerZeroAngle);
         return strAng;
     } 
+
+    public double steerAngleToSteerAngleRaw(Rotation2d strAng){
+        double strAngRaw = strAng.getDegrees()+this.steerZeroAngle;
+        return strAngRaw;
+
+    }
+
+    public double steerAngleRawToMotorPosCounts(double strAngRaw){
+        double strMtrPosCnts = TalonSRX_Conversions.degreesToMA3(
+            strAngRaw, 
+            1);
+        return strMtrPosCnts;
+    }
 
 
     /***********************************************************************************/
@@ -334,16 +354,11 @@ public class SwrNStr_FalconPG71_Module {
     }
 
     public double steerSensorCntsCorrected(){
-        double mSteerSensorCntsCorrected = steerSensorCnts()-this.steerAngleOffset;
+        double mSteerSensorCntsCorrected = steerSensorCnts()-this.steerZeroAngle;
         return mSteerSensorCntsCorrected;
     }
 
-    public double steerAngleRaw(){
-        double mSteerAngleRaw = TalonSRX_Conversions.ma3ToDegrees(
-            steerSensorCntsCorrected(),
-            SwrNStr_FalconPG71_Module_Constants.SteerMotor.steerGearRatio);
-        return mSteerAngleRaw;
-    }
+
 
    
 }

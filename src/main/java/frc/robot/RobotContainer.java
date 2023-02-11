@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -17,6 +18,7 @@ import frc.robot.ChargedUp.DriverStation.SubSys_DriverStation;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmd_SubSys_DriveTrain_JoysticDefault;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmd_SubSys_DriveTrain_Rotate2Heading;
+import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmd_SubSyst_DriveTrain_Drive4Distance;
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
 import frc.robot.Library.Vision.Limelight.SubSys_LimeLight;
 
@@ -126,8 +128,10 @@ public class RobotContainer {
     // Gyro Reset Command Button
     driverStation.GyroResetButton.onTrue(
         new InstantCommand(driveSubSys::setGyroYawToZero, driveSubSys));
-    driverStation.TestButton.onTrue(
-        new Cmd_SubSys_DriveTrain_Rotate2Heading(driveSubSys, 90));
+    driverStation.TestButton.whileTrue(
+        //new Cmd_SubSys_DriveTrain_Rotate2Heading(driveSubSys, 90));
+        new Cmd_SubSyst_DriveTrain_Drive4Distance(
+          driveSubSys, Units.feetToMeters(5), Units.feetToMeters(0)));
   }
 
   /**
