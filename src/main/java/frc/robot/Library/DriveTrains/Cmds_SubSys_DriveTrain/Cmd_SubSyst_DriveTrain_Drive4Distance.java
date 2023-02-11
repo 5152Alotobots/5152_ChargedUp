@@ -89,16 +89,18 @@ public class Cmd_SubSyst_DriveTrain_Drive4Distance extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
-
+    this.subSys_DriveTrain.setPose(new Pose2d());
+    this.subSys_DriveTrain.setGyroYawToZero();
     Pose2d currPose = this.subSys_DriveTrain.getPose();
     this.initialXDistance = currPose.getX();
-    this.xDistancePID.reset(0);
-    this.xDistancePID.setGoal(this.targetXDistance);
+    this.xDistancePID.reset();
+    this.xDistancePID.setSetpoint(this.targetXDistance);
+    this.xDistancePID.setTolerance(0.01);
     
     this.initialYDistance = currPose.getY();
-    this.yDistancePID.reset(0);
-    this.yDistancePID.setGoal(this.targetYDistance);
+    this.yDistancePID.reset();
+    this.yDistancePID.setSetpoint(this.targetYDistance);
+    this.yDistancePID.setTolerance(0.01);
     
     //this.targetHeadingDegrees = this.subSys_DriveTrain.getHeading().getDegrees();
     this.profiledRotationPID.reset(this.subSys_DriveTrain.getHeading().getDegrees());
@@ -135,11 +137,24 @@ public class Cmd_SubSyst_DriveTrain_Drive4Distance extends CommandBase {
     this.subSys_DriveTrain.Drive(
       xCmd,
       yCmd,
-      rotCmd,
-      true,
+      0, //rotCmd,
+      false,
       false,
       false);
 
+
+
+      SmartDashboard.putNumber("Drive4Distance_xSetpoint", this.xDistancePID.getSetpoint());
+      SmartDashboard.putNumber("Drive4Distance_xError", this.xDistancePID.getPositionError());
+      SmartDashboard.putNumber("Drive4Distance_xCmd", xCmd);
+      SmartDashboard.putBoolean("Drive4Distance_AtSetpoint", this.xDistancePID.atSetpoint());
+      //SmartDashboard.putNumber("Rotate2Heading_Setpoint_Position", this.profiledRotationPID.getSetpoint().position);
+      //SmartDashboard.putNumber("Rotate2Heading_SetPoint_Velocity",this.profiledRotationPID.getSetpoint().velocity);
+      //SmartDashboard.putNumber("Rotate2Heading_Error", this.profiledRotationPID.getPositionError());
+      
+      //SmartDashboard.putNumber("Rotate2Heading_rotPIDCmd", rotPIDCmd);
+      //SmartDashboard.putNumber("Rotate2Heading_rotFFCmd", rotFFCmd);
+      //SmartDashboard.putNumber("Rotate2Heading_rotCmd", rotCmd);
 
       /* SETPOINTS */
       // X
@@ -196,7 +211,8 @@ public class Cmd_SubSyst_DriveTrain_Drive4Distance extends CommandBase {
       // ROT
       SmartDashboard.putBoolean("Drive4Dist_IsAtGoal ROT", this.profiledRotationPID.atGoal());
 
-    }
+}
+
 
   // Called once the command ends or is interrupted.
   @Override
