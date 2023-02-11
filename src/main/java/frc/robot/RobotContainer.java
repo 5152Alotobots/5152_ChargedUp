@@ -95,7 +95,7 @@ public class RobotContainer {
         () -> driverStation.DriveFwdAxis(),
         () -> driverStation.DriveStrAxis(),
         () -> driverStation.DriveRotAxis(),
-        true,
+        false,
         () -> driverStation.RotateLeftPt(),
         () -> driverStation.RotateRightPt()));
 
@@ -128,11 +128,14 @@ public class RobotContainer {
     // Gyro Reset Command Button
     driverStation.GyroResetButton.onTrue(
         new InstantCommand(driveSubSys::setGyroYawToZero, driveSubSys));
+        
     driverStation.TestButton.whileTrue(
         //new Cmd_SubSys_DriveTrain_Rotate2Heading(driveSubSys, 90));
         new Cmd_SubSyst_DriveTrain_Drive4Distance(
           driveSubSys, Units.feetToMeters(5), Units.feetToMeters(0)));
   }
+
+  //when test button is pressed run the rotate to heading command to a random number between 0 and 360
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

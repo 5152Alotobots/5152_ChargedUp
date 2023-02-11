@@ -6,6 +6,7 @@ package frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -19,43 +20,56 @@ public class Cmd_SubSyst_DriveTrain_Drive4Distance extends CommandBase {
   private final SubSys_DriveTrain subSys_DriveTrain;
   private double targetXDistance;
   private double initialXDistance;
-  private final PIDController xDistancePID;
+  private final ProfiledPIDController xDistancePID;
   private double targetYDistance;
   private double initialYDistance;
-  private final PIDController yDistancePID;
+  private final ProfiledPIDController yDistancePID;
   private double targetHeadingDegrees;
   private final ProfiledPIDController profiledRotationPID;
   private final TrapezoidProfile.Constraints profiledRotationConstraints;
+  private final TrapezoidProfile.Constraints profiledMoveConstraints;
+  private final SimpleMotorFeedforward feedForward;
 
   public Cmd_SubSyst_DriveTrain_Drive4Distance(
     SubSys_DriveTrain subSys_DriveTrain,
     double targetXDistance,
-    double targetYDistance) {
+    double targetYDistance,
+    double targetRot
+    ) {
 
     this.subSys_DriveTrain = subSys_DriveTrain;
     this.targetXDistance = targetXDistance;
     this.initialXDistance = 0.0;
     this.targetYDistance = targetYDistance;
     this.initialYDistance = 0.0;
-    this.targetHeadingDegrees =0.0;
-    
-    this.xDistancePID = new PIDController(
+    this.targetHeadingDegrees = targetRot;
+      
+
+    this.feedForward = new SimpleMotorFeedforward(
+      SubSys_DriveTrain_Constants.DriveTrainTrajSettings.RotationTrajectoryFF.kS,
+      SubSys_DriveTrain_Constants.DriveTrainTrajSettings.RotationTrajectoryFF.kV);
+
+    this.profiledMoveConstraints = new TrapezoidProfile.Constraints(
+    SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrainTrajMaxSpd,
+     SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrainTrajMaxAccel
+     );
+
+    this.xDistancePID = new ProfiledPIDController(
       SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.Pgain,
       SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.Igain,
-      SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.Dgain);
+      SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.Dgain,
+      this.profiledMoveConstraints);
 
-    this.xDistancePID.setTolerance(0.01);
-
-    this.yDistancePID = new PIDController(
+    this.yDistancePID = new ProfiledPIDController(
       SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.Pgain,
       SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.Igain,
-      SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.Dgain);
-
-    this.xDistancePID.setTolerance(0.01);
+      SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.Dgain,
+      this.profiledMoveConstraints);
 
     this.profiledRotationConstraints = new TrapezoidProfile.Constraints(
       SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrainTrajMaxRotSpeed,
       SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrainTrajMaxRotAccel);
+
     this.profiledRotationPID = new ProfiledPIDController(
       SubSys_DriveTrain_Constants.DriveTrainTrajSettings.RotationTrajectoryPID.Pgain,
       SubSys_DriveTrain_Constants.DriveTrainTrajSettings.RotationTrajectoryPID.Igain,
@@ -63,7 +77,10 @@ public class Cmd_SubSyst_DriveTrain_Drive4Distance extends CommandBase {
       this.profiledRotationConstraints);
 
     this.profiledRotationPID.enableContinuousInput(-180, 180);
+      
     this.profiledRotationPID.setTolerance(1, 1);
+    this.xDistancePID.setTolerance(0.5, 0.1);
+    this.yDistancePID.setTolerance(0.5, 0.1);
     this.profiledRotationPID.setIntegratorRange(-.3, 0.3);
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(this.subSys_DriveTrain);
@@ -85,7 +102,7 @@ public class Cmd_SubSyst_DriveTrain_Drive4Distance extends CommandBase {
     this.yDistancePID.setSetpoint(this.targetYDistance);
     this.yDistancePID.setTolerance(0.01);
     
-    this.targetHeadingDegrees = this.subSys_DriveTrain.getHeading().getDegrees();
+    //this.targetHeadingDegrees = this.subSys_DriveTrain.getHeading().getDegrees();
     this.profiledRotationPID.reset(this.subSys_DriveTrain.getHeading().getDegrees());
     this.profiledRotationPID.setGoal(this.targetHeadingDegrees);
   }
@@ -93,17 +110,30 @@ public class Cmd_SubSyst_DriveTrain_Drive4Distance extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Pose2d currPose = this.subSys_DriveTrain.getPose();
+    Pose2d currPose = this.subSys_DriveTrain.getPose(); 
+
+     double xCmd = this.xDistancePID.calculate(
+      currPose.getX()-this.initialXDistance,
+      this.targetXDistance
+      );
+
+    SmartDashboard.putNumber("xPID", xCmd);
     
-    double xCmd = this.xDistancePID.calculate(
-      currPose.getX()-this.initialXDistance);
+     double yCmd = this.yDistancePID.calculate(
+        currPose.getY()-this.initialYDistance,
+        this.targetYDistance
+        );
 
-    double yCmd = this.yDistancePID.calculate(
-        currPose.getY()-this.initialYDistance);
-
-    double rotCmd = this.profiledRotationPID.calculate(
+        SmartDashboard.putNumber("yPID", yCmd);
+    
+    double rotFFCmd = this.feedForward.calculate(this.profiledRotationPID.getSetpoint().velocity); 
+    double rotPIDCmd = this.profiledRotationPID.calculate(
       this.subSys_DriveTrain.getHeading().getDegrees(),
       this.targetHeadingDegrees);
+
+      double rotCmd = rotFFCmd+rotPIDCmd;
+
+      SmartDashboard.putNumber("rotPID", rotCmd);
     this.subSys_DriveTrain.Drive(
       xCmd,
       yCmd,
@@ -111,6 +141,7 @@ public class Cmd_SubSyst_DriveTrain_Drive4Distance extends CommandBase {
       false,
       false,
       false);
+
 
 
       SmartDashboard.putNumber("Drive4Distance_xSetpoint", this.xDistancePID.getSetpoint());
@@ -124,7 +155,64 @@ public class Cmd_SubSyst_DriveTrain_Drive4Distance extends CommandBase {
       //SmartDashboard.putNumber("Rotate2Heading_rotPIDCmd", rotPIDCmd);
       //SmartDashboard.putNumber("Rotate2Heading_rotFFCmd", rotFFCmd);
       //SmartDashboard.putNumber("Rotate2Heading_rotCmd", rotCmd);
-  }
+
+      /* SETPOINTS */
+      // X
+      SmartDashboard.putNumber("Drive4Dist_Setpoint_Position X", this.xDistancePID.getSetpoint().position);
+      SmartDashboard.putNumber("Drive4Dist_SetPoint_Velocity X",this.xDistancePID.getSetpoint().velocity);
+      // Y
+      SmartDashboard.putNumber("Drive4Dist_Setpoint_Position Y", this.yDistancePID.getSetpoint().position);
+      SmartDashboard.putNumber("Drive4Dist_SetPoint_Velocity Y",this.yDistancePID.getSetpoint().velocity);
+      // ROT
+      SmartDashboard.putNumber("Drive4Dist_Setpoint_Position ROT", this.profiledRotationPID.getSetpoint().position);
+      SmartDashboard.putNumber("Drive4Dist_SetPoint_Velocity ROT",this.profiledRotationPID.getSetpoint().velocity);
+
+      /* GOALS */
+      // X
+      SmartDashboard.putNumber("Drive4Dist_Goal_Position X", this.xDistancePID.getGoal().position);
+      SmartDashboard.putNumber("Drive4Dist_Goal_Velocity X", this.xDistancePID.getGoal().velocity);
+      // Y
+      SmartDashboard.putNumber("Drive4Dist_Goal_Position Y", this.yDistancePID.getGoal().position);
+      SmartDashboard.putNumber("Drive4Dist_Goal_Velocity Y", this.yDistancePID.getGoal().velocity);
+      // ROT
+      SmartDashboard.putNumber("Drive4Dist_Goal_Position ROT", this.profiledRotationPID.getGoal().position);
+      SmartDashboard.putNumber("Drive4Dist_Goal_Velocity ROT", this.profiledRotationPID.getGoal().velocity);
+
+      /* ERRORS */
+      // X
+      SmartDashboard.putNumber("Drive4Dist_Velocity Error X", this.xDistancePID.getVelocityError());
+      SmartDashboard.putNumber("Drive4Dist_Error X", this.xDistancePID.getPositionError());
+      // Y
+      SmartDashboard.putNumber("Drive4Dist_Velocity Error Y", this.yDistancePID.getVelocityError());
+      SmartDashboard.putNumber("Drive4Dist_Error Y", this.yDistancePID.getPositionError());
+      // ROT
+      SmartDashboard.putNumber("Drive4Dist_Velocity Error ROT", this.profiledRotationPID.getVelocityError());
+      SmartDashboard.putNumber("Drive4Dist_Error ROT", this.profiledRotationPID.getPositionError());
+
+      /* PIDF GAINS */
+      // X
+      SmartDashboard.putNumber("Drive4Dist_Pgain X", this.xDistancePID.getP());
+      SmartDashboard.putNumber("Drive4Dist_Igain X", this.xDistancePID.getI());
+      SmartDashboard.putNumber("Drive4Dist_Dgain X", this.xDistancePID.getD());
+      // Y
+      SmartDashboard.putNumber("Drive4Dist_Pgain Y", this.yDistancePID.getP());
+      SmartDashboard.putNumber("Drive4Dist_Igain Y", this.yDistancePID.getI());
+      SmartDashboard.putNumber("Drive4Dist_Dgain Y", this.yDistancePID.getD());
+      // ROT
+      SmartDashboard.putNumber("Drive4Dist_Pgain ROT", this.profiledRotationPID.getP());
+      SmartDashboard.putNumber("Drive4Dist_Igain ROT", this.profiledRotationPID.getI());
+      SmartDashboard.putNumber("Drive4Dist_Dgain ROT", this.profiledRotationPID.getD());
+
+      /* Is At Goal */
+      // X
+      SmartDashboard.putBoolean("Drive4Dist_IsAtGoal X", this.xDistancePID.atGoal());
+      // Y
+      SmartDashboard.putBoolean("Drive4Dist_IsAtGoal Y", this.yDistancePID.atGoal());
+      // ROT
+      SmartDashboard.putBoolean("Drive4Dist_IsAtGoal ROT", this.profiledRotationPID.atGoal());
+
+}
+
 
   // Called once the command ends or is interrupted.
   @Override
@@ -141,7 +229,9 @@ public class Cmd_SubSyst_DriveTrain_Drive4Distance extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (this.xDistancePID.atSetpoint()){
+    if (this.xDistancePID.atGoal() &&
+         this.yDistancePID.atGoal() &&
+         this.profiledRotationPID.atGoal()){
       return true;
     }else{
       return false;
