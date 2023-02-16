@@ -8,22 +8,29 @@ package frc.robot.Library.DriveTrains;
 public class SubSys_DriveTrain_Constants {
     
     // Drive Max Speeds
+    public static final double DriveTrainMaxPctOutput = 0.25;              // 0-1
     public static final double DriveTrainMaxSpd   = 2;                  // m/s
     public static final double DriveTrainMaxAccel = 0.35;                  // m/s^2
+    public static final double DriveTrainMaxRotPctOutput = 0.25;              // 0-1
     public static final double DriveTrainMaxRotSpeed = 270*Math.PI/180;    // rad/s
     public static final double DriveTrainMaxRotAccel = 180*Math.PI/180;   // rad/s^2
+    
+    
   
     public static final class DriveTrainTrajSettings{
     // Drive Trajectory Max Speeds (Trajectories or PID Commands)
+    public static final double DriveTrainTrajMaxPctOutput = 0.25;    // 0-1
     public static final double DriveTrainTrajMaxSpd = 2;    // m/s
     public static final double DriveTrainTrajMaxAccel = 0.35; // m/s/s
+    public static final double DriveTrainTrajMaxRotPctOutput = 0.25;    // 0-1
     public static final double DriveTrainTrajMaxRotSpeed = 270*Math.PI/180;    // rad/s
     public static final double DriveTrainTrajMaxRotAccel = 180*Math.PI/180;   // rad/s^2
     
+    
         public static final class DriveTrajectoryPID{
-            public static final double Pgain = 0.06;
+            public static final double Pgain = 3.0;
             public static final double Igain = 0;
-            public static final double Dgain = 0.001;
+            public static final double Dgain = 0.0;
         }
 
         public static final class DriveTrajectoryFF{
@@ -33,9 +40,9 @@ public class SubSys_DriveTrain_Constants {
         }
 
         public static final class RotationTrajectoryPID{
-            public static final double Pgain = 0.06;
+            public static final double Pgain = 0.12;
             public static final double Igain = 0;
-            public static final double Dgain = 0.003;
+            public static final double Dgain = 0.0;
         }
 
         public static final class RotationTrajectoryFF{

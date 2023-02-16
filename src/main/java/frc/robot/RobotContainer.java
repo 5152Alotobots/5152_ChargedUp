@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -95,7 +96,7 @@ public class RobotContainer {
         () -> driverStation.DriveFwdAxis(),
         () -> driverStation.DriveStrAxis(),
         () -> driverStation.DriveRotAxis(),
-        false,
+        true,
         () -> driverStation.RotateLeftPt(),
         () -> driverStation.RotateRightPt()));
 
@@ -128,11 +129,21 @@ public class RobotContainer {
     // Gyro Reset Command Button
     driverStation.GyroResetButton.onTrue(
         new InstantCommand(driveSubSys::setGyroYawToZero, driveSubSys));
-        
+
+            // Gyro Reset Command Button
+    driverStation.PoseResetButton.onTrue(
+        //new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
+        new InstantCommand(driveSubSys::setPoseDriveMtrsToZero, driveSubSys));
+
     driverStation.TestButton.whileTrue(
         //new Cmd_SubSys_DriveTrain_Rotate2Heading(driveSubSys, 90));
+        
         new Cmd_SubSyst_DriveTrain_Drive4Distance(
-          driveSubSys, Units.feetToMeters(5), Units.feetToMeters(0)));
+          driveSubSys, 
+          .5, 
+          .5,
+          0));
+                
   }
 
   //when test button is pressed run the rotate to heading command to a random number between 0 and 360

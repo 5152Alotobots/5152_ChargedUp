@@ -63,7 +63,7 @@ public class SubSys_DriveTrain extends SubsystemBase {
       new Translation2d(driveXDirCmd, driveYDirCmd),
       driveZRotCmd,
       driveFieldOriented,
-      false,
+      true,
       driveRotateLeftPtCmd,
       driveRotateRightPtCmd);
 
@@ -170,5 +170,20 @@ public class SubSys_DriveTrain extends SubsystemBase {
    */
   public void setPose(Pose2d pose){
       this.driveTrain.setPose(pose);
+  }
+
+  /** setPoseToOrigin
+   * Set Pose of the drivetrain to 0,0
+   * @param pose Pose2d X and Y position of the drivetrain
+   */
+  public void setPoseToOrigin(){
+    this.driveTrain.setPose(new Pose2d());
+  }
+
+  /** setPoseDriveMtrsToZero
+   * Set Pose and Drive Motors to Zero
+   */
+  public void setPoseDriveMtrsToZero(){
+    this.driveTrain.setPoseDriveMtrsToZero();
   }
 }

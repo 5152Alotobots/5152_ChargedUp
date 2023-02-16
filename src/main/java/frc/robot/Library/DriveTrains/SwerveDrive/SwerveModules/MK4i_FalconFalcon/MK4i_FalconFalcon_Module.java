@@ -18,6 +18,7 @@
 
 package frc.robot.Library.DriveTrains.SwerveDrive.SwerveModules.MK4i_FalconFalcon;
 
+import com.ctre.phoenix.Util;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -42,12 +43,13 @@ import frc.robot.Library.MotorControllers.TalonFX.TalonFX_Conversions;
 public class MK4i_FalconFalcon_Module {
 
     public String moduleName;
-    private TalonFX driveMotor;
+    public TalonFX driveMotor;
     private TalonFX steerMotor;
     private CANCoder steerAngleEncoder;
     private double steerZeroAngle;  
     private double lastAngle;
     private MK4i_FalconFalcon_Module_Constants mk4i_Module_Constants;
+    private double driveMotorOutputPctCmd = 999;
 
     SimpleMotorFeedforward driveMotorFF = new SimpleMotorFeedforward(
         DriveMotor.driveKS,
@@ -102,7 +104,9 @@ public class MK4i_FalconFalcon_Module {
             // Open Loop 
             if(isOpenLoop){
                 double percentOutput = desiredState.speedMetersPerSecond / SubSys_DriveTrain_Constants.DriveTrainMaxSpd;
+                percentOutput = Util.cap(percentOutput, SubSys_DriveTrain_Constants.DriveTrainMaxPctOutput);
                 driveMotor.set(ControlMode.PercentOutput, percentOutput);
+                driveMotorOutputPctCmd = percentOutput;
             }
             // Closed Loop Velocity (PID Slot 0)
             else {                    
@@ -261,6 +265,10 @@ public class MK4i_FalconFalcon_Module {
           MK4i_FalconFalcon_Module_Constants.DriveMotor.invDriveWheelCircumference*
           MK4i_FalconFalcon_Module_Constants.DriveMotor.driveGearRatio);
 
+    }
+
+    public double getDriveMotorOutputPctCmd(){
+        return driveMotorOutputPctCmd;
     }
 
     /***********************************************************************************/
