@@ -17,9 +17,10 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.ChargedUp.DriverStation.SubSys_DriverStation;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
+import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmd_SubSys_DriveTrain_Drive4Distance;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmd_SubSys_DriveTrain_JoysticDefault;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmd_SubSys_DriveTrain_Rotate2Heading;
-import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmd_SubSyst_DriveTrain_Drive4Distance;
+import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmds_PathPlanner.Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj;
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
 import frc.robot.Library.Vision.Limelight.SubSys_LimeLight;
 
@@ -128,22 +129,30 @@ public class RobotContainer {
  
     // Gyro Reset Command Button
     driverStation.GyroResetButton.onTrue(
-        new InstantCommand(driveSubSys::setGyroYawToZero, driveSubSys));
+        new InstantCommand(gyroSubSys::zeroYaw, gyroSubSys));
 
             // Gyro Reset Command Button
     driverStation.PoseResetButton.onTrue(
         //new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
-        new InstantCommand(driveSubSys::setPoseDriveMtrsToZero, driveSubSys));
+        new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
 
     driverStation.TestButton.whileTrue(
-        //new Cmd_SubSys_DriveTrain_Rotate2Heading(driveSubSys, 90));
+        //new Cmd_SubSys_DriveTrain_Rotate2Heading(driveSubSys, 90)
         
-        new Cmd_SubSyst_DriveTrain_Drive4Distance(
+        /*
+        new Cmd_SubSys_DriveTrain_Drive4Distance(
           driveSubSys, 
           .5, 
           .5,
-          0));
-                
+          0)
+        */
+
+        new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
+          driveSubSys,
+          "ForwardTest",
+          true,
+          true)
+    );
   }
 
   //when test button is pressed run the rotate to heading command to a random number between 0 and 360
