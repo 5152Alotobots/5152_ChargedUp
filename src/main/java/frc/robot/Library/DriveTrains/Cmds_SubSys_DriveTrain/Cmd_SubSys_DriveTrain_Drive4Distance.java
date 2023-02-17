@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain_Constants;
 
-public class Cmd_SubSyst_DriveTrain_Drive4Distance extends CommandBase {
+public class Cmd_SubSys_DriveTrain_Drive4Distance extends CommandBase {
   /** Creates a new Cmd_SubSyst_DriveTrain_Drive4Distance. */
 
   private final SubSys_DriveTrain subSys_DriveTrain;
@@ -34,7 +34,7 @@ public class Cmd_SubSyst_DriveTrain_Drive4Distance extends CommandBase {
   private final TrapezoidProfile.Constraints profiledRotationConstraints;
   private final SimpleMotorFeedforward feedForward;
 
-  public Cmd_SubSyst_DriveTrain_Drive4Distance(
+  public Cmd_SubSys_DriveTrain_Drive4Distance(
     SubSys_DriveTrain subSys_DriveTrain,
     double targetXDistance,
     double targetYDistance,
@@ -54,21 +54,27 @@ public class Cmd_SubSyst_DriveTrain_Drive4Distance extends CommandBase {
       SubSys_DriveTrain_Constants.DriveTrainTrajSettings.RotationTrajectoryFF.kV);
 
     this.profiledDriveConstraints = new TrapezoidProfile.Constraints(
-    SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrainTrajMaxSpd,
-     SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrainTrajMaxAccel
-     );
+      SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrainTrajMaxSpd,
+      SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrainTrajMaxAccel
+    );
 
-     this.xDistancePID = new PIDController(
+    this.xDistancePID = new PIDController(
       SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.Pgain,
       SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.Igain,
       SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.Dgain);
-
+    this.xDistancePID.setTolerance(
+      SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.PositionTolerance,
+      SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.VelocityTolerance);
+   
     this.yDistancePID = new PIDController(
       SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.Pgain,
       SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.Igain,
       SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.Dgain);
-    
-      /*
+    this.yDistancePID.setTolerance(
+      SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.PositionTolerance,
+      SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.VelocityTolerance);
+  
+    /*
     this.xDistancePID = new ProfiledPIDController(
       SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.Pgain,
       SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.Igain,
@@ -92,11 +98,11 @@ public class Cmd_SubSyst_DriveTrain_Drive4Distance extends CommandBase {
       this.profiledRotationConstraints);
 
     this.profiledRotationPID.enableContinuousInput(-180, 180);
-      
-    this.profiledRotationPID.setTolerance(2, 4);
-    this.xDistancePID.setTolerance(0.5, 0.1);
-    this.yDistancePID.setTolerance(0.5, 0.1);
+    this.profiledRotationPID.setTolerance(
+      SubSys_DriveTrain_Constants.DriveTrainTrajSettings.RotationTrajectoryPID.PositionTolerance,
+      SubSys_DriveTrain_Constants.DriveTrainTrajSettings.RotationTrajectoryPID.VelocityTolerance);
     this.profiledRotationPID.setIntegratorRange(-.3, 0.3);
+
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(this.subSys_DriveTrain);
   }
@@ -109,12 +115,10 @@ public class Cmd_SubSyst_DriveTrain_Drive4Distance extends CommandBase {
     this.initialXDistance = currPose.getX();
     this.xDistancePID.reset();
     this.xDistancePID.setSetpoint(this.targetXDistance);
-    this.xDistancePID.setTolerance(0.01);
     
     this.initialYDistance = currPose.getY();
     this.yDistancePID.reset();
     this.yDistancePID.setSetpoint(this.targetYDistance);
-    this.yDistancePID.setTolerance(0.01);
     
     this.profiledRotationPID.reset(this.subSys_DriveTrain.getHeading().getDegrees());
     this.profiledRotationPID.setGoal(this.targetHeadingDegrees);

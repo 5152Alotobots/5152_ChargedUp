@@ -19,59 +19,66 @@ public class SubSys_PigeonGyro extends SubsystemBase {
   /**
    * Creates a new NavXGyro.
    */
-  private Pigeon2 m_Pigeon2Gyro;
+  private Pigeon2 pigeon2Gyro;
+  private double gyroOffsetDegrees;
 
   public SubSys_PigeonGyro() {
-    m_Pigeon2Gyro = new Pigeon2(Constants.CAN_IDs.Pigeon2_ID);
+    this.pigeon2Gyro = new Pigeon2(Constants.CAN_IDs.Pigeon2_ID);
+    this.gyroOffsetDegrees = 0.0;
     //m_Pigeon2Gyro.setYaw(0);
   }
-
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
 
     // Display
-    SmartDashboard.putNumber("GyroYaw", m_Pigeon2Gyro.getYaw());
-    SmartDashboard.putNumber("GyroCompass", m_Pigeon2Gyro.getCompassHeading());
+    SmartDashboard.putNumber("Pigeon_getRawYaw", getRawYaw());
+    SmartDashboard.putNumber("Pigeon_getYaw", getYaw());
+    SmartDashboard.putNumber("Pigeon_getYawRotation2d", getYawRotation2d().getDegrees());
+    //SmartDashboard.putNumber("GyroCompass", m_Pigeon2Gyro.getCompassHeading());
   }
 
   /**
    * Return Raw Gyro Angle
    * @return Raw Angle double raw Gyro Angle
    */
-  public double getRawGyroAngle(){
-    return m_Pigeon2Gyro.getYaw();
+  public double getRawYaw(){
+    return this.pigeon2Gyro.getYaw();
   }
+
+  public double getYaw(){
+    return getRawYaw()-this.gyroOffsetDegrees;
+  } 
 
   /**
    * Return Gyro Angle in Degrees
    * @return Gyro Angle double Degrees
    */
-  public double getGyroAngle(){
-    return Math.IEEEremainder(m_Pigeon2Gyro.getYaw(), 360) * (SubSys_NavXGyro_Constants.GyroReversed ? -1.0 : 1.0);
+  public double getYawAngle(){
+    return Math.IEEEremainder(getYaw(), 360) * (SubSys_NavXGyro_Constants.GyroReversed ? -1.0 : 1.0);
   }
 
   /**
    * Return Gyro Angle in Rotation2d
    * @return Gyro Angle Rotation2d
    */
-  public Rotation2d getGyroRotation2d(){
-    return Rotation2d.fromDegrees(getGyroAngle());
+  public Rotation2d getYawRotation2d(){
+    return Rotation2d.fromDegrees(getYawAngle());
   }
 
    /**
    * Zero Gyro
    */
   public void zeroYaw(){
-    m_Pigeon2Gyro.setYaw(0);
+    this.gyroOffsetDegrees = getRawYaw();
   }
 
   /**
    * Set Gyro
    */
   public void setYaw(double yawDegrees){
-    m_Pigeon2Gyro.setYaw(yawDegrees);
+    this.gyroOffsetDegrees = getRawYaw()-yawDegrees;
   }
 
 }

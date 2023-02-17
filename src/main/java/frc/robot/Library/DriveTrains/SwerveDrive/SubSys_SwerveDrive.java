@@ -97,7 +97,7 @@ public class SubSys_SwerveDrive extends SubsystemBase {
         SwerveModulePosition[] swerveModulePositions = getSwerveModulePositions();
 
         SmartDashboard.putNumber("Odometry_getHeading", getHeading().getDegrees());
-        SmartDashboard.putNumber("Odometry_getGyroAngle", gyroSubSys.getGyroAngle());
+        SmartDashboard.putNumber("Odometry_getYawAngle", gyroSubSys.getYawAngle());
         SmartDashboard.putNumber("Odometry_FL_getDegrees", swerveModulePositions[0].angle.getDegrees());
         SmartDashboard.putNumber("Odometry_FL_distanceMeters", swerveModulePositions[0].distanceMeters);
         SmartDashboard.putNumber("Odometry_FR_getDegrees", swerveModulePositions[1].angle.getDegrees());
@@ -241,21 +241,21 @@ public class SubSys_SwerveDrive extends SubsystemBase {
      * @return Rotation2d Heading of the drive train
      */
     public Rotation2d getHeading() {
-        return gyroSubSys.getGyroRotation2d();
+        return gyroSubSys.getYawRotation2d();
     }
     
     /** setGyroYaw
      * set Gyro Yaw Value
      * @param degrees
      */
-    public void setGyroYaw(double degrees){
+    public void setYaw(double degrees){
         gyroSubSys.setYaw(degrees);  
     }
 
     /** setGyroYawToZero
      * set Gyro Yaw Value to Zero
      */ 
-    public void setGyroYawToZero(){
+    public void setYawToZero(){
         gyroSubSys.setYaw(0.0);  
     }
 

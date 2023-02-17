@@ -31,6 +31,8 @@ public class SubSys_DriveTrain_Constants {
             public static final double Pgain = 3.0;
             public static final double Igain = 0;
             public static final double Dgain = 0.0;
+            public static final double PositionTolerance = 0.01; // m
+            public static final double VelocityTolerance = 0.05; // m/s
         }
 
         public static final class DriveTrajectoryFF{
@@ -43,6 +45,8 @@ public class SubSys_DriveTrain_Constants {
             public static final double Pgain = 0.12;
             public static final double Igain = 0;
             public static final double Dgain = 0.0;
+            public static final double PositionTolerance = 2.0; // Deg
+            public static final double VelocityTolerance = 4.0; // Deg/s
         }
 
         public static final class RotationTrajectoryFF{

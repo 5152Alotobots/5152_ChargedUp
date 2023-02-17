@@ -145,15 +145,15 @@ public class SubSys_DriveTrain extends SubsystemBase {
    * set Gyro Yaw Value
    * @param degrees
    */
-  public void setGyroYaw(double degrees){
-    this.driveTrain.setGyroYaw(degrees);  
+  public void setYaw(double degrees){
+    this.driveTrain.setYaw(degrees);  
   }
 
   /** setGyroYawToZero
    * set Gyro Yaw Value to Zero
    */ 
-  public void setGyroYawToZero(){
-    this.driveTrain.setGyroYawToZero();  
+  public void setYawToZero(){
+    this.driveTrain.setYawToZero();  
   }
 
   /** getPose
