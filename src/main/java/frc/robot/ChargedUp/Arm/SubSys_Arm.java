@@ -19,7 +19,8 @@ import frc.robot.ChargedUp.Arm.Const_Arm;
 public class SubSys_Arm extends SubsystemBase {
   private CANCoderConfiguration armExtensionCanCoderConfiguration = new CANCoderConfiguration();
 
-  private TalonFX ArmShoulderMotor = new TalonFX(Constants.CAN_IDs.ArmShoulderMtr_CAN_ID);
+  private TalonFX Arm_ShoulderMotor = new TalonFX(Constants.CAN_IDs.ArmShoulderMtr_CAN_ID);
+  private TalonFX Arm_ShoulderFollowerMotor = new TalonFX(Constants.CAN_IDs.ArmShoulderFollowerMtr_CAN_ID);
   private CANCoder armShoulderCanCoder = new CANCoder(Constants.CAN_IDs.ArmShoulderCANCoder_CAN_ID);
 
   private TalonFX ArmExtensionMotor = new TalonFX(Constants.CAN_IDs.ArmExtensionMtr_CAN_ID);
@@ -27,9 +28,13 @@ public class SubSys_Arm extends SubsystemBase {
 
   public SubSys_Arm() {
     //*motor configs */
-      ArmShoulderMotor.configFactoryDefault();
-      ArmShoulderMotor.setInverted(false);
-      ArmShoulderMotor.setNeutralMode(NeutralMode.Brake);
+      Arm_ShoulderMotor.configFactoryDefault();
+      Arm_ShoulderMotor.setInverted(false);
+      Arm_ShoulderMotor.setNeutralMode(NeutralMode.Brake);
+
+      Arm_ShoulderFollowerMotor.configFactoryDefault();
+      Arm_ShoulderFollowerMotor.setInverted(false);
+      Arm_ShoulderFollowerMotor.setNeutralMode(NeutralMode.Coast);
 
       ArmExtensionMotor.configFactoryDefault();
       ArmExtensionMotor.setInverted(false);
@@ -47,18 +52,19 @@ public class SubSys_Arm extends SubsystemBase {
    * @param percentCommand double percentCommand (-1 - 1)
    */
   public void rotateArmShoulder(double percentCommand) {
-    ArmShoulderMotor.set(TalonFXControlMode.PercentOutput, percentCommand);
+    Arm_ShoulderMotor.set(TalonFXControlMode.PercentOutput, percentCommand);
+    Arm_ShoulderFollowerMotor.set(TalonFXControlMode.PercentOutput, 0.0);
   }
 /**
  *     use this command to rotate the ArmShoulder
  * @param angleCommand double angleCommand (0 - 360)
  */
   public void rotateArmShoulder_angleCommand(double angleCommand){
-    ArmShoulderMotor.set(TalonFXControlMode.Position, angleCommand);
+    Arm_ShoulderMotor.set(TalonFXControlMode.Position, angleCommand);
   }
 
   public void rotateArmShoulder_feedForward(double percentCommand) {
-    ArmShoulderMotor.set(TalonFXControlMode.PercentOutput, percentCommand, DemandType.ArbitraryFeedForward, 0);
+    Arm_ShoulderMotor.set(TalonFXControlMode.PercentOutput, percentCommand, DemandType.ArbitraryFeedForward, 0);
   }
   //z = height
   public double getHeightOfArmFromBase(double ArmShoulderAngle, double ArmExtensionLength) {
@@ -88,5 +94,7 @@ public class SubSys_Arm extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.getNumber("SubSys_Arm__ShoulderMotor_Position",Arm_ShoulderMotor.getSelectedSensorPosition());
+    SmartDashboard.getNumber("SubSys_Arm__ShoulderFollowerMotor_Position",Arm_ShoulderFollowerMotor.getSelectedSensorPosition());
   }
 }

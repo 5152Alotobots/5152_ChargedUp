@@ -76,6 +76,7 @@ public final class Constants {
     public static final int Pigeon2_ID = 20;
             
     public static final int ArmShoulderMtr_CAN_ID = 30;
+    public static final int ArmShoulderFollowerMtr_CAN_ID = 35;
     public static final int ArmShoulderCANCoder_CAN_ID = 31;
     public static final int ArmExtensionMtr_CAN_ID = 32;
     public static final int ArmExtensionCANCoder_CAN_ID = 34;
