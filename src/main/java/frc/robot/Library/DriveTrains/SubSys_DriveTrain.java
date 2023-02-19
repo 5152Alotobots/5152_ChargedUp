@@ -17,22 +17,20 @@ import frc.robot.Library.DriveTrains.SwerveDrive.SubSys_SwerveDrive;
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
 
 public class SubSys_DriveTrain extends SubsystemBase {
-  /**
-   * Creates a new Drive SubSystem.
-   */
-  
+  /** Creates a new Drive SubSystem. */
+
   // Drive Types - Select only 1
-  
+
   // Tank
-  //private final TankDriveSubSys m_Drive = 
-  //new TankDriveSubSys;
+  // private final TankDriveSubSys m_Drive =
+  // new TankDriveSubSys;
 
   // Mecanum
-  //private final MecanumDriveSubSys m_Drive = 
-  //new MecanumDriveSubSys;
+  // private final MecanumDriveSubSys m_Drive =
+  // new MecanumDriveSubSys;
 
   // Swerve
-  private SubSys_SwerveDrive driveTrain; 
+  private SubSys_SwerveDrive driveTrain;
 
   // Drive Commands
   private double driveXDirCmd = 0;
@@ -43,15 +41,15 @@ public class SubSys_DriveTrain extends SubsystemBase {
   private boolean driveRotateRightPtCmd = false;
 
   // DriveSubSys Shuffleboard
-  //private DriveSubSys_Shuffleboard m_DriveSubSys_Shuffleboard =
+  // private DriveSubSys_Shuffleboard m_DriveSubSys_Shuffleboard =
   //  new DriveSubSys_Shuffleboard();
 
   // GyroScope
-  private SubSys_PigeonGyro gyroSubSys; 
-
+  private SubSys_PigeonGyro gyroSubSys;
 
   /**
    * DriveSubSys Constructor
+   *
    * @param gyroSubSys SubSys_PigeonGyro
    */
   public SubSys_DriveTrain(SubSys_PigeonGyro gyroSubSys) {
@@ -62,15 +60,15 @@ public class SubSys_DriveTrain extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    
+
     // Send Drive Commands
     driveTrain.drive(
-      new Translation2d(driveXDirCmd, driveYDirCmd),
-      driveZRotCmd,
-      driveFieldOriented,
-      false,
-      driveRotateLeftPtCmd,
-      driveRotateRightPtCmd);
+        new Translation2d(driveXDirCmd, driveYDirCmd),
+        driveZRotCmd,
+        driveFieldOriented,
+        false,
+        driveRotateLeftPtCmd,
+        driveRotateRightPtCmd);
 
     /*
     SmartDashboard.putNumber("Xdistance", m_DriveSubSys.getPose().getX());
@@ -93,90 +91,96 @@ public class SubSys_DriveTrain extends SubsystemBase {
   }
 
   /**
-  * Returns the currently-estimated pose of the robot.
-  *
-  * @return The pose.
-  */
+   * Returns the currently-estimated pose of the robot.
+   *
+   * @return The pose.
+   */
   public Pose2d getPose() {
     return driveTrain.getPose();
   }
 
   /**
-  * Returns the currently heading robot.
-  *
-  * @return The heading.
-  */
+   * Returns the currently heading robot.
+   *
+   * @return The heading.
+   */
   public Rotation2d getHeading() {
     return driveTrain.getHeading();
   }
-  
+
   /**
-  * Resets the odometry to the specified pose.
-  *
-  * @param pose The pose to which to set the odometry.
-  */
+   * Resets the odometry to the specified pose.
+   *
+   * @param pose The pose to which to set the odometry.
+   */
   public void resetOdometry(Pose2d pose) {
     driveTrain.resetOdometry(pose);
   }
-    
-  /**
-  * Resets the Gyro angle to specified heading
-  *
-  */
+
+  /** Resets the Gyro angle to specified heading */
   public void zeroGyro() {
     gyroSubSys.zeroYaw();
   }
 
   /**
-  * Returns Drive SubSystem Kinematics
-  *
-  * @return Drive SubSystem Kinematics
-  */
+   * Returns Drive SubSystem Kinematics
+   *
+   * @return Drive SubSystem Kinematics
+   */
   public SwerveDriveKinematics getSwerveDriveKinematics() {
     return driveTrain.getSwerveDriveKinematics();
   }
 
   /**
    * Returns Max Drive SubSystem Speed
-   * 
+   *
    * @return double DriveTrain Maximum Speed (m/s)
    */
-  public double getMaxDriveSubSysSpd(){
+  public double getMaxDriveSubSysSpd() {
     return RobotSettings.DriveTrain.DriveTrainMaxSpd;
   }
 
   /**
    * Returns Max Drive Subsystem Rotation
+   *
    * @return double DriveTrain Maximum Speed (rads/s)
    */
-  public double getMaxDriveSubSysRotSpd(){
+  public double getMaxDriveSubSysRotSpd() {
     return RobotSettings.DriveTrain.MaxDriveSubSysRotSpeed;
   }
 
-
   /**
-  * Method to drive the robot using setpoint.
-  *
-  * @param xSpdCmd       Speed Cmd of the robot in the x direction (forward) m/s.
-  * @param ySpdCmd       Speed Cmd of the robot in the y direction (sideways) m/s.
-  * @param rotSpdCmd     Rotational speed Cmd of the robot. rad/s
-  * @param fieldRelative Whether the provided x and y speeds are relative to the field.
-  * @param rotateLeftPt  boolean Rotate around Left Pt
-  * @param rotateRightPt boolean Rotate around Right Pt
-  */
+   * Method to drive the robot using setpoint.
+   *
+   * @param xSpdCmd Speed Cmd of the robot in the x direction (forward) m/s.
+   * @param ySpdCmd Speed Cmd of the robot in the y direction (sideways) m/s.
+   * @param rotSpdCmd Rotational speed Cmd of the robot. rad/s
+   * @param fieldRelative Whether the provided x and y speeds are relative to the field.
+   * @param rotateLeftPt boolean Rotate around Left Pt
+   * @param rotateRightPt boolean Rotate around Right Pt
+   */
   @SuppressWarnings("ParameterName")
   public void Drive(
-    double xSpdCmd,
-    double ySpdCmd,
-    double rotSpdCmd,
-    boolean fieldRelative,
-    boolean rotateLeftPtCmd,
-    boolean rotateRightPtCmd) {
-      
-    //Limit Cmds to Chassis Limits
-    driveXDirCmd = Math.min(Math.max(xSpdCmd,-RobotSettings.DriveTrain.DriveTrainMaxSpd),RobotSettings.DriveTrain.DriveTrainMaxSpd);
-    driveYDirCmd = Math.min(Math.max(ySpdCmd,-RobotSettings.DriveTrain.DriveTrainMaxSpd),RobotSettings.DriveTrain.DriveTrainMaxSpd);
-    driveZRotCmd = Math.min(Math.max(rotSpdCmd,-RobotSettings.DriveTrain.MaxDriveSubSysRotSpeed),RobotSettings.DriveTrain.MaxDriveSubSysRotSpeed);
+      double xSpdCmd,
+      double ySpdCmd,
+      double rotSpdCmd,
+      boolean fieldRelative,
+      boolean rotateLeftPtCmd,
+      boolean rotateRightPtCmd) {
+
+    // Limit Cmds to Chassis Limits
+    driveXDirCmd =
+        Math.min(
+            Math.max(xSpdCmd, -RobotSettings.DriveTrain.DriveTrainMaxSpd),
+            RobotSettings.DriveTrain.DriveTrainMaxSpd);
+    driveYDirCmd =
+        Math.min(
+            Math.max(ySpdCmd, -RobotSettings.DriveTrain.DriveTrainMaxSpd),
+            RobotSettings.DriveTrain.DriveTrainMaxSpd);
+    driveZRotCmd =
+        Math.min(
+            Math.max(rotSpdCmd, -RobotSettings.DriveTrain.MaxDriveSubSysRotSpeed),
+            RobotSettings.DriveTrain.MaxDriveSubSysRotSpeed);
     driveFieldOriented = fieldRelative;
     driveRotateLeftPtCmd = rotateLeftPtCmd;
     driveRotateRightPtCmd = rotateRightPtCmd;

@@ -13,30 +13,27 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.ChargedUp.DriverStation.SubSys_DriverStation;
-import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmd_SubSys_DriveTrain_JoysticDefault;
+import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
 import frc.robot.Library.Vision.Limelight.SubSys_LimeLight;
 
 /**
- * This class is where the bulk of the robot should be declared. Since
- * Command-based is a "declarative" paradigm, very little robot logic should
- * actually be handled in the {@link Robot} periodic methods (other than the
- * scheduler calls). Instead, the structure of the robot (including subsystems,
- * commands, and button mappings) should be declared here.
+ * This class is where the bulk of the robot should be declared. Since Command-based is a
+ * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
+ * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
+ * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
-  /**
-   ***** Library Components 
-   */
+  /** **** Library Components */
 
   // ---- Power Distribution
   // private final PDPSubSys m_PDPSubSys = new PDPSubSys();
 
   // ---- NavXGyro
-  //public final NavXGyroSubSys m_NavXGyroSubSys = new NavXGyroSubSys();
+  // public final NavXGyroSubSys m_NavXGyroSubSys = new NavXGyroSubSys();
 
   // ---- Pigeon2
   public final SubSys_PigeonGyro gyroSubSys = new SubSys_PigeonGyro();
@@ -48,29 +45,29 @@ public class RobotContainer {
   public final SubSys_DriveTrain driveSubSys = new SubSys_DriveTrain(gyroSubSys);
 
   /*
-  ***** Charged Up Componentes
-  */
- 
+   ***** Charged Up Componentes
+   */
+
   // ---- Driver Station
   public final SubSys_DriverStation driverStation = new SubSys_DriverStation();
   // SetUp Auto
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
   /*
-  ***** Auto Commands
-  */
+   ***** Auto Commands
+   */
   /*
 
   private final Command m_Auto_PathPlanner_Test_Cmd =
       new DriveSubSys_PathPlanner_Test_Cmd(driveSubSys);
-    
+
   private final Command m_Auto_PP_FollowTraj_Cmd =
       new DriveSubSys_PP_FollowTraj_Cmd("New New Path",driveSubSys);
 
   private final Command ihopethisworks =
       new DriveSubSys_PathPlanner_Test_Cmd(driveSubSys);
   */
-  
+
   /*
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -79,51 +76,48 @@ public class RobotContainer {
     configureButtonBindings();
 
     // Configure default commands
-   
-    /**
-    ****** Control System Components
-    */
+
+    /** ***** Control System Components */
 
     // ---- Drive Subsystem Default Command
-    driveSubSys
-      .setDefaultCommand(new Cmd_SubSys_DriveTrain_JoysticDefault(
-        driveSubSys,
-        () -> driverStation.DriveFwdAxis(),
-        () -> driverStation.DriveStrAxis(),
-        () -> driverStation.DriveRotAxis(),
-        false,
-        () -> driverStation.RotateLeftPt(),
-        () -> driverStation.RotateRightPt()));
+    driveSubSys.setDefaultCommand(
+        new Cmd_SubSys_DriveTrain_JoysticDefault(
+            driveSubSys,
+            () -> driverStation.DriveFwdAxis(),
+            () -> driverStation.DriveStrAxis(),
+            () -> driverStation.DriveRotAxis(),
+            false,
+            () -> driverStation.RotateLeftPt(),
+            () -> driverStation.RotateRightPt()));
 
     // Sendable Chooser
-    //m_chooser.setDefaultOption("Auto_BasicRevHighGoalRev_Cmd", m_Auto_BasicRevHighGoalRev_Cmd);
-    //m_chooser.addOption("Auto_BasicRevLowGoalRev", m_Auto_BasicRevLowGoalRev_Cmd);
-    //m_chooser.addOption("Auto_AS_RevHighGoalRev_Cmd", m_Auto_AS_RevHighGoalRev_Cmd);
-    //m_chooser.addOption("Auto_AS_T13CnrtoT13HighGoaltoB2toShoot_Cmd", m_Auto_AS_T13CnrtoT13HighGoaltoB2toShoot_Cmd);
-    //m_chooser.addOption("Auto_PathPlanner_Test_Cmd", m_Auto_PathPlanner_Test_Cmd);
-    //m_chooser.addOption("Auto_PP_FollowTraj_Cmd", m_Auto_PP_FollowTraj_Cmd);
-    //m_chooser.addOption("goodluck", ihopethisworks);
-    //m_chooser.setDefaultOption("Drive4Distance", m_Drive4Distance_Cmd);
-    //m_chooser.addOption("BasicAutoLowWait", m_BasicAutoLowWaitCmd);
-    //m_chooser.addOption("BasicAutoHigh", m_BasicAutoHighCmd);
-    //m_chooser.addOption("BasicAutoHighExtraBalls", m_BasicAutoHighExtraBallsCmd);
-    //m_chooser.addOption("HighshotAuto", m_LeftCenterHigh_Cmd);
-    
+    // m_chooser.setDefaultOption("Auto_BasicRevHighGoalRev_Cmd", m_Auto_BasicRevHighGoalRev_Cmd);
+    // m_chooser.addOption("Auto_BasicRevLowGoalRev", m_Auto_BasicRevLowGoalRev_Cmd);
+    // m_chooser.addOption("Auto_AS_RevHighGoalRev_Cmd", m_Auto_AS_RevHighGoalRev_Cmd);
+    // m_chooser.addOption("Auto_AS_T13CnrtoT13HighGoaltoB2toShoot_Cmd",
+    // m_Auto_AS_T13CnrtoT13HighGoaltoB2toShoot_Cmd);
+    // m_chooser.addOption("Auto_PathPlanner_Test_Cmd", m_Auto_PathPlanner_Test_Cmd);
+    // m_chooser.addOption("Auto_PP_FollowTraj_Cmd", m_Auto_PP_FollowTraj_Cmd);
+    // m_chooser.addOption("goodluck", ihopethisworks);
+    // m_chooser.setDefaultOption("Drive4Distance", m_Drive4Distance_Cmd);
+    // m_chooser.addOption("BasicAutoLowWait", m_BasicAutoLowWaitCmd);
+    // m_chooser.addOption("BasicAutoHigh", m_BasicAutoHighCmd);
+    // m_chooser.addOption("BasicAutoHighExtraBalls", m_BasicAutoHighExtraBallsCmd);
+    // m_chooser.addOption("HighshotAuto", m_LeftCenterHigh_Cmd);
 
     SmartDashboard.putData(m_chooser);
   }
 
   /**
-   * Use this method to define your button->command mappings. Buttons can be
-   * created by instantiating a {@link GenericHID} or one of its subclasses
-   * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
-   * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+   * Use this method to define your button->command mappings. Buttons can be created by
+   * instantiating a {@link GenericHID} or one of its subclasses ({@link
+   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
+   * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
- 
+
     // Gyro Reset Command Button
-    driverStation.GyroResetButton.onTrue(
-        new InstantCommand(driveSubSys::zeroGyro, driveSubSys));
+    driverStation.GyroResetButton.onTrue(new InstantCommand(driveSubSys::zeroGyro, driveSubSys));
   }
 
   /**
@@ -133,9 +127,9 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    //m_DriveSubSys.resetOdometry(new Pose2d(0, 0, new Rotation2d(0)));
-    
-    //return m_BasicAutoCmd;
+    // m_DriveSubSys.resetOdometry(new Pose2d(0, 0, new Rotation2d(0)));
+
+    // return m_BasicAutoCmd;
     return m_chooser.getSelected();
   }
 }

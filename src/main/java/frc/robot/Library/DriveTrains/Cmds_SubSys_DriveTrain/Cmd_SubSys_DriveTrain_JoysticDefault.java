@@ -7,18 +7,16 @@
 
 package frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain;
 
-import java.util.function.BooleanSupplier;
-import java.util.function.DoubleSupplier;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
 import frc.robot.Library.DriverStation.JoystickUtilities;
+import java.util.function.BooleanSupplier;
+import java.util.function.DoubleSupplier;
 
 public class Cmd_SubSys_DriveTrain_JoysticDefault extends CommandBase {
-  /**
-   * Creates a new FalconTalonFXDriveTalonSR.
-   */
+  /** Creates a new FalconTalonFXDriveTalonSR. */
   private final SubSys_DriveTrain driveSubSys;
+
   private final DoubleSupplier fwdCmd;
   private final DoubleSupplier strCmd;
   private final DoubleSupplier rotCmd;
@@ -29,13 +27,13 @@ public class Cmd_SubSys_DriveTrain_JoysticDefault extends CommandBase {
   // Max Speed Command is 4.7mps
 
   public Cmd_SubSys_DriveTrain_JoysticDefault(
-    SubSys_DriveTrain driveSubSys,
-    DoubleSupplier fwdCmd,
-    DoubleSupplier strCmd,
-    DoubleSupplier rotCmd,
-    boolean fieldOriented,
-    BooleanSupplier rotateLeftPt,
-    BooleanSupplier rotateRightPt){
+      SubSys_DriveTrain driveSubSys,
+      DoubleSupplier fwdCmd,
+      DoubleSupplier strCmd,
+      DoubleSupplier rotCmd,
+      boolean fieldOriented,
+      BooleanSupplier rotateLeftPt,
+      BooleanSupplier rotateRightPt) {
 
     this.driveSubSys = driveSubSys;
     this.fwdCmd = fwdCmd;
@@ -49,30 +47,31 @@ public class Cmd_SubSys_DriveTrain_JoysticDefault extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     driveSubSys.Drive(
-      JoystickUtilities.joyDeadBndSqrdScaled(fwdCmd.getAsDouble(), 0.05,driveSubSys.getMaxDriveSubSysSpd()),
-      JoystickUtilities.joyDeadBndSqrdScaled(strCmd.getAsDouble(),0.05,driveSubSys.getMaxDriveSubSysSpd()),
-      //JoystickUtilities.joyDeadBndScaled(fwdCmd.getAsDouble(),0.1,m_DriveSubSys.getMaxDriveSubSysSpd()),
-      //JoystickUtilities.joyDeadBndScaled(m_StrCmd.getAsDouble(),0.1,m_DriveSubSys.getMaxDriveSubSysSpd()),
-      JoystickUtilities.joyDeadBndScaled(rotCmd.getAsDouble(),0.1,driveSubSys.getMaxDriveSubSysRotSpd()),
-      fieldOriented,
-      rotateLeftPt.getAsBoolean(),
-      rotateRightPt.getAsBoolean());
+        JoystickUtilities.joyDeadBndSqrdScaled(
+            fwdCmd.getAsDouble(), 0.05, driveSubSys.getMaxDriveSubSysSpd()),
+        JoystickUtilities.joyDeadBndSqrdScaled(
+            strCmd.getAsDouble(), 0.05, driveSubSys.getMaxDriveSubSysSpd()),
+        // JoystickUtilities.joyDeadBndScaled(fwdCmd.getAsDouble(),0.1,m_DriveSubSys.getMaxDriveSubSysSpd()),
+        // JoystickUtilities.joyDeadBndScaled(m_StrCmd.getAsDouble(),0.1,m_DriveSubSys.getMaxDriveSubSysSpd()),
+        JoystickUtilities.joyDeadBndScaled(
+            rotCmd.getAsDouble(), 0.1, driveSubSys.getMaxDriveSubSysRotSpd()),
+        fieldOriented,
+        rotateLeftPt.getAsBoolean(),
+        rotateRightPt.getAsBoolean());
 
-      //SmartDashboard.putBoolean("RotateLeft_JoyCmd", m_RotateLeftPt.getAsBoolean());
-      //SmartDashboard.putBoolean("RotateRight_JoyCmd", m_RotateRightPt.getAsBoolean());
+    // SmartDashboard.putBoolean("RotateLeft_JoyCmd", m_RotateLeftPt.getAsBoolean());
+    // SmartDashboard.putBoolean("RotateRight_JoyCmd", m_RotateRightPt.getAsBoolean());
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
