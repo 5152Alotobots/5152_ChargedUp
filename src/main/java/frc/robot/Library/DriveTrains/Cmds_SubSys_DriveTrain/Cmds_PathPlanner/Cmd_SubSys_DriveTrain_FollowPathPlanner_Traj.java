@@ -8,8 +8,6 @@ import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
-import com.pathplanner.lib.commands.PPSwerveControllerCommand;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.Timer;
@@ -20,29 +18,31 @@ import frc.robot.Library.DriveTrains.SubSys_DriveTrain_Constants;
 
 public class Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj extends CommandBase {
   /** Creates a new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj. */
-  private SubSys_DriveTrain subSys_DriveTrain; 
+  private SubSys_DriveTrain subSys_DriveTrain;
+
   private String pathPlannerTrajName;
   private boolean setPose;
   private boolean setYaw;
   private PathPlannerTrajectory ppTraj;
-  
+
   private final PIDController xDistancePID;
   private final PIDController yDistancePID;
   private final PIDController rotationPID;
 
   private Timer timer;
 
-  /** Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj
-   * Follow PathPlanner Trajectory
+  /**
+   * Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj Follow PathPlanner Trajectory
+   *
    * @param subSys_DriveTrain SubSys_DriveTrain Drive Train subsystem
    * @param pathPlannerTraj String Name of PathPlannerTraj
    */
   public Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
-    SubSys_DriveTrain subSys_DriveTrain,
-    String pathPlannerTrajName,
-    boolean setPose,
-    boolean setYaw) {
-    
+      SubSys_DriveTrain subSys_DriveTrain,
+      String pathPlannerTrajName,
+      boolean setPose,
+      boolean setYaw) {
+
     this.subSys_DriveTrain = subSys_DriveTrain;
     this.pathPlannerTrajName = pathPlannerTrajName;
     this.setPose = setPose;
@@ -52,37 +52,41 @@ public class Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj extends CommandBase {
     addRequirements(subSys_DriveTrain);
 
     // Load Path
-    this.ppTraj = PathPlanner.loadPath(
-      this.pathPlannerTrajName,
-      new PathConstraints(
-        SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrainTrajMaxSpd,
-        SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrainTrajMaxAccel));
+    this.ppTraj =
+        PathPlanner.loadPath(
+            this.pathPlannerTrajName,
+            new PathConstraints(
+                SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrainTrajMaxSpd,
+                SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrainTrajMaxAccel));
 
-    this.xDistancePID = new PIDController(
-      SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.Pgain,
-      SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.Igain,
-      SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.Dgain);
+    this.xDistancePID =
+        new PIDController(
+            SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.Pgain,
+            SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.Igain,
+            SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.Dgain);
     this.xDistancePID.setTolerance(
-      SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.PositionTolerance,
-      SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.VelocityTolerance);
-     
-    this.yDistancePID = new PIDController(
-      SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.Pgain,
-      SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.Igain,
-      SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.Dgain);
+        SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.PositionTolerance,
+        SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.VelocityTolerance);
+
+    this.yDistancePID =
+        new PIDController(
+            SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.Pgain,
+            SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.Igain,
+            SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.Dgain);
     this.yDistancePID.setTolerance(
-      SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.PositionTolerance,
-      SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.VelocityTolerance);
-    
-    this.rotationPID = new PIDController(
-        SubSys_DriveTrain_Constants.DriveTrainTrajSettings.RotationTrajectoryPID.Pgain,
-        SubSys_DriveTrain_Constants.DriveTrainTrajSettings.RotationTrajectoryPID.Igain,
-        SubSys_DriveTrain_Constants.DriveTrainTrajSettings.RotationTrajectoryPID.Dgain);
+        SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.PositionTolerance,
+        SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.VelocityTolerance);
+
+    this.rotationPID =
+        new PIDController(
+            SubSys_DriveTrain_Constants.DriveTrainTrajSettings.RotationTrajectoryPID.Pgain,
+            SubSys_DriveTrain_Constants.DriveTrainTrajSettings.RotationTrajectoryPID.Igain,
+            SubSys_DriveTrain_Constants.DriveTrainTrajSettings.RotationTrajectoryPID.Dgain);
     this.rotationPID.enableContinuousInput(-180, 180);
     this.rotationPID.setTolerance(
-      SubSys_DriveTrain_Constants.DriveTrainTrajSettings.RotationTrajectoryPID.PositionTolerance,
-      SubSys_DriveTrain_Constants.DriveTrainTrajSettings.RotationTrajectoryPID.VelocityTolerance);
-   
+        SubSys_DriveTrain_Constants.DriveTrainTrajSettings.RotationTrajectoryPID.PositionTolerance,
+        SubSys_DriveTrain_Constants.DriveTrainTrajSettings.RotationTrajectoryPID.VelocityTolerance);
+
     this.timer = new Timer();
   }
 
@@ -90,10 +94,10 @@ public class Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj extends CommandBase {
   @Override
   public void initialize() {
     // Check if the Odometry should be reset
-    if(setYaw){
+    if (setYaw) {
       this.subSys_DriveTrain.setYaw(ppTraj.getInitialHolonomicPose().getRotation().getDegrees());
     }
-    if(setPose){
+    if (setPose) {
       this.subSys_DriveTrain.setPose(ppTraj.getInitialHolonomicPose());
     }
 
@@ -115,43 +119,27 @@ public class Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj extends CommandBase {
   public void execute() {
     double currentTime = this.timer.get();
     PathPlannerState desiredState = (PathPlannerState) ppTraj.sample(currentTime);
-  
+
     Pose2d currentPose = subSys_DriveTrain.getPose();
 
-    double xCmd = this.xDistancePID.calculate(
-      currentPose.getX(),
-      desiredState.poseMeters.getX());
+    double xCmd = this.xDistancePID.calculate(currentPose.getX(), desiredState.poseMeters.getX());
     SmartDashboard.putNumber("xPID_xCmd", xCmd);
-    
-    double yCmd = this.yDistancePID.calculate(
-        currentPose.getY(),
-        desiredState.poseMeters.getY());
+
+    double yCmd = this.yDistancePID.calculate(currentPose.getY(), desiredState.poseMeters.getY());
     SmartDashboard.putNumber("yPID_yCmd", yCmd);
 
-    double rotCmd = this.rotationPID.calculate(
-      this.subSys_DriveTrain.getHeading().getDegrees(),
-      desiredState.holonomicRotation.getDegrees());
+    double rotCmd =
+        this.rotationPID.calculate(
+            this.subSys_DriveTrain.getHeading().getDegrees(),
+            desiredState.holonomicRotation.getDegrees());
     SmartDashboard.putNumber("rotPID_rotCmd", rotCmd);
 
-    this.subSys_DriveTrain.Drive(
-      xCmd,
-      yCmd,
-      rotCmd,
-      true,
-      false,
-      false);
-
+    this.subSys_DriveTrain.Drive(xCmd, yCmd, rotCmd, true, false, false);
   }
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    this.subSys_DriveTrain.Drive(
-      0.0,
-      0.0,
-      0.0,
-      false,
-      false,
-      false);
+    this.subSys_DriveTrain.Drive(0.0, 0.0, 0.0, false, false, false);
   }
 
   // Returns true when the command should end.

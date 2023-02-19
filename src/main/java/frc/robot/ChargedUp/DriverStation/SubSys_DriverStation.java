@@ -13,10 +13,10 @@ public class SubSys_DriverStation extends SubsystemBase {
 
   // Driver Controller
   private XboxController m_DriverController = new XboxController(0);
-  
+
   // Co-Driver Controller
   private XboxController m_CoDriverController = new XboxController(1);
-  
+
   // AuxDriver Controller
   private XboxController m_AuxDriverController = new XboxController(2);
 
@@ -24,56 +24,53 @@ public class SubSys_DriverStation extends SubsystemBase {
   public JoystickButton PoseResetButton = new JoystickButton(m_AuxDriverController, 1);
   public JoystickButton TestButton = new JoystickButton(m_DriverController, 3);
 
-  public SubSys_DriverStation() {
-  }
+  public SubSys_DriverStation() {}
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
   }
-    
-  /**
-  ****** Library
-  */
+
+  /** ***** Library */
 
   // ---- Drive Subsystem
   // Drive Fwd Axis
-  public double DriveFwdAxis(){
+  public double DriveFwdAxis() {
     return -m_DriverController.getRawAxis(1);
   }
 
   // Drive Strafe Axis
-  public double DriveStrAxis(){
+  public double DriveStrAxis() {
     return -m_DriverController.getRawAxis(0);
   }
 
   // Drive Rotate Axis
-  public double DriveRotAxis(){
+  public double DriveRotAxis() {
     return -m_DriverController.getRawAxis(4);
   }
 
   // Drive RotateLeftPoint
-  public boolean RotateLeftPt(){
+  public boolean RotateLeftPt() {
     return m_DriverController.getRawButton(5);
   }
 
   // Drive RotateRightPoint
-  public boolean RotateRightPt(){
+  public boolean RotateRightPt() {
     return m_DriverController.getRawButton(6);
   }
-  
+
   /*
-  ***** Rapid React Components
-  */
+   ***** Rapid React Components
+   */
 
   // ---- Intake
   // ------ IntakeInNOut
 
   // IntakeInNOut_Intake
-  public boolean IntakeInNOut_Intake(){
+  public boolean IntakeInNOut_Intake() {
     return m_CoDriverController.getRawButton(1);
   }
-  
+
   /*
   // IntakeInOut_ShortShot
   public boolean IntakeInNOut_ShortShot(){
@@ -82,7 +79,7 @@ public class SubSys_DriverStation extends SubsystemBase {
   */
 
   // IntakeInOut_ShortShot Axis
-  public double IntakeInNOut_ShortShotAxis(){
+  public double IntakeInNOut_ShortShotAxis() {
     return m_CoDriverController.getRightTriggerAxis();
   }
 
@@ -94,49 +91,49 @@ public class SubSys_DriverStation extends SubsystemBase {
   */
 
   // IntakeInNOut_LongShotAxis
-  public double IntakeInNOut_LongShotAxis(){
+  public double IntakeInNOut_LongShotAxis() {
     return m_CoDriverController.getLeftTriggerAxis();
   }
 
   // ------IntakeArm
 
-  //IntakeArm_Axis
-  public double IntakeArm_Axis(){
+  // IntakeArm_Axis
+  public double IntakeArm_Axis() {
     return m_CoDriverController.getRawAxis(1);
   }
 
   // IntakeLeftTrigger
-  public boolean IntakeLeftTrigger(){
+  public boolean IntakeLeftTrigger() {
     return m_CoDriverController.getRawButton(5);
   }
 
   // IntakeRightTrigger
-  public boolean IntakeRightTrigger(){
+  public boolean IntakeRightTrigger() {
     return m_CoDriverController.getRawButton(6);
   }
 
   // ---- Climber
   // ------ Climber Lift
-  
+
   // Climber Lift Positive
-  public boolean ClimberLiftPositiveBtn(){
+  public boolean ClimberLiftPositiveBtn() {
     return m_DriverController.getRawButton(4);
   }
 
   // Climber Lift Negative
-  public boolean ClimberLiftNegativeBtn(){
+  public boolean ClimberLiftNegativeBtn() {
     return m_DriverController.getRawButton(1);
   }
-  
+
   // ------ Climber Rotator
-  public boolean ClimberLiftRotatorPositiveBtn(){
+  public boolean ClimberLiftRotatorPositiveBtn() {
     return m_DriverController.getRawButton(2);
   }
 
-  public boolean ClimberLiftRotatorNegativeBtn(){
+  public boolean ClimberLiftRotatorNegativeBtn() {
     return m_DriverController.getRawButton(3);
 
-  // ---- TEST POSE
+    // ---- TEST POSE
 
   }
 }
