@@ -92,9 +92,8 @@ public class MK4i_FalconFalcon_Module {
     desiredState =
         CTREModuleState.optimize(
             desiredState,
-            getState()
-                .angle); // Custom optimize command, since default WPILib optimize assumes
-                         // continuous controller which CTRE is not
+            getState().angle); // Custom optimize command, since default WPILib optimize assumes
+    // continuous controller which CTRE is not
 
     /* Drive Motor Command */
     // Open Loop
