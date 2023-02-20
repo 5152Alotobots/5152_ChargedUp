@@ -47,25 +47,8 @@ public class SubSys_Arm extends SubsystemBase {
       armExtensionCanCoder.configAllSettings(armExtensionCanCoderConfiguration);
   }
 
-  /** rotateArmShoulder
-   *    use this command to rotate the ArmShoulder
-   * @param percentCommand double percentCommand (-1 - 1)
-   */
-  public void rotateArmShoulder(double percentCommand) {
-    Arm_ShoulderMotor.set(TalonFXControlMode.PercentOutput, percentCommand);
-    Arm_ShoulderFollowerMotor.set(TalonFXControlMode.PercentOutput, 0.0);
-  }
-/**
- *     use this command to rotate the ArmShoulder
- * @param angleCommand double angleCommand (0 - 360)
- */
-  public void rotateArmShoulder_angleCommand(double angleCommand){
-    Arm_ShoulderMotor.set(TalonFXControlMode.Position, angleCommand);
-  }
 
-  public void rotateArmShoulder_feedForward(double percentCommand) {
-    Arm_ShoulderMotor.set(TalonFXControlMode.PercentOutput, percentCommand, DemandType.ArbitraryFeedForward, 0);
-  }
+  //*Math methods
   //z = height
   public double getHeightOfArmFromBase(double ArmShoulderAngle, double ArmExtensionLength) {
     return Const_Arm.kARM_SHOULDER_z + Math.cos(ArmShoulderAngle) * (ArmExtensionLength + Const_Arm.kHAND_LENGTH);
@@ -74,27 +57,58 @@ public class SubSys_Arm extends SubsystemBase {
   public double getLengthOfArmFromBase(double ArmShoulderAngle, double ArmExtensionLength) {
     return Const_Arm.kARM_SHOULDER_x + Math.sin(ArmShoulderAngle) * (ArmExtensionLength + Const_Arm.kHAND_LENGTH);
   }
-  public void extend(double percentCommand) {
-    ArmExtensionMotor.set(TalonFXControlMode.PercentOutput, percentCommand);
 
-  }
-  public void extendUntilOuterBoundry(double percentCommand) {
+  //*Motor methods (-SHOULDER-)
 
-    double currentHeight = getHeightOfArmFromBase(0, 0);
-    double currentLength = getLengthOfArmFromBase(0, 0);
+    /** @param angleCommand double angleCommand (0 - 360) */
 
-    if (currentHeight < Const_Arm.k_MAX_EXTENSION_z && currentLength < Const_Arm.k_MAX_EXTENSION_x) {
+    public void rotateArmShoulder_angleCommand(double angleCommand){
+      Arm_ShoulderMotor.set(TalonFXControlMode.Position, angleCommand);
+      //TODO fix this follow cmd 
+      Arm_ShoulderFollowerMotor.set(TalonFXControlMode.Position, angleCommand);
+    }
+
+    /** @param percentCommand double percentCommand (-1 - 1) */
+
+    public void rotateArmShoulder_feedForward(double percentCommand) {
+      Arm_ShoulderMotor.set(TalonFXControlMode.PercentOutput, percentCommand, DemandType.ArbitraryFeedForward, 0);
+      Arm_ShoulderFollowerMotor.set(TalonFXControlMode.PercentOutput, 0.0);
+    }
+
+   /** @param percentCommand double percentCommand (-1 - 1) */
+
+    public void rotateArmShoulder(double percentCommand) {
+      Arm_ShoulderMotor.set(TalonFXControlMode.PercentOutput, percentCommand);
+      Arm_ShoulderFollowerMotor.set(TalonFXControlMode.PercentOutput, 0.0);
+    }
+
+  //*Motor methods (-Extend-) 
+
+    /** @param percentCommand double percentCommand (-1 - 1) */
+
+    public void extend(double percentCommand) {
       ArmExtensionMotor.set(TalonFXControlMode.PercentOutput, percentCommand);
     }
-    else {
-      SmartDashboard.putString("Info", "Arm has reached outer boundry");
+
+    public void extendUntilOuterBoundary(double percentCommand) {
+
+      double currentHeight = getHeightOfArmFromBase(0, 0);
+      double currentLength = getLengthOfArmFromBase(0, 0);
+
+      if (currentHeight < Const_Arm.k_MAX_EXTENSION_z && currentLength < Const_Arm.k_MAX_EXTENSION_x) {
+        ArmExtensionMotor.set(TalonFXControlMode.PercentOutput, percentCommand);
+      }
+      else {
+        SmartDashboard.putString("Info", "Arm has reached outer boundary");
+      }
     }
-  }
+
+
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.getNumber("SubSys_Arm__ShoulderMotor_Position",Arm_ShoulderMotor.getSelectedSensorPosition());
-    SmartDashboard.getNumber("SubSys_Arm__ShoulderFollowerMotor_Position",Arm_ShoulderFollowerMotor.getSelectedSensorPosition());
+    SmartDashboard.getNumber("SubSys_Arm__ShoulderMotor_Position", Arm_ShoulderMotor.getSelectedSensorPosition());
+    SmartDashboard.getNumber("SubSys_Arm__ShoulderFollowerMotor_Position", Arm_ShoulderFollowerMotor.getSelectedSensorPosition());
   }
 }
