@@ -117,15 +117,15 @@ public class RobotContainer {
     armSubSys.setDefaultCommand(new Cmd_ArmDefault(
       armSubSys, 
       () -> driverStationSubSys.GetArmRotateAxis(),
-      () -> driverStationSubSys.GetArmExtendAxis())
-    );
+      () -> driverStationSubSys.GetArmExtendAxis()
+    ));
 
     handSubSys.setDefaultCommand(new Cmd_HandWithSensor(
       handSubSys, 
       colorSubSys, 
       distanceSubsys, 
-      () ->  driverStationSubSys.HandSensorBtn())
-    );
+      () ->  driverStationSubSys.HandSensorBtn()
+    ));
 
     mecanumDriveSubSys.setDefaultCommand(new Cmd_MecanumDriveDefault(
       mecanumDriveSubSys, 
