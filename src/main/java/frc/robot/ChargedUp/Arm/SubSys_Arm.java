@@ -14,7 +14,6 @@ import com.ctre.phoenix.motorcontrol.DemandType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.ChargedUp.Arm.Const_Arm;
 
 public class SubSys_Arm extends SubsystemBase {
   private CANCoderConfiguration armExtensionCanCoderConfiguration = new CANCoderConfiguration();
@@ -95,7 +94,7 @@ public class SubSys_Arm extends SubsystemBase {
       double currentHeight = getHeightOfArmFromBase(0, 0);
       double currentLength = getLengthOfArmFromBase(0, 0);
 
-      if (currentHeight < Const_Arm.k_MAX_EXTENSION_z && currentLength < Const_Arm.k_MAX_EXTENSION_x) {
+      if (currentHeight < Const_Arm.kMAX_EXTENSION_z && currentLength < Const_Arm.kMAX_EXTENSION_x) {
         ArmExtensionMotor.set(TalonFXControlMode.PercentOutput, percentCommand);
       }
       else {
