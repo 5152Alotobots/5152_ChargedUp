@@ -90,7 +90,7 @@ public class SubSys_Arm extends SubsystemBase {
       ArmExtensionMotor.set(TalonFXControlMode.PercentOutput, percentCommand);
     }
 
-    public void extendUntilOuterBoundary(double percentCommand) {
+    public void extend_UntilOuterBoundary(double percentCommand) {
 
       double currentHeight = getHeightOfArmFromBase(0, 0);
       double currentLength = getLengthOfArmFromBase(0, 0);
