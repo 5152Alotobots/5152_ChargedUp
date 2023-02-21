@@ -36,11 +36,12 @@ public class SubSys_PigeonGyro extends SubsystemBase {
     SmartDashboard.putNumber("Pigeon_getYawRotation2d", getYawRotation2d().getDegrees());
     // SmartDashboard.putNumber("GyroCompass", m_Pigeon2Gyro.getCompassHeading());
   }
-  public double getRawGyroPitch(){
+
+  public double getRawGyroPitch() {
     return this.pigeon2Gyro.getPitch();
   }
 
-  public double getRawGyroRoll(){
+  public double getRawGyroRoll() {
     return this.pigeon2Gyro.getRoll();
   }
   /**
