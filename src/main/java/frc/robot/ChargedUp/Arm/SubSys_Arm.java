@@ -21,7 +21,7 @@ public class SubSys_Arm extends SubsystemBase {
 
   private TalonFX Arm_ShoulderMotor = new TalonFX(Constants.CAN_IDs.ArmShoulderMtr_CAN_ID);
   private TalonFX Arm_ShoulderFollowerMotor = new TalonFX(Constants.CAN_IDs.ArmShoulderFollowerMtr_CAN_ID);
-  private CANCoder armShoulderCanCoder = new CANCoder(Constants.CAN_IDs.ArmShoulderCANCoder_CAN_ID);
+  private CANCoder Arm_ShoulderCanCoder = new CANCoder(Constants.CAN_IDs.ArmShoulderCANCoder_CAN_ID);
 
   private TalonFX ArmExtensionMotor = new TalonFX(Constants.CAN_IDs.ArmExtensionMtr_CAN_ID);
   private CANCoder armExtensionCanCoder = new CANCoder(Constants.CAN_IDs.ArmExtensionCANCoder_CAN_ID);
@@ -31,10 +31,14 @@ public class SubSys_Arm extends SubsystemBase {
       Arm_ShoulderMotor.configFactoryDefault();
       Arm_ShoulderMotor.setInverted(false);
       Arm_ShoulderMotor.setNeutralMode(NeutralMode.Brake);
-
+      Arm_ShoulderMotor.configRemoteFeedbackFilter(Arm_ShoulderCanCoder, 0);
+      
       Arm_ShoulderFollowerMotor.configFactoryDefault();
-      Arm_ShoulderFollowerMotor.setInverted(false);
-      Arm_ShoulderFollowerMotor.setNeutralMode(NeutralMode.Coast);
+      Arm_ShoulderFollowerMotor.setInverted(true);
+      Arm_ShoulderFollowerMotor.setNeutralMode(NeutralMode.Brake);
+      Arm_ShoulderFollowerMotor.follow(Arm_ShoulderMotor);
+
+      Arm_ShoulderCanCoder.configFactoryDefault();
 
       ArmExtensionMotor.configFactoryDefault();
       ArmExtensionMotor.setInverted(false);
@@ -53,7 +57,7 @@ public class SubSys_Arm extends SubsystemBase {
    */
   public void rotateArmShoulder(double percentCommand) {
     Arm_ShoulderMotor.set(TalonFXControlMode.PercentOutput, percentCommand);
-    Arm_ShoulderFollowerMotor.set(TalonFXControlMode.PercentOutput, 0.0);
+    //Arm_ShoulderFollowerMotor.set(TalonFXControlMode.PercentOutput, 0.0);
   }
 /**
  *     use this command to rotate the ArmShoulder
@@ -94,7 +98,8 @@ public class SubSys_Arm extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.getNumber("SubSys_Arm__ShoulderMotor_Position",Arm_ShoulderMotor.getSelectedSensorPosition());
-    SmartDashboard.getNumber("SubSys_Arm__ShoulderFollowerMotor_Position",Arm_ShoulderFollowerMotor.getSelectedSensorPosition());
+    SmartDashboard.putNumber("SubSys_Arm__ShoulderMotor_Position",Arm_ShoulderMotor.getSelectedSensorPosition());
+    SmartDashboard.putNumber("SubSys_Arm__ShoulderFollowerMotor_Position",Arm_ShoulderFollowerMotor.getSelectedSensorPosition());
+    SmartDashboard.putNumber("SubSys_Arm_ShoulderCanCoder_Position",Arm_ShoulderCanCoder.getAbsolutePosition());
   }
 }

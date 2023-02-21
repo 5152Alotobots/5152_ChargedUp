@@ -67,7 +67,7 @@ public class RobotContainer {
   public final SubSys_MecanumDrive mecanumDriveSubSys = new SubSys_MecanumDrive();
 
 
-  public final SubSys_ColorSensor colorSubSys = new SubSys_ColorSensor();
+  //public final SubSys_ColorSensor colorSubSys = new SubSys_ColorSensor();
  
   public final SubSys_DistanceSensor distanceSubsys = new SubSys_DistanceSensor();
   // ---- Driver Station
@@ -120,12 +120,12 @@ public class RobotContainer {
       () -> driverStationSubSys.GetArmExtendAxis())
     );
 
-    handSubSys.setDefaultCommand(new Cmd_HandWithSensor(
-      handSubSys, 
-      colorSubSys, 
-      distanceSubsys, 
-      () ->  driverStationSubSys.HandSensorBtn())
-    );
+    //handSubSys.setDefaultCommand(new Cmd_HandWithSensor(
+    //  handSubSys, 
+    //  colorSubSys, 
+    //  distanceSubsys, 
+    //  () ->  driverStationSubSys.HandSensorBtn())
+    //);
 
     mecanumDriveSubSys.setDefaultCommand(new Cmd_MecanumDriveDefault(
       mecanumDriveSubSys, 
