@@ -11,6 +11,8 @@ import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.CANCoderConfiguration;
 import com.ctre.phoenix.sensors.SensorTimeBase;
 import com.ctre.phoenix.motorcontrol.DemandType;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -31,6 +33,8 @@ public class SubSys_Arm extends SubsystemBase {
       Arm_ShoulderMotor.setInverted(false);
       Arm_ShoulderMotor.setNeutralMode(NeutralMode.Brake);
       Arm_ShoulderMotor.configRemoteFeedbackFilter(Arm_ShoulderCanCoder, 0);
+      Arm_ShoulderMotor.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor0);
+      Arm_ShoulderMotor.configSelectedFeedbackCoefficient(1/4096);
       
       Arm_ShoulderFollowerMotor.configFactoryDefault();
       Arm_ShoulderFollowerMotor.setInverted(true);
@@ -43,11 +47,11 @@ public class SubSys_Arm extends SubsystemBase {
       ArmExtensionMotor.setInverted(false);
       ArmExtensionMotor.setNeutralMode(NeutralMode.Brake);
      
-      armExtensionCanCoderConfiguration.sensorCoefficient = 2 * Math.PI / 4096.0;
-      armExtensionCanCoderConfiguration.unitString = "rad";
-      armExtensionCanCoderConfiguration.sensorTimeBase = SensorTimeBase.PerSecond;
+      // armExtensionCanCoderConfiguration.sensorCoefficient = 2 * Math.PI / 4096.0;
+      // armExtensionCanCoderConfiguration.unitString = "rad";
+      // armExtensionCanCoderConfiguration.sensorTimeBase = SensorTimeBase.PerSecond;
       
-      armExtensionCanCoder.configAllSettings(armExtensionCanCoderConfiguration);
+      // armExtensionCanCoder.configAllSettings(armExtensionCanCoderConfiguration);
   }
 
   //*Math methods
@@ -74,14 +78,14 @@ public class SubSys_Arm extends SubsystemBase {
 
     public void rotateArmShoulder_feedForward(double percentCommand) {
       Arm_ShoulderMotor.set(TalonFXControlMode.PercentOutput, percentCommand, DemandType.ArbitraryFeedForward, 0);
-      Arm_ShoulderFollowerMotor.set(TalonFXControlMode.PercentOutput, 0.0);
+      //Arm_ShoulderFollowerMotor.set(TalonFXControlMode.PercentOutput, 0.0);
     }
 
    /** @param percentCommand double percentCommand (-1 - 1) */
 
     public void rotateArmShoulder(double percentCommand) {
       Arm_ShoulderMotor.set(TalonFXControlMode.PercentOutput, percentCommand);
-      Arm_ShoulderFollowerMotor.set(TalonFXControlMode.PercentOutput, 0.0);
+      //Arm_ShoulderFollowerMotor.set(TalonFXControlMode.PercentOutput, 0.0);
     }
 
   //*Motor methods (-Extend-) 
@@ -113,6 +117,5 @@ public class SubSys_Arm extends SubsystemBase {
     SmartDashboard.putNumber("SubSys_Arm__ShoulderMotor_Position",Arm_ShoulderMotor.getSelectedSensorPosition());
     SmartDashboard.putNumber("SubSys_Arm__ShoulderFollowerMotor_Position",Arm_ShoulderFollowerMotor.getSelectedSensorPosition());
     SmartDashboard.putNumber("SubSys_Arm_ShoulderCanCoder_Position",Arm_ShoulderCanCoder.getAbsolutePosition());
-
   }
 }
