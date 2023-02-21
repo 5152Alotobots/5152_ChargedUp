@@ -14,9 +14,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.ChargedUp.ColorSensor.SubSys_ColorSensor;
-import frc.robot.ChargedUp.DistanceSensor.SubSys_DistanceSensor;
+// import frc.robot.ChargedUp.DistanceSensor.SubSys_DistanceSensor;
 import frc.robot.ChargedUp.DriverStation.SubSys_DriverStation;
-import frc.robot.ChargedUp.Hand.Cmd.Cmd_HandWithSensor;
+// import frc.robot.ChargedUp.Hand.Cmd.Cmd_HandWithSensor;
 import frc.robot.ChargedUp.Hand.SubSys_Hand;
 import frc.robot.ChargedUp.MecanumDrive.SubSys_MecanumDrive;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmd_SubSys_DriveTrain_JoysticDefault;
@@ -60,7 +60,7 @@ public class RobotContainer {
 
   public final SubSys_ColorSensor colorSubSys = new SubSys_ColorSensor();
 
-  public final SubSys_DistanceSensor distanceSubsys = new SubSys_DistanceSensor();
+  // public final SubSys_DistanceSensor distanceSubsys = new SubSys_DistanceSensor();
   // ---- Driver Station
 
   // ---- Hand
@@ -100,9 +100,9 @@ public class RobotContainer {
     // Configure default commands
 
     /** ***** Control System Components */
-    handSubSys.setDefaultCommand(
-        new Cmd_HandWithSensor(
-            handSubSys, colorSubSys, distanceSubsys, () -> driverStation.HandSensorBtn()));
+    // handSubSys.setDefaultCommand(
+    //     new Cmd_HandWithSensor(
+    //         handSubSys, colorSubSys, distanceSubsys, () -> driverStation.HandSensorBtn()));
     // ---- Drive Subsystem Default Command
     driveSubSys.setDefaultCommand(
         new Cmd_SubSys_DriveTrain_JoysticDefault(
