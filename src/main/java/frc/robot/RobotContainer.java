@@ -136,7 +136,7 @@ public class RobotContainer {
           0)
         */
 
-        new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "ForwardTest", true, true));
+        new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "charge", true, true));
   }
 
   // when test button is pressed run the rotate to heading command to a random number between 0 and
