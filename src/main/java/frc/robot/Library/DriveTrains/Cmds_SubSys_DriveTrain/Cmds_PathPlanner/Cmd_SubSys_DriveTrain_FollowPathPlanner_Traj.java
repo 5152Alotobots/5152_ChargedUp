@@ -135,6 +135,10 @@ public class Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj extends CommandBase {
     SmartDashboard.putNumber("rotPID_rotCmd", rotCmd);
 
     this.subSys_DriveTrain.Drive(xCmd, yCmd, rotCmd, true, false, false);
+
+    SmartDashboard.putBoolean("x dist at set", this.xDistancePID.atSetpoint());
+    SmartDashboard.putBoolean("y dist at set", this.yDistancePID.atSetpoint());
+    SmartDashboard.putBoolean("rot dist at set", this.rotationPID.atSetpoint());
   }
   // Called once the command ends or is interrupted.
   @Override
@@ -145,6 +149,11 @@ public class Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    PathPlannerState endState = ppTraj.getEndState();
+    PathPlannerState currentState = (PathPlannerState) ppTraj.sample(this.timer.get());
+    if (endState == currentState){
+      return true;
+    }
     return false;
   }
 }
