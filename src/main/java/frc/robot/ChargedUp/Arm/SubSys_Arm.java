@@ -99,16 +99,45 @@ public class SubSys_Arm extends SubsystemBase {
       ArmExtensionMotor.set(TalonFXControlMode.PercentOutput, percentCommand);
     }
 
-    public void extend_UntilOuterBoundary(double percentCommand) {
+    /** @param percentCommand double percentCommand (-1 - 1)
+     *  @param ArmShoulderAngle double shoulderAngle (0 - 360)
+     */
 
+    public void rotate_UntilOuterBoundary(double percentCommand, double ArmShoulderAngle) {
       double currentHeight = getHeightOfArmFromBase(0, 0);
       double currentLength = getLengthOfArmFromBase(0, 0);
+      
+      if (currentHeight < Const_Arm.kMAX_EXTENSION_z && currentLength < Const_Arm.kMAX_EXTENSION_x) {
+        SmartDashboard.putString("Boundary", "No boundary hit");
+        Arm_ShoulderMotor.set(TalonFXControlMode.PercentOutput, percentCommand);
+      }
+      if (currentHeight > Const_Arm.kMAX_EXTENSION_z) {
+        if (ArmShoulderAngle >=   0 && ArmShoulderAngle < 90 ) rotateArmShoulder(Math.min(0, percentCommand));
+        if (ArmShoulderAngle >=  90 && ArmShoulderAngle < 180) rotateArmShoulder(Math.max(0, percentCommand));
+      }
+      if (currentHeight > Const_Arm.kMAX_EXTENSION_x) {
+        SmartDashboard.putString("Boundary", "Width boundary hit");
+        if (ArmShoulderAngle >=   0 && ArmShoulderAngle < 90 ) rotateArmShoulder(Math.max(0, percentCommand));
+        if (ArmShoulderAngle >=  90 && ArmShoulderAngle < 180) rotateArmShoulder(Math.min(0, percentCommand));
+        if (ArmShoulderAngle >= 180 && ArmShoulderAngle < 270) rotateArmShoulder(Math.max(0, percentCommand));
+        if (ArmShoulderAngle >= 270 && ArmShoulderAngle < 360) rotateArmShoulder(Math.min(0, percentCommand));
+      }
+      else { 
+      SmartDashboard.putString("Boundary", "Both boundary hit");
+        rotateArmShoulder(0);
+      }
+    }
 
+    /** @param percentCommand double percentCommand (-1 - 1) */
+
+    public void extend_UntilOuterBoundary(double percentCommand) {
+      double currentHeight = getHeightOfArmFromBase(0, 0);
+      double currentLength = getLengthOfArmFromBase(0, 0);
+    
       if (currentHeight < Const_Arm.kMAX_EXTENSION_z && currentLength < Const_Arm.kMAX_EXTENSION_x) {
         ArmExtensionMotor.set(TalonFXControlMode.PercentOutput, percentCommand);
       }
       else {
-        SmartDashboard.putString("Info", "Arm has reached outer boundary");
         ArmExtensionMotor.set(TalonFXControlMode.PercentOutput, Math.min(0, percentCommand)); //arm can retract but not extend
       }
     }
