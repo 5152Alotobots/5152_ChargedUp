@@ -91,14 +91,6 @@ public class SubSys_Arm extends SubsystemBase {
       //Arm_ShoulderFollowerMotor.set(TalonFXControlMode.PercentOutput, 0.0);
     }
 
-  //*Motor methods (-Extend-) 
-
-    /** @param percentCommand double percentCommand (-1 - 1) */
-
-    public void extend(double percentCommand) {
-      ArmExtensionMotor.set(TalonFXControlMode.PercentOutput, percentCommand);
-    }
-
     /** @param percentCommand double percentCommand (-1 - 1)
      *  @param ArmShoulderAngle double shoulderAngle (0 - 360)
      */
@@ -111,10 +103,12 @@ public class SubSys_Arm extends SubsystemBase {
         SmartDashboard.putString("Boundary", "No boundary hit");
         Arm_ShoulderMotor.set(TalonFXControlMode.PercentOutput, percentCommand);
       }
+
       if (currentHeight > Const_Arm.kMAX_EXTENSION_z) {
         if (ArmShoulderAngle >=   0 && ArmShoulderAngle < 90 ) rotateArmShoulder(Math.min(0, percentCommand));
         if (ArmShoulderAngle >=  90 && ArmShoulderAngle < 180) rotateArmShoulder(Math.max(0, percentCommand));
       }
+
       if (currentHeight > Const_Arm.kMAX_EXTENSION_x) {
         SmartDashboard.putString("Boundary", "Width boundary hit");
         if (ArmShoulderAngle >=   0 && ArmShoulderAngle < 90 ) rotateArmShoulder(Math.max(0, percentCommand));
@@ -122,10 +116,19 @@ public class SubSys_Arm extends SubsystemBase {
         if (ArmShoulderAngle >= 180 && ArmShoulderAngle < 270) rotateArmShoulder(Math.max(0, percentCommand));
         if (ArmShoulderAngle >= 270 && ArmShoulderAngle < 360) rotateArmShoulder(Math.min(0, percentCommand));
       }
-      else { 
+
+      if (currentHeight > Const_Arm.kMAX_EXTENSION_z && currentLength > Const_Arm.kMAX_EXTENSION_x) { 
       SmartDashboard.putString("Boundary", "Both boundary hit");
         rotateArmShoulder(0);
       }
+    }
+
+  //*Motor methods (-Extend-) 
+
+    /** @param percentCommand double percentCommand (-1 - 1) */
+
+    public void extend(double percentCommand) {
+      ArmExtensionMotor.set(TalonFXControlMode.PercentOutput, percentCommand);
     }
 
     /** @param percentCommand double percentCommand (-1 - 1) */
