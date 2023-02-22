@@ -57,14 +57,17 @@ public class SubSys_Arm extends SubsystemBase {
   //*Math methods
   //z = height
   public double getHeightOfArmFromBase(double ArmShoulderAngle, double ArmExtensionLength) {
-    if (ArmShoulderAngle >= 0 && ArmShoulderAngle <= 180) 
-        return Const_Arm.kARM_SHOULDER_z + (Math.sin(ArmShoulderAngle) * (ArmExtensionLength + Const_Arm.kHAND_LENGTH)); //if angle is between 0-180
+    if (ArmShoulderAngle >= 0 && ArmShoulderAngle <= 180) {
+      double radians = Math.toRadians(ArmShoulderAngle); //Convert from degrees to radians 
+      return Const_Arm.kARM_SHOULDER_z + (Math.sin(radians) * (ArmExtensionLength + Const_Arm.kHAND_LENGTH)); //if angle is between 0-180
+    }
     else 
         return Const_Arm.kARM_SHOULDER_z; //if not the hight = the arm pivot point 
   }
   //x = offset
   public double getLengthOfArmFromBase(double ArmShoulderAngle, double ArmExtensionLength) {
-    return (Const_Arm.kARM_SHOULDER_x + Math.cos(ArmShoulderAngle) * (ArmExtensionLength + Const_Arm.kHAND_LENGTH)) - Const_Arm.kROBOT_WIDTH; //no if needed because we simply subtract the robots width and it does not matter if this becomes negative
+    double radians = Math.toRadians(ArmShoulderAngle); //Convert from degrees to radians 
+    return (Const_Arm.kARM_SHOULDER_x + Math.cos(radians) * (ArmExtensionLength + Const_Arm.kHAND_LENGTH)) - Const_Arm.kROBOT_WIDTH; //no if needed because we simply subtract the robots width and it does not matter if this becomes negative
   }
 
   //*Motor methods (-SHOULDER-)
