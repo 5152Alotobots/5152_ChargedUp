@@ -95,9 +95,12 @@ public class SubSys_Arm extends SubsystemBase {
      *  @param ArmShoulderAngle double shoulderAngle (0 - 360)
      */
 
-    public void rotate_UntilOuterBoundary(double percentCommand, double ArmShoulderAngle) {
-      double currentHeight = getHeightOfArmFromBase(0, 0);
-      double currentLength = getLengthOfArmFromBase(0, 0);
+    public void rotate_UntilOuterBoundary(double percentCommand) {
+      double ArmShoulderAngle = Arm_ShoulderMotor.getSelectedSensorPosition();
+      double ArmExtendLength = ArmExtensionMotor.getSelectedSensorPosition();
+
+      double currentHeight = getHeightOfArmFromBase(ArmShoulderAngle, ArmExtendLength);
+      double currentLength = getLengthOfArmFromBase(ArmShoulderAngle, ArmExtendLength);
       
       if (currentHeight < Const_Arm.kMAX_EXTENSION_z && currentLength < Const_Arm.kMAX_EXTENSION_x) {
         SmartDashboard.putString("Boundary", "No boundary hit");
@@ -134,8 +137,11 @@ public class SubSys_Arm extends SubsystemBase {
     /** @param percentCommand double percentCommand (-1 - 1) */
 
     public void extend_UntilOuterBoundary(double percentCommand) {
-      double currentHeight = getHeightOfArmFromBase(0, 0);
-      double currentLength = getLengthOfArmFromBase(0, 0);
+      double ArmShoulderAngle = Arm_ShoulderMotor.getSelectedSensorPosition();
+      double ArmExtendLength = ArmExtensionMotor.getSelectedSensorPosition();
+
+      double currentHeight = getHeightOfArmFromBase(ArmShoulderAngle, ArmExtendLength);
+      double currentLength = getLengthOfArmFromBase(ArmShoulderAngle, ArmExtendLength);
     
       if (currentHeight < Const_Arm.kMAX_EXTENSION_z && currentLength < Const_Arm.kMAX_EXTENSION_x) {
         ArmExtensionMotor.set(TalonFXControlMode.PercentOutput, percentCommand);
