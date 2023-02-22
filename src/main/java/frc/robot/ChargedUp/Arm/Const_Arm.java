@@ -11,4 +11,5 @@ public class Const_Arm {
     public static final double kMAX_EXTENSION_z = 0;
     public static final double kMAX_ROTATION_SPEED = .5;
     public static final double kMAX_EXTENSION_SPEED = .2;
+    public static final double kROBOT_WIDTH = 0;
 }
