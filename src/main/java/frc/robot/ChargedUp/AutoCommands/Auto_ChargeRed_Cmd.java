@@ -17,20 +17,21 @@ import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.htm
 
-public class Auto_ChargeRed2_Cmd extends SequentialCommandGroup {
+public class Auto_ChargeRed_Cmd extends SequentialCommandGroup {
   private final SubSys_DriveTrain m_DriveTrain;
   private final SubSys_PigeonGyro m_pigeonGyro;
 
   /** Creates a new Auto_Challenge1_Cmd. */
-  public Auto_ChargeRed2_Cmd(SubSys_DriveTrain driveSubSys, SubSys_PigeonGyro pigeonGyro) {
+  public Auto_ChargeRed_Cmd(SubSys_DriveTrain driveSubSys, SubSys_PigeonGyro pigeonGyro) {
     m_DriveTrain = driveSubSys;
     m_pigeonGyro = pigeonGyro;
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "chargered2", true, true),
+      new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "chargered", true, true),
       new Cmd_AutoBalance(pigeonGyro, driveSubSys)
       );
   
   }
 }
+
