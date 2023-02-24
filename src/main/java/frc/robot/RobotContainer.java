@@ -19,6 +19,8 @@ import frc.robot.ChargedUp.AutoCommands.Auto_MiddleChargeBlue_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_ChargeRed_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_RedLeave_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_MiddleChargeRed_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_OneConeBlue_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_OneConeRed_Cmd;
 import frc.robot.ChargedUp.ColorSensor.SubSys_ColorSensor;
 // import frc.robot.ChargedUp.DistanceSensor.SubSys_DistanceSensor;
 import frc.robot.ChargedUp.DriverStation.SubSys_DriverStation;
@@ -113,6 +115,12 @@ public class RobotContainer {
 
   private final Command m_middlechargeRed =
   new Auto_MiddleChargeRed_Cmd(driveSubSys, gyroSubSys);
+
+  private final Command m_OneConeBlue =
+  new Auto_OneConeBlue_Cmd(driveSubSys, gyroSubSys);
+
+  private final Command m_OneConeRed =
+  new Auto_OneConeRed_Cmd(driveSubSys, gyroSubSys);
   /*
   /*
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -158,6 +166,8 @@ public class RobotContainer {
     m_chooser.addOption("chargered", m_chargeRed);
     m_chooser.addOption("redleave", m_redleave);
     m_chooser.addOption("middlechargered", m_middlechargeRed);
+    m_chooser.addOption("oneconeblue", m_OneConeBlue);
+    m_chooser.addOption("oneconered", m_OneConeRed);
    
     SmartDashboard.putData(m_chooser);
   }
