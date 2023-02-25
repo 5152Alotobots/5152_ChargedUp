@@ -12,6 +12,17 @@ import com.ctre.phoenix.sensors.CANCoderConfiguration;
 import com.ctre.phoenix.sensors.SensorTimeBase;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.IMotorController;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
+import com.ctre.phoenix.motorcontrol.StatusFrame;
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
+import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
+import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -22,10 +33,16 @@ public class SubSys_Arm extends SubsystemBase {
 
   private TalonFX Arm_ShoulderMotor = new TalonFX(Constants.CAN_IDs.ArmShoulderMtr_CAN_ID);
   private TalonFX Arm_ShoulderFollowerMotor = new TalonFX(Constants.CAN_IDs.ArmShoulderFollowerMtr_CAN_ID);
+
+  private TalonFXConfiguration arm_ShoulderMotorConfiguration = new TalonFXConfiguration();
+  private TalonFXConfiguration arm_ShoulderFollowerMotorConfiguration = new TalonFXConfiguration();
+
   private CANCoder Arm_ShoulderCanCoder = new CANCoder(Constants.CAN_IDs.ArmShoulderCANCoder_CAN_ID);
 
   private TalonFX ArmExtensionMotor = new TalonFX(Constants.CAN_IDs.ArmExtensionMtr_CAN_ID);
-  private CANCoder armExtensionCanCoder = new CANCoder(Constants.CAN_IDs.ArmExtensionCANCoder_CAN_ID);
+  private TalonFXConfiguration ArmExtensionConfig = new TalonFXConfiguration();
+  // private CANCoder armExtensionCanCoder = new CANCoder(Constants.CAN_IDs.ArmExtensionCANCoder_CAN_ID); NOT USED
+  
 
   public SubSys_Arm() {
     //*motor configs */
@@ -46,12 +63,9 @@ public class SubSys_Arm extends SubsystemBase {
       ArmExtensionMotor.configFactoryDefault();
       ArmExtensionMotor.setInverted(false);
       ArmExtensionMotor.setNeutralMode(NeutralMode.Brake);
-     
-      // armExtensionCanCoderConfiguration.sensorCoefficient = 2 * Math.PI / 4096.0;
-      // armExtensionCanCoderConfiguration.unitString = "rad";
-      // armExtensionCanCoderConfiguration.sensorTimeBase = SensorTimeBase.PerSecond;
-      
-      // armExtensionCanCoder.configAllSettings(armExtensionCanCoderConfiguration);
+      ArmExtensionMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
+		  ArmExtensionConfig.remoteFilter0.remoteSensorDeviceID = ((IMotorController) ArmExtensionConfig).getDeviceID(); //Device ID of Remote Source
+		  ArmExtensionConfig.remoteFilter0.remoteSensorSource = RemoteSensorSource.TalonFX_SelectedSensor; //Remote Source Type
   }
 
   //*Math methods
@@ -62,7 +76,7 @@ public class SubSys_Arm extends SubsystemBase {
       return Const_Arm.kARM_SHOULDER_z + (Math.sin(radians) * (ArmExtensionLength + Const_Arm.kHAND_LENGTH)); //if angle is between 0-180
     }
     else 
-        return Const_Arm.kARM_SHOULDER_z; //if not the hight = the arm pivot point 
+        return Const_Arm.kARM_SHOULDER_z; //if not above the pivot point then hight is the pivot point 
   }
   //x = offset
   public double getLengthOfArmFromBase(double ArmShoulderAngle, double ArmExtensionLength) {
