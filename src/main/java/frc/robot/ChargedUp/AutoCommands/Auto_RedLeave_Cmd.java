@@ -14,9 +14,8 @@ import frc.robot.Library.DriveTrains.SwerveDrive.*;
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
 
 /**
- * *Link For Path Planner
+ * *Link For PathPlanner
  * *https://docs.google.com/presentation/d/1xjYSI4KpbmGBUY-ZMf1nAFrXIoJo1tl-HHNl8LLqa1I/edit#slide=id.g1e64fa08ff8_0_6
- * 
  */
 
 public class Auto_RedLeave_Cmd extends SequentialCommandGroup {
