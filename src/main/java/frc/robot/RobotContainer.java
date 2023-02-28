@@ -13,16 +13,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.ChargedUp.Arm.SubSys_Arm;
 import frc.robot.ChargedUp.Arm.Cmd.Cmd_ArmDefault;
+import frc.robot.ChargedUp.Arm.SubSys_Arm;
 import frc.robot.ChargedUp.AutoCommands.Auto_ChargeBlue_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_ChargeRed_Cmd;
 import frc.robot.ChargedUp.DriverStation.SubSys_DriverStation;
 import frc.robot.ChargedUp.Hand.SubSys_Hand;
-import frc.robot.ChargedUp.MecanumDrive.SubSys_MecanumDrive;
 import frc.robot.ChargedUp.MecanumDrive.Cmd.Cmd_MecanumDriveDefault;
-import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
+import frc.robot.ChargedUp.MecanumDrive.SubSys_MecanumDrive;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmd_SubSys_DriveTrain_JoysticDefault;
+import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
 import frc.robot.Library.Vision.Limelight.SubSys_LimeLight;
 
@@ -79,12 +79,10 @@ public class RobotContainer {
   // SetUp Auto
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
-  private final Command m_chargeBlue =
-  new Auto_ChargeBlue_Cmd(driveSubSys, gyroSubSys);
-  private final Command m_chargeRed =
-  new Auto_ChargeRed_Cmd(driveSubSys, gyroSubSys);
+  private final Command m_chargeBlue = new Auto_ChargeBlue_Cmd(driveSubSys, gyroSubSys);
+  private final Command m_chargeRed = new Auto_ChargeRed_Cmd(driveSubSys, gyroSubSys);
 
-/* 
+  /*
 
   private final Command m_Auto_PathPlanner_Test_Cmd =
       new DriveSubSys_PathPlanner_Test_Cmd(driveSubSys);
@@ -95,7 +93,7 @@ public class RobotContainer {
   private final Command ihopethisworks =
       new DriveSubSys_PathPlanner_Test_Cmd(driveSubSys);
   */
-  
+
   /*
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -160,18 +158,17 @@ public class RobotContainer {
    * Use this method to define your button->command mappings. Buttons can be created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
-   * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-   * Use this method to define your button->command mappings. Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
-   * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+   * edu.wpi.first.wpilibj2.command.button.JoystickButton}. Use this method to define your
+   * button->command mappings. Buttons can be created by instantiating a {@link GenericHID} or one
+   * of its subclasses ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
+   * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
 
-
     // Gyro Reset Command Button
     driverStationSubSys.OpenHandButton.onTrue(new InstantCommand(handSubSys::OpenHand, handSubSys));
-    driverStationSubSys.CloseHandButton.onTrue(new InstantCommand(handSubSys::CloseHand, handSubSys));
+    driverStationSubSys.CloseHandButton.onTrue(
+        new InstantCommand(handSubSys::CloseHand, handSubSys));
     driverStationSubSys.GyroResetButton.onTrue(new InstantCommand(gyroSubSys::zeroYaw, gyroSubSys));
 
     // Gyro Reset Command Button

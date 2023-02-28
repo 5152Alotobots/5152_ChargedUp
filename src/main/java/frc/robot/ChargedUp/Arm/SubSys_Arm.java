@@ -6,7 +6,6 @@ package frc.robot.ChargedUp.Arm;
 
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.IMotorController;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
@@ -57,7 +56,7 @@ public class SubSys_Arm extends SubsystemBase {
     ArmExtensionMotor.setNeutralMode(NeutralMode.Brake);
     ArmExtensionMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
     // ArmExtensionConfig.remoteFilter0.remoteSensorDeviceID =
-      //  ((IMotorController) ArmExtensionConfig).getDeviceID(); // Device ID of Remote Source
+    //  ((IMotorController) ArmExtensionConfig).getDeviceID(); // Device ID of Remote Source
     ArmExtensionConfig.remoteFilter0.remoteSensorSource =
         RemoteSensorSource.TalonFX_SelectedSensor; // Remote Source Type
   }

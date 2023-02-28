@@ -6,10 +6,8 @@ package frc.robot.ChargedUp.DriverStation;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
 
 public class SubSys_DriverStation extends SubsystemBase {
   /** Creates a new DriverStationSubSys. */
@@ -17,10 +15,8 @@ public class SubSys_DriverStation extends SubsystemBase {
   // Driver Controller
   private XboxController m_DriverController = new XboxController(0);
 
-
   // Co-Driver Controller
   private XboxController m_CoDriverController = new XboxController(1);
-
 
   // AuxDriver Controller
   private XboxController m_AuxDriverController = new XboxController(2);
@@ -68,8 +64,6 @@ public class SubSys_DriverStation extends SubsystemBase {
     return m_DriverController.getRawButton(6);
   }
 
-
-
   // ---- Intake
   // ------ IntakeInNOut
 
@@ -77,7 +71,6 @@ public class SubSys_DriverStation extends SubsystemBase {
   public boolean IntakeInNOut_Intake() {
     return m_CoDriverController.getRawButton(1);
   }
-
 
   /*
   // IntakeInOut_ShortShot
@@ -129,7 +122,6 @@ public class SubSys_DriverStation extends SubsystemBase {
   // ---- Climber
   // ------ Climber Lift
 
-
   // Climber Lift Positive
   public boolean ClimberLiftPositiveBtn() {
 
@@ -140,7 +132,6 @@ public class SubSys_DriverStation extends SubsystemBase {
   public boolean ClimberLiftNegativeBtn() {
     return m_DriverController.getRawButton(1);
   }
-
 
   // ------ Climber Rotator
   public boolean ClimberLiftRotatorPositiveBtn() {
@@ -153,7 +144,6 @@ public class SubSys_DriverStation extends SubsystemBase {
     // ---- TEST POSE
 
   }
-
 
   public double HandSensorBtn() {
     boolean buttonValue = m_AuxDriverController.getRawButton(0);
