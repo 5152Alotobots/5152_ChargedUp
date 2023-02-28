@@ -64,7 +64,7 @@ public class SubSys_Arm extends SubsystemBase {
       ArmExtensionMotor.setInverted(false);
       ArmExtensionMotor.setNeutralMode(NeutralMode.Brake);
       ArmExtensionMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
-		  ArmExtensionConfig.remoteFilter0.remoteSensorDeviceID = ((IMotorController) ArmExtensionConfig).getDeviceID(); //Device ID of Remote Source
+		  // ArmExtensionConfig.remoteFilter0.remoteSensorDeviceID = ((IMotorController) ArmExtensionConfig).getDeviceID(); //Device ID of Remote Source
 		  ArmExtensionConfig.remoteFilter0.remoteSensorSource = RemoteSensorSource.TalonFX_SelectedSensor; //Remote Source Type
   }
 
