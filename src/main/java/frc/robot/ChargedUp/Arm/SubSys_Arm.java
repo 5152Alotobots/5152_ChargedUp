@@ -81,7 +81,7 @@ public class SubSys_Arm extends SubsystemBase {
             + Math.cos(radians) * (ArmExtensionLength + Const_Arm.kHAND_LENGTH))
         - Const_Arm
             .kROBOT_WIDTH; // no if needed because we simply subtract the robots width and it does
-                           // not matter if this becomes negative
+    // not matter if this becomes negative
   }
 
   // *Motor methods (-SHOULDER-)
