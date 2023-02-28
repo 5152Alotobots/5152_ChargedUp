@@ -4,13 +4,13 @@
 
 package frc.robot.ChargedUp.Arm.Cmd;
 
-import java.util.function.DoubleSupplier;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
 // import frc.robot.ChargedUp.DriverStation.SubSys_DriverStation;
 // import java.util.function.DoubleSupplier;
+import java.util.function.DoubleSupplier;
+
 public class Cmd_RotateArmFake extends CommandBase {
   /** Creates a new Cmd_RotateArm. */
   private final SubSys_Arm ArmSubsys;
@@ -22,6 +22,7 @@ public class Cmd_RotateArmFake extends CommandBase {
     this.Axis = Axis;
     addRequirements(ArmSubsys);
   }
+
   public double FalseEncoderValue;
   // Called when the command is initially scheduled.
   @Override
@@ -34,12 +35,13 @@ public class Cmd_RotateArmFake extends CommandBase {
   public void execute() {
     SmartDashboard.putNumber("Axis for Arm Rot", Axis.getAsDouble());
     SmartDashboard.putNumber("False Encoder Value", FalseEncoderValue);
-    SmartDashboard.putNumber("Length Of Arm", ArmSubsys.getLengthOfArmFromBase(FalseEncoderValue, 3));
-    SmartDashboard.putNumber("Height Of Arm", ArmSubsys.getHeightOfArmFromBase(FalseEncoderValue, 3));
-    if (Axis.getAsDouble() > .05 || Axis.getAsDouble() < -.05){
-    FalseEncoderValue = FalseEncoderValue + Axis.getAsDouble();
+    SmartDashboard.putNumber(
+        "Length Of Arm", ArmSubsys.getLengthOfArmFromBase(FalseEncoderValue, 3));
+    SmartDashboard.putNumber(
+        "Height Of Arm", ArmSubsys.getHeightOfArmFromBase(FalseEncoderValue, 3));
+    if (Axis.getAsDouble() > .05 || Axis.getAsDouble() < -.05) {
+      FalseEncoderValue = FalseEncoderValue + Axis.getAsDouble();
     }
-
   }
 
   // Called once the command ends or is interrupted.

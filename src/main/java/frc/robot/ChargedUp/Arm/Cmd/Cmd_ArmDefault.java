@@ -4,12 +4,10 @@
 
 package frc.robot.ChargedUp.Arm.Cmd;
 
-import java.util.function.DoubleSupplier;
-
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.ChargedUp.Arm.Const_Arm;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
+import java.util.function.DoubleSupplier;
 
 public class Cmd_ArmDefault extends CommandBase {
   /** Creates a new Cmd_RotateArm. */
@@ -18,7 +16,8 @@ public class Cmd_ArmDefault extends CommandBase {
   private final DoubleSupplier rotateAxis;
   private final DoubleSupplier extendAxis;
 
-  public Cmd_ArmDefault(SubSys_Arm armSubsys, DoubleSupplier rotateAxis, DoubleSupplier extendAxis) {
+  public Cmd_ArmDefault(
+      SubSys_Arm armSubsys, DoubleSupplier rotateAxis, DoubleSupplier extendAxis) {
     this.armSubsys = armSubsys;
     this.rotateAxis = rotateAxis;
     this.extendAxis = extendAxis;
@@ -27,14 +26,13 @@ public class Cmd_ArmDefault extends CommandBase {
   }
 
   @Override
-  public void initialize() {
-  }
+  public void initialize() {}
 
   @Override
   public void execute() {
-    
-    armSubsys.rotate_UntilOuterBoundary(rotateAxis.getAsDouble() * Const_Arm.kMAX_ROTATION_SPEED); 
-    armSubsys.extend_UntilOuterBoundary(extendAxis.getAsDouble() * Const_Arm.kMAX_EXTENSION_SPEED); 
+
+    armSubsys.rotate_UntilOuterBoundary(rotateAxis.getAsDouble() * Const_Arm.kMAX_ROTATION_SPEED);
+    armSubsys.extend_UntilOuterBoundary(extendAxis.getAsDouble() * Const_Arm.kMAX_EXTENSION_SPEED);
   }
 
   // Called once the command ends or is interrupted.
