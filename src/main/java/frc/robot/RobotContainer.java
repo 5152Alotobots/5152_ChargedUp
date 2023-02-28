@@ -13,7 +13,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.ChargedUp.Arm.SubSys_Arm;
+import frc.robot.ChargedUp.Arm.Cmd.Cmd_ArmDefault;
+import frc.robot.ChargedUp.AutoCommands.Auto_ChargeBlue_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_ChargeRed_Cmd;
 import frc.robot.ChargedUp.DriverStation.SubSys_DriverStation;
+import frc.robot.ChargedUp.Hand.SubSys_Hand;
+import frc.robot.ChargedUp.MecanumDrive.SubSys_MecanumDrive;
+import frc.robot.ChargedUp.MecanumDrive.Cmd.Cmd_MecanumDriveDefault;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmd_SubSys_DriveTrain_JoysticDefault;
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
@@ -55,7 +62,7 @@ public class RobotContainer {
 
   // public final SubSys_ColorSensor colorSubSys = new SubSys_ColorSensor();
 
-  public final SubSys_DistanceSensor distanceSubsys = new SubSys_DistanceSensor();
+  // public final SubSys_DistanceSensor distanceSubsys = new SubSys_DistanceSensor();
   // ---- Driver Station
 
   // ---- Hand
@@ -72,12 +79,12 @@ public class RobotContainer {
   // SetUp Auto
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
-  /*
-   ***** Auto Commands
-   */
-   ***** Auto Commands
-   */
-  /*
+  private final Command m_chargeBlue =
+  new Auto_ChargeBlue_Cmd(driveSubSys, gyroSubSys);
+  private final Command m_chargeRed =
+  new Auto_ChargeRed_Cmd(driveSubSys, gyroSubSys);
+
+/* 
 
   private final Command m_Auto_PathPlanner_Test_Cmd =
       new DriveSubSys_PathPlanner_Test_Cmd(driveSubSys);
@@ -163,16 +170,16 @@ public class RobotContainer {
 
 
     // Gyro Reset Command Button
-    driverStation.OpenHandButton.onTrue(new InstantCommand(handSubSys::OpenHand, handSubSys));
-    driverStation.CloseHandButton.onTrue(new InstantCommand(handSubSys::CloseHand, handSubSys));
-    driverStation.GyroResetButton.onTrue(new InstantCommand(gyroSubSys::zeroYaw, gyroSubSys));
+    driverStationSubSys.OpenHandButton.onTrue(new InstantCommand(handSubSys::OpenHand, handSubSys));
+    driverStationSubSys.CloseHandButton.onTrue(new InstantCommand(handSubSys::CloseHand, handSubSys));
+    driverStationSubSys.GyroResetButton.onTrue(new InstantCommand(gyroSubSys::zeroYaw, gyroSubSys));
 
     // Gyro Reset Command Button
-    driverStation.PoseResetButton.onTrue(
+    driverStationSubSys.PoseResetButton.onTrue(
         // new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
         new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
 
-    driverStation.TestButton.whileTrue(
+    driverStationSubSys.TestButton.whileTrue(
         // new Cmd_SubSys_DriveTrain_Rotate2Heading(driveSubSys, 90)
 
         /*
