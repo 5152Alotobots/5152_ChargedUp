@@ -36,6 +36,8 @@ public class SubSys_DriverStation extends SubsystemBase {
 
   /** ***** Library */
 
+  /** ***** Library */
+
   // ---- Drive Subsystem
   // Drive Fwd Axis
   public double DriveFwdAxis() {
@@ -62,10 +64,6 @@ public class SubSys_DriverStation extends SubsystemBase {
     return m_DriverController.getRawButton(6);
   }
 
-  /*
-   ***** Rapid React Components
-   */
-
   // ---- Intake
   // ------ IntakeInNOut
 
@@ -80,7 +78,13 @@ public class SubSys_DriverStation extends SubsystemBase {
     return m_CoDriverController.getRawButton(2);
   }
   */
+  public double GetArmRotateAxis() {
+    return m_AuxDriverController.getRawAxis(1);
+  }
 
+  public double GetArmExtendAxis() {
+    return m_AuxDriverController.getRawAxis(5);
+  }
   // IntakeInOut_ShortShot Axis
   public double IntakeInNOut_ShortShotAxis() {
     return m_CoDriverController.getRightTriggerAxis();
@@ -120,6 +124,7 @@ public class SubSys_DriverStation extends SubsystemBase {
 
   // Climber Lift Positive
   public boolean ClimberLiftPositiveBtn() {
+
     return m_DriverController.getRawButton(4);
   }
 
