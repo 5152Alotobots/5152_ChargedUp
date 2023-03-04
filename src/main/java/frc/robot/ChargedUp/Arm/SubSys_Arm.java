@@ -198,14 +198,18 @@ public class SubSys_Arm extends SubsystemBase {
       extend(Math.min(0, percentCommand)); //Can extend but not retract 
     }
   }
- 
 
-
+  public double getShoulderRotation() {
+    return Arm_ShoulderCanCoder.getAbsolutePosition() - Const_Arm.kOffsetTo0;
+  }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber(
-        "SubSys_Arm_ShoulderCanCoder_Position", Arm_ShoulderCanCoder.getAbsolutePosition());
+        "SubSys_Arm_ShoulderCanCoder_CalculatedPOS", getShoulderRotation());
+        SmartDashboard.putNumber(
+          "SubSys_Arm_ShoulderCanCoder_Position", Arm_ShoulderCanCoder.getAbsolutePosition());
+
     SmartDashboard.putNumber(
         "SubSys_Arm_ExtendCanCoder_Position", Arm_ExtensionCanCoder.getPosition());
     SmartDashboard.putNumber(
