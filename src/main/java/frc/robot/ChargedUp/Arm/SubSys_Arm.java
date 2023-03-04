@@ -4,6 +4,8 @@
 
 package frc.robot.ChargedUp.Arm;
 
+import javax.swing.text.StyleContext.SmallAttributeSet;
+
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -16,22 +18,28 @@ import com.ctre.phoenix.sensors.CANCoderConfiguration;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 public class SubSys_Arm extends SubsystemBase {
   private CANCoderConfiguration armExtensionCanCoderConfiguration = new CANCoderConfiguration();
 
   private TalonFX Arm_ShoulderMotor = new TalonFX(Constants.CAN_IDs.ArmShoulderMtr_CAN_ID);
-  private TalonFX Arm_ShoulderFollowerMotor =
-      new TalonFX(Constants.CAN_IDs.ArmShoulderFollowerMtr_CAN_ID);
+  private TalonFX Arm_ShoulderFollowerMotor = new TalonFX(Constants.CAN_IDs.ArmShoulderFollowerMtr_CAN_ID);
 
   private TalonFXConfiguration arm_ShoulderMotorConfiguration = new TalonFXConfiguration();
   private TalonFXConfiguration arm_ShoulderFollowerMotorConfiguration = new TalonFXConfiguration();
 
-  private CANCoder Arm_ShoulderCanCoder =
-      new CANCoder(Constants.CAN_IDs.ArmShoulderCANCoder_CAN_ID);
+  private CANCoder Arm_ShoulderCanCoder =new CANCoder(Constants.CAN_IDs.ArmShoulderCANCoder_CAN_ID);
 
-  private TalonFX ArmExtensionMotor = new TalonFX(Constants.CAN_IDs.ArmExtensionMtr_CAN_ID);
+  private TalonFX Arm_ExtensionMotor = new TalonFX(Constants.CAN_IDs.ArmExtensionMtr_CAN_ID);
+
+  private CANCoder Arm_ExtensionCanCoder = new CANCoder(Constants.CAN_IDs.ArmExtensionCANCoder_CAN_ID);
+
   private TalonFXConfiguration ArmExtensionConfig = new TalonFXConfiguration();
+
+  private DigitalInput limitSwitch = new DigitalInput(0);
+
+  private Boolean isSwitchClosed;
   // private CANCoder armExtensionCanCoder = new
   // CANCoder(Constants.CAN_IDs.ArmExtensionCANCoder_CAN_ID); NOT USED
 
@@ -49,25 +57,18 @@ public class SubSys_Arm extends SubsystemBase {
     Arm_ShoulderFollowerMotor.setNeutralMode(NeutralMode.Brake);
     Arm_ShoulderFollowerMotor.follow(Arm_ShoulderMotor);
 
-<<<<<<< HEAD
-      ArmExtensionMotor.configFactoryDefault();
-      ArmExtensionMotor.setInverted(false);
-      ArmExtensionMotor.setNeutralMode(NeutralMode.Brake);
-      ArmExtensionMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
-		  // ArmExtensionConfig.remoteFilter0.remoteSensorDeviceID = ((IMotorController) ArmExtensionConfig).getDeviceID(); //Device ID of Remote Source
-		  ArmExtensionConfig.remoteFilter0.remoteSensorSource = RemoteSensorSource.TalonFX_SelectedSensor; //Remote Source Type
-=======
     Arm_ShoulderCanCoder.configFactoryDefault();
 
-    ArmExtensionMotor.configFactoryDefault();
-    ArmExtensionMotor.setInverted(false);
-    ArmExtensionMotor.setNeutralMode(NeutralMode.Brake);
-    ArmExtensionMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
+    Arm_ExtensionMotor.configFactoryDefault();
+    Arm_ExtensionMotor.setInverted(false);
+    Arm_ExtensionMotor.setNeutralMode(NeutralMode.Brake);
+    Arm_ExtensionMotor.configRemoteFeedbackFilter(Arm_ExtensionCanCoder, 0);
+    Arm_ExtensionMotor.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor0);
+    Arm_ExtensionMotor.configSelectedFeedbackCoefficient(1 / 4096);
     // ArmExtensionConfig.remoteFilter0.remoteSensorDeviceID =
     //  ((IMotorController) ArmExtensionConfig).getDeviceID(); // Device ID of Remote Source
     ArmExtensionConfig.remoteFilter0.remoteSensorSource =
         RemoteSensorSource.TalonFX_SelectedSensor; // Remote Source Type
->>>>>>> 4aeb5b27c4b42b57f8b94a4cda0e200e743a6013
   }
 
   // *Math methods
@@ -126,7 +127,7 @@ public class SubSys_Arm extends SubsystemBase {
    */
   public void rotate_UntilOuterBoundary(double percentCommand) {
     double ArmShoulderAngle = Arm_ShoulderMotor.getSelectedSensorPosition();
-    double ArmExtendLength = ArmExtensionMotor.getSelectedSensorPosition();
+    double ArmExtendLength = Arm_ExtensionMotor.getSelectedSensorPosition();
 
     double currentHeight = getHeightOfArmFromBase(ArmShoulderAngle, ArmExtendLength);
     double currentLength = getLengthOfArmFromBase(ArmShoulderAngle, ArmExtendLength);
@@ -167,7 +168,7 @@ public class SubSys_Arm extends SubsystemBase {
    * @param percentCommand double percentCommand (-1 - 1)
    */
   public void extend(double percentCommand) {
-    ArmExtensionMotor.set(TalonFXControlMode.PercentOutput, percentCommand);
+    Arm_ExtensionMotor.set(TalonFXControlMode.PercentOutput, percentCommand);
   }
 
   /**
@@ -175,15 +176,15 @@ public class SubSys_Arm extends SubsystemBase {
    */
   public void extend_UntilOuterBoundary(double percentCommand) {
     double ArmShoulderAngle = Arm_ShoulderMotor.getSelectedSensorPosition();
-    double ArmExtendLength = ArmExtensionMotor.getSelectedSensorPosition();
+    double ArmExtendLength = Arm_ExtensionMotor.getSelectedSensorPosition();
 
     double currentHeight = getHeightOfArmFromBase(ArmShoulderAngle, ArmExtendLength);
     double currentLength = getLengthOfArmFromBase(ArmShoulderAngle, ArmExtendLength);
 
     if (currentHeight < Const_Arm.kMAX_EXTENSION_z && currentLength < Const_Arm.kMAX_EXTENSION_x) {
-      ArmExtensionMotor.set(TalonFXControlMode.PercentOutput, percentCommand);
+      Arm_ExtensionMotor.set(TalonFXControlMode.PercentOutput, percentCommand);
     } else {
-      ArmExtensionMotor.set(
+      Arm_ExtensionMotor.set(
           TalonFXControlMode.PercentOutput,
           Math.min(0, percentCommand)); // arm can retract but not extend
     }
@@ -199,5 +200,10 @@ public class SubSys_Arm extends SubsystemBase {
         Arm_ShoulderFollowerMotor.getSelectedSensorPosition());
     SmartDashboard.putNumber(
         "SubSys_Arm_ShoulderCanCoder_Position", Arm_ShoulderCanCoder.getAbsolutePosition());
+    SmartDashboard.putNumber(
+        "RobotHeight", getHeightOfArmFromBase(Arm_ShoulderMotor.getSelectedSensorPosition(), Arm_ExtensionMotor.getSelectedSensorPosition()));
+    SmartDashboard.putNumber(
+        "RobotWidth", getLengthOfArmFromBase(Arm_ShoulderMotor.getSelectedSensorPosition(), Arm_ExtensionMotor.getSelectedSensorPosition()));
+    
   }
 }
