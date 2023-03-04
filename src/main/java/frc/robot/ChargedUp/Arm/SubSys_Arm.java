@@ -190,6 +190,9 @@ public class SubSys_Arm extends SubsystemBase {
     }
   }
 
+  public double getShoulderRotation() {
+    return Arm_ShoulderCanCoder.getAbsolutePosition() - Const_Arm.kOffsetTo0;
+  }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
@@ -199,7 +202,10 @@ public class SubSys_Arm extends SubsystemBase {
         "SubSys_Arm__ShoulderFollowerMotor_Position",
         Arm_ShoulderFollowerMotor.getSelectedSensorPosition());
     SmartDashboard.putNumber(
-        "SubSys_Arm_ShoulderCanCoder_Position", Arm_ShoulderCanCoder.getAbsolutePosition());
+        "SubSys_Arm_ShoulderCanCoder_CalculatedPOS", getShoulderRotation());
+        SmartDashboard.putNumber(
+          "SubSys_Arm_ShoulderCanCoder_Position", Arm_ShoulderCanCoder.getAbsolutePosition());
+
     SmartDashboard.putNumber(
         "RobotHeight", getHeightOfArmFromBase(Arm_ShoulderMotor.getSelectedSensorPosition(), Arm_ExtensionMotor.getSelectedSensorPosition()));
     SmartDashboard.putNumber(
