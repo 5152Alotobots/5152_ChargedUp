@@ -10,8 +10,8 @@ import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
 
 public class Cmd_SubSys_DriveTrain_Drive4Time extends CommandBase {
   /** Creates a new Cmd_SubSys_DriveTrain_Drive4Time. */
-
   private final SubSys_DriveTrain subSys_DriveTrain;
+
   private final double driveFwdSpd;
   private final double driveStrSpd;
   private final double driveRotSpd;
@@ -20,12 +20,12 @@ public class Cmd_SubSys_DriveTrain_Drive4Time extends CommandBase {
   private final Timer timer = new Timer();
 
   public Cmd_SubSys_DriveTrain_Drive4Time(
-    SubSys_DriveTrain subSys_DriveTrain,
-    double driveFwdSpd,
-    double driveStrSpd,
-    double driveRotSpd,
-    double driveTime,
-    boolean fieldOriented) {
+      SubSys_DriveTrain subSys_DriveTrain,
+      double driveFwdSpd,
+      double driveStrSpd,
+      double driveRotSpd,
+      double driveTime,
+      boolean fieldOriented) {
 
     this.subSys_DriveTrain = subSys_DriveTrain;
     this.driveFwdSpd = driveFwdSpd;
@@ -35,7 +35,7 @@ public class Cmd_SubSys_DriveTrain_Drive4Time extends CommandBase {
     this.fieldOriented = fieldOriented;
 
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(this.subSys_DriveTrain);  
+    addRequirements(this.subSys_DriveTrain);
   }
 
   // Called when the command is initially scheduled.
@@ -49,34 +49,23 @@ public class Cmd_SubSys_DriveTrain_Drive4Time extends CommandBase {
   @Override
   public void execute() {
     this.subSys_DriveTrain.Drive(
-      this.driveFwdSpd,
-      this.driveStrSpd,
-      this.driveRotSpd, 
-      this.fieldOriented, 
-      false,
-      false);
+        this.driveFwdSpd, this.driveStrSpd, this.driveRotSpd, this.fieldOriented, false, false);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    this.subSys_DriveTrain.Drive(
-      0.0,
-      0.0,
-      0.0,
-      this.fieldOriented,
-      false,
-      false);
+    this.subSys_DriveTrain.Drive(0.0, 0.0, 0.0, this.fieldOriented, false, false);
     this.timer.reset();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(this.timer.get() >= this.driveTime){
+    if (this.timer.get() >= this.driveTime) {
       return true;
-    }else{
-    return false;
+    } else {
+      return false;
     }
   }
 }
