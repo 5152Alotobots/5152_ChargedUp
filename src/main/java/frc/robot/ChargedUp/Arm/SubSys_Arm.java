@@ -205,5 +205,9 @@ public class SubSys_Arm extends SubsystemBase {
     SmartDashboard.putNumber(
         "RobotWidth", getLengthOfArmFromBase(Arm_ShoulderMotor.getSelectedSensorPosition(), Arm_ExtensionMotor.getSelectedSensorPosition()));
     
+    isSwitchClosed = !limitSwitch.get();
+
+    SmartDashboard.putBoolean(
+        "isSwitchClosed", isSwitchClosed);
   }
 }
