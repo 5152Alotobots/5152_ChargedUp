@@ -37,9 +37,13 @@ public class SubSys_Arm extends SubsystemBase {
 
   private TalonFXConfiguration ArmExtensionConfig = new TalonFXConfiguration();
 
-  private DigitalInput limitSwitch = new DigitalInput(0);
+  //STOP Switch
+  private DigitalInput limitSwitch2 = new DigitalInput(0);
+  private Boolean isSwitch2Closed;
+  //SLOW Switch
+  private DigitalInput limitSwitch1 = new DigitalInput(1);
+  private Boolean isSwitch1Closed;
 
-  private Boolean isSwitchClosed;
   // private CANCoder armExtensionCanCoder = new
   // CANCoder(Constants.CAN_IDs.ArmExtensionCANCoder_CAN_ID); NOT USED
 
@@ -129,7 +133,7 @@ public class SubSys_Arm extends SubsystemBase {
     double ArmShoulderAngle = Arm_ShoulderMotor.getSelectedSensorPosition();
     double ArmExtendLength = Arm_ExtensionMotor.getSelectedSensorPosition();
 
-    double currentHeight = getHeightOfArmFromBase(ArmShoulderAngle, ArmExtendLength);
+    double currentHeight = getHeightOfArmFromBase(ArmShoulderAngle, ArmExtendLength * .4000);
     double currentLength = getLengthOfArmFromBase(ArmShoulderAngle, ArmExtendLength);
 
     if (currentHeight < Const_Arm.kMAX_EXTENSION_z && currentLength < Const_Arm.kMAX_EXTENSION_x) {
@@ -180,34 +184,41 @@ public class SubSys_Arm extends SubsystemBase {
 
     double currentHeight = getHeightOfArmFromBase(ArmShoulderAngle, ArmExtendLength);
     double currentLength = getLengthOfArmFromBase(ArmShoulderAngle, ArmExtendLength);
-
-    if (currentHeight < Const_Arm.kMAX_EXTENSION_z && currentLength < Const_Arm.kMAX_EXTENSION_x) {
-      Arm_ExtensionMotor.set(TalonFXControlMode.PercentOutput, percentCommand);
+    
+    if (!isSwitch2Closed) {
+      if (!isSwitch1Closed) {
+        if (currentLength < Const_Arm.kARM_SHOULDER_x && currentHeight < Const_Arm.kMAX_EXTENSION_z) {
+          extend(Math.max(0, percentCommand)); //Can retract but not extend 
+        }
+      }
+      else {
+        extend(percentCommand*Const_Arm.kSLOW_EXTENSION_SPEED);
+      }
     } else {
-      Arm_ExtensionMotor.set(
-          TalonFXControlMode.PercentOutput,
-          Math.min(0, percentCommand)); // arm can retract but not extend
+      extend(Math.min(0, percentCommand)); //Can extend but not retract 
     }
   }
+ 
+
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber(
-        "SubSys_Arm__ShoulderMotor_Position", Arm_ShoulderMotor.getSelectedSensorPosition());
-    SmartDashboard.putNumber(
-        "SubSys_Arm__ShoulderFollowerMotor_Position",
-        Arm_ShoulderFollowerMotor.getSelectedSensorPosition());
-    SmartDashboard.putNumber(
         "SubSys_Arm_ShoulderCanCoder_Position", Arm_ShoulderCanCoder.getAbsolutePosition());
+    SmartDashboard.putNumber(
+        "SubSys_Arm_ExtendCanCoder_Position", Arm_ExtensionCanCoder.getPosition());
     SmartDashboard.putNumber(
         "RobotHeight", getHeightOfArmFromBase(Arm_ShoulderMotor.getSelectedSensorPosition(), Arm_ExtensionMotor.getSelectedSensorPosition()));
     SmartDashboard.putNumber(
         "RobotWidth", getLengthOfArmFromBase(Arm_ShoulderMotor.getSelectedSensorPosition(), Arm_ExtensionMotor.getSelectedSensorPosition()));
     
-    isSwitchClosed = !limitSwitch.get();
+    isSwitch2Closed = !limitSwitch2.get();
+
+    isSwitch1Closed = !limitSwitch1.get();
 
     SmartDashboard.putBoolean(
-        "isSwitchClosed", isSwitchClosed);
+        "isSwitchClosed", isSwitch2Closed);
   }
 }
+
