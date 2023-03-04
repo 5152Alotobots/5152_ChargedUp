@@ -33,4 +33,8 @@ public class Const_Arm {
         public static final double kShoulderMaxRotAcelSpeed = 180 * Math.PI / 180; // rad/s^2
     }
 
+   public class Positions {
+    public static final double pickup = 0;
+   } 
+
 }
