@@ -17,7 +17,7 @@ public class SubSys_Pneumatics extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-Compressor pcmCompressor = new Compressor(20, PneumaticsModuleType.CTREPCM);
+Compressor pcmCompressor = new Compressor(21, PneumaticsModuleType.CTREPCM);
   public void compressorOn() {
     pcmCompressor.enableDigital();
   }
