@@ -121,6 +121,13 @@ public class RobotContainer {
 
   private final Command m_OneConeRed =
   new Auto_OneConeRed_Cmd(driveSubSys, gyroSubSys);
+  
+  /*private final Command m_Blank =
+  new Auto_Blank_Cmd(driveSubSys, gyroSubSys);
+
+  private final Command m_BlankTwo =
+  new Auto_BlankTwo_Cmd(driveSubSys, gyroSubSys);
+*/
   /*
   /*
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -147,19 +154,7 @@ public class RobotContainer {
             () -> driverStation.RotateRightPt()));
 
     // Sendable Chooser
-    // m_chooser.setDefaultOption("Auto_BasicRevHighGoalRev_Cmd", m_Auto_BasicRevHighGoalRev_Cmd);
-    // m_chooser.addOption("Auto_BasicRevLowGoalRev", m_Auto_BasicRevLowGoalRev_Cmd);
-    // m_chooser.addOption("Auto_AS_RevHighGoalRev_Cmd", m_Auto_AS_RevHighGoalRev_Cmd);
-    // m_chooser.addOption("Auto_AS_T13CnrtoT13HighGoaltoB2toShoot_Cmd",
-    // m_Auto_AS_T13CnrtoT13HighGoaltoB2toShoot_Cmd);
-    // m_chooser.addOption("Auto_PathPlanner_Test_Cmd", m_Auto_PathPlanner_Test_Cmd);
-    // m_chooser.addOption("Auto_PP_FollowTraj_Cmd", m_Auto_PP_FollowTraj_Cmd);
-    // m_chooser.addOption("goodluck", ihopethisworks);
-    // m_chooser.setDefaultOption("Drive4Distance", m_Drive4Distance_Cmd);
-    // m_chooser.addOption("BasicAutoLowWait", m_BasicAutoLowWaitCmd);
-    // m_chooser.addOption("BasicAutoHigh", m_BasicAutoHighCmd);
-    // m_chooser.addOption("BasicAutoHighExtraBalls", m_BasicAutoHighExtraBallsCmd);
-    // m_chooser.addOption("HighshotAuto", m_LeftCenterHigh_Cmd);
+   
     m_chooser.setDefaultOption("chargeblue", m_chargeBlue);
     m_chooser.addOption("leaveblue", m_blueleave);
     m_chooser.addOption("middlechargeblue", m_middlechargeBlue);
@@ -168,7 +163,8 @@ public class RobotContainer {
     m_chooser.addOption("middlechargered", m_middlechargeRed);
     m_chooser.addOption("oneconeblue", m_OneConeBlue);
     m_chooser.addOption("oneconered", m_OneConeRed);
-   
+    //m_chooser.addOption("Blank", m_Blankone);
+    //m_chooser.addOption("Blank", m_Blanktwo);
     SmartDashboard.putData(m_chooser);
   }
 
