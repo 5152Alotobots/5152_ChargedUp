@@ -67,7 +67,7 @@ public class SubSys_Arm extends SubsystemBase {
     Arm_ShoulderCanCoder.configFactoryDefault();
 
     Arm_ExtensionMotor.configFactoryDefault();
-    Arm_ExtensionMotor.setInverted(true);
+    Arm_ExtensionMotor.setInverted(false);
     Arm_ExtensionMotor.setNeutralMode(NeutralMode.Brake);
     Arm_ExtensionMotor.configRemoteFeedbackFilter(Arm_ExtensionCanCoder, 0);
     Arm_ExtensionMotor.configRemoteFeedbackFilter(Arm_ExtensionCanCoder, 0);
