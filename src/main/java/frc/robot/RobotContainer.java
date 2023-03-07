@@ -132,7 +132,7 @@ public class RobotContainer {
             () -> driverStationSubSys.DriveFwdAxis(),
             () -> driverStationSubSys.DriveStrAxis(),
             () -> driverStationSubSys.DriveRotAxis(),
-            false,
+            true,
             () -> driverStationSubSys.RotateLeftPt(),
             () -> driverStationSubSys.RotateRightPt()));
 
