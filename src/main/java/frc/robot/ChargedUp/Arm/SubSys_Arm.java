@@ -190,6 +190,19 @@ public class SubSys_Arm extends SubsystemBase {
           RotateArm(0, 0);
         }
     }
+    public void RotateArmMinMax(double min, double max, double percentOutput) {
+      double ArmShoulderAngle = Arm_ShoulderCanCoder.getAbsolutePosition()-Const_Arm.kOffsetTo0;
+      double ArmExtendLength = Arm_ExtensionMotor.getSelectedSensorPosition();
+
+      if (ArmShoulderAngle > max && ArmShoulderAngle < max + 10) {
+        RotateArm(1, percentOutput);
+      }
+      else if (ArmShoulderAngle < min && ArmShoulderAngle > min - 10) {
+        RotateArm(2, percentOutput);
+      } else {
+        RotateArm(0, percentOutput);
+      }
+    }
     public void ExtendArm_InBounds(double PercentOutput) {
       double ArmShoulderAngle = Arm_ShoulderCanCoder.getAbsolutePosition()-Const_Arm.kOffsetTo0;
       double ArmExtendLength = Arm_ExtensionMotor.getSelectedSensorPosition();
