@@ -43,7 +43,8 @@ public class Cmd_ArmShoulderPID extends CommandBase {
             Const_Arm.PID.kD,
             this.profiledRotationConstraints);
 
-    this.profiledRotationPID.enableContinuousInput(-180, 180);
+    //limit the PID to not move between -30 and 30 degrees
+    this.profiledRotationPID.enableContinuousInput(-30, 30);
     this.profiledRotationPID.setTolerance(2, 4);
     this.profiledRotationPID.setIntegratorRange(-.3, 0.3);
 
