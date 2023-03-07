@@ -71,7 +71,7 @@ public class Cmd_ArmExtensionPID extends CommandBase {
         this.distancePID.calculate(currPose - this.initialPosition, this.targetPosition);
 
     SmartDashboard.putNumber("PID", mvCmd);
-    this.subSys_Arm.extend(mvCmd);
+    this.subSys_Arm.ExtendArm(0, mvCmd);
    
 
     SmartDashboard.putNumber("Drive4Distance_xSetpoint", this.distancePID.getSetpoint());
@@ -129,7 +129,7 @@ public class Cmd_ArmExtensionPID extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    this.subSys_Arm.extend(0.0);
+    this.subSys_Arm.ExtendArm(0, 0);
   }
 
   // Returns true when the command should end.
