@@ -7,8 +7,8 @@ public class Const_Arm {
     public static final double kARM_SHOULDER_z = .58; //VERTICAL DIRECTION
     public static final double kARM_SHOULDER_x = .05;
     public static final double kHAND_LENGTH = .35;
-    public static final double kMAX_EXTENSION_x = .120; //.120m or 120cm (width)
-    public static final double kMAX_EXTENSION_z = .198; //.198m or 198cm (Height)
+    public static final double kMAX_EXTENSION_x = 1.20; //.120m or 120cm (width)
+    public static final double kMAX_EXTENSION_z = 1.18; //.198m or 198cm (Height)
     public static final double kSWITCH_ARM_LOCATION = 0;
     public static final double kMAX_ROTATION_SPEED = .2;
     public static final double kMAX_EXTENSION_SPEED = .4;

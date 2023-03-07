@@ -70,9 +70,9 @@ public class SubSys_Arm extends SubsystemBase {
     Arm_ExtensionMotor.setInverted(true);
     Arm_ExtensionMotor.setNeutralMode(NeutralMode.Brake);
     Arm_ExtensionMotor.configRemoteFeedbackFilter(Arm_ExtensionCanCoder, 0);
-    Arm_ExtensionMotor.configRemoteFeedbackFilter(Arm_ShoulderCanCoder, 0);
+    Arm_ExtensionMotor.configRemoteFeedbackFilter(Arm_ExtensionCanCoder, 0);
     Arm_ExtensionMotor.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor0);
-    Arm_ExtensionMotor.configSelectedFeedbackCoefficient(1 / 4096);
+    Arm_ExtensionMotor.configSelectedFeedbackCoefficient(7.854/4096);
   }
 
   // *Math methods
@@ -240,7 +240,7 @@ public class SubSys_Arm extends SubsystemBase {
           "SubSys_Arm_ShoulderCanCoder_Position", Arm_ShoulderCanCoder.getAbsolutePosition()-Const_Arm.kOffsetTo0);
 
     SmartDashboard.putNumber(
-        "SubSys_Arm_ExtendCanCoder_Position", Arm_ExtensionCanCoder.getPosition());
+        "SubSys_Arm_ExtendMotor_Position", Arm_ExtensionMotor.getSelectedSensorPosition());
     SmartDashboard.putNumber(
         "RobotHeight", getHeightOfArmFromBase(Arm_ShoulderMotor.getSelectedSensorPosition(), Arm_ExtensionMotor.getSelectedSensorPosition()));
     SmartDashboard.putNumber(
