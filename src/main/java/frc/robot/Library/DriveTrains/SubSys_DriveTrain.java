@@ -35,7 +35,7 @@ public class SubSys_DriveTrain extends SubsystemBase {
   private double driveXDirCmd = 0;
   private double driveYDirCmd = 0;
   private double driveZRotCmd = 0;
-  private boolean driveFieldOriented = false;
+  private boolean driveFieldOriented = true;
   private boolean driveRotateLeftPtCmd = false;
   private boolean driveRotateRightPtCmd = false;
 
