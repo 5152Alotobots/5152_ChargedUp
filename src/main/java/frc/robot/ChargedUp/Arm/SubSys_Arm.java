@@ -40,11 +40,11 @@ public class SubSys_Arm extends SubsystemBase {
   private TalonFXConfiguration ArmExtensionConfig = new TalonFXConfiguration();
 
   //STOP Switch
-  private DigitalInput limitSwitch1 = new DigitalInput(0);
-  private Boolean isSwitch2Closed;
+  private DigitalInput stopSwitch = new DigitalInput(0);
+  private Boolean isSlowSwitchClosed;
   //SLOW Switch
-  private DigitalInput limitSwitch2 = new DigitalInput(1);
-  private Boolean isSwitch1Closed;
+  private DigitalInput slowSwitch = new DigitalInput(1);
+  private Boolean isStopSwitchClosed;
   private Boolean inSlowArea;
 
   // private CANCoder armExtensionCanCoder = new
@@ -197,26 +197,54 @@ public class SubSys_Arm extends SubsystemBase {
       double currentHeight = getHeightOfArmFromBase(ArmShoulderAngle, ArmExtendLength);
       double currentLength = getLengthOfArmFromBase(ArmShoulderAngle, ArmExtendLength);
 
-      // if (isSwitch2Closed || inSlowArea && !isSwitch1Closed) {
+      // if (isSlowSwitchClosed || inSlowArea && !isSwitch1Closed) {
       //   ExtendArm(3, PercentOutput);
 
       //   if (Arm_ExtensionCanCoder.getPosition() > Const_Arm.kSWITCH_ARM_LOCATION) {inSlowArea = false; }
       //   else { inSlowArea = true;}
 
-      //   if (isSwitch2Closed) {
+      //   if (isSlowSwitchClosed) {
       //     Arm_ExtensionCanCoder.setPosition(Const_Arm.kSWITCH_ARM_LOCATION);
       //   }
       // } 
-      if (isSwitch1Closed) {
+      if (isStopSwitchClosed) {
         ExtendArm(1, PercentOutput);
         Arm_ExtensionCanCoder.setPosition(0);
       }
-      if (!isSwitch1Closed && !isSwitch2Closed) {
+      if (!isStopSwitchClosed && !isSlowSwitchClosed) {
         if (currentHeight < Const_Arm.kMAX_EXTENSION_z && currentLength < Const_Arm.kMAX_EXTENSION_x) {
           ExtendArm(0, PercentOutput);
         }
         else {
           ExtendArm(2, PercentOutput);
+        }
+      }
+    }
+
+    /**
+    Arm extension control method that limits the extension of the arm within the specified minimum and maximum values.
+    @param PercentOutput the percentage of output/speed to use for the arm extension motor
+    @param min the minimum allowed extension value for the arm
+    @param max the maximum allowed extension value for the arm
+    */
+    public void armExtentionMinMax(double PercentOutput, double min, double max) {
+      double ArmExtendLength = Arm_ExtensionMotor.getSelectedSensorPosition();
+
+      if (isStopSwitchClosed) {
+        ExtendArm(1, PercentOutput);
+        Arm_ExtensionCanCoder.setPosition(0);
+      }
+      if (!isStopSwitchClosed && !isSlowSwitchClosed) {
+        if (ArmExtendLength < max && ArmExtendLength > min) {
+          ExtendArm(0, PercentOutput);
+        }
+        else {
+          if (ArmExtendLength > max) {
+            ExtendArm(2, PercentOutput);
+          }
+          if (ArmExtendLength < min) {
+            ExtendArm(1, PercentOutput);
+          }
         }
       }
     }
@@ -246,12 +274,12 @@ public class SubSys_Arm extends SubsystemBase {
     SmartDashboard.putNumber(
         "RobotWidth", getLengthOfArmFromBase(Arm_ShoulderMotor.getSelectedSensorPosition(), Arm_ExtensionMotor.getSelectedSensorPosition()));
     
-    isSwitch2Closed = !limitSwitch2.get();
+    isSlowSwitchClosed = !slowSwitch.get();
 
-    isSwitch1Closed = !limitSwitch1.get();
+    isStopSwitchClosed = !stopSwitch.get();
 
     SmartDashboard.putBoolean(
-        "isSwitchClosed", isSwitch2Closed);
+        "isSwitchClosed", isSlowSwitchClosed);
   }
 }
 
