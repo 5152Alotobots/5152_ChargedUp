@@ -178,6 +178,17 @@ public class RobotContainer {
         // new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
         new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
 
+    driverStationSubSys.TurboButton.whileTrue(
+      new Cmd_SubSys_DriveTrain_JoysticDefault(
+            driveSubSys,
+            () -> driverStationSubSys.DriveFwdAxis()*1.5,
+            () -> driverStationSubSys.DriveStrAxis()*1.5,
+            () -> driverStationSubSys.DriveRotAxis()*1.5,
+            true,
+            () -> driverStationSubSys.RotateLeftPt(),
+            () -> driverStationSubSys.RotateRightPt())
+    );
+
     driverStationSubSys.TestButton.whileTrue(
         // new Cmd_SubSys_DriveTrain_Rotate2Heading(driveSubSys, 90)
 

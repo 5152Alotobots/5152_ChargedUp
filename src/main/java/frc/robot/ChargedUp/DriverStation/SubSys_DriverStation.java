@@ -26,6 +26,7 @@ public class SubSys_DriverStation extends SubsystemBase {
   public JoystickButton OpenHandButton = new JoystickButton(m_DriverController, 5);
   public JoystickButton PoseResetButton = new JoystickButton(m_DriverController, 1);
   public JoystickButton TestButton = new JoystickButton(m_DriverController, 3);
+  public JoystickButton TurboButton = new JoystickButton(m_DriverController, 7);
 
   public SubSys_DriverStation() {}
 
