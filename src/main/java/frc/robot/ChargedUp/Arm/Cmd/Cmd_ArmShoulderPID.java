@@ -73,7 +73,7 @@ public class Cmd_ArmShoulderPID extends CommandBase {
     double rotCmd = rotFFCmd + rotPIDCmd;
 
     //rotate arm
-    this.subSys_Arm.rotateArmShoulder(rotCmd);
+    this.subSys_Arm.RotateArm(0, rotCmd);
 
     SmartDashboard.putNumber("Rotate2Heading_Goal", this.profiledRotationPID.getGoal().position);
     SmartDashboard.putNumber(
@@ -93,7 +93,7 @@ public class Cmd_ArmShoulderPID extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    this.subSys_Arm.rotateArmShoulder(0);
+    this.subSys_Arm.RotateArm(0,0);
   }
 
   // Returns true when the command should end.

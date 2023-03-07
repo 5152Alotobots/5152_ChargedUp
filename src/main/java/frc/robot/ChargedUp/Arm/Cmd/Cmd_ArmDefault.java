@@ -31,8 +31,8 @@ public class Cmd_ArmDefault extends CommandBase {
   @Override
   public void execute() {
 
-    armSubsys.rotate_UntilOuterBoundary(rotateAxis.getAsDouble() * Const_Arm.kMAX_ROTATION_SPEED);
-    armSubsys.extend_UntilOuterBoundary(extendAxis.getAsDouble() * Const_Arm.kMAX_EXTENSION_SPEED);
+    armSubsys.RotateArm(0, rotateAxis.getAsDouble() * Const_Arm.kMAX_ROTATION_SPEED);
+    armSubsys.ExtendArm_InBounds(extendAxis.getAsDouble() * Const_Arm.kMAX_EXTENSION_SPEED);
   }
 
   // Called once the command ends or is interrupted.
