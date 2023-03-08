@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.ChargedUp.Arm.Cmd.Cmd_ArmDefault;
+import frc.robot.ChargedUp.Arm.SubSys_Arm;
 import frc.robot.ChargedUp.AutoCommands.Auto_BlankTwo_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_Blank_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_BlueLeave_Cmd;
@@ -23,12 +25,7 @@ import frc.robot.ChargedUp.AutoCommands.Auto_MiddleChargeRed_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_OneConeBlue_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_OneConeRed_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_RedLeave_Cmd;
-import frc.robot.ChargedUp.ColorSensor.SubSys_ColorSensor;
 // import frc.robot.ChargedUp.DistanceSensor.SubSys_DistanceSensor;
-import frc.robot.ChargedUp.Arm.Cmd.Cmd_ArmDefault;
-import frc.robot.ChargedUp.Arm.SubSys_Arm;
-import frc.robot.ChargedUp.AutoCommands.Auto_ChargeBlue_Cmd;
-import frc.robot.ChargedUp.AutoCommands.Auto_ChargeRed_Cmd;
 import frc.robot.ChargedUp.DriverStation.SubSys_DriverStation;
 import frc.robot.ChargedUp.Hand.SubSys_Hand;
 import frc.robot.ChargedUp.MecanumDrive.Cmd.Cmd_MecanumDriveDefault;
@@ -105,7 +102,6 @@ public class RobotContainer {
   private final Command ihopethisworks =
       new DriveSubSys_PathPlanner_Test_Cmd(driveSubSys);
   */
-
 
   private final Command m_chargeBlue = new Auto_ChargeBlue_Cmd(driveSubSys, gyroSubSys);
 
