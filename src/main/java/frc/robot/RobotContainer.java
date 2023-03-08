@@ -79,6 +79,7 @@ public class RobotContainer {
 
   // Arm
   public final SubSys_Arm armSubSys = new SubSys_Arm();
+
   /*
    ***** Charged Up Componentes
    */
@@ -155,7 +156,7 @@ public class RobotContainer {
             () -> driverStationSubSys.DriveFwdAxis(),
             () -> driverStationSubSys.DriveStrAxis(),
             () -> driverStationSubSys.DriveRotAxis(),
-            false,
+            true,
             () -> driverStationSubSys.RotateLeftPt(),
             () -> driverStationSubSys.RotateRightPt()));
 
@@ -195,19 +196,17 @@ public class RobotContainer {
     driverStationSubSys.PoseResetButton.onTrue(
         // new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
         new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
-
-    driverStationSubSys.TestButton.whileTrue(
-        // new Cmd_SubSys_DriveTrain_Rotate2Heading(driveSubSys, 90)
-
-        /*
-        new Cmd_SubSys_DriveTrain_Drive4Distance(
-          driveSubSys,
-          .5,
-          .5,
-          0)
-        */
-
-        new Auto_ChargeBlue_Cmd(driveSubSys, gyroSubSys));
+    /* //TODO: FIX THIS
+      driverStationSubSys.TurboButton.whileTrue(
+          new Cmd_SubSys_DriveTrain_JoysticTurbo(
+              driveSubSys,
+              () -> driverStationSubSys.DriveFwdAxis(),
+              () -> driverStationSubSys.DriveStrAxis(),
+              () -> driverStationSubSys.DriveRotAxis(),
+              true,
+              () -> driverStationSubSys.RotateLeftPt(),
+              () -> driverStationSubSys.RotateRightPt()));
+    */
   }
 
   // when test button is pressed run the rotate to heading command to a random number between 0 and

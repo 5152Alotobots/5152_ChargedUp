@@ -9,11 +9,14 @@ public class SubSys_DriveTrain_Constants {
 
   // Drive Max Speeds
   public static final double DriveTrainMaxPctOutput = 0.50; // 0-1
-  public static final double DriveTrainMaxSpd = 2; // m/s
+  public static final double DriveTrainMaxSpd = 4; // m/s
+  public static final double DriveTrainMaxDefaultSpd = 2; // m/s
+  public static final double DriveTrainMaxTurboSpd = 7; // m/s
   public static final double DriveTrainMaxAccel = 0.35; // m/s^2
   public static final double DriveTrainMaxRotPctOutput = 0.05; // 0-1
   public static final double DriveTrainMaxRotSpeed = 90 * Math.PI / 180; // rad/s
-  public static final double DriveTrainMaxRotAccel = 180 * Math.PI / 180; // rad/s^2
+  public static final double DriveTrainMaxTurboRotSpeed = 90 * Math.PI / 180; // rad/s
+  public static final double DriveTrainMaxRotAccel = 200 * Math.PI / 180; // rad/s^2
 
   public static final class DriveTrainTrajSettings {
     // Drive Trajectory Max Speeds (Trajectories or PID Commands)
@@ -23,7 +26,7 @@ public class SubSys_DriveTrain_Constants {
     public static final double DriveTrainTrajMaxRotPctOutput = 0.25; // 0-1
     public static final double DriveTrainTrajMaxRotSpeed = 270 * Math.PI / 180; // rad/s
     public static final double DriveTrainTrajMaxRotAccel = 180 * Math.PI / 180; // rad/s^2
-    public static final double DriveSpeedMultiplier = 4; // NOT RECOMENDED TO USE
+    public static final double DriveSpeedMultiplier = 1; // NOT RECOMENDED TO USE
 
     public static final class DriveTrajectoryPID {
       public static final double Pgain = 3.0;

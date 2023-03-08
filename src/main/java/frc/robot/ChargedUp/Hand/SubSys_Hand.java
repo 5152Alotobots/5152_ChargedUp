@@ -19,7 +19,7 @@ public class SubSys_Hand extends SubsystemBase {
   }
 
   public final DoubleSolenoid m_handSolenoid =
-      new DoubleSolenoid(20, PneumaticsModuleType.CTREPCM, 0, 1);
+      new DoubleSolenoid(21, PneumaticsModuleType.CTREPCM, 0, 1);
 
   public void OpenHand() {
     m_handSolenoid.set(Value.kReverse);
