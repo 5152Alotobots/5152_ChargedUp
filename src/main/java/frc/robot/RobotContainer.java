@@ -22,6 +22,7 @@ import frc.robot.ChargedUp.Hand.SubSys_Hand;
 import frc.robot.ChargedUp.MecanumDrive.Cmd.Cmd_MecanumDriveDefault;
 import frc.robot.ChargedUp.MecanumDrive.SubSys_MecanumDrive;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmd_SubSys_DriveTrain_JoysticDefault;
+import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmd_SubSys_DriveTrain_JoysticTurbo;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
 import frc.robot.Library.Pneumatics.SubSys_Pneumatics;
@@ -179,28 +180,14 @@ public class RobotContainer {
         new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
 
     driverStationSubSys.TurboButton.whileTrue(
-      new Cmd_SubSys_DriveTrain_JoysticDefault(
+        new Cmd_SubSys_DriveTrain_JoysticTurbo(
             driveSubSys,
-            () -> driverStationSubSys.DriveFwdAxis()*1.5,
-            () -> driverStationSubSys.DriveStrAxis()*1.5,
-            () -> driverStationSubSys.DriveRotAxis()*1.5,
+            () -> driverStationSubSys.DriveFwdAxis(),
+            () -> driverStationSubSys.DriveStrAxis(),
+            () -> driverStationSubSys.DriveRotAxis(),
             true,
             () -> driverStationSubSys.RotateLeftPt(),
-            () -> driverStationSubSys.RotateRightPt())
-    );
-
-    driverStationSubSys.TestButton.whileTrue(
-        // new Cmd_SubSys_DriveTrain_Rotate2Heading(driveSubSys, 90)
-
-        /*
-        new Cmd_SubSys_DriveTrain_Drive4Distance(
-          driveSubSys,
-          .5,
-          .5,
-          0)
-        */
-
-        new Auto_ChargeBlue_Cmd(driveSubSys, gyroSubSys));
+            () -> driverStationSubSys.RotateRightPt()));      
   }
 
   // when test button is pressed run the rotate to heading command to a random number between 0 and

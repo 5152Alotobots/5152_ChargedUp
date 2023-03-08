@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public class SubSys_DriverStation extends SubsystemBase {
   /** Creates a new DriverStationSubSys. */
@@ -26,7 +27,7 @@ public class SubSys_DriverStation extends SubsystemBase {
   public JoystickButton OpenHandButton = new JoystickButton(m_DriverController, 5);
   public JoystickButton PoseResetButton = new JoystickButton(m_DriverController, 1);
   public JoystickButton TestButton = new JoystickButton(m_DriverController, 3);
-  public JoystickButton TurboButton = new JoystickButton(m_DriverController, 7);
+  public Trigger TurboButton = new Trigger(() -> m_DriverController.getRawAxis(3) > 0.5);
 
   public SubSys_DriverStation() {}
 
