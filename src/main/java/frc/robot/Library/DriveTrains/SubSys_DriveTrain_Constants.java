@@ -9,7 +9,8 @@ public class SubSys_DriveTrain_Constants {
 
   // Drive Max Speeds
   public static final double DriveTrainMaxPctOutput = 0.50; // 0-1
-  public static final double  DriveTrainMaxSpd = 2; // m/s
+  public static final double  DriveTrainMaxSpd = 4; // m/s
+  public static final double  DriveTrainMaxDefaultSpd = 2; // m/s
   public static final double  DriveTrainMaxTurboSpd = 7; // m/s
   public static final double DriveTrainMaxAccel = 0.35; // m/s^2
   public static final double DriveTrainMaxRotPctOutput = 0.05; // 0-1
