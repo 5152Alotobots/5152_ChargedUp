@@ -17,12 +17,13 @@ public class SubSys_DriveTrain_Constants {
 
   public static final class DriveTrainTrajSettings {
     // Drive Trajectory Max Speeds (Trajectories or PID Commands)
-    public static final double DriveTrainTrajMaxPctOutput = 0.25; // 0-1
-    public static final double DriveTrainTrajMaxSpd = 2; // m/s
-    public static final double DriveTrainTrajMaxAccel = 0.35; // m/s/s
+    public static final double DriveTrainTrajMaxPctOutput = 1; // 0-1
+    public static final double DriveTrainTrajMaxSpd = 36; // m/s
+    public static final double DriveTrainTrajMaxAccel = 1; // m/s/s
     public static final double DriveTrainTrajMaxRotPctOutput = 0.25; // 0-1
     public static final double DriveTrainTrajMaxRotSpeed = 270 * Math.PI / 180; // rad/s
     public static final double DriveTrainTrajMaxRotAccel = 180 * Math.PI / 180; // rad/s^2
+    public static final double DriveSpeedMultiplier = 4; // NOT RECOMENDED TO USE
 
     public static final class DriveTrajectoryPID {
       public static final double Pgain = 3.0;
