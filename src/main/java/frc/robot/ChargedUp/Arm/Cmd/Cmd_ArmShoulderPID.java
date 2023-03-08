@@ -6,7 +6,6 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
 import frc.robot.ChargedUp.Arm.Const_Arm;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
 
@@ -26,22 +25,14 @@ public class Cmd_ArmShoulderPID extends CommandBase {
 
     this.profiledRotationConstraints =
         new TrapezoidProfile.Constraints(
-            Units.radiansToDegrees(
-                Const_Arm.Trajectory.kShoulderMaxRotSpeed),
-            Units.radiansToDegrees(
-                Const_Arm.Trajectory.kShoulderMaxRotAcelSpeed));
+            Units.radiansToDegrees(Const_Arm.Trajectory.kShoulderMaxRotSpeed),
+            Units.radiansToDegrees(Const_Arm.Trajectory.kShoulderMaxRotAcelSpeed));
 
-    this.feedForward =
-        new SimpleMotorFeedforward(
-            Const_Arm.FF.kS,
-            Const_Arm.FF.kV);
+    this.feedForward = new SimpleMotorFeedforward(Const_Arm.FF.kS, Const_Arm.FF.kV);
 
     this.profiledRotationPID =
         new ProfiledPIDController(
-            Const_Arm.PID.kP,
-            Const_Arm.PID.kI,
-            Const_Arm.PID.kD,
-            this.profiledRotationConstraints);
+            Const_Arm.PID.kP, Const_Arm.PID.kI, Const_Arm.PID.kD, this.profiledRotationConstraints);
 
     this.profiledRotationPID.enableContinuousInput(-180, 180);
     this.profiledRotationPID.setTolerance(2, 4);
@@ -71,7 +62,7 @@ public class Cmd_ArmShoulderPID extends CommandBase {
             this.subSys_Arm.getShoulderRotation(), this.targetHeadingDegrees);
     double rotCmd = rotFFCmd + rotPIDCmd;
 
-    //rotate arm
+    // rotate arm
     this.subSys_Arm.RotateArm(0, rotCmd);
 
     SmartDashboard.putNumber("Rotate2Heading_Goal", this.profiledRotationPID.getGoal().position);
@@ -92,7 +83,7 @@ public class Cmd_ArmShoulderPID extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    this.subSys_Arm.RotateArm(0,0);
+    this.subSys_Arm.RotateArm(0, 0);
   }
 
   // Returns true when the command should end.

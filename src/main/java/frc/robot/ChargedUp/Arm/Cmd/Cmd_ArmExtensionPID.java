@@ -5,15 +5,10 @@
 package frc.robot.ChargedUp.Arm.Cmd;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
-import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain_Constants;
 
 public class Cmd_ArmExtensionPID extends CommandBase {
@@ -26,9 +21,7 @@ public class Cmd_ArmExtensionPID extends CommandBase {
 
   private final SimpleMotorFeedforward feedForward;
 
-  public Cmd_ArmExtensionPID(
-      SubSys_Arm subSys_Arm,
-      double targetPositionCM) {
+  public Cmd_ArmExtensionPID(SubSys_Arm subSys_Arm, double targetPositionCM) {
 
     this.subSys_Arm = subSys_Arm;
     this.targetPosition = targetPositionCM;
@@ -56,7 +49,7 @@ public class Cmd_ArmExtensionPID extends CommandBase {
   @Override
   public void initialize() {
     // this.subSys_DriveTrain.setPose(new Pose2d());
-    double currPose = 0; //CHANGEME
+    double currPose = 0; // CHANGEME
     this.initialPosition = currPose;
     this.distancePID.reset();
     this.distancePID.setSetpoint(this.targetPosition);
@@ -65,14 +58,12 @@ public class Cmd_ArmExtensionPID extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-     double currPose = 0; //CHANGEME 
+    double currPose = 0; // CHANGEME
 
-    double mvCmd =
-        this.distancePID.calculate(currPose - this.initialPosition, this.targetPosition);
+    double mvCmd = this.distancePID.calculate(currPose - this.initialPosition, this.targetPosition);
 
     SmartDashboard.putNumber("PID", mvCmd);
     this.subSys_Arm.ExtendArm(0, mvCmd);
-   
 
     SmartDashboard.putNumber("Drive4Distance_xSetpoint", this.distancePID.getSetpoint());
     SmartDashboard.putNumber("Drive4Distance_xError", this.distancePID.getPositionError());
