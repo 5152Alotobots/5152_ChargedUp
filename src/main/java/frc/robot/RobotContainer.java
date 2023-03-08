@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.ChargedUp.AutoCommands.Auto_ChargeBlue_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_BlankTwo_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_Blank_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_BlueLeave_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_MiddleChargeBlue_Cmd;
@@ -126,8 +127,8 @@ public class RobotContainer {
   private final Command m_Blank =
   new Auto_Blank_Cmd(driveSubSys, gyroSubSys);
 
- // private final Command m_BlankTwo =
-  //new Auto_BlankTwo_Cmd(driveSubSys, gyroSubSys);
+  private final Command m_BlankTwo =
+  new Auto_BlankTwo_Cmd(driveSubSys, gyroSubSys);
 
   /*
   /*
@@ -165,7 +166,7 @@ public class RobotContainer {
     m_chooser.addOption("oneconeblue", m_OneConeBlue);
     m_chooser.addOption("oneconered", m_OneConeRed);
     m_chooser.addOption("Blank", m_Blank);
-    //m_chooser.addOption("Blank", m_Blanktwo);
+    m_chooser.addOption("Blanktwo", m_BlankTwo);
     SmartDashboard.putData(m_chooser);
   }
 

@@ -134,7 +134,7 @@ public class Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj extends CommandBase {
             desiredState.holonomicRotation.getDegrees());
     SmartDashboard.putNumber("rotPID_rotCmd", rotCmd);
 
-    this.subSys_DriveTrain.Drive(xCmd, yCmd, rotCmd, true, false, false);
+    this.subSys_DriveTrain.Drive(xCmd*SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveSpeedMultiplier, yCmd*SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveSpeedMultiplier, rotCmd, true, false, false);
 
     SmartDashboard.putBoolean("x dist at set", this.xDistancePID.atSetpoint());
     SmartDashboard.putBoolean("y dist at set", this.yDistancePID.atSetpoint());
