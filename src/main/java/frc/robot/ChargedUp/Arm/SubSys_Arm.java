@@ -4,7 +4,6 @@
 
 package frc.robot.ChargedUp.Arm;
 
-
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
