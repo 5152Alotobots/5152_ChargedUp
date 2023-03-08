@@ -190,7 +190,7 @@ public class SubSys_Arm extends SubsystemBase {
           RotateArm(0, 0);
         }
     }
-    public void RotateArmMinMax(double min, double max, double percentOutput) {
+    public void rotateArmMinMax(double percentOutput, double min, double max) {
       double ArmShoulderAngle = Arm_ShoulderCanCoder.getAbsolutePosition()-Const_Arm.kOffsetTo0;
       double ArmExtendLength = Arm_ExtensionMotor.getSelectedSensorPosition();
 
@@ -244,20 +244,20 @@ public class SubSys_Arm extends SubsystemBase {
       double ArmExtendLength = Arm_ExtensionMotor.getSelectedSensorPosition();
 
       if (isStopSwitchClosed) {
-        ExtendArm(1, PercentOutput);
+        ExtendArm(2, PercentOutput);
         Arm_ExtensionCanCoder.setPosition(0);
       }
-      if (!isStopSwitchClosed && !isSlowSwitchClosed) {
+      if (!isStopSwitchClosed) {
         if (ArmExtendLength < max && ArmExtendLength > min) {
           ExtendArm(0, PercentOutput);
         }
         else {
-          if (ArmExtendLength > max) {
-            ExtendArm(2, PercentOutput);
-          }
-          if (ArmExtendLength < min) {
+          // if (ArmExtendLength >= max) {
             ExtendArm(1, PercentOutput);
-          }
+          // }
+          // if (ArmExtendLength <= min) {
+          //   ExtendArm(1, PercentOutput);
+          // }
         }
       }
     }
