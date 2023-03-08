@@ -14,6 +14,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.ChargedUp.Arm.Cmd.Cmd_ArmDefault;
+import frc.robot.ChargedUp.Arm.Cmd.Cmd_ArmExtensionPID;
+import frc.robot.ChargedUp.Arm.Cmd.Cmd_ArmRotationPID;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
 import frc.robot.ChargedUp.AutoCommands.Auto_ChargeBlue_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_ChargeRed_Cmd;
@@ -188,6 +190,10 @@ public class RobotContainer {
             true,
             () -> driverStationSubSys.RotateLeftPt(),
             () -> driverStationSubSys.RotateRightPt()));      
+
+    driverStationSubSys.TestButton.whileTrue(
+      new Cmd_ArmExtensionPID(armSubSys, 40).alongWith(new Cmd_ArmRotationPID(armSubSys, 30))
+    );
   }
 
   // when test button is pressed run the rotate to heading command to a random number between 0 and

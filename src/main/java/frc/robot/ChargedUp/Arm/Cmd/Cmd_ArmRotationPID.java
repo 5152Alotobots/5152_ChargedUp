@@ -10,7 +10,7 @@ import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
 import frc.robot.ChargedUp.Arm.Const_Arm;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
 
-public class Cmd_ArmShoulderPID extends CommandBase {
+public class Cmd_ArmRotationPID extends CommandBase {
   /** Creates a new Cmd_SubSys_DriveTrain_Rotate2Heading. */
   private final SubSys_Arm subSys_Arm;
 
@@ -19,7 +19,7 @@ public class Cmd_ArmShoulderPID extends CommandBase {
   private final ProfiledPIDController profiledRotationPID;
   private final TrapezoidProfile.Constraints profiledRotationConstraints;
 
-  public Cmd_ArmShoulderPID(SubSys_Arm subSys_Arm, double targetHeadingDegrees) {
+  public Cmd_ArmRotationPID(SubSys_Arm subSys_Arm, double targetHeadingDegrees) {
 
     this.subSys_Arm = subSys_Arm;
     this.targetHeadingDegrees = targetHeadingDegrees;
