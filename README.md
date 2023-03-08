@@ -161,6 +161,7 @@ Developer Emails:<br>
 Seanernstes@otsegops.org<br>
 Rowankortlandt@otsegops.org<br>
 Alanmeyer@otsegops.org<br>
-Chelseasmith@otsegops.org
+Chelseasmith@otsegops.org<br>
+Avaburchfield@otsegops.org
 <!-- ACKNOWLEDGMENTS -->
 <p align="right">(<a href="#top">back to top</a>)</p>

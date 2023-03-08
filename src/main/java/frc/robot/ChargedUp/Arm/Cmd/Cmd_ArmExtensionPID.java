@@ -5,15 +5,10 @@
 package frc.robot.ChargedUp.Arm.Cmd;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
-import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain_Constants;
 
 public class Cmd_ArmExtensionPID extends CommandBase {
@@ -26,9 +21,7 @@ public class Cmd_ArmExtensionPID extends CommandBase {
 
   private final SimpleMotorFeedforward feedForward;
 
-  public Cmd_ArmExtensionPID(
-      SubSys_Arm subSys_Arm,
-      double targetPositionCM) {
+  public Cmd_ArmExtensionPID(SubSys_Arm subSys_Arm, double targetPositionCM) {
 
     this.subSys_Arm = subSys_Arm;
     this.targetPosition = targetPositionCM;
@@ -67,8 +60,7 @@ public class Cmd_ArmExtensionPID extends CommandBase {
   public void execute() {
      double currPose = this.subSys_Arm.getArmExtension(); //TODO: TEST 
 
-    double mvCmd =
-        this.distancePID.calculate(currPose - this.initialPosition, this.targetPosition);
+    double mvCmd = this.distancePID.calculate(currPose - this.initialPosition, this.targetPosition);
 
     SmartDashboard.putNumber("PID", mvCmd);
     this.subSys_Arm.armExtentionMinMax(mvCmd, 0, 60);
