@@ -1,4 +1,4 @@
-/*
+
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
@@ -23,15 +23,15 @@ public class Auto_Blank_Cmd extends SequentialCommandGroup {
   private final SubSys_PigeonGyro m_pigeonGyro;
 
   // Creates a new Auto_Blank_Cmd. /
-  public Auto_BlueLeave_Cmd(SubSys_DriveTrain driveSubSys, SubSys_PigeonGyro pigeonGyro) {
+  public Auto_Blank_Cmd(SubSys_DriveTrain driveSubSys, SubSys_PigeonGyro pigeonGyro) {
     m_DriveTrain = driveSubSys;
     m_pigeonGyro = pigeonGyro;
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "Blank", true, true)
+      new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "Blank", true, true),
+      new Cmd_AutoBalance(pigeonGyro, driveSubSys)
       );
   
   }
 }
-*/
