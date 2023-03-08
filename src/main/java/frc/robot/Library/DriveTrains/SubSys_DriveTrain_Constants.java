@@ -26,7 +26,7 @@ public class SubSys_DriveTrain_Constants {
     public static final double DriveTrainTrajMaxRotPctOutput = 0.25; // 0-1
     public static final double DriveTrainTrajMaxRotSpeed = 270 * Math.PI / 180; // rad/s
     public static final double DriveTrainTrajMaxRotAccel = 180 * Math.PI / 180; // rad/s^2
-    public static final double DriveSpeedMultiplier = 4; // NOT RECOMENDED TO USE
+    public static final double DriveSpeedMultiplier = 1; // NOT RECOMENDED TO USE
 
     public static final class DriveTrajectoryPID {
       public static final double Pgain = 3.0;
