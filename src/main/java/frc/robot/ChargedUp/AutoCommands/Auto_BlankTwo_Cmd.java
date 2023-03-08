@@ -1,16 +1,14 @@
-
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.ChargedUp.AutoCommands;
 
-import com.pathplanner.lib.PathPlannerTrajectory;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.ChargedUp.ChargeStation.Cmd_AutoBalance;
-import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmds_PathPlanner.Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj;
+import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
 import frc.robot.Library.DriveTrains.SwerveDrive.*;
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
 
@@ -29,9 +27,7 @@ public class Auto_BlankTwo_Cmd extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "Blank", true, true),
-      new Cmd_AutoBalance(pigeonGyro, driveSubSys)
-      );
-  
+        new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "Blank", true, true),
+        new Cmd_AutoBalance(pigeonGyro, driveSubSys));
   }
 }

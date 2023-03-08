@@ -13,16 +13,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.ChargedUp.AutoCommands.Auto_ChargeBlue_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_BlankTwo_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_Blank_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_BlueLeave_Cmd;
-import frc.robot.ChargedUp.AutoCommands.Auto_MiddleChargeBlue_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_ChargeBlue_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_ChargeRed_Cmd;
-import frc.robot.ChargedUp.AutoCommands.Auto_RedLeave_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_MiddleChargeBlue_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_MiddleChargeRed_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_OneConeBlue_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_OneConeRed_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_RedLeave_Cmd;
 import frc.robot.ChargedUp.ColorSensor.SubSys_ColorSensor;
 // import frc.robot.ChargedUp.DistanceSensor.SubSys_DistanceSensor;
 import frc.robot.ChargedUp.DriverStation.SubSys_DriverStation;
@@ -30,7 +30,6 @@ import frc.robot.ChargedUp.DriverStation.SubSys_DriverStation;
 import frc.robot.ChargedUp.Hand.SubSys_Hand;
 import frc.robot.ChargedUp.MecanumDrive.SubSys_MecanumDrive;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmd_SubSys_DriveTrain_JoysticDefault;
-import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmds_PathPlanner.Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
 import frc.robot.Library.Vision.Limelight.SubSys_LimeLight;
@@ -100,35 +99,25 @@ public class RobotContainer {
       new DriveSubSys_PathPlanner_Test_Cmd(driveSubSys);
   */
 
-  private final Command m_chargeBlue =
-  new Auto_ChargeBlue_Cmd(driveSubSys, gyroSubSys);
+  private final Command m_chargeBlue = new Auto_ChargeBlue_Cmd(driveSubSys, gyroSubSys);
 
-  private final Command m_chargeRed =
-  new Auto_ChargeRed_Cmd(driveSubSys, gyroSubSys);
+  private final Command m_chargeRed = new Auto_ChargeRed_Cmd(driveSubSys, gyroSubSys);
 
-  private final Command m_blueleave =
-  new Auto_BlueLeave_Cmd(driveSubSys, gyroSubSys);
+  private final Command m_blueleave = new Auto_BlueLeave_Cmd(driveSubSys, gyroSubSys);
 
-  private final Command m_redleave =
-  new Auto_RedLeave_Cmd(driveSubSys, gyroSubSys);
+  private final Command m_redleave = new Auto_RedLeave_Cmd(driveSubSys, gyroSubSys);
 
-  private final Command m_middlechargeBlue =
-  new Auto_MiddleChargeBlue_Cmd(driveSubSys, gyroSubSys);
+  private final Command m_middlechargeBlue = new Auto_MiddleChargeBlue_Cmd(driveSubSys, gyroSubSys);
 
-  private final Command m_middlechargeRed =
-  new Auto_MiddleChargeRed_Cmd(driveSubSys, gyroSubSys);
+  private final Command m_middlechargeRed = new Auto_MiddleChargeRed_Cmd(driveSubSys, gyroSubSys);
 
-  private final Command m_OneConeBlue =
-  new Auto_OneConeBlue_Cmd(driveSubSys, gyroSubSys);
+  private final Command m_OneConeBlue = new Auto_OneConeBlue_Cmd(driveSubSys, gyroSubSys);
 
-  private final Command m_OneConeRed =
-  new Auto_OneConeRed_Cmd(driveSubSys, gyroSubSys);
-  
-  private final Command m_Blank =
-  new Auto_Blank_Cmd(driveSubSys, gyroSubSys);
+  private final Command m_OneConeRed = new Auto_OneConeRed_Cmd(driveSubSys, gyroSubSys);
 
-  private final Command m_BlankTwo =
-  new Auto_BlankTwo_Cmd(driveSubSys, gyroSubSys);
+  private final Command m_Blank = new Auto_Blank_Cmd(driveSubSys, gyroSubSys);
+
+  private final Command m_BlankTwo = new Auto_BlankTwo_Cmd(driveSubSys, gyroSubSys);
 
   /*
   /*
@@ -156,7 +145,7 @@ public class RobotContainer {
             () -> driverStation.RotateRightPt()));
 
     // Sendable Chooser
-   
+
     m_chooser.setDefaultOption("chargeblue", m_chargeBlue);
     m_chooser.addOption("leaveblue", m_blueleave);
     m_chooser.addOption("middlechargeblue", m_middlechargeBlue);
