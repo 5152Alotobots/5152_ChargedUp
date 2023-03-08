@@ -30,8 +30,8 @@ public class SubSys_DistanceSensor extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-   // distance = distSensor.getRange();
-    //SmartDashboard.putNumber("Range", distSensor.getRange());
+    // distance = distSensor.getRange();
+    // SmartDashboard.putNumber("Range", distSensor.getRange());
   }
 }
 */

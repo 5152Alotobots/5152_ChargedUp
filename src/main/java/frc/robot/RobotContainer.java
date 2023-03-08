@@ -25,9 +25,13 @@ import frc.robot.ChargedUp.AutoCommands.Auto_OneConeRed_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_RedLeave_Cmd;
 import frc.robot.ChargedUp.ColorSensor.SubSys_ColorSensor;
 // import frc.robot.ChargedUp.DistanceSensor.SubSys_DistanceSensor;
+import frc.robot.ChargedUp.Arm.Cmd.Cmd_ArmDefault;
+import frc.robot.ChargedUp.Arm.SubSys_Arm;
+import frc.robot.ChargedUp.AutoCommands.Auto_ChargeBlue_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_ChargeRed_Cmd;
 import frc.robot.ChargedUp.DriverStation.SubSys_DriverStation;
-// import frc.robot.ChargedUp.Hand.Cmd.Cmd_HandWithSensor;
 import frc.robot.ChargedUp.Hand.SubSys_Hand;
+import frc.robot.ChargedUp.MecanumDrive.Cmd.Cmd_MecanumDriveDefault;
 import frc.robot.ChargedUp.MecanumDrive.SubSys_MecanumDrive;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmd_SubSys_DriveTrain_JoysticDefault;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
@@ -62,12 +66,13 @@ public class RobotContainer {
   // private final PDPSubSys m_PDPSubSys = new PDPSubSys();
 
   // public final NavXGyroSubSys m_NavXGyroSubSys = new NavXGyroSubSys();
+  // public final NavXGyroSubSys m_NavXGyroSubSys = new NavXGyroSubSys();
 
   // private final SubSys_LimeLight limeLightSubSys = new SubSys_LimeLight();
 
   public final SubSys_MecanumDrive mecanumDriveSubSys = new SubSys_MecanumDrive();
 
-  public final SubSys_ColorSensor colorSubSys = new SubSys_ColorSensor();
+  // public final SubSys_ColorSensor colorSubSys = new SubSys_ColorSensor();
 
   // public final SubSys_DistanceSensor distanceSubsys = new SubSys_DistanceSensor();
   // ---- Driver Station
@@ -75,18 +80,20 @@ public class RobotContainer {
   // ---- Hand
   public final SubSys_Hand handSubSys = new SubSys_Hand();
 
+  // Arm
+  public final SubSys_Arm armSubSys = new SubSys_Arm();
   /*
    ***** Charged Up Componentes
    */
 
   // ---- Driver Station
-  public final SubSys_DriverStation driverStation = new SubSys_DriverStation();
+  public final SubSys_DriverStation driverStationSubSys = new SubSys_DriverStation();
   // SetUp Auto
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
-  /*
-   ***** Auto Commands
-   */
+  private final Command m_chargeBlue = new Auto_ChargeBlue_Cmd(driveSubSys, gyroSubSys);
+  private final Command m_chargeRed = new Auto_ChargeRed_Cmd(driveSubSys, gyroSubSys);
+
   /*
 
   private final Command m_Auto_PathPlanner_Test_Cmd =
@@ -98,6 +105,7 @@ public class RobotContainer {
   private final Command ihopethisworks =
       new DriveSubSys_PathPlanner_Test_Cmd(driveSubSys);
   */
+
 
   private final Command m_chargeBlue = new Auto_ChargeBlue_Cmd(driveSubSys, gyroSubSys);
 
@@ -120,7 +128,6 @@ public class RobotContainer {
   private final Command m_BlankTwo = new Auto_BlankTwo_Cmd(driveSubSys, gyroSubSys);
 
   /*
-  /*
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
@@ -130,19 +137,35 @@ public class RobotContainer {
     // Configure default commands
 
     /** ***** Control System Components */
-    // handSubSys.setDefaultCommand(
-    //     new Cmd_HandWithSensor(
-    //         handSubSys, colorSubSys, distanceSubsys, () -> driverStation.HandSensorBtn()));
-    // ---- Drive Subsystem Default Command
+    armSubSys.setDefaultCommand(
+        new Cmd_ArmDefault(
+            armSubSys,
+            () -> driverStationSubSys.GetArmRotateAxis(),
+            () -> driverStationSubSys.GetArmExtendAxis()));
+
+    // handSubSys.setDefaultCommand(new Cmd_HandWithSensor(
+    //  handSubSys,
+    //  colorSubSys,
+    //  distanceSubsys,
+    //  () ->  driverStationSubSys.HandSensorBtn())
+    // );
+
+    mecanumDriveSubSys.setDefaultCommand(
+        new Cmd_MecanumDriveDefault(
+            mecanumDriveSubSys,
+            () -> driverStationSubSys.DriveFwdAxis(),
+            () -> driverStationSubSys.DriveStrAxis(),
+            () -> driverStationSubSys.DriveRotAxis()));
+
     driveSubSys.setDefaultCommand(
         new Cmd_SubSys_DriveTrain_JoysticDefault(
             driveSubSys,
-            () -> driverStation.DriveFwdAxis(),
-            () -> driverStation.DriveStrAxis(),
-            () -> driverStation.DriveRotAxis(),
-            true,
-            () -> driverStation.RotateLeftPt(),
-            () -> driverStation.RotateRightPt()));
+            () -> driverStationSubSys.DriveFwdAxis(),
+            () -> driverStationSubSys.DriveStrAxis(),
+            () -> driverStationSubSys.DriveRotAxis(),
+            false,
+            () -> driverStationSubSys.RotateLeftPt(),
+            () -> driverStationSubSys.RotateRightPt()));
 
     // Sendable Chooser
 
@@ -163,21 +186,25 @@ public class RobotContainer {
    * Use this method to define your button->command mappings. Buttons can be created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
-   * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+   * edu.wpi.first.wpilibj2.command.button.JoystickButton}. Use this method to define your
+   * button->command mappings. Buttons can be created by instantiating a {@link GenericHID} or one
+   * of its subclasses ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
+   * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
 
     // Gyro Reset Command Button
-    driverStation.OpenHandButton.onTrue(new InstantCommand(handSubSys::OpenHand, handSubSys));
-    driverStation.CloseHandButton.onTrue(new InstantCommand(handSubSys::CloseHand, handSubSys));
-    driverStation.GyroResetButton.onTrue(new InstantCommand(gyroSubSys::zeroYaw, gyroSubSys));
+    driverStationSubSys.OpenHandButton.onTrue(new InstantCommand(handSubSys::OpenHand, handSubSys));
+    driverStationSubSys.CloseHandButton.onTrue(
+        new InstantCommand(handSubSys::CloseHand, handSubSys));
+    driverStationSubSys.GyroResetButton.onTrue(new InstantCommand(gyroSubSys::zeroYaw, gyroSubSys));
 
     // Gyro Reset Command Button
-    driverStation.PoseResetButton.onTrue(
+    driverStationSubSys.PoseResetButton.onTrue(
         // new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
         new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
 
-    driverStation.TestButton.whileTrue(
+    driverStationSubSys.TestButton.whileTrue(
         // new Cmd_SubSys_DriveTrain_Rotate2Heading(driveSubSys, 90)
 
         /*
@@ -201,6 +228,9 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
+    // m_DriveSubSys.resetOdometry(new Pose2d(0, 0, new Rotation2d(0)));
+
+    // return m_BasicAutoCmd;
     // m_DriveSubSys.resetOdometry(new Pose2d(0, 0, new Rotation2d(0)));
 
     // return m_BasicAutoCmd;
