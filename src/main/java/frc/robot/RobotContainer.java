@@ -15,8 +15,17 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.ChargedUp.Arm.Cmd.Cmd_ArmDefault;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
+import frc.robot.ChargedUp.AutoCommands.Auto_BlankTwo_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_Blank_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_BlueLeave_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_ChargeBlue_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_ChargeRed_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_MiddleChargeBlue_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_MiddleChargeRed_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_OneConeBlue_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_OneConeRed_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_RedLeave_Cmd;
+// import frc.robot.ChargedUp.DistanceSensor.SubSys_DistanceSensor;
 import frc.robot.ChargedUp.DriverStation.SubSys_DriverStation;
 import frc.robot.ChargedUp.Hand.SubSys_Hand;
 import frc.robot.ChargedUp.MecanumDrive.Cmd.Cmd_MecanumDriveDefault;
@@ -95,6 +104,22 @@ public class RobotContainer {
       new DriveSubSys_PathPlanner_Test_Cmd(driveSubSys);
   */
 
+  private final Command m_blueleave = new Auto_BlueLeave_Cmd(driveSubSys, gyroSubSys);
+
+  private final Command m_redleave = new Auto_RedLeave_Cmd(driveSubSys, gyroSubSys);
+
+  private final Command m_middlechargeBlue = new Auto_MiddleChargeBlue_Cmd(driveSubSys, gyroSubSys);
+
+  private final Command m_middlechargeRed = new Auto_MiddleChargeRed_Cmd(driveSubSys, gyroSubSys);
+
+  private final Command m_OneConeBlue = new Auto_OneConeBlue_Cmd(driveSubSys, gyroSubSys);
+
+  private final Command m_OneConeRed = new Auto_OneConeRed_Cmd(driveSubSys, gyroSubSys);
+
+  private final Command m_Blank = new Auto_Blank_Cmd(driveSubSys, gyroSubSys);
+
+  private final Command m_BlankTwo = new Auto_BlankTwo_Cmd(driveSubSys, gyroSubSys);
+
   /*
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -136,22 +161,17 @@ public class RobotContainer {
             () -> driverStationSubSys.RotateRightPt()));
 
     // Sendable Chooser
-    // m_chooser.setDefaultOption("Auto_BasicRevHighGoalRev_Cmd", m_Auto_BasicRevHighGoalRev_Cmd);
-    // m_chooser.addOption("Auto_BasicRevLowGoalRev", m_Auto_BasicRevLowGoalRev_Cmd);
-    // m_chooser.addOption("Auto_AS_RevHighGoalRev_Cmd", m_Auto_AS_RevHighGoalRev_Cmd);
-    // m_chooser.addOption("Auto_AS_T13CnrtoT13HighGoaltoB2toShoot_Cmd",
-    // m_Auto_AS_T13CnrtoT13HighGoaltoB2toShoot_Cmd);
-    // m_chooser.addOption("Auto_PathPlanner_Test_Cmd", m_Auto_PathPlanner_Test_Cmd);
-    // m_chooser.addOption("Auto_PP_FollowTraj_Cmd", m_Auto_PP_FollowTraj_Cmd);
-    // m_chooser.addOption("goodluck", ihopethisworks);
-    // m_chooser.setDefaultOption("Drive4Distance", m_Drive4Distance_Cmd);
-    // m_chooser.addOption("BasicAutoLowWait", m_BasicAutoLowWaitCmd);
-    // m_chooser.addOption("BasicAutoHigh", m_BasicAutoHighCmd);
-    // m_chooser.addOption("BasicAutoHighExtraBalls", m_BasicAutoHighExtraBallsCmd);
-    // m_chooser.addOption("HighshotAuto", m_LeftCenterHigh_Cmd);
-    m_chooser.setDefaultOption("chargeblue", m_chargeBlue);
-    m_chooser.addOption("chargered", m_chargeRed);
 
+    m_chooser.setDefaultOption("chargeblue", m_chargeBlue);
+    m_chooser.addOption("leaveblue", m_blueleave);
+    m_chooser.addOption("middlechargeblue", m_middlechargeBlue);
+    m_chooser.addOption("chargered", m_chargeRed);
+    m_chooser.addOption("redleave", m_redleave);
+    m_chooser.addOption("middlechargered", m_middlechargeRed);
+    m_chooser.addOption("oneconeblue", m_OneConeBlue);
+    m_chooser.addOption("oneconered", m_OneConeRed);
+    m_chooser.addOption("Blank", m_Blank);
+    m_chooser.addOption("Blanktwo", m_BlankTwo);
     SmartDashboard.putData(m_chooser);
   }
 
