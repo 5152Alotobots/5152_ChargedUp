@@ -103,9 +103,7 @@ public class RobotContainer {
       new DriveSubSys_PathPlanner_Test_Cmd(driveSubSys);
   */
 
-  private final Command m_chargeBlue = new Auto_ChargeBlue_Cmd(driveSubSys, gyroSubSys);
 
-  private final Command m_chargeRed = new Auto_ChargeRed_Cmd(driveSubSys, gyroSubSys);
 
   private final Command m_blueleave = new Auto_BlueLeave_Cmd(driveSubSys, gyroSubSys);
 
