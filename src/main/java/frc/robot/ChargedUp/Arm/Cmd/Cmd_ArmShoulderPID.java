@@ -56,9 +56,6 @@ public class Cmd_ArmShoulderPID extends CommandBase {
   public void initialize() {
     this.profiledRotationPID.reset(this.subSys_Arm.getShoulderRotation());
     this.profiledRotationPID.setGoal(this.targetHeadingDegrees);
-
-    // log target to dashboard
-    SmartDashboard.putData(profiledRotationPID);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -72,27 +69,14 @@ public class Cmd_ArmShoulderPID extends CommandBase {
     double rotCmd = rotFFCmd + rotPIDCmd;
 
     //rotate arm
-    this.subSys_Arm.RotateArm(0, rotCmd);
+    this.subSys_Arm.rotateArmMinMax(rotCmd, 30, 45);
 
-    SmartDashboard.putNumber("Rotate2Heading_Goal", this.profiledRotationPID.getGoal().position);
-    SmartDashboard.putNumber(
-        "Rotate2Heading_Setpoint_Position", this.profiledRotationPID.getSetpoint().position);
-    SmartDashboard.putNumber(
-        "Rotate2Heading_SetPoint_Velocity", this.profiledRotationPID.getSetpoint().velocity);
-    SmartDashboard.putNumber("Rotate2Heading_Error", this.profiledRotationPID.getPositionError());
-
-    SmartDashboard.putNumber("Rotate2Heading_rotPIDCmd", rotPIDCmd);
-    SmartDashboard.putNumber("Rotate2Heading_rotFFCmd", rotFFCmd);
-    SmartDashboard.putNumber("Rotate2Heading_rotCmd", rotCmd);
-
-    // Test to see if finished
-    SmartDashboard.putBoolean("Rotate2Heading Finished", this.profiledRotationPID.atGoal());
-  }
+}
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    this.subSys_Arm.RotateArm(0,0);
+    this.subSys_Arm.rotateArmMinMax(0, -43, 35);
   }
 
   // Returns true when the command should end.

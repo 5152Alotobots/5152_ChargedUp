@@ -269,8 +269,11 @@ public class SubSys_Arm extends SubsystemBase {
   public double getShoulderRotation() {
     return Arm_ShoulderCanCoder.getAbsolutePosition() - Const_Arm.kOffsetTo0;
   }
-  public void resetExtendCanCoder() {
-    Arm_ExtensionCanCoder.setPosition(0);
+  public double getArmExtension() {
+    return Arm_ShoulderCanCoder.getAbsolutePosition() - Const_Arm.kOffsetTo0;
+  } 
+  public double resetExtendCanCoder() {
+    return Arm_ExtensionMotor.getSelectedSensorPosition();
   }
   @Override
   public void periodic() {
