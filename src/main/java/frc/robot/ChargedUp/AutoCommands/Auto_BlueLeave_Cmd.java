@@ -4,7 +4,6 @@
 
 package frc.robot.ChargedUp.AutoCommands;
 
-
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmds_PathPlanner.Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
