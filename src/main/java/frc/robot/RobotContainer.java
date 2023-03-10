@@ -29,6 +29,7 @@ import frc.robot.ChargedUp.Hand.SubSys_Hand;
 import frc.robot.ChargedUp.MecanumDrive.Cmd.Cmd_MecanumDriveDefault;
 import frc.robot.ChargedUp.MecanumDrive.SubSys_MecanumDrive;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmd_SubSys_DriveTrain_JoysticDefault;
+import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmd_SubSys_DriveTrain_JoysticTurbo;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
 import frc.robot.Library.Vision.Limelight.SubSys_LimeLight;
@@ -190,7 +191,8 @@ public class RobotContainer {
     driverStationSubSys.PoseResetButton.onTrue(
         // new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
         new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
-    /* //TODO: FIX THIS
+        
+    //TODO: FIX THIS
       driverStationSubSys.TurboButton.whileTrue(
           new Cmd_SubSys_DriveTrain_JoysticTurbo(
               driveSubSys,
@@ -200,7 +202,6 @@ public class RobotContainer {
               true,
               () -> driverStationSubSys.RotateLeftPt(),
               () -> driverStationSubSys.RotateRightPt()));
-    */
   }
 
   // when test button is pressed run the rotate to heading command to a random number between 0 and
