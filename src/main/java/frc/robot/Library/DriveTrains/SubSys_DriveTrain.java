@@ -103,7 +103,6 @@ public class SubSys_DriveTrain extends SubsystemBase {
     return SubSys_DriveTrain_Constants.DriveTrainMaxTurboAccel;
   }
 
-
   /**
    * getMaxDriveSubSysRotSpd Returns Max Drive Subsystem Rotation
    *
