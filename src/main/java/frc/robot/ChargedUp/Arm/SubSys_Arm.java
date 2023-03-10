@@ -248,7 +248,7 @@ public class SubSys_Arm extends SubsystemBase {
       if (ArmExtendLength < max) {
         ExtendArm(0, PercentOutput);
       }
-      if (ArmExtendLength > max) { 
+      if (ArmExtendLength > max) {
         ExtendArm(1, PercentOutput);
       }
     }
