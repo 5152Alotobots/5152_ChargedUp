@@ -6,6 +6,7 @@ package frc.robot.ChargedUp.AutoCommands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmds_PathPlanner.Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj;
+import frc.robot.ChargedUp.ChargeStation.Cmd_AutoBalance;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
 import frc.robot.Library.DriveTrains.SwerveDrive.*;
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
@@ -27,5 +28,6 @@ public class Auto_MiddleChargeBlue_Cmd extends SequentialCommandGroup {
     addCommands(
         new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
             driveSubSys, "middlechargeblue", true, true));
-  }
+            new Cmd_AutoBalance(pigeonGyro, driveSubSys);
+          }
 }

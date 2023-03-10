@@ -26,7 +26,7 @@ public class Auto_LeftChargeRed_Cmd extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "leftchargered", true, true),
+        new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "leftredcharge", true, true),
         new Cmd_AutoBalance(pigeonGyro, driveSubSys));
   }
 }
