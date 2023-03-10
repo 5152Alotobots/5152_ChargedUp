@@ -9,6 +9,7 @@ package frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
+import frc.robot.Library.DriveTrains.SubSys_DriveTrain_Constants;
 import frc.robot.Library.DriverStation.JoystickUtilities;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
@@ -61,6 +62,16 @@ public class Cmd_SubSys_DriveTrain_JoysticTurbo extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    //! DON'T DO THIS. CHANGE THIS AFTER THE COMP
+    SubSys_DriveTrain_Constants.DriveTrainMaxPctOutput = driveSubSys.getMaxDriveSubSysTurboPctOutput();
+    SubSys_DriveTrain_Constants.DriveTrainMaxSpd = driveSubSys.getMaxDriveTurboSubSysSpd();
+    SubSys_DriveTrain_Constants.DriveTrainMaxAccel = driveSubSys.getMaxDriveSubSysTurboAccel();
+
+    SubSys_DriveTrain_Constants.DriveTrainMaxPctOutput = driveSubSys.getMaxDriveSubSysTurboPctOutput();
+    SubSys_DriveTrain_Constants.DriveTrainMaxRotSpeed = driveSubSys.getMaxDriveSubSysTurboRotSpd();
+    SubSys_DriveTrain_Constants.DriveTrainMaxRotAccel = driveSubSys.getMaxDriveSubSysTurboRotAccel();
+    
+
     driveSubSys.Drive(
         JoystickUtilities.joyDeadBndSqrdScaled(
             fwdCmd.getAsDouble(), 0.05, driveSubSys.getMaxDriveTurboSubSysSpd()),
