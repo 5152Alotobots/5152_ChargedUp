@@ -14,17 +14,17 @@ import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
  * *Link For PathPlanner
  * *https://docs.google.com/presentation/d/1xjYSI4KpbmGBUY-ZMf1nAFrXIoJo1tl-HHNl8LLqa1I/edit#slide=id.g1e64fa08ff8_0_6
  */
-public class Auto_rightredescape_Cmd extends SequentialCommandGroup {
+public class Auto_leftredescape_Cmd extends SequentialCommandGroup {
   private final SubSys_DriveTrain m_DriveTrain;
   private final SubSys_PigeonGyro m_pigeonGyro;
 
   /** Creates a new Auto_Challenge1_Cmd. */
-  public Auto_rightredescape_Cmd(SubSys_DriveTrain driveSubSys, SubSys_PigeonGyro pigeonGyro) {
+  public Auto_leftredescape_Cmd(SubSys_DriveTrain driveSubSys, SubSys_PigeonGyro pigeonGyro) {
     m_DriveTrain = driveSubSys;
     m_pigeonGyro = pigeonGyro;
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "rightredescape", true, true));
+        new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "leftredescape", true, true));
   }
 }
