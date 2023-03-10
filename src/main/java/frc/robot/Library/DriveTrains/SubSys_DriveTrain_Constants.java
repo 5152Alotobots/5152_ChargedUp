@@ -7,6 +7,14 @@ package frc.robot.Library.DriveTrains;
 /** Add your docs here. */
 public class SubSys_DriveTrain_Constants {
 
+    // Drive Default Speeds
+    public static final double DriveTrainMaxDefaultPctOutput = 0.50; // 0-1
+    public static final double DriveTrainMaxDefaultSpd = 4; // m/s
+    public static final double DriveTrainMaxDefaultAccel = 0.35; // m/s^2
+    public static final double DriveTrainMaxDefaultRotPctOutput = 0.4; // 0-1
+    public static final double DriveTrainMaxDefaultRotSpeed = 140 * Math.PI / 180; // rad/s
+    public static final double DriveTrainMaxDefaultRotAccel = 200 * Math.PI / 180; // rad/s^2
+
   // Drive Max Speeds
   public static double DriveTrainMaxPctOutput = 0.50; // 0-1
   public static double DriveTrainMaxSpd = 4; // m/s
