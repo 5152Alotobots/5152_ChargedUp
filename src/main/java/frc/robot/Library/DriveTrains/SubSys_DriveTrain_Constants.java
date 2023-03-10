@@ -25,11 +25,11 @@ public class SubSys_DriveTrain_Constants {
 
 //Drive Turbo Speeds
 public static final double DriveTrainMaxTurboPctOutput = 1; // 0-1
-public static final double DriveTrainMaxTurboSpd = 8; // m/s
-public static final double DriveTrainMaxTurboAccel = 1; // m/s^2
-public static final double DriveTrainMaxTurboRotPctOutput = 0.8; // 0-1
-public static final double DriveTrainMaxTurboRotSpeed = 200 * Math.PI / 180; // rad/s
-public static final double DriveTrainMaxTurboRotAccel = 240 * Math.PI / 180; // rad/s^2
+public static final double DriveTrainMaxTurboSpd = 18; // m/s
+public static final double DriveTrainMaxTurboAccel = 6; // m/s^2
+public static final double DriveTrainMaxTurboRotPctOutput = 1; // 0-1
+public static final double DriveTrainMaxTurboRotSpeed = 280 * Math.PI / 180; // rad/s
+public static final double DriveTrainMaxTurboRotAccel = 330 * Math.PI / 180; // rad/s^2
 
 
 
