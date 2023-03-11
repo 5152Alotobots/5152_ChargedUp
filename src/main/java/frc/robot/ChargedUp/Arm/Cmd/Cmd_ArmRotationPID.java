@@ -4,7 +4,6 @@ import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.ChargedUp.Arm.Const_Arm;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
@@ -72,11 +71,6 @@ public class Cmd_ArmRotationPID extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // if (Math.abs(this.targetHeadingDegrees-this.subSys_DriveTrain.getHeading().getDegrees())< 1){
-    //  return true;
-    // }else{
-    //  return false;
-    // }
 
     if (this.profiledRotationPID.atGoal()) {
       return true;
