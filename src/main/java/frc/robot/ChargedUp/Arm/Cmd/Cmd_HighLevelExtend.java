@@ -25,7 +25,7 @@ public class Cmd_HighLevelExtend extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
- this.armSubsys.ExtendArm(0, -0.3);
+ this.armSubsys.ExtendArm(0, -0.8);
  System.out.println("Extending");
   }
 

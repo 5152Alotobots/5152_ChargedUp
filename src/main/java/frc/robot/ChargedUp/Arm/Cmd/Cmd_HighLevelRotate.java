@@ -25,7 +25,7 @@ public class Cmd_HighLevelRotate extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
- this.armSubsys.rotateArmMinMax(.30, 45, 50);
+ this.armSubsys.RotateArm(0,.8);
  System.out.println("Running Cmd");
   }
 
