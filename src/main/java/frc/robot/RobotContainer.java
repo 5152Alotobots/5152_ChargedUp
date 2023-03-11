@@ -29,6 +29,7 @@ import frc.robot.ChargedUp.Hand.SubSys_Hand;
 import frc.robot.ChargedUp.MecanumDrive.Cmd.Cmd_MecanumDriveDefault;
 import frc.robot.ChargedUp.MecanumDrive.SubSys_MecanumDrive;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmd_SubSys_DriveTrain_JoysticDefault;
+import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmd_SubSys_DriveTrain_JoysticSlow;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmd_SubSys_DriveTrain_JoysticTurbo;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
@@ -192,7 +193,7 @@ public class RobotContainer {
         // new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
         new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
         
-    //TODO: FIX THIS
+    // Turbo Button
       driverStationSubSys.TurboButton.whileTrue(
           new Cmd_SubSys_DriveTrain_JoysticTurbo(
               driveSubSys,
@@ -202,6 +203,17 @@ public class RobotContainer {
               true,
               () -> driverStationSubSys.RotateLeftPt(),
               () -> driverStationSubSys.RotateRightPt()));
+
+    //Slow Button
+        driverStationSubSys.SlowButton.whileTrue(
+            new Cmd_SubSys_DriveTrain_JoysticSlow(
+                driveSubSys,
+                () -> driverStationSubSys.DriveFwdAxis(),
+                () -> driverStationSubSys.DriveStrAxis(),
+                () -> driverStationSubSys.DriveRotAxis(),
+                true,
+                () -> driverStationSubSys.RotateLeftPt(),
+                () -> driverStationSubSys.RotateRightPt()));
   }
 
   // when test button is pressed run the rotate to heading command to a random number between 0 and

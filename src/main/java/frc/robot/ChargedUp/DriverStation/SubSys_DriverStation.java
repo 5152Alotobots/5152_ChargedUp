@@ -27,7 +27,8 @@ public class SubSys_DriverStation extends SubsystemBase {
   public JoystickButton OpenHandButton = new JoystickButton(m_DriverController, 5);
   public JoystickButton PoseResetButton = new JoystickButton(m_DriverController, 1);
   public JoystickButton TestButton = new JoystickButton(m_DriverController, 3);
-  public Trigger TurboButton = new Trigger(() -> m_DriverController.getRawAxis(3) > 0.5);
+  public Trigger TurboButton = new Trigger(() -> m_DriverController.getRawAxis(3) > 0.5); //right trigger
+  public Trigger SlowButton = new Trigger(() -> m_DriverController.getRawAxis(2) > 0.5); //left trigger`
 
   public SubSys_DriverStation() {}
 
