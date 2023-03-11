@@ -59,7 +59,7 @@ public class Cmd_ArmRotationPID extends CommandBase {
     double rotCmd = rotFFCmd + rotPIDCmd;
 
     //rotate arm
-    this.subSys_Arm.rotateArmMinMax(rotCmd, 30, 45);
+    this.subSys_Arm.rotateArmMinMax(rotCmd, -43, 80);
 
 }
 
