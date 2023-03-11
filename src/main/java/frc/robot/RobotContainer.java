@@ -124,7 +124,7 @@ public class RobotContainer {
 
 //   private final Command m_OneConeRed = new Auto_OneConeRed_Cmd(driveSubSys, gyroSubSys);
 
-  private final Command m_allianceblue = new Auto_allianceblue_Cmd(driveSubSys, gyroSubSys, handSubSys);
+  private final Command m_allianceblue = new Auto_allianceblue_Cmd(driveSubSys, gyroSubSys, handSubSys, armSubSys);
 
   /*
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -175,7 +175,8 @@ public class RobotContainer {
     m_chooser.addOption("redleave", m_redleave);
     m_chooser.addOption("middlechargered", m_middlechargeRed);
     m_chooser.addOption("leftchargeblue", m_leftbluecharge);
-    m_chooser.addOption("rightchargered", m_rightredcharge);
+    m_chooser.addOption("blue", m_allianceblue);
+    // m_chooser.addOption("rightchargered", m_rightredcharge);
    
     SmartDashboard.putData(m_chooser);
   }
@@ -201,12 +202,12 @@ public class RobotContainer {
     driverStationSubSys.PoseResetButton.onTrue(
         // new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
         new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
-
+/*
         //REMOVE THIS BEFORE COMP
     driverStationSubSys.TestButton.onTrue(
       new Cmd_HighLevelExtend(armSubSys)
     );
-
+*/
     //TODO: FIX THIS
       driverStationSubSys.TurboButton.whileTrue(
           new Cmd_SubSys_DriveTrain_JoysticTurbo(
