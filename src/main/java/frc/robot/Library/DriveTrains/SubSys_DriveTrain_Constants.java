@@ -7,13 +7,13 @@ package frc.robot.Library.DriveTrains;
 /** Add your docs here. */
 public class SubSys_DriveTrain_Constants {
 
-    // Drive Default Speeds
-    public static final double DriveTrainMaxDefaultPctOutput = 0.50; // 0-1
-    public static final double DriveTrainMaxDefaultSpd = 4; // m/s
-    public static final double DriveTrainMaxDefaultAccel = 0.35; // m/s^2
-    public static final double DriveTrainMaxDefaultRotPctOutput = 0.4; // 0-1
-    public static final double DriveTrainMaxDefaultRotSpeed = 140 * Math.PI / 180; // rad/s
-    public static final double DriveTrainMaxDefaultRotAccel = 200 * Math.PI / 180; // rad/s^2
+  // Drive Default Speeds
+  public static final double DriveTrainMaxDefaultPctOutput = 0.50; // 0-1
+  public static final double DriveTrainMaxDefaultSpd = 4; // m/s
+  public static final double DriveTrainMaxDefaultAccel = 0.35; // m/s^2
+  public static final double DriveTrainMaxDefaultRotPctOutput = 0.4; // 0-1
+  public static final double DriveTrainMaxDefaultRotSpeed = 140 * Math.PI / 180; // rad/s
+  public static final double DriveTrainMaxDefaultRotAccel = 200 * Math.PI / 180; // rad/s^2
 
   // Drive Max Speeds
   public static double DriveTrainMaxPctOutput = 0.50; // 0-1
@@ -39,12 +39,12 @@ public static final double DriveTrainMaxSlowRotPctOutput = 0.2; // 0-1
 public static final double DriveTrainMaxSlowRotSpeed = 70 * Math.PI / 180; // rad/s
 public static final double DriveTrainMaxSlowRotAccel = 100 * Math.PI / 180; // rad/s^2
 
-
   public static final class DriveTrainTrajSettings {
     // Drive Trajectory Max Speeds (Trajectories or PID Commands)
     public static final double DriveTrainTrajMaxPctOutput = 1; // 0-1
     public static final double DriveTrainTrajMaxSpd = 36; // m/s
-    public static final double DriveTrainTrajMaxAccel = 1; // m/s/s //? Possible reason why the auton is so slow?
+    public static final double DriveTrainTrajMaxAccel =
+        1; // m/s/s //? Possible reason why the auton is so slow?
     public static final double DriveTrainTrajMaxRotPctOutput = 0.25; // 0-1
     public static final double DriveTrainTrajMaxRotSpeed = 270 * Math.PI / 180; // rad/s
     public static final double DriveTrainTrajMaxRotAccel = 180 * Math.PI / 180; // rad/s^2
