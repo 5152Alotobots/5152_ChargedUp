@@ -119,7 +119,7 @@ public class RobotContainer {
 
   private final Command m_leftbluecharge = new Auto_leftbluecharge_Cmd(driveSubSys, gyroSubSys);
 
-  private final Command m_OneConeRed = new Auto_OneConeRed_Cmd(driveSubSys, gyroSubSys);
+//   private final Command m_OneConeRed = new Auto_OneConeRed_Cmd(driveSubSys, gyroSubSys);
 
   private final Command m_allianceblue = new Auto_allianceblue_Cmd(driveSubSys, gyroSubSys, handSubSys);
 
