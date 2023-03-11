@@ -110,11 +110,10 @@ public class SubSys_DriveTrain extends SubsystemBase {
   public double getMaxDriveSubSysTurboAccel() {
     return SubSys_DriveTrain_Constants.DriveTrainMaxTurboAccel;
   }
- 
+
   public double getMaxDriveSubSysSlowAccel() {
     return SubSys_DriveTrain_Constants.DriveTrainMaxSlowAccel;
   }
-
 
   /**
    * getMaxDriveSubSysRotSpd Returns Max Drive Subsystem Rotation
@@ -151,37 +150,54 @@ public class SubSys_DriveTrain extends SubsystemBase {
 
   // ***** Drive Methods *****
 
-  //Normal mode
+  // Normal mode
   public void setDriveSpdDefault() {
-    SubSys_DriveTrain_Constants.DriveTrainMaxPctOutput = SubSys_DriveTrain_Constants.DriveTrainMaxDefaultPctOutput;
-    SubSys_DriveTrain_Constants.DriveTrainMaxSpd = SubSys_DriveTrain_Constants.DriveTrainMaxDefaultSpd;
-    SubSys_DriveTrain_Constants.DriveTrainMaxAccel = SubSys_DriveTrain_Constants.DriveTrainMaxDefaultAccel;
+    SubSys_DriveTrain_Constants.DriveTrainMaxPctOutput =
+        SubSys_DriveTrain_Constants.DriveTrainMaxDefaultPctOutput;
+    SubSys_DriveTrain_Constants.DriveTrainMaxSpd =
+        SubSys_DriveTrain_Constants.DriveTrainMaxDefaultSpd;
+    SubSys_DriveTrain_Constants.DriveTrainMaxAccel =
+        SubSys_DriveTrain_Constants.DriveTrainMaxDefaultAccel;
 
-    SubSys_DriveTrain_Constants.DriveTrainMaxRotPctOutput = SubSys_DriveTrain_Constants.DriveTrainMaxDefaultRotPctOutput;
-    SubSys_DriveTrain_Constants.DriveTrainMaxRotSpeed = SubSys_DriveTrain_Constants.DriveTrainMaxDefaultRotSpeed;
-    SubSys_DriveTrain_Constants.DriveTrainMaxRotAccel = SubSys_DriveTrain_Constants.DriveTrainMaxDefaultRotAccel;
+    SubSys_DriveTrain_Constants.DriveTrainMaxRotPctOutput =
+        SubSys_DriveTrain_Constants.DriveTrainMaxDefaultRotPctOutput;
+    SubSys_DriveTrain_Constants.DriveTrainMaxRotSpeed =
+        SubSys_DriveTrain_Constants.DriveTrainMaxDefaultRotSpeed;
+    SubSys_DriveTrain_Constants.DriveTrainMaxRotAccel =
+        SubSys_DriveTrain_Constants.DriveTrainMaxDefaultRotAccel;
   }
 
-  //Turbo mode
+  // Turbo mode
   public void setDriveSpdTurbo() {
-    SubSys_DriveTrain_Constants.DriveTrainMaxPctOutput = SubSys_DriveTrain_Constants.DriveTrainMaxTurboPctOutput;
-    SubSys_DriveTrain_Constants.DriveTrainMaxSpd = SubSys_DriveTrain_Constants.DriveTrainMaxTurboSpd;
-    SubSys_DriveTrain_Constants.DriveTrainMaxAccel = SubSys_DriveTrain_Constants.DriveTrainMaxTurboAccel;
+    SubSys_DriveTrain_Constants.DriveTrainMaxPctOutput =
+        SubSys_DriveTrain_Constants.DriveTrainMaxTurboPctOutput;
+    SubSys_DriveTrain_Constants.DriveTrainMaxSpd =
+        SubSys_DriveTrain_Constants.DriveTrainMaxTurboSpd;
+    SubSys_DriveTrain_Constants.DriveTrainMaxAccel =
+        SubSys_DriveTrain_Constants.DriveTrainMaxTurboAccel;
 
-    SubSys_DriveTrain_Constants.DriveTrainMaxRotPctOutput = SubSys_DriveTrain_Constants.DriveTrainMaxTurboRotPctOutput;
-    SubSys_DriveTrain_Constants.DriveTrainMaxRotSpeed = SubSys_DriveTrain_Constants.DriveTrainMaxTurboRotSpeed;
-    SubSys_DriveTrain_Constants.DriveTrainMaxRotAccel = SubSys_DriveTrain_Constants.DriveTrainMaxTurboRotAccel;
+    SubSys_DriveTrain_Constants.DriveTrainMaxRotPctOutput =
+        SubSys_DriveTrain_Constants.DriveTrainMaxTurboRotPctOutput;
+    SubSys_DriveTrain_Constants.DriveTrainMaxRotSpeed =
+        SubSys_DriveTrain_Constants.DriveTrainMaxTurboRotSpeed;
+    SubSys_DriveTrain_Constants.DriveTrainMaxRotAccel =
+        SubSys_DriveTrain_Constants.DriveTrainMaxTurboRotAccel;
   }
 
-  //Slow mode
+  // Slow mode
   public void setDriveSpdSlow() {
-    SubSys_DriveTrain_Constants.DriveTrainMaxPctOutput = SubSys_DriveTrain_Constants.DriveTrainMaxSlowPctOutput;
+    SubSys_DriveTrain_Constants.DriveTrainMaxPctOutput =
+        SubSys_DriveTrain_Constants.DriveTrainMaxSlowPctOutput;
     SubSys_DriveTrain_Constants.DriveTrainMaxSpd = SubSys_DriveTrain_Constants.DriveTrainMaxSlowSpd;
-    SubSys_DriveTrain_Constants.DriveTrainMaxAccel = SubSys_DriveTrain_Constants.DriveTrainMaxSlowAccel;
+    SubSys_DriveTrain_Constants.DriveTrainMaxAccel =
+        SubSys_DriveTrain_Constants.DriveTrainMaxSlowAccel;
 
-    SubSys_DriveTrain_Constants.DriveTrainMaxRotPctOutput = SubSys_DriveTrain_Constants.DriveTrainMaxSlowRotPctOutput;
-    SubSys_DriveTrain_Constants.DriveTrainMaxRotSpeed = SubSys_DriveTrain_Constants.DriveTrainMaxSlowRotSpeed;
-    SubSys_DriveTrain_Constants.DriveTrainMaxRotAccel = SubSys_DriveTrain_Constants.DriveTrainMaxSlowRotAccel;
+    SubSys_DriveTrain_Constants.DriveTrainMaxRotPctOutput =
+        SubSys_DriveTrain_Constants.DriveTrainMaxSlowRotPctOutput;
+    SubSys_DriveTrain_Constants.DriveTrainMaxRotSpeed =
+        SubSys_DriveTrain_Constants.DriveTrainMaxSlowRotSpeed;
+    SubSys_DriveTrain_Constants.DriveTrainMaxRotAccel =
+        SubSys_DriveTrain_Constants.DriveTrainMaxSlowRotAccel;
   }
 
   /**

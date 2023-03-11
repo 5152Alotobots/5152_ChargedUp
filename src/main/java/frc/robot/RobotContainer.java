@@ -15,15 +15,15 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.ChargedUp.Arm.Cmd.Cmd_ArmDefault;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
-import frc.robot.ChargedUp.AutoCommands.Auto_leftblueescape_Cmd;
-import frc.robot.ChargedUp.AutoCommands.Auto_RightChargeBlue_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_LeftChargeRed_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_MiddleChargeBlue_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_MiddleChargeRed_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_RightChargeBlue_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_leftbluecharge_Cmd;
-import frc.robot.ChargedUp.AutoCommands.Auto_rightredcharge_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_leftblueescape_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_leftredescape_Cmd;
 // import frc.robot.ChargedUp.DistanceSensor.SubSys_DistanceSensor;
+import frc.robot.ChargedUp.AutoCommands.Auto_rightredcharge_Cmd;
 import frc.robot.ChargedUp.DriverStation.SubSys_DriverStation;
 import frc.robot.ChargedUp.Hand.SubSys_Hand;
 import frc.robot.ChargedUp.MecanumDrive.Cmd.Cmd_MecanumDriveDefault;
@@ -116,7 +116,6 @@ public class RobotContainer {
 
   private final Command m_rightredcharge = new Auto_rightredcharge_Cmd(driveSubSys, gyroSubSys);
 
-
   /*
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -167,7 +166,7 @@ public class RobotContainer {
     m_chooser.addOption("middlechargered", m_middlechargeRed);
     m_chooser.addOption("leftchargeblue", m_leftbluecharge);
     m_chooser.addOption("rightchargered", m_rightredcharge);
-   
+
     SmartDashboard.putData(m_chooser);
   }
 
@@ -192,28 +191,28 @@ public class RobotContainer {
     driverStationSubSys.PoseResetButton.onTrue(
         // new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
         new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
-        
-    // Turbo Button
-      driverStationSubSys.TurboButton.whileTrue(
-          new Cmd_SubSys_DriveTrain_JoysticTurbo(
-              driveSubSys,
-              () -> driverStationSubSys.DriveFwdAxis(),
-              () -> driverStationSubSys.DriveStrAxis(),
-              () -> driverStationSubSys.DriveRotAxis(),
-              true,
-              () -> driverStationSubSys.RotateLeftPt(),
-              () -> driverStationSubSys.RotateRightPt()));
 
-    //Slow Button
-        driverStationSubSys.SlowButton.whileTrue(
-            new Cmd_SubSys_DriveTrain_JoysticSlow(
-                driveSubSys,
-                () -> driverStationSubSys.DriveFwdAxis(),
-                () -> driverStationSubSys.DriveStrAxis(),
-                () -> driverStationSubSys.DriveRotAxis(),
-                true,
-                () -> driverStationSubSys.RotateLeftPt(),
-                () -> driverStationSubSys.RotateRightPt()));
+    // Turbo Button
+    driverStationSubSys.TurboButton.whileTrue(
+        new Cmd_SubSys_DriveTrain_JoysticTurbo(
+            driveSubSys,
+            () -> driverStationSubSys.DriveFwdAxis(),
+            () -> driverStationSubSys.DriveStrAxis(),
+            () -> driverStationSubSys.DriveRotAxis(),
+            true,
+            () -> driverStationSubSys.RotateLeftPt(),
+            () -> driverStationSubSys.RotateRightPt()));
+
+    // Slow Button
+    driverStationSubSys.SlowButton.whileTrue(
+        new Cmd_SubSys_DriveTrain_JoysticSlow(
+            driveSubSys,
+            () -> driverStationSubSys.DriveFwdAxis(),
+            () -> driverStationSubSys.DriveStrAxis(),
+            () -> driverStationSubSys.DriveRotAxis(),
+            true,
+            () -> driverStationSubSys.RotateLeftPt(),
+            () -> driverStationSubSys.RotateRightPt()));
   }
 
   // when test button is pressed run the rotate to heading command to a random number between 0 and

@@ -9,7 +9,6 @@ package frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
-import frc.robot.Library.DriveTrains.SubSys_DriveTrain_Constants;
 import frc.robot.Library.DriverStation.JoystickUtilities;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
@@ -85,7 +84,7 @@ public class Cmd_SubSys_DriveTrain_JoysticSlow extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-      driveSubSys.setDriveSpdDefault();
+    driveSubSys.setDriveSpdDefault();
   }
 
   // Returns true when the command should end.
