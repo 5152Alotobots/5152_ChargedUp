@@ -16,6 +16,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.ChargedUp.Arm.Cmd.Cmd_ArmDefault;
 import frc.robot.ChargedUp.Arm.Cmd.Cmd_ArmExtensionPID;
 import frc.robot.ChargedUp.Arm.Cmd.Cmd_ArmRotationPID;
+import frc.robot.ChargedUp.Arm.Cmd.Cmd_HighLevelExtend;
+import frc.robot.ChargedUp.Arm.Cmd.Cmd_HighLevelRotate;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
 import frc.robot.ChargedUp.AutoCommands.Auto_leftblueescape_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_RightChargeBlue_Cmd;
@@ -195,8 +197,8 @@ public class RobotContainer {
         new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
 
         //REMOVE THIS BEFORE COMP
-    driverStationSubSys.TestButton.whileTrue(
-      new Cmd_ArmExtensionPID(armSubSys, 40).alongWith(new Cmd_ArmRotationPID(armSubSys, 30))
+    driverStationSubSys.TestButton.onTrue(
+      new Cmd_HighLevelExtend(armSubSys)
     );
 
     //TODO: FIX THIS
