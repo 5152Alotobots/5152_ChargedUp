@@ -22,6 +22,10 @@ import frc.robot.ChargedUp.Arm.SubSys_Arm;
 import frc.robot.ChargedUp.AutoCommands.Auto_leftblueescape_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_RightChargeBlue_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_LeftChargeRed_Cmd;
+// import frc.robot.ChargedUp.AutoCommands.Auto_leftblueescape_Cmd;
+// import frc.robot.ChargedUp.AutoCommands.Auto_RightChargeBlue_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_allianceblue_Cmd;
+// import frc.robot.ChargedUp.AutoCommands.Auto_LeftChargeRed_Cmd;/
 import frc.robot.ChargedUp.AutoCommands.Auto_MiddleChargeBlue_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_MiddleChargeRed_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_leftbluecharge_Cmd;
@@ -117,8 +121,9 @@ public class RobotContainer {
 
   private final Command m_leftbluecharge = new Auto_leftbluecharge_Cmd(driveSubSys, gyroSubSys);
 
-  private final Command m_rightredcharge = new Auto_rightredcharge_Cmd(driveSubSys, gyroSubSys);
+//   private final Command m_OneConeRed = new Auto_OneConeRed_Cmd(driveSubSys, gyroSubSys);
 
+  private final Command m_allianceblue = new Auto_allianceblue_Cmd(driveSubSys, gyroSubSys, handSubSys);
 
   /*
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -168,9 +173,9 @@ public class RobotContainer {
     m_chooser.addOption("leftchargered", m_leftchargeRed);
     m_chooser.addOption("redleave", m_redleave);
     m_chooser.addOption("middlechargered", m_middlechargeRed);
-    m_chooser.addOption("leftchargeblue", m_leftbluecharge);
-    m_chooser.addOption("rightchargered", m_rightredcharge);
-   
+    // m_chooser.addOption("leftchargeblue", m_leftbluecharge);
+    // m_chooser.addOption("rightchargered", m_rightredcharge);
+    m_chooser.addOption("allianceblue", m_allianceblue);
     SmartDashboard.putData(m_chooser);
   }
 
