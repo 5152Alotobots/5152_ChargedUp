@@ -245,15 +245,11 @@ public class SubSys_Arm extends SubsystemBase {
       Arm_ExtensionCanCoder.setPosition(0);
     }
     if (!isStopSwitchClosed) {
-      if (ArmExtendLength < max && ArmExtendLength > min) {
+      if (ArmExtendLength < max) {
         ExtendArm(0, PercentOutput);
-      } else {
-        // if (ArmExtendLength >= max) {
+      }
+      if (ArmExtendLength > max) { 
         ExtendArm(1, PercentOutput);
-        // }
-        // if (ArmExtendLength <= min) {
-        //   ExtendArm(1, PercentOutput);
-        // }
       }
     }
   }
@@ -291,6 +287,6 @@ public class SubSys_Arm extends SubsystemBase {
 
     isStopSwitchClosed = !stopSwitch.get();
 
-    SmartDashboard.putBoolean("isSwitchClosed", isSlowSwitchClosed);
+    SmartDashboard.putBoolean("isSwitchClosed", isStopSwitchClosed);
   }
 }

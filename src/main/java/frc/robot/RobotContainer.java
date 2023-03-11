@@ -22,7 +22,7 @@ import frc.robot.ChargedUp.AutoCommands.Auto_MiddleChargeBlue_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_MiddleChargeRed_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_leftbluecharge_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_rightredcharge_Cmd;
-import frc.robot.ChargedUp.AutoCommands.Auto_rightredescape_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_leftredescape_Cmd;
 // import frc.robot.ChargedUp.DistanceSensor.SubSys_DistanceSensor;
 import frc.robot.ChargedUp.DriverStation.SubSys_DriverStation;
 import frc.robot.ChargedUp.Hand.SubSys_Hand;
@@ -106,7 +106,7 @@ public class RobotContainer {
 
   private final Command m_blueleave = new Auto_leftblueescape_Cmd(driveSubSys, gyroSubSys);
 
-  private final Command m_redleave = new Auto_rightredescape_Cmd(driveSubSys, gyroSubSys);
+  private final Command m_redleave = new Auto_leftredescape_Cmd(driveSubSys, gyroSubSys);
 
   private final Command m_middlechargeBlue = new Auto_MiddleChargeBlue_Cmd(driveSubSys, gyroSubSys);
 
