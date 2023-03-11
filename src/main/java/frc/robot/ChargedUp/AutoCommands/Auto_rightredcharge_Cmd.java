@@ -11,22 +11,23 @@ import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
 import frc.robot.Library.DriveTrains.SwerveDrive.*;
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
 
-// For information see slides linked below
-// Link For PathPlaner
-// https://docs.google.com/presentation/d/1xjYSI4KpbmGBUY-ZMf1nAFrXIoJo1tl-HHNl8LLqa1I/edit#slide=id.g1e64fa08ff8_0_0
-
-public class Auto_Blank_Cmd extends SequentialCommandGroup {
+/**
+ * *Link For PathPlaner *
+ * https://docs.google.com/presentation/d/1xjYSI4KpbmGBUY-ZMf1nAFrXIoJo1tl-HHNl8LLqa1I/edit#slide=id.g1e65ac68f1d_0_53
+ */
+public class Auto_rightredcharge_Cmd extends SequentialCommandGroup {
   private final SubSys_DriveTrain m_DriveTrain;
   private final SubSys_PigeonGyro m_pigeonGyro;
 
-  // Creates a new Auto_Blank_Cmd. /
-  public Auto_Blank_Cmd(SubSys_DriveTrain driveSubSys, SubSys_PigeonGyro pigeonGyro) {
+  /** Creates a new Auto_Challenge1_Cmd. */
+  public Auto_rightredcharge_Cmd(SubSys_DriveTrain driveSubSys, SubSys_PigeonGyro pigeonGyro) {
     m_DriveTrain = driveSubSys;
     m_pigeonGyro = pigeonGyro;
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "Blank", true, true),
+        // new Cmd_whatever the arm one is
+        new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "rightchargered", true, true),
         new Cmd_AutoBalance(pigeonGyro, driveSubSys));
   }
 }

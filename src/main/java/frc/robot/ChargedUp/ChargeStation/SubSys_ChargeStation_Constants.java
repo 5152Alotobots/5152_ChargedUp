@@ -8,4 +8,5 @@ public class SubSys_ChargeStation_Constants {
   public static final int maxRoll = 5;
   public static final int minRoll = -5;
   public static final double autoBalanceIntervalSeconds = 1.0;
+  public static final double speedMultiplier = 1.6;
 }
