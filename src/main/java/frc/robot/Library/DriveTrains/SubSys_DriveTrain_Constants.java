@@ -28,8 +28,8 @@ public static final double DriveTrainMaxTurboPctOutput = 1; // 0-1
 public static final double DriveTrainMaxTurboSpd = 18; // m/s
 public static final double DriveTrainMaxTurboAccel = 6; // m/s^2
 public static final double DriveTrainMaxTurboRotPctOutput = 1; // 0-1
-public static final double DriveTrainMaxTurboRotSpeed = 280 * Math.PI / 180; // rad/s
-public static final double DriveTrainMaxTurboRotAccel = 330 * Math.PI / 180; // rad/s^2
+public static final double DriveTrainMaxTurboRotSpeed = 140 * Math.PI / 180; // rad/s
+public static final double DriveTrainMaxTurboRotAccel = 200 * Math.PI / 180; // rad/s^2
 
 //Drive Slowmode Speeds
 public static final double DriveTrainMaxSlowPctOutput = 0.2; // 0-1

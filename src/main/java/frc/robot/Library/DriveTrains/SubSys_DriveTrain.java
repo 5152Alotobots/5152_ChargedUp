@@ -168,9 +168,9 @@ public class SubSys_DriveTrain extends SubsystemBase {
     SubSys_DriveTrain_Constants.DriveTrainMaxSpd = SubSys_DriveTrain_Constants.DriveTrainMaxTurboSpd;
     SubSys_DriveTrain_Constants.DriveTrainMaxAccel = SubSys_DriveTrain_Constants.DriveTrainMaxTurboAccel;
 
-    SubSys_DriveTrain_Constants.DriveTrainMaxRotPctOutput = SubSys_DriveTrain_Constants.DriveTrainMaxTurboRotPctOutput;
-    SubSys_DriveTrain_Constants.DriveTrainMaxRotSpeed = SubSys_DriveTrain_Constants.DriveTrainMaxTurboRotSpeed;
-    SubSys_DriveTrain_Constants.DriveTrainMaxRotAccel = SubSys_DriveTrain_Constants.DriveTrainMaxTurboRotAccel;
+    SubSys_DriveTrain_Constants.DriveTrainMaxRotPctOutput = SubSys_DriveTrain_Constants.DriveTrainMaxDefaultRotPctOutput;
+    SubSys_DriveTrain_Constants.DriveTrainMaxRotSpeed = SubSys_DriveTrain_Constants.DriveTrainMaxDefaultRotSpeed;
+    SubSys_DriveTrain_Constants.DriveTrainMaxRotAccel = SubSys_DriveTrain_Constants.DriveTrainMaxDefaultRotAccel;
   }
 
   //Slow mode
