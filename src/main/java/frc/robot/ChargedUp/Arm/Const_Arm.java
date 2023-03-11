@@ -10,7 +10,7 @@ public class Const_Arm {
   public static final double kMAX_EXTENSION_x = 1.20; // .120m or 120cm (width)
   public static final double kMAX_EXTENSION_z = 1.98; // .198m or 198cm (Height)
   public static final double kSWITCH_ARM_LOCATION = 0;
-  public static final double kMAX_ROTATION_SPEED = .2;
+  public static final double kMAX_ROTATION_SPEED = .4;
   public static final double kMAX_EXTENSION_SPEED = .6;
   public static final double kSLOW_EXTENSION_SPEED = .1;
   public static final double kSLOW_MULTIPLIER = .5;

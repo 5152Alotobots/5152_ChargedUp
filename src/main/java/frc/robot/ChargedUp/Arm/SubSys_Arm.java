@@ -188,9 +188,9 @@ public class SubSys_Arm extends SubsystemBase {
     double ArmShoulderAngle = Arm_ShoulderCanCoder.getAbsolutePosition() - Const_Arm.kOffsetTo0;
     double ArmExtendLength = Arm_ExtensionMotor.getSelectedSensorPosition();
 
-    if (ArmShoulderAngle > max && ArmShoulderAngle < max + 10) {
+    if (ArmShoulderAngle > max && ArmShoulderAngle < max + 30) {
       RotateArm(1, percentOutput);
-    } else if (ArmShoulderAngle < min && ArmShoulderAngle > min - 10) {
+    } else if (ArmShoulderAngle < min && ArmShoulderAngle > min - 30) {
       RotateArm(2, percentOutput);
     } else {
       RotateArm(0, percentOutput);
@@ -245,15 +245,11 @@ public class SubSys_Arm extends SubsystemBase {
       Arm_ExtensionCanCoder.setPosition(0);
     }
     if (!isStopSwitchClosed) {
-      if (ArmExtendLength < max && ArmExtendLength > min) {
+      if (ArmExtendLength < max) {
         ExtendArm(0, PercentOutput);
-      } else {
-        // if (ArmExtendLength >= max) {
+      }
+      if (ArmExtendLength > max) { 
         ExtendArm(1, PercentOutput);
-        // }
-        // if (ArmExtendLength <= min) {
-        //   ExtendArm(1, PercentOutput);
-        // }
       }
     }
   }
@@ -293,6 +289,6 @@ public class SubSys_Arm extends SubsystemBase {
 
     isStopSwitchClosed = !stopSwitch.get();
 
-    SmartDashboard.putBoolean("isSwitchClosed", isSlowSwitchClosed);
+    SmartDashboard.putBoolean("isSwitchClosed", isStopSwitchClosed);
   }
 }

@@ -95,6 +95,15 @@ public class SubSys_DriveTrain extends SubsystemBase {
     return SubSys_DriveTrain_Constants.DriveTrainMaxTurboSpd;
   }
 
+  public double getMaxDriveSubSysTurboPctOutput() {
+    return SubSys_DriveTrain_Constants.DriveTrainMaxTurboPctOutput;
+  }
+
+  public double getMaxDriveSubSysTurboAccel() {
+    return SubSys_DriveTrain_Constants.DriveTrainMaxTurboAccel;
+  }
+
+
   /**
    * getMaxDriveSubSysRotSpd Returns Max Drive Subsystem Rotation
    *
@@ -107,6 +116,15 @@ public class SubSys_DriveTrain extends SubsystemBase {
   public double getMaxDriveSubSysTurboRotSpd() {
     return SubSys_DriveTrain_Constants.DriveTrainMaxTurboRotSpeed;
   }
+
+  public double getMaxDriveSubSysTurboRotPctOutput() {
+    return SubSys_DriveTrain_Constants.DriveTrainMaxTurboRotPctOutput;
+  }
+
+  public double getMaxDriveSubSysTurboRotAccel() {
+    return SubSys_DriveTrain_Constants.DriveTrainMaxTurboRotAccel;
+  }
+
   // ***** Drive Methods *****
 
   /**
