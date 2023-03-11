@@ -144,7 +144,7 @@ public class SubSys_Arm extends SubsystemBase {
         }
         if (PercentOutput > 0) { // Retracting is slowed
           Arm_ExtensionMotor.set(
-              TalonFXControlMode.PercentOutput, PercentOutput * Const_Arm.kSLOW_MULTIPLIER);
+              TalonFXControlMode.PercentOutput, PercentOutput * Const_Arm.kSLOW_EXT_MULTIPLIER);
         }
         break;
       default:
@@ -197,6 +197,22 @@ public class SubSys_Arm extends SubsystemBase {
     }
   }
 
+  public void rotateArmMinMaxSlow(double percentOutput, double min, double max, double slowMin, double slowMax) {
+    double ArmShoulderAngle = Arm_ShoulderCanCoder.getAbsolutePosition() - Const_Arm.kOffsetTo0;
+    double ArmExtendLength = Arm_ExtensionMotor.getSelectedSensorPosition();
+
+    if (ArmShoulderAngle >= max && ArmShoulderAngle < max + 30) {
+      RotateArm(1, percentOutput);
+    } else if (ArmShoulderAngle <= min && ArmShoulderAngle > min - 30) {
+      RotateArm(2, percentOutput);
+    } else if (ArmShoulderAngle <= slowMin && ArmShoulderAngle > min) {
+      RotateArm(0, percentOutput*Const_Arm.kSLOW_ROT_MULTIPLIER);
+    } else if (ArmShoulderAngle >= slowMax && ArmShoulderAngle < max) {
+      RotateArm(0, percentOutput*Const_Arm.kSLOW_ROT_MULTIPLIER);
+    } else {
+      RotateArm(0, percentOutput);
+    }
+  }
   public void ExtendArm_InBounds(double PercentOutput) {
     double ArmShoulderAngle = Arm_ShoulderCanCoder.getAbsolutePosition() - Const_Arm.kOffsetTo0;
     double ArmExtendLength = Arm_ExtensionMotor.getSelectedSensorPosition();
