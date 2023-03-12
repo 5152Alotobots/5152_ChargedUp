@@ -9,8 +9,6 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.ChargedUp.Arm.Cmd.Cmd_ArmExtensionPID;
 import frc.robot.ChargedUp.Arm.Cmd.Cmd_ArmRotationPID;
-import frc.robot.ChargedUp.Arm.Cmd.Cmd_HighLevelExtend;
-import frc.robot.ChargedUp.Arm.Cmd.Cmd_HighLevelRotate;
 import frc.robot.ChargedUp.ChargeStation.Cmd_AutoBalance;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmds_PathPlanner.Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
