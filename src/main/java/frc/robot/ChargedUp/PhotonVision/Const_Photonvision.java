@@ -14,6 +14,7 @@ public class Const_Photonvision {
 
     // How far from the target we want to be
     public static final double GOAL_RANGE_METERS = Units.feetToMeters(1);
+    public static final double IN_RANGE_AREA_PERCENT = 0.8; //TODO: MIGHT BE 80 INSTEAD OF 0.8
 
     public static final Transform3d robotToCam =
     new Transform3d(

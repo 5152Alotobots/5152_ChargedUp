@@ -77,6 +77,15 @@ public class SubSys_Photonvision extends SubsystemBase {
       }
     }
   
+    /** Returns true if the camera is in the acceptable range to the target */
+    public boolean isInRange(PhotonPipelineResult result){
+      if (result.hasTargets()) {
+        return result.getBestTarget().getArea() >= Const_Photonvision.IN_RANGE_AREA_PERCENT;
+      } else {
+        return false;
+      }
+    }
+
     
 }
 
