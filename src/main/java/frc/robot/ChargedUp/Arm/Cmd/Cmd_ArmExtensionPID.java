@@ -17,7 +17,7 @@ public class Cmd_ArmExtensionPID extends PIDCommand {
     //Use super to use the parent class of PIDCommand
     super(
       new PIDController(Const_Arm.ExtendPID.kP, Const_Arm.ExtendPID.kI, Const_Arm.ExtendPID.kD),
-      () -> subSys_Arm.getExtendLength(),
+      () -> subSys_Arm.getArmExtension(),
       () -> targetPositionCM,
       output -> subSys_Arm.ExtendArm(0, output),
       subSys_Arm
