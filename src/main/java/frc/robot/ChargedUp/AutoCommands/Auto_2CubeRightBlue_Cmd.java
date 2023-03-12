@@ -20,13 +20,13 @@ import frc.robot.ChargedUp.Hand.SubSys_Hand;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
 
 
-public class Auto_2CubeAutoRightBlue_Cmd extends SequentialCommandGroup {
+public class Auto_2CubeRightBlue_Cmd extends SequentialCommandGroup {
   private final SubSys_DriveTrain m_DriveTrain;
   private final SubSys_PigeonGyro m_pigeonGyro;
   private final SubSys_Hand m_hand;
   private final SubSys_Arm m_Arm;
   /** Creates a new Auto_Challenge1_Cmd. */
-  public Auto_2CubeAutoRightBlue_Cmd(SubSys_DriveTrain driveSubSys, SubSys_PigeonGyro pigeonGyro, SubSys_Hand handSubSys, SubSys_Arm armSubSys) {
+  public Auto_2CubeRightBlue_Cmd(SubSys_DriveTrain driveSubSys, SubSys_PigeonGyro pigeonGyro, SubSys_Hand handSubSys, SubSys_Arm armSubSys) {
     m_DriveTrain = driveSubSys;
     m_pigeonGyro = pigeonGyro;
     m_hand = handSubSys;
