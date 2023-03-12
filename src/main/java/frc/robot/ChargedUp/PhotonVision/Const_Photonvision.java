@@ -1,5 +1,7 @@
 package frc.robot.ChargedUp.PhotonVision;
 
+import org.photonvision.PhotonCamera;
+
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
@@ -22,5 +24,11 @@ public class Const_Photonvision {
             new Rotation3d(
                     0, 0,
                     0)); // Cam mounted facing forward, half a meter forward of center, half a meter up from center.
+
+
+    public static class Cameras {
+        public static final PhotonCamera frontCamera = new PhotonCamera("frontCamera");
+        public static final PhotonCamera backCamera = new PhotonCamera("backCamera");
+    }
  
 }

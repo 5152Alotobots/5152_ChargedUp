@@ -36,6 +36,9 @@ import frc.robot.ChargedUp.AutoCommands.Auto_leftredescape_Cmd;
 import frc.robot.ChargedUp.DriverStation.SubSys_DriverStation;
 import frc.robot.ChargedUp.Hand.SubSys_Hand;
 import frc.robot.ChargedUp.MecanumDrive.Cmd.Cmd_MecanumDriveDefault;
+import frc.robot.ChargedUp.PhotonVision.Const_Photonvision;
+import frc.robot.ChargedUp.PhotonVision.SubSys_Photonvision;
+import frc.robot.ChargedUp.PhotonVision.Cmd.Cmd_NavigateToBestVisionTarget;
 import frc.robot.ChargedUp.MecanumDrive.SubSys_MecanumDrive;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmd_SubSys_DriveTrain_JoysticDefault;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmd_SubSys_DriveTrain_JoysticTurbo;
@@ -87,6 +90,9 @@ public class RobotContainer {
 
   // Arm
   public final SubSys_Arm armSubSys = new SubSys_Arm();
+
+  //PhotonVision
+  public final SubSys_Photonvision photonvisionSubSys = new SubSys_Photonvision(armSubSys);
 
   /*
    ***** Charged Up Componentes
@@ -205,6 +211,10 @@ public class RobotContainer {
         // new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
         new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
 
+    //Test Button
+    driverStationSubSys.TestButton.onTrue(
+        new Cmd_NavigateToBestVisionTarget(driveSubSys, photonvisionSubSys, Const_Photonvision.Cameras.frontCamera, 0)
+    );
     
     //TODO: FIX THIS
       driverStationSubSys.TurboButton.whileTrue(
