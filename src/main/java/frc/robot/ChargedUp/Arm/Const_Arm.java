@@ -32,6 +32,14 @@ public class Const_Arm {
     public static final double kD = 0;
   }
 
+  public class ExtendPID {
+    public static final double kP = 3.0;
+    public static final double kI = 0;
+    public static final double kD = 0;
+    public static final double kTOLERANCE = 0.5;
+    public static final double kSPEED_TOLERANCE = 0.1;
+  }
+
   public static class Trajectory {
 
     // Motor specifications
