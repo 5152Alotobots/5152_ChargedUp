@@ -32,7 +32,7 @@ public class Auto_2CubeAutoRightBlue_Cmd extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
         // new Cmd_whatever the arm one is
-        new InstantCommand(m_hand::CloseHand, m_hand),
+        //new InstantCommand(m_hand::CloseHand, m_hand),
         // new Cmd_HighLevelRotate(armSubSys),
         // new Cmd_HighLevelExtend(armSubSys),
         new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "alliancered", true, true));
