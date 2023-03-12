@@ -204,12 +204,8 @@ public class RobotContainer {
     driverStationSubSys.PoseResetButton.onTrue(
         // new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
         new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
-/*
-        //REMOVE THIS BEFORE COMP
-    driverStationSubSys.TestButton.onTrue(
-      new Cmd_HighLevelExtend(armSubSys)
-    );
-*/
+
+    
     //TODO: FIX THIS
       driverStationSubSys.TurboButton.whileTrue(
           new Cmd_SubSys_DriveTrain_JoysticTurbo(
