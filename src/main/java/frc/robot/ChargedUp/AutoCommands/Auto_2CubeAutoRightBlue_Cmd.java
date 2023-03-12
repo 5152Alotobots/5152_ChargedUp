@@ -5,7 +5,10 @@
 package frc.robot.ChargedUp.AutoCommands;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.ChargedUp.Arm.Cmd.Cmd_ArmExtensionPID;
+import frc.robot.ChargedUp.Arm.Cmd.Cmd_ArmRotationPID;
 import frc.robot.ChargedUp.Arm.Cmd.Cmd_HighLevelExtend;
 import frc.robot.ChargedUp.Arm.Cmd.Cmd_HighLevelRotate;
 import frc.robot.ChargedUp.ChargeStation.Cmd_AutoBalance;
@@ -28,13 +31,51 @@ public class Auto_2CubeAutoRightBlue_Cmd extends SequentialCommandGroup {
     m_pigeonGyro = pigeonGyro;
     m_hand = handSubSys;
     m_Arm = armSubSys;
+
+    /* Parallel commands */
+    ParallelCommandGroup armRotHighLevelAndExtendParallel = new ParallelCommandGroup(
+      new Cmd_ArmRotationPID(armSubSys, 145),
+      new Cmd_ArmExtensionPID(armSubSys, 42)
+    );
+
+    ParallelCommandGroup armRotateAndRetractDriveToPickup1Parallel = new ParallelCommandGroup(
+      new Cmd_ArmExtensionPID(armSubSys, 0),
+      new Cmd_ArmRotationPID(armSubSys, -43),
+      new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "leftbluedrivetopickup1", true, true)
+    );
+
+    ParallelCommandGroup armRotateAndExtendDriveToDeliver1Parallel = new ParallelCommandGroup(
+      new Cmd_ArmRotationPID(armSubSys, 145),
+      new Cmd_ArmExtensionPID(armSubSys, 42),
+      new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "leftbluedrivetodeliver1", false, false)
+    );
+
+    ParallelCommandGroup armRotateAndRetractDriveToPickup2Parallel = new ParallelCommandGroup(
+      new Cmd_ArmRotationPID(armSubSys, -43),
+      new Cmd_ArmExtensionPID(armSubSys, 0),
+      new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "leftbluedrivetopickup2", true, true)
+    );
+
+    ParallelCommandGroup armRotateAndExtendDriveToDeliver2Parallel = new ParallelCommandGroup(
+      new Cmd_ArmRotationPID(armSubSys, 145),
+      new Cmd_ArmExtensionPID(armSubSys, 42),
+      new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "leftbluedrivetodeliver2", false, false)
+    );
+
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        // new Cmd_whatever the arm one is
-        //new InstantCommand(m_hand::CloseHand, m_hand),
-        // new Cmd_HighLevelRotate(armSubSys),
-        // new Cmd_HighLevelExtend(armSubSys),
-        new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "alliancered", true, true));
+        armRotHighLevelAndExtendParallel,
+        new InstantCommand(handSubSys::OpenHand),
+        armRotateAndRetractDriveToPickup1Parallel,
+        //USE PHOTONVISION TO FIND CUBE HERE
+        new InstantCommand(handSubSys::CloseHand),
+        armRotateAndExtendDriveToDeliver1Parallel,
+        new InstantCommand(handSubSys::OpenHand),
+        armRotateAndRetractDriveToPickup2Parallel,
+        //USE PHOTONVISION TO FIND CUBE HERE
+        new InstantCommand(handSubSys::CloseHand),
+        armRotateAndExtendDriveToDeliver2Parallel
+        );
   }
 }
