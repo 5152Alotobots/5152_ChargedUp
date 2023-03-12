@@ -11,10 +11,13 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain_Constants.DriveTrainTrajSettings;
+import frc.robot.ChargedUp.Arm.SubSys_Arm;
 
 public class SubSys_Photonvision extends SubsystemBase {
   /** Creates a new PhotonVisionSubsytem. */
-  public SubSys_Photonvision() {
+  private final SubSys_Arm m_Arm;
+  public SubSys_Photonvision(SubSys_Arm armSubSys) {
+    m_Arm = armSubSys;
   }
 
   @Override
@@ -26,17 +29,17 @@ public class SubSys_Photonvision extends SubsystemBase {
     public PIDController XYcontroller = new PIDController(DriveTrainTrajSettings.DriveTrajectoryPID.Pgain, DriveTrainTrajSettings.DriveTrajectoryPID.Igain, DriveTrainTrajSettings.DriveTrajectoryPID.Dgain);
 
     /* Z PID */
+    
     public PIDController Zcontroller = new PIDController(DriveTrainTrajSettings.RotationTrajectoryPID.Pgain, DriveTrainTrajSettings.RotationTrajectoryPID.Igain, DriveTrainTrajSettings.RotationTrajectoryPID.Dgain);
-
 
     /** VISION */
     public double getRangeToTarget(PhotonPipelineResult result){
 
       double range =
         PhotonUtils.calculateDistanceToTargetMeters(
-            Const_Photonvision.CAMERA_HEIGHT_METERS,
+            m_Arm.getCameraHeight(),
             Const_Photonvision.TARGET_HEIGHT_METERS,
-            Const_Photonvision.CAMERA_PITCH_RADIANS,
+            m_Arm.getShoulderRotationRadians() - 90,
                 Units.degreesToRadians(result.getBestTarget().getPitch()));
       return range;
     }

@@ -75,6 +75,10 @@ public class SubSys_Arm extends SubsystemBase {
 
   // *Math methods
   // z = height
+
+  public double getCameraHeight() {
+    return Const_Arm.kARM_SHOULDER_z - (Math.cos(getShoulderRotationRadians()) * getArmExtension());
+  }
   public double getHeightOfArmFromBase(double ArmShoulderAngle, double ArmExtensionLength) {
     if (ArmShoulderAngle >= 0 && ArmShoulderAngle <= 180) {
       double radians = Math.toRadians(ArmShoulderAngle); // Convert from degrees to radians
@@ -228,7 +232,7 @@ public class SubSys_Arm extends SubsystemBase {
       }
     }
   }
-
+  
   /**
    * Arm extension control method that limits the extension of the arm within the specified minimum
    * and maximum values.
@@ -256,6 +260,10 @@ public class SubSys_Arm extends SubsystemBase {
 
   public double getShoulderRotation() {
     return Arm_ShoulderCanCoder.getAbsolutePosition() - Const_Arm.kOffsetTo0;
+  }
+  public double getShoulderRotationRadians() {
+    double degrees = Arm_ShoulderCanCoder.getAbsolutePosition() - Const_Arm.kOffsetTo0;
+    return Math.toRadians(degrees);
   }
   public double getArmExtension() {
     return Arm_ExtensionMotor.getSelectedSensorPosition();
