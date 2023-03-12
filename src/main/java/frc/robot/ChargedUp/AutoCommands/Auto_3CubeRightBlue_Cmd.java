@@ -18,13 +18,13 @@ import frc.robot.ChargedUp.Hand.SubSys_Hand;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
 
 
-public class Auto_2CubeRightBlue_Cmd extends SequentialCommandGroup {
+public class Auto_3CubeRightBlue_Cmd extends SequentialCommandGroup {
   private final SubSys_DriveTrain m_DriveTrain;
   private final SubSys_PigeonGyro m_pigeonGyro;
   private final SubSys_Hand m_hand;
   private final SubSys_Arm m_Arm;
   /** Creates a new Auto_Challenge1_Cmd. */
-  public Auto_2CubeRightBlue_Cmd(SubSys_DriveTrain driveSubSys, SubSys_PigeonGyro pigeonGyro, SubSys_Hand handSubSys, SubSys_Arm armSubSys) {
+  public Auto_3CubeRightBlue_Cmd(SubSys_DriveTrain driveSubSys, SubSys_PigeonGyro pigeonGyro, SubSys_Hand handSubSys, SubSys_Arm armSubSys) {
     m_DriveTrain = driveSubSys;
     m_pigeonGyro = pigeonGyro;
     m_hand = handSubSys;
@@ -42,7 +42,7 @@ public class Auto_2CubeRightBlue_Cmd extends SequentialCommandGroup {
       new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "leftbluedrivetopickup1", true, true)
     );
 
-    ParallelCommandGroup armRotateAndExtendDriveToDeliver1Parallel = new ParallelCommandGroup(
+    ParallelCommandGroup armRotateAndExtendDriveToDeliverMidLevelParallel = new ParallelCommandGroup(
       new Cmd_ArmRotationPID(armSubSys, 145),
       new Cmd_ArmExtensionPID(armSubSys, 42),
       new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "leftbluedrivetodeliver1", false, false)
@@ -54,7 +54,7 @@ public class Auto_2CubeRightBlue_Cmd extends SequentialCommandGroup {
       new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "leftbluedrivetopickup2", true, true)
     );
 
-    ParallelCommandGroup armRotateAndExtendDriveToDeliver2Parallel = new ParallelCommandGroup(
+    ParallelCommandGroup armRotateAndExtendDriveToDeliverLowLevelParallel = new ParallelCommandGroup(
       new Cmd_ArmRotationPID(armSubSys, 145),
       new Cmd_ArmExtensionPID(armSubSys, 42),
       new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "leftbluedrivetodeliver2", false, false)
@@ -68,12 +68,14 @@ public class Auto_2CubeRightBlue_Cmd extends SequentialCommandGroup {
         armRotateAndRetractDriveToPickup1Parallel,
         //USE PHOTONVISION TO FIND CUBE HERE
         new InstantCommand(handSubSys::CloseHand),
-        armRotateAndExtendDriveToDeliver1Parallel,
+        armRotateAndExtendDriveToDeliverMidLevelParallel,
         new InstantCommand(handSubSys::OpenHand),
         armRotateAndRetractDriveToPickup2Parallel,
         //USE PHOTONVISION TO FIND CUBE HERE
         new InstantCommand(handSubSys::CloseHand),
-        armRotateAndExtendDriveToDeliver2Parallel
+        armRotateAndExtendDriveToDeliverLowLevelParallel,
+        new InstantCommand(handSubSys::OpenHand),
+        new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "leftbluedrivetocharge", false, false) //ONLY IF TIME
         );
   }
 }
