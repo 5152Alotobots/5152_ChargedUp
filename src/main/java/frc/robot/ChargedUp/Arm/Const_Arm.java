@@ -1,5 +1,7 @@
 package frc.robot.ChargedUp.Arm;
 
+import edu.wpi.first.math.util.Units;
+
 public class Const_Arm {
   // *! Everything is in meters */
   public static final int RotateMotorCanID = 0;
@@ -30,9 +32,20 @@ public class Const_Arm {
     public static final double kD = 0;
   }
 
-  public class Trajectory {
-    public static final double kShoulderMaxRotSpeed = 270 * Math.PI / 180; // rad/s
-    public static final double kShoulderMaxRotAcelSpeed = 180 * Math.PI / 180; // rad/s^2
+  public static class Trajectory {
+
+    // Motor specifications
+    public static final double MAX_ROT_SPEED_RPM = 142; //with 5:1 and 9:1 gearboxes
+    public static final double MAX_MOTOR_TORQUE_Nm = 9.4;
+
+    // System specifications
+    public static final double SYSTEM_INERTIA_KG_M_SQUARED = 0.085;
+    
+    public static final double kShoulderMaxRotSpeed = 
+    0.9 * Units.degreesToRadians(MAX_ROT_SPEED_RPM * 2 * Math.PI / 60);
+    public static final double kShoulderMaxRotAcelSpeed = 
+    0.6 * (MAX_MOTOR_TORQUE_Nm / SYSTEM_INERTIA_KG_M_SQUARED);
+
   }
 
   public class Positions {

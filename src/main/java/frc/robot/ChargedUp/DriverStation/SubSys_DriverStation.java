@@ -23,8 +23,8 @@ public class SubSys_DriverStation extends SubsystemBase {
   private XboxController m_AuxDriverController = new XboxController(2);
 
   public JoystickButton GyroResetButton = new JoystickButton(m_DriverController, 4);
-  public JoystickButton CloseHandButton = new JoystickButton(m_DriverController, 6);
-  public JoystickButton OpenHandButton = new JoystickButton(m_DriverController, 5);
+  public JoystickButton OpenHandButton = new JoystickButton(m_DriverController, 6);
+  public JoystickButton CloseHandButton = new JoystickButton(m_DriverController, 5);
   public JoystickButton PoseResetButton = new JoystickButton(m_DriverController, 1);
   public JoystickButton TestButton = new JoystickButton(m_DriverController, 3);
   public Trigger TurboButton = new Trigger(() -> m_DriverController.getRawAxis(3) > 0.5);

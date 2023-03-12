@@ -193,10 +193,12 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     // Gyro Reset Command Button
-    driverStationSubSys.OpenHandButton.onTrue(new InstantCommand(handSubSys::OpenHand, handSubSys));
     driverStationSubSys.CloseHandButton.onTrue(
         new InstantCommand(handSubSys::CloseHand, handSubSys));
-    driverStationSubSys.GyroResetButton.onTrue(new InstantCommand(gyroSubSys::zeroYaw, gyroSubSys));
+    driverStationSubSys.OpenHandButton.onTrue(
+        new InstantCommand(handSubSys::OpenHand, handSubSys));
+    driverStationSubSys.GyroResetButton.onTrue(
+        new InstantCommand(gyroSubSys::zeroYaw, gyroSubSys));
 
     // Gyro Reset Command Button
     driverStationSubSys.PoseResetButton.onTrue(
