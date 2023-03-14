@@ -11,10 +11,16 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.CANCoderConfiguration;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 
 public class SubSys_Arm extends SubsystemBase {
 
@@ -45,6 +51,10 @@ public class SubSys_Arm extends SubsystemBase {
   private Boolean isStopSwitchClosed;
   private Boolean inSlowArea;
 
+  private PIDController extController;
+  private ProfiledPIDController rotController;
+  private final TrapezoidProfile.Constraints profiledRotationConstraints;
+  private final SimpleMotorFeedforward feedForward;
   // private CANCoder armExtensionCanCoder = new
   // CANCoder(Constants.CAN_IDs.ArmExtensionCANCoder_CAN_ID); NOT USED
 
@@ -71,6 +81,45 @@ public class SubSys_Arm extends SubsystemBase {
     Arm_ExtensionMotor.configRemoteFeedbackFilter(Arm_ExtensionCanCoder, 0);
     Arm_ExtensionMotor.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor0);
     Arm_ExtensionMotor.configSelectedFeedbackCoefficient(7.854 / 4096);
+
+    profiledRotationConstraints = new TrapezoidProfile.Constraints(
+      Units.radiansToDegrees(Const_Arm.Trajectory.kShoulderMaxRotSpeed),
+      Units.radiansToDegrees(Const_Arm.Trajectory.kShoulderMaxRotAcelSpeed)
+    );
+
+    extController = new PIDController(Const_Arm.ExtendPID.kP, Const_Arm.ExtendPID.kI, Const_Arm.ExtendPID.kD);
+    rotController = new ProfiledPIDController(Const_Arm.RotationPID.kP, Const_Arm.RotationPID.kI, Const_Arm.RotationPID.kD, profiledRotationConstraints);
+    feedForward = new SimpleMotorFeedforward(Const_Arm.RotationPID.kS, Const_Arm.RotationPID.kV);
+
+    rotController.setTolerance(Const_Arm.RotationPID.kTOLERANCE, Const_Arm.RotationPID.kSPEED_TOLERANCE);
+    rotController.setIntegratorRange(Const_Arm.RotationPID.kMIN_INTEGRAL, Const_Arm.RotationPID.kMAX_INTEGRAL);
+    
+    extController.setTolerance(Const_Arm.ExtendPID.kTOLERANCE, Const_Arm.ExtendPID.kSPEED_TOLERANCE);
+    
+  }
+
+  //*PID methods */
+
+  public Object setShoulderToPos(double targetHeadingDegrees) {
+    rotController.setGoal(targetHeadingDegrees);
+
+    double rotFFCmd = this.feedForward.calculate(rotController.getSetpoint().velocity);
+    double rotPIDCmd =
+      rotController.calculate(
+        getShoulderRotation(), targetHeadingDegrees);
+    double rotCmd = rotFFCmd + rotPIDCmd;
+
+    boolean isAtTarget = rotController.atSetpoint();
+    return isAtTarget ? isAtTarget : rotCmd;
+  }
+
+  public Object setExtendToPos(double targetHeadingCM) {
+    extController.setSetpoint(targetHeadingCM);
+    double extPIDCmd = 
+      extController.calculate(getArmExtension());
+
+    boolean isAtTarget = extController.atSetpoint();
+    return isAtTarget ? isAtTarget : extPIDCmd;
   }
 
   // *Math methods

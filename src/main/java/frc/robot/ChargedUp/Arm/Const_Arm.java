@@ -21,15 +21,17 @@ public class Const_Arm {
   public static final double kMaxAngle = 0;
   public static final double kOffsetTo0 = 47.1;
 
-  public class FF {
-    public static final double kS = 0;
-    public static final double kV = 0;
-  }
 
-  public class PID {
+  public class RotationPID {
     public static final double kP = 0.1;
     public static final double kI = 0;
     public static final double kD = 0;
+    public static final double kS = 0;
+    public static final double kV = 0;
+    public static final double kTOLERANCE = 2;
+    public static final double kSPEED_TOLERANCE = 4;
+    public static final double kMAX_INTEGRAL = 0.3;
+    public static final double kMIN_INTEGRAL = -0.3;
   }
 
   public class ExtendPID {
