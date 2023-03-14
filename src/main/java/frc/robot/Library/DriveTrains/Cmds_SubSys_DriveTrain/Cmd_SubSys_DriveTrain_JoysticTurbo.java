@@ -9,7 +9,6 @@ package frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
-import frc.robot.Library.DriveTrains.SubSys_DriveTrain_Constants;
 import frc.robot.Library.DriverStation.JoystickUtilities;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
@@ -57,20 +56,13 @@ public class Cmd_SubSys_DriveTrain_JoysticTurbo extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    driveSubSys.setDriveSpdTurbo();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //! DON'T DO THIS. CHANGE THIS AFTER THE COMP
-    SubSys_DriveTrain_Constants.DriveTrainMaxPctOutput = SubSys_DriveTrain_Constants.DriveTrainMaxTurboPctOutput;
-    SubSys_DriveTrain_Constants.DriveTrainMaxSpd = SubSys_DriveTrain_Constants.DriveTrainMaxTurboSpd;
-    SubSys_DriveTrain_Constants.DriveTrainMaxAccel = SubSys_DriveTrain_Constants.DriveTrainMaxTurboAccel;
-
-    SubSys_DriveTrain_Constants.DriveTrainMaxRotPctOutput = SubSys_DriveTrain_Constants.DriveTrainMaxTurboRotPctOutput;
-    SubSys_DriveTrain_Constants.DriveTrainMaxRotSpeed = SubSys_DriveTrain_Constants.DriveTrainMaxTurboRotSpeed;
-    SubSys_DriveTrain_Constants.DriveTrainMaxRotAccel = SubSys_DriveTrain_Constants.DriveTrainMaxTurboRotAccel;
-
 
     driveSubSys.Drive(
         JoystickUtilities.joyDeadBndSqrdScaled(
@@ -92,14 +84,7 @@ public class Cmd_SubSys_DriveTrain_JoysticTurbo extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-        //! DON'T DO THIS. CHANGE THIS AFTER THE COMP
-        SubSys_DriveTrain_Constants.DriveTrainMaxPctOutput = SubSys_DriveTrain_Constants.DriveTrainMaxDefaultPctOutput;
-        SubSys_DriveTrain_Constants.DriveTrainMaxSpd = SubSys_DriveTrain_Constants.DriveTrainMaxDefaultSpd;
-        SubSys_DriveTrain_Constants.DriveTrainMaxAccel = SubSys_DriveTrain_Constants.DriveTrainMaxDefaultAccel;
-    
-        SubSys_DriveTrain_Constants.DriveTrainMaxPctOutput = SubSys_DriveTrain_Constants.DriveTrainMaxDefaultPctOutput;
-        SubSys_DriveTrain_Constants.DriveTrainMaxRotSpeed = SubSys_DriveTrain_Constants.DriveTrainMaxDefaultRotSpeed;
-        SubSys_DriveTrain_Constants.DriveTrainMaxRotAccel = SubSys_DriveTrain_Constants.DriveTrainMaxDefaultRotAccel;
+    driveSubSys.setDriveSpdDefault();
   }
 
   // Returns true when the command should end.

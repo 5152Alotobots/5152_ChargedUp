@@ -13,7 +13,7 @@ import frc.robot.Library.DriverStation.JoystickUtilities;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
-public class Cmd_SubSys_DriveTrain_JoysticDefault extends CommandBase {
+public class Cmd_SubSys_DriveTrain_JoysticSlow extends CommandBase {
   /** Creates a new FalconTalonFXDriveTalonSR. */
   private final SubSys_DriveTrain driveSubSys;
 
@@ -35,7 +35,7 @@ public class Cmd_SubSys_DriveTrain_JoysticDefault extends CommandBase {
    * @param rotateLeftPt
    * @param rotateRightPt
    */
-  public Cmd_SubSys_DriveTrain_JoysticDefault(
+  public Cmd_SubSys_DriveTrain_JoysticSlow(
       SubSys_DriveTrain driveSubSys,
       DoubleSupplier fwdCmd,
       DoubleSupplier strCmd,
@@ -57,21 +57,22 @@ public class Cmd_SubSys_DriveTrain_JoysticDefault extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    driveSubSys.setDriveSpdDefault();
+    driveSubSys.setDriveSpdSlow();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+
     driveSubSys.Drive(
         JoystickUtilities.joyDeadBndSqrdScaled(
-            fwdCmd.getAsDouble(), 0.05, driveSubSys.getMaxDriveSubSysSpd()),
+            fwdCmd.getAsDouble(), 0.05, driveSubSys.getMaxDriveSlowSubSysSpd()),
         JoystickUtilities.joyDeadBndSqrdScaled(
-            strCmd.getAsDouble(), 0.05, driveSubSys.getMaxDriveSubSysSpd()),
+            strCmd.getAsDouble(), 0.05, driveSubSys.getMaxDriveSlowSubSysSpd()),
         // JoystickUtilities.joyDeadBndScaled(fwdCmd.getAsDouble(),0.1,m_DriveSubSys.getMaxDriveSubSysSpd()),
         // JoystickUtilities.joyDeadBndScaled(m_StrCmd.getAsDouble(),0.1,m_DriveSubSys.getMaxDriveSubSysSpd()),
         JoystickUtilities.joyDeadBndScaled(
-            rotCmd.getAsDouble(), 0.1, driveSubSys.getMaxDriveSubSysRotSpd()),
+            rotCmd.getAsDouble(), 0.1, driveSubSys.getMaxDriveSubSysSlowRotSpd()),
         fieldOriented,
         rotateLeftPt.getAsBoolean(),
         rotateRightPt.getAsBoolean());
@@ -82,7 +83,9 @@ public class Cmd_SubSys_DriveTrain_JoysticDefault extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    driveSubSys.setDriveSpdDefault();
+  }
 
   // Returns true when the command should end.
   @Override
