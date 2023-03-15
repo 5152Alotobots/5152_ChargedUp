@@ -11,6 +11,9 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.CANCoderConfiguration;
+
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -72,6 +75,62 @@ public class SubSys_Arm extends SubsystemBase {
     Arm_ExtensionMotor.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor0);
     Arm_ExtensionMotor.configSelectedFeedbackCoefficient(7.854 / 4096);
   }
+
+
+  @Override
+  public void periodic() {
+    // This method will be called once per scheduler run
+    SmartDashboard.putNumber("SubSys_Arm_ShoulderCanCoder_CalculatedPOS", getShoulderRotation());
+    SmartDashboard.putNumber(
+        "SubSys_Arm_ShoulderCanCoder_Position",
+        Arm_ShoulderCanCoder.getAbsolutePosition() - Const_Arm.kOffsetTo0);
+
+    SmartDashboard.putNumber(
+        "SubSys_Arm_ExtendMotor_Position", Arm_ExtensionMotor.getSelectedSensorPosition());
+    SmartDashboard.putNumber(
+        "RobotHeight",
+        getHeightOfArmFromBase(
+            Arm_ShoulderMotor.getSelectedSensorPosition(),
+            Arm_ExtensionMotor.getSelectedSensorPosition()));
+    SmartDashboard.putNumber(
+        "RobotWidth",
+        getLengthOfArmFromBase(
+            Arm_ShoulderMotor.getSelectedSensorPosition(),
+            Arm_ExtensionMotor.getSelectedSensorPosition()));
+
+    isSlowSwitchClosed = !slowSwitch.get();
+
+    isStopSwitchClosed = !stopSwitch.get();
+
+    SmartDashboard.putBoolean("isSwitchClosed", isStopSwitchClosed);
+  }
+  
+  /***********************************************************************************/
+  /* ***** Public Arm Methods *****                                                  */
+  /***********************************************************************************/
+
+  // ***** Arm Rotation Methods *****
+  
+  public Rotation2d getArmShoulderAngle() {
+    return new Rotation2d(Units.degreesToRadians(Arm_ShoulderCanCoder.getAbsolutePosition()
+      -SubSys_Arm_Constants.ArmShoulderZeroAngle));
+  }
+  // ***** Arm Extension Methods *****
+
+  /***********************************************************************************/
+  /* ***** Private Arm Methods *****                                                 */
+  /***********************************************************************************/
+
+  // ***** Arm Methods *****
+  
+  //private calcHandPosition(){
+
+  //}
+  // ***** Arm Rotation Methods *****
+
+  // ***** Arm Extension Methods *****
+
+  
 
   // *Math methods
   // z = height
@@ -262,31 +321,5 @@ public class SubSys_Arm extends SubsystemBase {
     Arm_ExtensionCanCoder.setPosition(0);
   }
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-    SmartDashboard.putNumber("SubSys_Arm_ShoulderCanCoder_CalculatedPOS", getShoulderRotation());
-    SmartDashboard.putNumber(
-        "SubSys_Arm_ShoulderCanCoder_Position",
-        Arm_ShoulderCanCoder.getAbsolutePosition() - Const_Arm.kOffsetTo0);
-
-    SmartDashboard.putNumber(
-        "SubSys_Arm_ExtendMotor_Position", Arm_ExtensionMotor.getSelectedSensorPosition());
-    SmartDashboard.putNumber(
-        "RobotHeight",
-        getHeightOfArmFromBase(
-            Arm_ShoulderMotor.getSelectedSensorPosition(),
-            Arm_ExtensionMotor.getSelectedSensorPosition()));
-    SmartDashboard.putNumber(
-        "RobotWidth",
-        getLengthOfArmFromBase(
-            Arm_ShoulderMotor.getSelectedSensorPosition(),
-            Arm_ExtensionMotor.getSelectedSensorPosition()));
-
-    isSlowSwitchClosed = !slowSwitch.get();
-
-    isStopSwitchClosed = !stopSwitch.get();
-
-    SmartDashboard.putBoolean("isSwitchClosed", isStopSwitchClosed);
-  }
+  
 }

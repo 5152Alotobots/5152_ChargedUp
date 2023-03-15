@@ -13,7 +13,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Constants.RobotSettings;
+import frc.robot.Constants.RobotDimensions;
 
 public class SubSys_LimeLight extends SubsystemBase {
   /** Creates a new LimeLightSubSys. */
@@ -156,8 +156,8 @@ public class SubSys_LimeLight extends SubsystemBase {
     double ringDistance = 0.0;
     if (m_Tv > 0.5) {
       ringDistance =
-          (Constants.Field.Hub.kTargetRingHeight - RobotSettings.Limelight.kCameraHeight)
-              / (Math.tan(Units.degreesToRadians(m_Ty + RobotSettings.Limelight.kCameraAngle)));
+          (Constants.Field.Hub.kTargetRingHeight - RobotDimensions.Limelight.kCameraHeight)
+              / (Math.tan(Units.degreesToRadians(m_Ty + RobotDimensions.Limelight.kCameraAngle)));
       m_TargetDistance = ringDistance + Constants.Field.Hub.kTargetRingDist2Ctr;
     } else {
       m_TargetDistance = 0;

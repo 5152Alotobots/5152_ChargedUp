@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
 
 /**
@@ -19,8 +20,36 @@ import edu.wpi.first.math.util.Units;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-  public static final class RobotSettings {
+  public static final class RobotDimensions {
 
+    // Robot Origin (0,0,0 at center and bottom of wheels)
+    public static final class Frame{
+      public static final Translation3d FrameOrigin = new Translation3d(0,0,0); 
+      public static final double FrameLength = Units.inchesToMeters(24.0);
+      public static final double FrameWidth = Units.inchesToMeters(24.0);
+    }
+
+    public static final class DriveTrain{
+      public static final double DriveTrainTrackWidth = Units.inchesToMeters(21.73);
+      public static final double DriveTrainWheelBase = Units.inchesToMeters(21.73);
+    }
+
+    public static final class Arm{
+      public static final Translation3d ArmShoulder =
+        new Translation3d(0.05, 0, 0.58);   // Relative to Frame Origin
+      public static final double ArmMinLength = Units.inchesToMeters(12);
+      public static final double ArmMaxLength = Units.inchesToMeters(12);
+    }
+
+    public static final class Hand{
+      public static final double HandLength = 0.35;
+    }
+    
+    public static final class RobotBoundaries{
+      public static final double MaxExtensionOverFrame = 1.20; // .120m or 120cm (width)
+      public static final double MaxHeight = 1.98; // .198m or 198cm (Height)
+    }
+    
     public static final class Limelight {
       public static final double kCameraHeight = Units.inchesToMeters(35); // m
       public static final double kCameraAngle = 29.0; // Degrees
