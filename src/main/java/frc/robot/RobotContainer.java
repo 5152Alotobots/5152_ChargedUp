@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.ChargedUp.Arm.Cmd.CmdGrp_MoveToLowPos;
 import frc.robot.ChargedUp.Arm.Cmd.Cmd_ArmDefault;
 import frc.robot.ChargedUp.Arm.Cmd.Cmd_ArmExtensionPID;
 import frc.robot.ChargedUp.Arm.Cmd.Cmd_ArmRotationPID;
@@ -42,6 +43,7 @@ import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmd_SubSys_DriveTrai
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
 import frc.robot.Library.Vision.Limelight.SubSys_LimeLight;
+import frc.robot.ChargedUp.Arm.Cmd.CmdGrp_MoveToLowPos;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -199,7 +201,8 @@ public class RobotContainer {
         new InstantCommand(handSubSys::OpenHand, handSubSys));
     driverStationSubSys.GyroResetButton.onTrue(
         new InstantCommand(gyroSubSys::zeroYaw, gyroSubSys));
-
+    driverStationSubSys.LowLevelButton.onTrue(
+        new CmdGrp_MoveToLowPos(armSubSys));
     // Gyro Reset Command Button
     driverStationSubSys.PoseResetButton.onTrue(
         // new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));

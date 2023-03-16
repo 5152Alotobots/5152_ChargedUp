@@ -11,6 +11,8 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.CANCoderConfiguration;
+import com.ctre.phoenix.sensors.SensorInitializationStrategy;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -18,25 +20,18 @@ import frc.robot.Constants;
 
 public class SubSys_Arm extends SubsystemBase {
 
-  private CANCoderConfiguration armExtensionCanCoderConfiguration = new CANCoderConfiguration();
-
   private TalonFX Arm_ShoulderMotor = new TalonFX(Constants.CAN_IDs.ArmShoulderMtr_CAN_ID);
-  private TalonFX Arm_ShoulderFollowerMotor =
-      new TalonFX(Constants.CAN_IDs.ArmShoulderFollowerMtr_CAN_ID);
+  private TalonFX Arm_ShoulderFollowerMotor = new TalonFX(Constants.CAN_IDs.ArmShoulderFollowerMtr_CAN_ID);
 
-  private TalonFXConfiguration arm_ShoulderMotorConfiguration = new TalonFXConfiguration();
-  private TalonFXConfiguration arm_ShoulderFollowerMotorConfiguration = new TalonFXConfiguration();
+  private TalonFXConfiguration Arm_ShoulderMotorConfiguration = new TalonFXConfiguration();
+  private TalonFXConfiguration Arm_ShoulderFollowerMotorConfiguration = new TalonFXConfiguration();
 
-  private CANCoder Arm_ShoulderCanCoder =
-      new CANCoder(Constants.CAN_IDs.ArmShoulderCANCoder_CAN_ID);
+  private CANCoder Arm_ShoulderCanCoder = new CANCoder(Constants.CAN_IDs.ArmShoulderCANCoder_CAN_ID);
 
   private TalonFX Arm_ExtensionMotor = new TalonFX(Constants.CAN_IDs.ArmExtensionMtr_CAN_ID);
 
-  private CANCoder Arm_ExtensionCanCoder =
-      new CANCoder(Constants.CAN_IDs.ArmExtensionCANCoder_CAN_ID);
-
-  private TalonFXConfiguration ArmExtensionConfig = new TalonFXConfiguration();
-
+  private CANCoder Arm_ExtensionCanCoder = new CANCoder(Constants.CAN_IDs.ArmExtensionCANCoder_CAN_ID);
+  
   // STOP Switch
   private DigitalInput stopSwitch = new DigitalInput(0);
   private Boolean isSlowSwitchClosed;
@@ -49,20 +44,25 @@ public class SubSys_Arm extends SubsystemBase {
   // CANCoder(Constants.CAN_IDs.ArmExtensionCANCoder_CAN_ID); NOT USED
 
   public SubSys_Arm() {
-    // *motor configs */
+    Arm_ShoulderCanCoder.configFactoryDefault();
+    Arm_ShoulderCanCoder.configSensorInitializationStrategy(SensorInitializationStrategy.BootToAbsolutePosition);
+    Arm_ShoulderCanCoder.configMagnetOffset(Const_Arm.kOffsetTo0);
+
     Arm_ShoulderMotor.configFactoryDefault();
-    Arm_ShoulderMotor.setInverted(false);
+    Arm_ShoulderMotor.setInverted(false); //! it is a good idea to use clockwise and counter clockwise directions in the future
     Arm_ShoulderMotor.setNeutralMode(NeutralMode.Brake);
     Arm_ShoulderMotor.configRemoteFeedbackFilter(Arm_ShoulderCanCoder, 0);
     Arm_ShoulderMotor.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor0);
     Arm_ShoulderMotor.configSelectedFeedbackCoefficient(360 / 4096);
-
+    
     Arm_ShoulderFollowerMotor.configFactoryDefault();
     Arm_ShoulderFollowerMotor.setInverted(true);
     Arm_ShoulderFollowerMotor.setNeutralMode(NeutralMode.Brake);
+    //Use same output as shoulder motor 
     Arm_ShoulderFollowerMotor.follow(Arm_ShoulderMotor);
 
-    Arm_ShoulderCanCoder.configFactoryDefault();
+    Arm_ExtensionCanCoder.configFactoryDefault();
+    Arm_ExtensionCanCoder.configSensorInitializationStrategy(SensorInitializationStrategy.BootToAbsolutePosition);
 
     Arm_ExtensionMotor.configFactoryDefault();
     Arm_ExtensionMotor.setInverted(false);
@@ -70,7 +70,7 @@ public class SubSys_Arm extends SubsystemBase {
     Arm_ExtensionMotor.configRemoteFeedbackFilter(Arm_ExtensionCanCoder, 0);
     Arm_ExtensionMotor.configRemoteFeedbackFilter(Arm_ExtensionCanCoder, 0);
     Arm_ExtensionMotor.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor0);
-    Arm_ExtensionMotor.configSelectedFeedbackCoefficient(7.854 / 4096);
+    Arm_ExtensionMotor.configSelectedFeedbackCoefficient(7.854 / 4096); //Consider using configFeedbackCoefficient (For the can coder)
   }
 
   // *Math methods
@@ -267,23 +267,27 @@ public class SubSys_Arm extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("SubSys_Arm_ShoulderCanCoder_CalculatedPOS", getShoulderRotation());
-    SmartDashboard.putNumber(
-        "SubSys_Arm_ShoulderCanCoder_Position",
-        Arm_ShoulderCanCoder.getAbsolutePosition() - Const_Arm.kOffsetTo0);
+    SmartDashboard.putNumber("SubSys_Arm_ShoulderCanCoder_Position",
+      Arm_ShoulderCanCoder.getAbsolutePosition());
 
-    SmartDashboard.putNumber(
-        "SubSys_Arm_ExtendMotor_Position", Arm_ExtensionMotor.getSelectedSensorPosition());
-    SmartDashboard.putNumber(
-        "RobotHeight",
-        getHeightOfArmFromBase(
-            Arm_ShoulderMotor.getSelectedSensorPosition(),
-            Arm_ExtensionMotor.getSelectedSensorPosition()));
-    SmartDashboard.putNumber(
-        "RobotWidth",
-        getLengthOfArmFromBase(
-            Arm_ShoulderMotor.getSelectedSensorPosition(),
-            Arm_ExtensionMotor.getSelectedSensorPosition()));
+    SmartDashboard.putNumber("SubSys_Arm_ShoulderMotor_Position", 
+      Arm_ShoulderMotor.getSelectedSensorPosition());
+
+    SmartDashboard.putNumber("SubSys_Arm_ExtendCanCoder_Position", 
+      Arm_ExtensionCanCoder.getPosition());
+      
+    SmartDashboard.putNumber("SubSys_Arm_ExtendMotor_Position", 
+      Arm_ExtensionMotor.getSelectedSensorPosition());
+
+    SmartDashboard.putNumber("RobotHeight",
+      getHeightOfArmFromBase(
+        Arm_ShoulderMotor.getSelectedSensorPosition(),
+        Arm_ExtensionMotor.getSelectedSensorPosition()));
+
+    SmartDashboard.putNumber("RobotWidth",
+      getLengthOfArmFromBase(
+        Arm_ShoulderMotor.getSelectedSensorPosition(),
+        Arm_ExtensionMotor.getSelectedSensorPosition()));
 
     isSlowSwitchClosed = !slowSwitch.get();
 
