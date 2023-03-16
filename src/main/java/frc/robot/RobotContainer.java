@@ -38,6 +38,7 @@ import frc.robot.ChargedUp.Hand.SubSys_Hand;
 import frc.robot.ChargedUp.MecanumDrive.Cmd.Cmd_MecanumDriveDefault;
 import frc.robot.ChargedUp.PhotonVision.Const_Photonvision;
 import frc.robot.ChargedUp.PhotonVision.SubSys_Photonvision;
+import frc.robot.ChargedUp.PhotonVision.Cmd.Cmd_GetDistanceToTarget;
 import frc.robot.ChargedUp.PhotonVision.Cmd.Cmd_NavigateToBestVisionTarget;
 import frc.robot.ChargedUp.MecanumDrive.SubSys_MecanumDrive;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmd_SubSys_DriveTrain_JoysticDefault;
@@ -171,6 +172,10 @@ public class RobotContainer {
             true,
             () -> driverStationSubSys.RotateLeftPt(),
             () -> driverStationSubSys.RotateRightPt()));
+
+        photonvisionSubSys.setDefaultCommand(
+            new Cmd_GetDistanceToTarget(photonvisionSubSys, handSubSys, Const_Photonvision.Cameras.frontCamera, 1)
+        );
 
     // Sendable Chooser
 

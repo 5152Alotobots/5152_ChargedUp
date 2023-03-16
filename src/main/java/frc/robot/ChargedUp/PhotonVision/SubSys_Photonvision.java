@@ -33,15 +33,22 @@ public class SubSys_Photonvision extends SubsystemBase {
     public PIDController Zcontroller = new PIDController(DriveTrainTrajSettings.RotationTrajectoryPID.Pgain, DriveTrainTrajSettings.RotationTrajectoryPID.Igain, DriveTrainTrajSettings.RotationTrajectoryPID.Dgain);
 
     /** VISION */
-    public double getRangeToTarget(PhotonPipelineResult result){
-
-      double range =
+    public double getRangeToTarget(PhotonPipelineResult result, Boolean UseArmCalculatedAngle){
+      if (UseArmCalculatedAngle){
+      return
         PhotonUtils.calculateDistanceToTargetMeters(
             m_Arm.getCameraHeight(),
             Const_Photonvision.TARGET_HEIGHT_METERS,
             m_Arm.getShoulderRotationRadians() - 90,
                 Units.degreesToRadians(result.getBestTarget().getPitch()));
-      return range;
+      } else {
+        return
+        PhotonUtils.calculateDistanceToTargetMeters(
+            Const_Photonvision.CAMERA_HEIGHT_METERS,
+            Const_Photonvision.TARGET_HEIGHT_METERS,
+            Const_Photonvision.CAMERA_PITCH_RADIANS,
+            Units.degreesToRadians(result.getBestTarget().getPitch()));
+      }
     }
 
     /** Calculate rotation speed */
@@ -56,7 +63,7 @@ public class SubSys_Photonvision extends SubsystemBase {
     /** Calculate forward speed */
     public double getVisionForwardSpeed(PhotonPipelineResult result){
       if (result.hasTargets()) {
-        return XYcontroller.calculate(getRangeToTarget(result), Const_Photonvision.GOAL_RANGE_METERS);
+        return XYcontroller.calculate(getRangeToTarget(result, false), Const_Photonvision.GOAL_RANGE_METERS);
       } else {
         return 0;
       }
