@@ -72,6 +72,8 @@ public class Cmd_SubSys_DriveTrain_JoysticDefault extends CommandBase {
     this.perfModeAActive = perfModeAActive;
     this.perfModeBActive = perfModeBActive;
     addRequirements(driveSubSys);
+
+    this.timer = new Timer();
   }
 
   // Called when the command is initially scheduled.
@@ -131,6 +133,7 @@ public class Cmd_SubSys_DriveTrain_JoysticDefault extends CommandBase {
         prevPerfMode = 0; 
       }
     }
+    /*
     double elapsedTime = timer.get();
     if(elapsedTime>0.01){
       double factor = elapsedTime/Robot.Calibrations.DriveTrain.PerfModeTransitionTime;
@@ -141,6 +144,9 @@ public class Cmd_SubSys_DriveTrain_JoysticDefault extends CommandBase {
       maxRotSpd = newMaxRotSpd;
       timer.stop();  
     }
+    */
+    maxSpd = newMaxSpd;
+    maxRotSpd = newMaxRotSpd;
     
     driveSubSys.Drive(
         JoystickUtilities.joyDeadBndSqrdScaled(
@@ -157,6 +163,7 @@ public class Cmd_SubSys_DriveTrain_JoysticDefault extends CommandBase {
     // SmartDashboard.putBoolean("RotateRight_JoyCmd", m_RotateRightPt.getAsBoolean());
     SmartDashboard.putBoolean("PerfModeA_Active", perfModeAActive.getAsBoolean());
     SmartDashboard.putBoolean("PerfModeB_Active", perfModeBActive.getAsBoolean());
+    SmartDashboard.putNumber("PerfMode", prevPerfMode);
     SmartDashboard.putNumber("MaxSpd", maxSpd);
     SmartDashboard.putNumber("MaxRotSpd", maxRotSpd);
   }

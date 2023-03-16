@@ -65,12 +65,12 @@ public class SubSys_DriverStation extends SubsystemBase {
 
   // Drive Performance Mode A
   public boolean DrivePerfModeAActive(){
-    return (m_DriverController.getRawAxis(3)> 0.3);
+    return (m_DriverController.getRawAxis(2)> 0.3);
   }
 
   // Drive Performance Mode B
   public boolean DrivePerfModeBActive(){
-    return (m_DriverController.getRawAxis(4)> 0.3);
+    return (m_DriverController.getRawAxis(3)> 0.3);
   }
 
   // ----- Arm Subsystem
