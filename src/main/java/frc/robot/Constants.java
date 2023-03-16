@@ -20,39 +20,99 @@ import edu.wpi.first.math.util.Units;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-  public static final class RobotDimensions {
+  public static final class Robot{
+    
+    public static final class Calibrations{
 
-    // Robot Origin (0,0,0 at center and bottom of wheels)
-    public static final class Frame{
-      public static final Translation3d FrameOrigin = new Translation3d(0,0,0); 
-      public static final double FrameLength = Units.inchesToMeters(24.0);
-      public static final double FrameWidth = Units.inchesToMeters(24.0);
+      public static final class DriveTrain{
+        public static final double PerfModeTransitionTime = 2.0;            // s
+        
+        public static final class PerformanceMode_Default{
+          // Default Performance Mode Speeds
+          public static double DriveTrainMaxPctOutput = 0.50;               // 0-1
+          public static double DriveTrainMaxSpd = 4.0;                      // m/s
+          public static double DriveTrainMaxAccel = 0.35;                   // m/s^2
+          public static double DriveTrainMaxRotPctOutput = 0.4;             // 0-1
+          public static double DriveTrainMaxRotSpd = 140 * Math.PI / 180; // rad/s
+          public static double DriveTrainMaxRotAccel = 200 * Math.PI / 180; // rad/s^2
+        }
+
+        public static final class PerformanceMode_A{
+          // Performance Mode A Speeds (Fast)
+          public static double DriveTrainMaxPctOutput = 0.75;               // 0-1
+          public static double DriveTrainMaxSpd = 10.0;                     // m/s
+          public static double DriveTrainMaxAccel = 1.00;                   // m/s^2
+          public static double DriveTrainMaxRotPctOutput = 0.6;             // 0-1
+          public static double DriveTrainMaxRotSpd = 200 * Math.PI / 180; // rad/s
+          public static double DriveTrainMaxRotAccel = 200 * Math.PI / 180; // rad/s^2
+        }
+
+        public static final class PerformanceMode_B{
+          // Performance Mode B Speeds (Slow)
+          public static double DriveTrainMaxPctOutput = 0.25;               // 0-1
+          public static double DriveTrainMaxSpd = 2.0;                      // m/s
+          public static double DriveTrainMaxAccel = 0.35;                   // m/s^2
+          public static double DriveTrainMaxRotPctOutput = 0.2;             // 0-1
+          public static double DriveTrainMaxRotSpd = 100 * Math.PI / 180; // rad/s
+          public static double DriveTrainMaxRotAccel = 100 * Math.PI / 180; // rad/s^2
+        }
+
+        public static final class DriveTrainTrajSettings{
+          // PathPlanner Speeds 
+          public static double DriveTrainMaxPctOutput = 0.50;               // 0-1
+          public static double DriveTrainMaxSpd = 4.0;                      // m/s
+          public static double DriveTrainMaxAccel = 0.35;                   // m/s^2
+          public static double DriveTrainMaxRotPctOutput = 0.4;             // 0-1
+          public static double DriveTrainMaxRotSpd = 140 * Math.PI / 180; // rad/s
+          public static double DriveTrainMaxRotAccel = 200 * Math.PI / 180; // rad/s^2
+        }
+      }
     }
 
-    public static final class DriveTrain{
-      public static final double DriveTrainTrackWidth = Units.inchesToMeters(21.73);
-      public static final double DriveTrainWheelBase = Units.inchesToMeters(21.73);
-    }
-
-    public static final class Arm{
-      public static final Translation3d ArmShoulder =
-        new Translation3d(0.05, 0, 0.58);   // Relative to Frame Origin
-      public static final double ArmMinLength = Units.inchesToMeters(12);
-      public static final double ArmMaxLength = Units.inchesToMeters(12);
-    }
-
-    public static final class Hand{
-      public static final double HandLength = 0.35;
+    public static final class MaxSpeeds{
+      // Default Performance Mode Speeds
+      public static double DriveTrainMaxPctOutput = 1.00;               // 0-1
+      public static double DriveTrainMaxSpd = 5.0;                      // m/s
+      public static double DriveTrainMaxAccel = 5.0;                    // m/s^2
+      public static double DriveTrainMaxRotPctOutput = 1.0;             // 0-1
+      public static double DriveTrainMaxRotSpeed = 360 * Math.PI / 180; // rad/s
+      public static double DriveTrainMaxRotAccel = 360 * Math.PI / 180; // rad/s^2
     }
     
-    public static final class RobotBoundaries{
-      public static final double MaxExtensionOverFrame = 1.20; // .120m or 120cm (width)
-      public static final double MaxHeight = 1.98; // .198m or 198cm (Height)
-    }
-    
-    public static final class Limelight {
-      public static final double kCameraHeight = Units.inchesToMeters(35); // m
-      public static final double kCameraAngle = 29.0; // Degrees
+    public static final class Dimensions{
+      
+      public static final class Frame{
+        // Robot Origin (0,0,0 at center and bottom of wheels)
+        public static final Translation3d FrameOrigin = new Translation3d(0,0,0);
+        public static final double Length = Units.inchesToMeters(23.75); 
+        public static final double Width = Units.inchesToMeters(23.85);
+        public static final double BumperThickness = Units.inchesToMeters(3.25);
+      }
+      public static final class DriveTrain{
+        public static final double WheelBase = Units.inchesToMeters(18.5);
+        public static final double TrackWidth = Units.inchesToMeters(18.5);
+      } 
+
+      public static final class Arm{
+        public static final Translation3d ArmShoulder =
+          new Translation3d(0.05, 0, 0.58);   // Relative to Frame Origin
+        public static final double ArmMinLength = Units.inchesToMeters(12);
+        public static final double ArmMaxLength = Units.inchesToMeters(12);
+      }
+  
+      public static final class Hand{
+        public static final double HandLength = 0.35;
+      }
+      
+      public static final class RobotBoundaries{
+        public static final double MaxExtensionOverFrame = 1.20; // .120m or 120cm (width)
+        public static final double MaxHeight = 1.98; // .198m or 198cm (Height)
+      }
+
+      public static final class Limelight {
+        public static final double kCameraHeight = Units.inchesToMeters(35); // m
+        public static final double kCameraAngle = 29.0; // Degrees
+      }
     }
   }
 
