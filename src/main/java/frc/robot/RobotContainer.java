@@ -22,6 +22,7 @@ import frc.robot.ChargedUp.AutoCommands.Auto_MiddleChargeBlue_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_MiddleChargeRed_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_leftbluecharge_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_rightredcharge_Cmd;
+import frc.robot.ChargedUp.BlinkinLED.SubSys_Bling;
 import frc.robot.ChargedUp.AutoCommands.Auto_leftredescape_Cmd;
 // import frc.robot.ChargedUp.DistanceSensor.SubSys_DistanceSensor;
 import frc.robot.ChargedUp.DriverStation.SubSys_DriverStation;
@@ -79,6 +80,8 @@ public class RobotContainer {
   // Arm
   public final SubSys_Arm armSubSys = new SubSys_Arm();
 
+  // Bling
+    public final SubSys_Bling blingSubSys = new SubSys_Bling();
   /*
    ***** Charged Up Componentes
    */
@@ -186,6 +189,10 @@ public class RobotContainer {
     driverStationSubSys.CloseHandButton.onTrue(
         new InstantCommand(handSubSys::CloseHand, handSubSys));
     driverStationSubSys.GyroResetButton.onTrue(new InstantCommand(gyroSubSys::zeroYaw, gyroSubSys));
+
+    // LEDs
+    driverStationSubSys.RequestConeButton.onTrue(new InstantCommand(blingSubSys::setBlinkinLEDYellow, blingSubSys));
+    driverStationSubSys.RequestCubeButton.onTrue(new InstantCommand(blingSubSys::setBlinkinLEDPurple, blingSubSys));
 
     // Gyro Reset Command Button
     driverStationSubSys.PoseResetButton.onTrue(
