@@ -61,12 +61,9 @@ public class RobotContainer {
   public final SubSys_DriveTrain driveSubSys = new SubSys_DriveTrain(gyroSubSys);
   // private final PDPSubSys m_PDPSubSys = new PDPSubSys();
 
-  // public final NavXGyroSubSys m_NavXGyroSubSys = new NavXGyroSubSys();
-  // public final NavXGyroSubSys m_NavXGyroSubSys = new NavXGyroSubSys();
-
   // private final SubSys_LimeLight limeLightSubSys = new SubSys_LimeLight();
 
-  public final SubSys_MecanumDrive mecanumDriveSubSys = new SubSys_MecanumDrive();
+  //public final SubSys_MecanumDrive mecanumDriveSubSys = new SubSys_MecanumDrive();
 
   // public final SubSys_ColorSensor colorSubSys = new SubSys_ColorSensor();
 
@@ -139,12 +136,12 @@ public class RobotContainer {
     //  () ->  driverStationSubSys.HandSensorBtn())
     // );
 
-    mecanumDriveSubSys.setDefaultCommand(
-        new Cmd_MecanumDriveDefault(
-            mecanumDriveSubSys,
-            () -> driverStationSubSys.DriveFwdAxis(),
-            () -> driverStationSubSys.DriveStrAxis(),
-            () -> driverStationSubSys.DriveRotAxis()));
+    //mecanumDriveSubSys.setDefaultCommand(
+    //    new Cmd_MecanumDriveDefault(
+    //        mecanumDriveSubSys,
+    //        () -> driverStationSubSys.DriveFwdAxis(),
+    //        () -> driverStationSubSys.DriveStrAxis(),
+    //        () -> driverStationSubSys.DriveRotAxis()));
 
     driveSubSys.setDefaultCommand(
         new Cmd_SubSys_DriveTrain_JoysticDefault(
@@ -154,7 +151,9 @@ public class RobotContainer {
             () -> driverStationSubSys.DriveRotAxis(),
             true,
             () -> driverStationSubSys.RotateLeftPt(),
-            () -> driverStationSubSys.RotateRightPt()));
+            () -> driverStationSubSys.RotateRightPt(),
+            () -> driverStationSubSys.DrivePerfModeAActive(),
+            () -> driverStationSubSys.DrivePerfModeBActive()));
 
     // Sendable Chooser
 
@@ -191,17 +190,6 @@ public class RobotContainer {
     driverStationSubSys.PoseResetButton.onTrue(
         // new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
         new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
-        
-    //TODO: FIX THIS
-      driverStationSubSys.TurboButton.whileTrue(
-          new Cmd_SubSys_DriveTrain_JoysticTurbo(
-              driveSubSys,
-              () -> driverStationSubSys.DriveFwdAxis(),
-              () -> driverStationSubSys.DriveStrAxis(),
-              () -> driverStationSubSys.DriveRotAxis(),
-              true,
-              () -> driverStationSubSys.RotateLeftPt(),
-              () -> driverStationSubSys.RotateRightPt()));
   }
 
   // when test button is pressed run the rotate to heading command to a random number between 0 and
