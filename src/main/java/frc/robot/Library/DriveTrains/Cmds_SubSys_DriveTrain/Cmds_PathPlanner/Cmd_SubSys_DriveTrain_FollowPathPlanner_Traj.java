@@ -55,9 +55,7 @@ public class Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj extends CommandBase {
     this.ppTraj =
         PathPlanner.loadPath(
             this.pathPlannerTrajName,
-            new PathConstraints(
-                SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrainTrajMaxSpd,
-                SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrainTrajMaxAccel));
+            PathPlanner.getConstraintsFromPath(this.pathPlannerTrajName));
 
     this.xDistancePID =
         new PIDController(
