@@ -1,5 +1,7 @@
 package frc.robot.ChargedUp.Arm;
 
+import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
+
 import edu.wpi.first.math.util.Units;
 
 public class Const_Arm {
@@ -59,4 +61,5 @@ public class Const_Arm {
   public class Positions {
     public static final double pickup = 0;
   }
+
 }

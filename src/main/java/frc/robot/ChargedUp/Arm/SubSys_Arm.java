@@ -4,6 +4,8 @@
 
 package frc.robot.ChargedUp.Arm;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
@@ -263,6 +265,35 @@ public class SubSys_Arm extends SubsystemBase {
   public double resetExtendCanCoder() {
     return Arm_ExtensionMotor.getSelectedSensorPosition();
   }
+
+
+  //! --- ON MOTOR PIDs --- \\
+
+
+  public void armRotationMoveToPos(double positionDegrees){
+    int kMeasuredPosHorizontal = 840; //Position measured when arm is horizontal //TODO: Measure
+    double kTicksPerDegree = 4096 / 360; //Sensor is 1:1 with arm rotation
+    double currentPos = Arm_ShoulderMotor.getSelectedSensorPosition();
+    double degrees = (currentPos - kMeasuredPosHorizontal) / kTicksPerDegree;
+    double radians = java.lang.Math.toRadians(degrees);
+    double cosineScalar = java.lang.Math.cos(radians);
+
+double maxGravityFF = 0.07;
+    Arm_ShoulderMotor.config_kP(0, 0.1);
+    Arm_ShoulderMotor.config_kI(0, 0);
+    Arm_ShoulderMotor.config_kD(0, 0);
+    Arm_ShoulderFollowerMotor.config_kP(0, 0.1);
+    Arm_ShoulderFollowerMotor.config_kI(0, 0);
+    Arm_ShoulderFollowerMotor.config_kD(0, 0);
+
+    //Config acceptabe error
+    Arm_ShoulderMotor.configAllowableClosedloopError(0, 100);
+    Arm_ShoulderFollowerMotor.configAllowableClosedloopError(0, 100);
+
+    Arm_ShoulderMotor.set(TalonFXControlMode.Position, positionDegrees, DemandType.ArbitraryFeedForward, maxGravityFF * cosineScalar);
+    Arm_ShoulderFollowerMotor.follow(Arm_ShoulderMotor);
+  }
+
 
   @Override
   public void periodic() {
