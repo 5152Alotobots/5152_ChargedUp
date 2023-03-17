@@ -17,6 +17,7 @@ import frc.robot.ChargedUp.Arm.Cmd.CmdGrp_MoveToLowPos;
 import frc.robot.ChargedUp.Arm.Cmd.Cmd_ArmDefault;
 import frc.robot.ChargedUp.Arm.Cmd.Cmd_ArmExtensionPID;
 import frc.robot.ChargedUp.Arm.Cmd.Cmd_ArmRotationPID;
+import frc.robot.ChargedUp.Arm.Cmd.Cmd_ArmRotationPIDOnboard;
 // import frc.robot.ChargedUp.Arm.Cmd.Cmd_HighLevelExtend;
 // import frc.robot.ChargedUp.Arm.Cmd.Cmd_HighLevelRotate;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
@@ -202,7 +203,7 @@ public class RobotContainer {
     driverStationSubSys.GyroResetButton.onTrue(
         new InstantCommand(gyroSubSys::zeroYaw, gyroSubSys));
     driverStationSubSys.LowLevelButton.onTrue(
-        new CmdGrp_MoveToLowPos(armSubSys));
+        new Cmd_ArmRotationPIDOnboard(armSubSys, 0));
     // Gyro Reset Command Button
     driverStationSubSys.PoseResetButton.onTrue(
         // new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));

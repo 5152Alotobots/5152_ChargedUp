@@ -49,6 +49,7 @@ public class SubSys_Arm extends SubsystemBase {
     Arm_ShoulderCanCoder.configFactoryDefault();
     Arm_ShoulderCanCoder.configSensorInitializationStrategy(SensorInitializationStrategy.BootToAbsolutePosition);
     Arm_ShoulderCanCoder.configMagnetOffset(Const_Arm.kOffsetTo0);
+    Arm_ShoulderCanCoder.setPositionToAbsolute();
 
     Arm_ShoulderMotor.configFactoryDefault();
     Arm_ShoulderMotor.setInverted(false); //! it is a good idea to use clockwise and counter clockwise directions in the future
@@ -270,35 +271,37 @@ public class SubSys_Arm extends SubsystemBase {
   //! --- ON MOTOR PIDs --- \\
 
 
-  public void armRotationMoveToPos(double positionDegrees){
-    int kMeasuredPosHorizontal = 840; //Position measured when arm is horizontal //TODO: Measure
-    double kTicksPerDegree = 4096 / 360; //Sensor is 1:1 with arm rotation
-    double currentPos = Arm_ShoulderMotor.getSelectedSensorPosition();
-    double degrees = (currentPos - kMeasuredPosHorizontal) / kTicksPerDegree;
-    double radians = java.lang.Math.toRadians(degrees);
-    double cosineScalar = java.lang.Math.cos(radians);
+  public void armRotationMoveToPos(){
+    // double positionDegrees = 180;
+    // int kMeasuredPosHorizontal = -4096; //Position measured when arm is horizontal //TODO: Measure
+    // double kTicksPerDegree = 4096 / 360; //Sensor is 1:1 with arm rotation
+    // double currentPos = Arm_ShoulderMotor.getSelectedSensorPosition();
+    // double degrees = (currentPos - kMeasuredPosHorizontal) / kTicksPerDegree;
+    // double radians = java.lang.Math.toRadians(degrees);
+    // double cosineScalar = java.lang.Math.cos(radians);
 
-double maxGravityFF = 0.07;
+// double maxGravityFF = 0.07;
     Arm_ShoulderMotor.config_kP(0, 0.1);
     Arm_ShoulderMotor.config_kI(0, 0);
     Arm_ShoulderMotor.config_kD(0, 0);
-    Arm_ShoulderFollowerMotor.config_kP(0, 0.1);
-    Arm_ShoulderFollowerMotor.config_kI(0, 0);
-    Arm_ShoulderFollowerMotor.config_kD(0, 0);
-
+    // Arm_ShoulderFollowerMotor.config_kP(0, 0.1);
+    // Arm_ShoulderFollowerMotor.config_kI(0, 0);
+    // Arm_ShoulderFollowerMotor.config_kD(0, 0);
+//DemandType.ArbitraryFeedForward, maxGravityFF * cosineScalar
     //Config acceptabe error
-    Arm_ShoulderMotor.configAllowableClosedloopError(0, 100);
-    Arm_ShoulderFollowerMotor.configAllowableClosedloopError(0, 100);
+    // Arm_ShoulderMotor.configAllowableClosedloopError(0, 100);
 
-    Arm_ShoulderMotor.set(TalonFXControlMode.Position, positionDegrees, DemandType.ArbitraryFeedForward, maxGravityFF * cosineScalar);
-    Arm_ShoulderFollowerMotor.follow(Arm_ShoulderMotor);
+    // Arm_ShoulderFollowerMotor.configAllowableClosedloopError(0, 100);
+
+    Arm_ShoulderMotor.set(TalonFXControlMode.Position, 2048);
   }
 
 
   @Override
   public void periodic() {
+ 
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("SubSys_Arm_ShoulderCanCoder_Position",
+    SmartDashboard.putNumber("SubSys_Arm_ShoulderCanCoder_AbdPosition",
       Arm_ShoulderCanCoder.getAbsolutePosition());
 
     SmartDashboard.putNumber("SubSys_Arm_ShoulderMotor_Position", 
@@ -309,6 +312,9 @@ double maxGravityFF = 0.07;
       
     SmartDashboard.putNumber("SubSys_Arm_ExtendMotor_Position", 
       Arm_ExtensionMotor.getSelectedSensorPosition());
+
+    SmartDashboard.putNumber("SubSys_Arm_ShoulderCanCoder_Position", 
+      Arm_ShoulderCanCoder.getPosition());
 
     SmartDashboard.putNumber("RobotHeight",
       getHeightOfArmFromBase(

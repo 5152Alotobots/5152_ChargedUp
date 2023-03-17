@@ -21,7 +21,7 @@ public class Const_Arm {
   public static final double kROBOT_WIDTH = .6;
   public static final double kMinAngle = 0;
   public static final double kMaxAngle = 0;
-  public static final double kOffsetTo0 = 47.1;
+  public static final double kOffsetTo0 = 44.1+90;
 
   public class FF {
     public static final double kS = 0;
