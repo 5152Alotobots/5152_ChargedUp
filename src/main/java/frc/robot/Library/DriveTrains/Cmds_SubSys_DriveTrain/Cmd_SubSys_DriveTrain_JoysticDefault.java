@@ -28,15 +28,9 @@ public class Cmd_SubSys_DriveTrain_JoysticDefault extends CommandBase {
   private final BooleanSupplier rotateRightPt;
   private final BooleanSupplier perfModeAActive;  // Mode 1
   private final BooleanSupplier perfModeBActive;  // Mode 2
-  private Integer prevPerfMode;
   private double maxSpd = 0;
-  private double oldMaxSpd = 0;
-  private double newMaxSpd = 0;
   private double maxRotSpd = 0;
-  private double oldMaxRotSpd = 0;
-  private double newMaxRotSpd = 0;
-  private Timer timer;
-  private double transitionFactor = 0;
+
 
   /**
    * Cmd_SubSys_DriveTrain_JoysticDefault Joystick Drive Command
@@ -73,81 +67,28 @@ public class Cmd_SubSys_DriveTrain_JoysticDefault extends CommandBase {
     this.perfModeBActive = perfModeBActive;
     addRequirements(driveSubSys);
 
-    this.timer = new Timer();
+    this.maxSpd = Robot.Calibrations.DriveTrain.PerformanceMode_Default.DriveTrainMaxSpd;
+    this.maxRotSpd = Robot.Calibrations.DriveTrain.PerformanceMode_Default.DriveTrainMaxRotSpd;
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-
-    // Determine Performance Mode and set maxSpds
-    // Mode 1
-    if(perfModeAActive.getAsBoolean()){
-      prevPerfMode = 1;
-      maxSpd = Robot.Calibrations.DriveTrain.PerformanceMode_A.DriveTrainMaxSpd;
-      maxRotSpd = Robot.Calibrations.DriveTrain.PerformanceMode_A.DriveTrainMaxRotSpd;
-    // Mode 2
-    } else if(perfModeBActive.getAsBoolean()) {
-      prevPerfMode = 2;
-      maxSpd = Robot.Calibrations.DriveTrain.PerformanceMode_B.DriveTrainMaxSpd;
-      maxRotSpd = Robot.Calibrations.DriveTrain.PerformanceMode_B.DriveTrainMaxRotSpd;
-    // Mode 0
-    } else {
-      prevPerfMode = 0;
-      maxSpd = Robot.Calibrations.DriveTrain.PerformanceMode_Default.DriveTrainMaxSpd;
-      maxRotSpd = Robot.Calibrations.DriveTrain.PerformanceMode_Default.DriveTrainMaxRotSpd;
-    }
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     if(perfModeAActive.getAsBoolean()){
-      if (prevPerfMode != 1){
-        oldMaxSpd = maxSpd;
-        oldMaxRotSpd = maxRotSpd;
-        newMaxSpd = Robot.Calibrations.DriveTrain.PerformanceMode_A.DriveTrainMaxSpd;
-        newMaxRotSpd = Robot.Calibrations.DriveTrain.PerformanceMode_A.DriveTrainMaxRotSpd;
-        timer.reset();
-        timer.start();
-        prevPerfMode = 1; 
-      }
+      this.maxSpd = Robot.Calibrations.DriveTrain.PerformanceMode_A.DriveTrainMaxSpd;
+      this.maxRotSpd = Robot.Calibrations.DriveTrain.PerformanceMode_A.DriveTrainMaxRotSpd;
     }else if(perfModeBActive.getAsBoolean()){
-      if(prevPerfMode != 2){
-        oldMaxSpd = maxSpd;
-        oldMaxRotSpd = maxRotSpd;
-        newMaxSpd = Robot.Calibrations.DriveTrain.PerformanceMode_B.DriveTrainMaxSpd;
-        newMaxRotSpd = Robot.Calibrations.DriveTrain.PerformanceMode_B.DriveTrainMaxRotSpd;
-        timer.reset();
-        timer.start();
-        prevPerfMode = 2; 
-      }
+      this.maxSpd = Robot.Calibrations.DriveTrain.PerformanceMode_B.DriveTrainMaxSpd;
+      this.maxRotSpd = Robot.Calibrations.DriveTrain.PerformanceMode_B.DriveTrainMaxRotSpd;
     }else{
-      if(prevPerfMode !=0){
-        oldMaxSpd = maxSpd;
-        oldMaxRotSpd = maxRotSpd;
-        newMaxSpd = Robot.Calibrations.DriveTrain.PerformanceMode_Default.DriveTrainMaxSpd;
-        newMaxRotSpd = Robot.Calibrations.DriveTrain.PerformanceMode_Default.DriveTrainMaxRotSpd;
-        timer.reset();
-        timer.start();
-        prevPerfMode = 0; 
-      }
+      this.maxSpd = Robot.Calibrations.DriveTrain.PerformanceMode_Default.DriveTrainMaxSpd;
+      this.maxRotSpd = Robot.Calibrations.DriveTrain.PerformanceMode_Default.DriveTrainMaxRotSpd;
     }
-    /*
-    double elapsedTime = timer.get();
-    if(elapsedTime>0.01){
-      double factor = elapsedTime/Robot.Calibrations.DriveTrain.PerfModeTransitionTime;
-      maxSpd = oldMaxSpd+(newMaxSpd-oldMaxSpd)*factor;
-      maxRotSpd = oldMaxRotSpd+(newMaxRotSpd-oldMaxRotSpd)*factor;
-    }else if(elapsedTime>Robot.Calibrations.DriveTrain.PerfModeTransitionTime){
-      maxSpd = newMaxSpd;
-      maxRotSpd = newMaxRotSpd;
-      timer.stop();  
-    }
-    */
-    maxSpd = newMaxSpd;
-    maxRotSpd = newMaxRotSpd;
-    
+      
     driveSubSys.Drive(
         JoystickUtilities.joyDeadBndSqrdScaled(
             fwdCmd.getAsDouble(), 0.05, maxSpd),
@@ -163,9 +104,12 @@ public class Cmd_SubSys_DriveTrain_JoysticDefault extends CommandBase {
     // SmartDashboard.putBoolean("RotateRight_JoyCmd", m_RotateRightPt.getAsBoolean());
     SmartDashboard.putBoolean("PerfModeA_Active", perfModeAActive.getAsBoolean());
     SmartDashboard.putBoolean("PerfModeB_Active", perfModeBActive.getAsBoolean());
-    SmartDashboard.putNumber("PerfMode", prevPerfMode);
     SmartDashboard.putNumber("MaxSpd", maxSpd);
     SmartDashboard.putNumber("MaxRotSpd", maxRotSpd);
+
+
+    SmartDashboard.putNumber("FwdCmd", JoystickUtilities.joyDeadBndSqrdScaled(
+      fwdCmd.getAsDouble(), 0.05, maxSpd));
   }
 
   // Called once the command ends or is interrupted.

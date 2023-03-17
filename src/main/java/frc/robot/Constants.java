@@ -40,22 +40,22 @@ public final class Constants {
 
         public static final class PerformanceMode_A{
           // Performance Mode A Speeds (Fast)
-          public static double DriveTrainMaxPctOutput = 0.75;               // 0-1
-          public static double DriveTrainMaxSpd = 10.0;                     // m/s
-          public static double DriveTrainMaxAccel = 1.00;                   // m/s^2
+          public static double DriveTrainMaxPctOutput = 0.25;               // 0-1
+          public static double DriveTrainMaxSpd = 2.0;                     // m/s
+          public static double DriveTrainMaxAccel = 0.35;                   // m/s^2
           public static double DriveTrainMaxRotPctOutput = 0.6;             // 0-1
-          public static double DriveTrainMaxRotSpd = 200 * Math.PI / 180; // rad/s
-          public static double DriveTrainMaxRotAccel = 200 * Math.PI / 180; // rad/s^2
+          public static double DriveTrainMaxRotSpd = 100 * Math.PI / 180; // rad/s
+          public static double DriveTrainMaxRotAccel = 100 * Math.PI / 180; // rad/s^2
         }
 
         public static final class PerformanceMode_B{
           // Performance Mode B Speeds (Slow)
-          public static double DriveTrainMaxPctOutput = 0.25;               // 0-1
-          public static double DriveTrainMaxSpd = 2.0;                      // m/s
-          public static double DriveTrainMaxAccel = 0.35;                   // m/s^2
+          public static double DriveTrainMaxPctOutput = 0.75;               // 0-1
+          public static double DriveTrainMaxSpd = 5;                      // m/s
+          public static double DriveTrainMaxAccel = 1.00;                   // m/s^2
           public static double DriveTrainMaxRotPctOutput = 0.2;             // 0-1
-          public static double DriveTrainMaxRotSpd = 100 * Math.PI / 180; // rad/s
-          public static double DriveTrainMaxRotAccel = 100 * Math.PI / 180; // rad/s^2
+          public static double DriveTrainMaxRotSpd = 200 * Math.PI / 180; // rad/s
+          public static double DriveTrainMaxRotAccel = 200 * Math.PI / 180; // rad/s^2
         }
 
         public static final class DriveTrainTrajSettings{
