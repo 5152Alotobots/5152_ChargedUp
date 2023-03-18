@@ -297,6 +297,10 @@ public class SubSys_Arm extends SubsystemBase {
 
 
   public void armRotationMoveToPos(double setPositionDegrees){
+    // First, select config slot 0 for the TalonFX
+    Arm_ShoulderMotor.selectProfileSlot(Const_Arm.HardwareConfigs.SLOT_0, Const_Arm.HardwareConfigs.PID_PRIMARY);
+
+    // Then calculate the position in encoder ticks and drive the motor to that position
      setPositionDegrees *= 4096 / 360;
     Arm_ShoulderMotor.set(TalonFXControlMode.Position, setPositionDegrees);
   }
@@ -312,6 +316,7 @@ public Boolean armRotationAtCorrectPosition() {
       }
       return (Const_Arm._withinThresholdLoops > Const_Arm.kLoopsToSettle);
 }
+
   @Override
   public void periodic() {
  

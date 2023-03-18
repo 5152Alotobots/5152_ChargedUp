@@ -203,7 +203,7 @@ public class RobotContainer {
     driverStationSubSys.GyroResetButton.onTrue(
         new InstantCommand(gyroSubSys::zeroYaw, gyroSubSys));
     driverStationSubSys.LowLevelButton.onTrue(
-        new Cmd_ArmRotationPIDOnboard(armSubSys, 0));
+        new Cmd_ArmRotationPIDOnboard(armSubSys, 180));
     // Gyro Reset Command Button
     driverStationSubSys.PoseResetButton.onTrue(
         // new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));

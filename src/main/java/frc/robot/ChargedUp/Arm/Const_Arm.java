@@ -68,6 +68,10 @@ public class Const_Arm {
     public static final int REMOTE_0 = 0;
     public static final int REMOTE_1 = 1;
 
+    // Hardware config slots
+    public static final int SLOT_0 = 0;
+    public static final int SLOT_1 = 1;
+
   }
 
   public class PidfPrimary {
