@@ -40,10 +40,20 @@ public class SubSys_Arm extends SubsystemBase {
 
   public SubSys_Arm() {
     //* PID Primary */
+
+    // Shoulder
     Arm_ShoulderMotor.config_kP(Const_Arm.HardwareConfigs.PID_PRIMARY, 0.05);
 
+    // Extension
+    Arm_ExtensionMotor.config_kP(Const_Arm.HardwareConfigs.PID_PRIMARY, 0.05);
+
     //* PID Secondary */
+
+    // Shoulder
     Arm_ShoulderMotor.config_kP(Const_Arm.HardwareConfigs.PID_SECONDARY, 0.05);
+
+    // Extension
+    Arm_ExtensionMotor.config_kP(Const_Arm.HardwareConfigs.PID_SECONDARY, 0.05);
 
     //* Arm Shoulder CanCoder */
     Arm_ShoulderCanCoder.configFactoryDefault();
