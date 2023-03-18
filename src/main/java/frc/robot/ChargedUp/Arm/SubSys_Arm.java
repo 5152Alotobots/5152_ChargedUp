@@ -25,9 +25,6 @@ public class SubSys_Arm extends SubsystemBase {
   private TalonFX Arm_ShoulderMotor = new TalonFX(Constants.CAN_IDs.ArmShoulderMtr_CAN_ID);
   private TalonFX Arm_ShoulderFollowerMotor = new TalonFX(Constants.CAN_IDs.ArmShoulderFollowerMtr_CAN_ID);
 
-  private TalonFXConfiguration Arm_ShoulderMotorConfiguration = new TalonFXConfiguration();
-  private TalonFXConfiguration Arm_ShoulderFollowerMotorConfiguration = new TalonFXConfiguration();
-
   private CANCoder Arm_ShoulderCanCoder = new CANCoder(Constants.CAN_IDs.ArmShoulderCANCoder_CAN_ID);
 
   private TalonFX Arm_ExtensionMotor = new TalonFX(Constants.CAN_IDs.ArmExtensionMtr_CAN_ID);
@@ -40,40 +37,58 @@ public class SubSys_Arm extends SubsystemBase {
   // SLOW Switch
   private DigitalInput slowSwitch = new DigitalInput(1);
   private Boolean isStopSwitchClosed;
-  private Boolean inSlowArea;
-
-  // private CANCoder armExtensionCanCoder = new
-  // CANCoder(Constants.CAN_IDs.ArmExtensionCANCoder_CAN_ID); NOT USED
 
   public SubSys_Arm() {
+    //* PID Primary */
+    Arm_ShoulderMotor.config_kP(Const_Arm.HardwareConfigs.PID_PRIMARY, 0.05);
+
+    //* PID Secondary */
+    Arm_ShoulderMotor.config_kP(Const_Arm.HardwareConfigs.PID_SECONDARY, 0.05);
+
+    //* Arm Shoulder CanCoder */
     Arm_ShoulderCanCoder.configFactoryDefault();
-    Arm_ShoulderCanCoder.configSensorInitializationStrategy(SensorInitializationStrategy.BootToAbsolutePosition);
-    Arm_ShoulderCanCoder.configMagnetOffset(Const_Arm.kOffsetTo0);
+    Arm_ShoulderCanCoder.configSensorInitializationStrategy(SensorInitializationStrategy.BootToAbsolutePosition, Const_Arm.HardwareConfigs.TIMEOUT_MS);
+    Arm_ShoulderCanCoder.configMagnetOffset(Const_Arm.kOffsetTo0, Const_Arm.HardwareConfigs.TIMEOUT_MS);
     Arm_ShoulderCanCoder.setPositionToAbsolute();
 
+    //* Arm Shoulder Motor */
     Arm_ShoulderMotor.configFactoryDefault();
-    Arm_ShoulderMotor.setInverted(false); //! it is a good idea to use clockwise and counter clockwise directions in the future
+    Arm_ShoulderMotor.setInverted(false);
     Arm_ShoulderMotor.setNeutralMode(NeutralMode.Brake);
-    Arm_ShoulderMotor.configRemoteFeedbackFilter(Arm_ShoulderCanCoder, 0);
-    Arm_ShoulderMotor.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor0);
-    Arm_ShoulderMotor.configSelectedFeedbackCoefficient(360 / 4096);
-    
+
+    // Integrated
+    Arm_ShoulderMotor.configIntegratedSensorInitializationStrategy(SensorInitializationStrategy.BootToZero, Const_Arm.HardwareConfigs.TIMEOUT_MS);
+    Arm_ShoulderMotor.configIntegratedSensorOffset(0, Const_Arm.HardwareConfigs.TIMEOUT_MS);
+
+    // Remote
+    Arm_ShoulderMotor.configRemoteFeedbackFilter(Arm_ShoulderCanCoder, Const_Arm.HardwareConfigs.REMOTE_0, Const_Arm.HardwareConfigs.TIMEOUT_MS);
+    Arm_ShoulderMotor.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor0, Const_Arm.HardwareConfigs.PID_PRIMARY, Const_Arm.HardwareConfigs.TIMEOUT_MS);
+    Arm_ShoulderMotor.configSelectedFeedbackCoefficient(360 / 4096, Const_Arm.HardwareConfigs.PID_PRIMARY, Const_Arm.HardwareConfigs.TIMEOUT_MS);
+
+    //* Arm Shoulder Follower Motor */
     Arm_ShoulderFollowerMotor.configFactoryDefault();
     Arm_ShoulderFollowerMotor.setInverted(true);
     Arm_ShoulderFollowerMotor.setNeutralMode(NeutralMode.Brake);
-    //Use same output as shoulder motor 
-    Arm_ShoulderFollowerMotor.follow(Arm_ShoulderMotor);
+    Arm_ShoulderFollowerMotor.follow(Arm_ShoulderMotor); //Use same output as shoulder motor 
 
+
+    //* Arm Extension CanCoder */
     Arm_ExtensionCanCoder.configFactoryDefault();
-    Arm_ExtensionCanCoder.configSensorInitializationStrategy(SensorInitializationStrategy.BootToAbsolutePosition);
+    Arm_ExtensionCanCoder.configSensorInitializationStrategy(SensorInitializationStrategy.BootToAbsolutePosition, Const_Arm.HardwareConfigs.TIMEOUT_MS);
 
+    //* Arm Extension Motor */
     Arm_ExtensionMotor.configFactoryDefault();
     Arm_ExtensionMotor.setInverted(false);
     Arm_ExtensionMotor.setNeutralMode(NeutralMode.Brake);
-    Arm_ExtensionMotor.configRemoteFeedbackFilter(Arm_ExtensionCanCoder, 0);
-    Arm_ExtensionMotor.configRemoteFeedbackFilter(Arm_ExtensionCanCoder, 0);
-    Arm_ExtensionMotor.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor0);
-    Arm_ExtensionMotor.configSelectedFeedbackCoefficient(7.854 / 4096); //Consider using configFeedbackCoefficient (For the can coder)
+
+    // Integrated
+    Arm_ExtensionMotor.configIntegratedSensorInitializationStrategy(SensorInitializationStrategy.BootToZero, Const_Arm.HardwareConfigs.TIMEOUT_MS);
+    Arm_ExtensionMotor.configIntegratedSensorOffset(0, Const_Arm.HardwareConfigs.TIMEOUT_MS);
+
+    // Remote
+    Arm_ExtensionMotor.configRemoteFeedbackFilter(Arm_ExtensionCanCoder, Const_Arm.HardwareConfigs.REMOTE_0, Const_Arm.HardwareConfigs.TIMEOUT_MS);
+    Arm_ExtensionMotor.configSelectedFeedbackSensor(FeedbackDevice.RemoteSensor0, Const_Arm.HardwareConfigs.PID_PRIMARY, Const_Arm.HardwareConfigs.TIMEOUT_MS);
+    Arm_ExtensionMotor.configSelectedFeedbackCoefficient(7.854 / 4096, Const_Arm.HardwareConfigs.PID_PRIMARY, Const_Arm.HardwareConfigs.TIMEOUT_MS);
   }
 
   // *Math methods
@@ -272,27 +287,6 @@ public class SubSys_Arm extends SubsystemBase {
 
 
   public void armRotationMoveToPos(){
-    // double positionDegrees = 180;
-    // int kMeasuredPosHorizontal = -4096; //Position measured when arm is horizontal //TODO: Measure
-    // double kTicksPerDegree = 4096 / 360; //Sensor is 1:1 with arm rotation
-    // double currentPos = Arm_ShoulderMotor.getSelectedSensorPosition();
-    // double degrees = (currentPos - kMeasuredPosHorizontal) / kTicksPerDegree;
-    // double radians = java.lang.Math.toRadians(degrees);
-    // double cosineScalar = java.lang.Math.cos(radians);
-
-// double maxGravityFF = 0.07;
-    Arm_ShoulderMotor.config_kP(0, 0.1);
-    Arm_ShoulderMotor.config_kI(0, 0);
-    Arm_ShoulderMotor.config_kD(0, 0);
-    // Arm_ShoulderFollowerMotor.config_kP(0, 0.1);
-    // Arm_ShoulderFollowerMotor.config_kI(0, 0);
-    // Arm_ShoulderFollowerMotor.config_kD(0, 0);
-//DemandType.ArbitraryFeedForward, maxGravityFF * cosineScalar
-    //Config acceptabe error
-    // Arm_ShoulderMotor.configAllowableClosedloopError(0, 100);
-
-    // Arm_ShoulderFollowerMotor.configAllowableClosedloopError(0, 100);
-
     Arm_ShoulderMotor.set(TalonFXControlMode.Position, 2048);
   }
 

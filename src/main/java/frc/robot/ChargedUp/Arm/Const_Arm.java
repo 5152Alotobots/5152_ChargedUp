@@ -23,17 +23,6 @@ public class Const_Arm {
   public static final double kMaxAngle = 0;
   public static final double kOffsetTo0 = 44.1+90;
 
-  public class FF {
-    public static final double kS = 0;
-    public static final double kV = 0;
-  }
-
-  public class PID {
-    public static final double kP = 1;
-    public static final double kI = 0;
-    public static final double kD = 0;
-  }
-
   public class ExtendPID {
     public static final double kP = 3.0;
     public static final double kI = 0;
@@ -62,4 +51,47 @@ public class Const_Arm {
     public static final double pickup = 0;
   }
 
+  public class HardwareConfigs {
+    // Global
+    public static final int TIMEOUT_MS = 0;
+
+    // PID slot configs
+    public static final int PID_PRIMARY = 0;
+    public static final int PID_SECONDARY = 1;
+
+    // Remote sensors configs
+    public static final int REMOTE_0 = 0;
+    public static final int REMOTE_1 = 1;
+
+  }
+
+  public class PidfPrimary {
+    public static final double kP = 0.05;
+    public static final double kI = 0;
+    public static final double kD = 0;
+    public static final double kF = 0;
+    public static final double kIZone = 0;
+    public static final double kAllowableError = 0;
+    public static final double kMaxIntegralAccumulator = 0;
+    public static final double kPeakOutputForward = 0;
+    public static final double kPeakOutputReverse = 0;
+    public static final double kNominalOutputForward = 0;
+    public static final double kNominalOutputReverse = 0;
+    public static final double kNeutralDeadband = 0;
+  }
+
+  public class PidfSecondary {
+    public static final double kP = 0.05;
+    public static final double kI = 0;
+    public static final double kD = 0;
+    public static final double kF = 0;
+    public static final double kIZone = 0;
+    public static final double kAllowableError = 0;
+    public static final double kMaxIntegralAccumulator = 0;
+    public static final double kPeakOutputForward = 0;
+    public static final double kPeakOutputReverse = 0;
+    public static final double kNominalOutputForward = 0;
+    public static final double kNominalOutputReverse = 0;
+    public static final double kNeutralDeadband = 0;
+  }
 }
