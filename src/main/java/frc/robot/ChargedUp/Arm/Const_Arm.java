@@ -23,6 +23,11 @@ public class Const_Arm {
   public static final double kMaxAngle = 0;
   public static final double kOffsetTo0 = 44.1+90;
 
+  public static final int kErrThreshold = 10; // how many sensor units until its close-enough
+  public static final int kLoopsToSettle = 10; // how many loops sensor must be close-enough
+  public static int _withinThresholdLoops = 0;
+
+
   public class ExtendPID {
     public static final double kP = 3.0;
     public static final double kI = 0;
@@ -94,4 +99,5 @@ public class Const_Arm {
     public static final double kNominalOutputReverse = 0;
     public static final double kNeutralDeadband = 0;
   }
+  
 }

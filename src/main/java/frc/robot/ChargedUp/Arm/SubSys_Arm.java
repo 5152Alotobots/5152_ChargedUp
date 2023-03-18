@@ -296,11 +296,22 @@ public class SubSys_Arm extends SubsystemBase {
   //! --- ON MOTOR PIDs --- \\
 
 
-  public void armRotationMoveToPos(){
-    Arm_ShoulderMotor.set(TalonFXControlMode.Position, 2048);
+  public void armRotationMoveToPos(double setPositionDegrees){
+     setPositionDegrees *= 4096 / 360;
+    Arm_ShoulderMotor.set(TalonFXControlMode.Position, setPositionDegrees);
   }
 
-
+public Boolean armRotationAtCorrectPosition() {
+      //Check if we're close enough
+      if (Arm_ShoulderMotor.getClosedLoopError() < +Const_Arm.kErrThreshold &&
+      Arm_ShoulderMotor.getClosedLoopError() > -Const_Arm.kErrThreshold) {
+  
+      ++Const_Arm._withinThresholdLoops;
+      } else {
+       Const_Arm._withinThresholdLoops = 0;
+      }
+      return (Const_Arm._withinThresholdLoops > Const_Arm.kLoopsToSettle);
+}
   @Override
   public void periodic() {
  
