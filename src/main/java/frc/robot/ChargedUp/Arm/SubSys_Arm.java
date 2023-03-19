@@ -305,17 +305,38 @@ public class SubSys_Arm extends SubsystemBase {
     Arm_ShoulderMotor.set(TalonFXControlMode.Position, setPositionDegrees);
   }
 
-public Boolean armRotationAtCorrectPosition() {
-      //Check if we're close enough
-      if (Arm_ShoulderMotor.getClosedLoopError() < +Const_Arm.kErrThreshold &&
-      Arm_ShoulderMotor.getClosedLoopError() > -Const_Arm.kErrThreshold) {
-  
-      ++Const_Arm._withinThresholdLoops;
-      } else {
-       Const_Arm._withinThresholdLoops = 0;
-      }
-      return (Const_Arm._withinThresholdLoops > Const_Arm.kLoopsToSettle);
-}
+  public void armExtensionMoveToPos(double setPositionCM){
+    // First, select config slot 0 for the TalonFX
+    Arm_ExtensionMotor.selectProfileSlot(Const_Arm.HardwareConfigs.SLOT_0, Const_Arm.HardwareConfigs.PID_PRIMARY);
+
+    // Then calculate the position in encoder ticks and drive the motor to that position
+    setPositionCM *= 4096 / 7.854 ;
+    Arm_ExtensionMotor.set(TalonFXControlMode.Position, setPositionCM);
+  }
+
+  public Boolean armRotationAtCorrectPosition() {
+        //Check if we're close enough
+        if (Arm_ShoulderMotor.getClosedLoopError() < +Const_Arm.kErrThreshold &&
+        Arm_ShoulderMotor.getClosedLoopError() > -Const_Arm.kErrThreshold) {
+        
+        ++Const_Arm._withinThresholdLoops;
+        } else {
+         Const_Arm._withinThresholdLoops = 0;
+        }
+        return (Const_Arm._withinThresholdLoops > Const_Arm.kLoopsToSettle);
+  }
+
+  public Boolean armExtensionAtCorrectPosition() {
+        //Check if we're close enough
+        if (Arm_ExtensionMotor.getClosedLoopError() < +Const_Arm.kErrThreshold &&
+        Arm_ExtensionMotor.getClosedLoopError() > -Const_Arm.kErrThreshold) {
+        
+        ++Const_Arm._withinThresholdLoops;
+        } else {
+         Const_Arm._withinThresholdLoops = 0;
+        }
+        return (Const_Arm._withinThresholdLoops > Const_Arm.kLoopsToSettle);
+  }
 
   @Override
   public void periodic() {
