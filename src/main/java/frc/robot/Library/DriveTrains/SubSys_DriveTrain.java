@@ -7,11 +7,17 @@
 
 package frc.robot.Library.DriveTrains;
 
+import java.util.Optional;
+
+import org.photonvision.EstimatedRobotPose;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.ChargedUp.AprilTagPoseEstimation.SubSys_AprilTagPoseEstimation;
+import frc.robot.ChargedUp.PhotonVision.SubSys_Photonvision;
 import frc.robot.Library.DriveTrains.SwerveDrive.SubSys_SwerveDrive;
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
 
@@ -42,13 +48,18 @@ public class SubSys_DriveTrain extends SubsystemBase {
   // GyroScope
   private SubSys_PigeonGyro gyroSubSys;
 
+  // Apriltags
+  private SubSys_AprilTagPoseEstimation aprilTagPoseEstimation;
+
   /**
    * SubSys_DriveTrain Constructor
    *
    * @param gyroSubSys SubSys_PigeonGyro
+   * @param aprilTagPoseEstimation SubSys_AprilTagPoseEstimation
    */
   public SubSys_DriveTrain(SubSys_PigeonGyro gyroSubSys) {
     this.gyroSubSys = gyroSubSys;
+    this.aprilTagPoseEstimation = new SubSys_AprilTagPoseEstimation();
     this.driveTrain = new SubSys_SwerveDrive(this.gyroSubSys);
   }
 
@@ -219,5 +230,22 @@ public class SubSys_DriveTrain extends SubsystemBase {
   /** setPoseDriveMtrsToZero Set Pose and Drive Motors to Zero */
   public void setPoseDriveMtrsToZero() {
     this.driveTrain.setPoseDriveMtrsToZero();
+  }
+
+  // PhotonVision
+  public void setPoseToAverageVisionAndOdometry() {
+    // Get the estimated pose from the AprilTagPoseEstimator 
+    Optional<EstimatedRobotPose> result = this.aprilTagPoseEstimation.getEstimatedGlobalPose(getPose());
+
+    // If the pose is valid, average it with the current pose and set the new pose
+    if (result.isPresent()) {
+      double avgX = (getPose().getTranslation().getX() + result.get().estimatedPose.toPose2d().getTranslation().getX()) / 2;
+      double avgY = (getPose().getTranslation().getY() + result.get().estimatedPose.toPose2d().getTranslation().getY()) / 2;
+      Rotation2d avgRotation = getPose().getRotation().plus(result.get().estimatedPose.toPose2d().getRotation()).div(2);
+  
+      Pose2d avgPose = new Pose2d(avgX, avgY, avgRotation);
+
+      this.driveTrain.setPose(avgPose);
+    }
   }
 }

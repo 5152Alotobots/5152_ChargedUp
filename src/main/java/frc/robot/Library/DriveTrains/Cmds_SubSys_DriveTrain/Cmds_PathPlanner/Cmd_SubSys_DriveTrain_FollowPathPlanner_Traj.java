@@ -117,6 +117,9 @@ public class Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    // First, estimate the pose of the robot via apriltags
+    this.subSys_DriveTrain.setPoseToAverageVisionAndOdometry();
+    
     double currentTime = this.timer.get();
     PathPlannerState desiredState = (PathPlannerState) ppTraj.sample(currentTime);
 
