@@ -15,16 +15,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.ChargedUp.Arm.Cmd.Cmd_ArmDefault;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
-
-import frc.robot.ChargedUp.AutoCommands.Auto_LeftChargeRed_Cmd;
-import frc.robot.ChargedUp.AutoCommands.Auto_MiddleChargeBlue_Cmd;
-import frc.robot.ChargedUp.AutoCommands.Auto_MiddleChargeRed_Cmd;
-import frc.robot.ChargedUp.AutoCommands.Auto_RightChargeBlue_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_leftbluecharge_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_leftblueescape_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_leftredescape_Cmd;
 // import frc.robot.ChargedUp.DistanceSensor.SubSys_DistanceSensor;
-
 import frc.robot.ChargedUp.AutoCommands.Auto_rightredcharge_Cmd;
 import frc.robot.ChargedUp.DriverStation.SubSys_DriverStation;
 import frc.robot.ChargedUp.Hand.SubSys_Hand;
