@@ -19,11 +19,26 @@ import edu.wpi.first.math.util.Units;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-  public static final class RobotSettings {
 
-    public static final class Limelight {
-      public static final double kCameraHeight = Units.inchesToMeters(35); // m
-      public static final double kCameraAngle = 29.0; // Degrees
+  /* Robot Constants */
+  public static final class Robot {
+    public static final class Dimensions {
+
+      public static final class Frame {
+        public static final double Length = Units.inchesToMeters(23.75);
+        public static final double Width = Units.inchesToMeters(23.85);
+        public static final double BumperThickness = Units.inchesToMeters(3.25);
+      }
+
+      public static final class DriveTrain {
+        public static final double WheelBase = Units.inchesToMeters(18.5);
+        public static final double TrackWidth = Units.inchesToMeters(18.5);
+      }
+
+      public static final class Limelight {
+        public static final double kCameraHeight = Units.inchesToMeters(35); // m
+        public static final double kCameraAngle = 29.0; // Degrees
+      }
     }
   }
 

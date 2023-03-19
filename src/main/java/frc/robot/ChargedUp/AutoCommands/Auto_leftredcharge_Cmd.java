@@ -13,20 +13,20 @@ import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
 
 /**
  * *Link For PathPlaner *
- * https://docs.google.com/presentation/d/1xjYSI4KpbmGBUY-ZMf1nAFrXIoJo1tl-HHNl8LLqa1I/edit#slide=id.g1e64fa08ff8_0_9
+ * https://docs.google.com/presentation/d/1xjYSI4KpbmGBUY-ZMf1nAFrXIoJo1tl-HHNl8LLqa1I/edit#slide=id.g1e64fa08ff8_0_18
  */
-public class Auto_RightChargeBlue_Cmd extends SequentialCommandGroup {
+public class Auto_leftredcharge_Cmd extends SequentialCommandGroup {
   private final SubSys_DriveTrain m_DriveTrain;
   private final SubSys_PigeonGyro m_pigeonGyro;
 
   /** Creates a new Auto_Challenge1_Cmd. */
-  public Auto_RightChargeBlue_Cmd(SubSys_DriveTrain driveSubSys, SubSys_PigeonGyro pigeonGyro) {
+  public Auto_leftredcharge_Cmd(SubSys_DriveTrain driveSubSys, SubSys_PigeonGyro pigeonGyro) {
     m_DriveTrain = driveSubSys;
     m_pigeonGyro = pigeonGyro;
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "rightchargeblue", true, true),
+        new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "leftredcharge", true, true),
         new Cmd_AutoBalance(pigeonGyro, driveSubSys));
   }
 }
