@@ -22,7 +22,10 @@ import frc.robot.ChargedUp.AutoCommands.Auto_MiddleChargeBlue_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_MiddleChargeRed_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_leftbluecharge_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_rightredcharge_Cmd;
-import frc.robot.ChargedUp.BlinkinLED.SubSys_Bling;
+import frc.robot.ChargedUp.Bling.Const_Bling;
+import frc.robot.ChargedUp.Bling.SubSys_Bling;
+import frc.robot.ChargedUp.Bling.Cmd.CmdGrp_IdleBlingColorSequence;
+import frc.robot.ChargedUp.Bling.Cmd.Cmd_SetBlingColorValue;
 import frc.robot.ChargedUp.AutoCommands.Auto_leftredescape_Cmd;
 // import frc.robot.ChargedUp.DistanceSensor.SubSys_DistanceSensor;
 import frc.robot.ChargedUp.DriverStation.SubSys_DriverStation;
@@ -159,6 +162,11 @@ public class RobotContainer {
             () -> driverStationSubSys.RotateLeftPt(),
             () -> driverStationSubSys.RotateRightPt()));
 
+    blingSubSys.setDefaultCommand(
+        new CmdGrp_IdleBlingColorSequence(
+            blingSubSys,
+            Const_Bling.Controllers.controller1));
+
     // Sendable Chooser
 
     m_chooser.setDefaultOption("rightchargeblue", m_rightchargeBlue);
@@ -191,8 +199,8 @@ public class RobotContainer {
     driverStationSubSys.GyroResetButton.onTrue(new InstantCommand(gyroSubSys::zeroYaw, gyroSubSys));
 
     // LEDs
-    driverStationSubSys.RequestConeButton.onTrue(new InstantCommand(blingSubSys::setBlinkinLEDYellow, blingSubSys));
-    driverStationSubSys.RequestCubeButton.onTrue(new InstantCommand(blingSubSys::setBlinkinLEDPurple, blingSubSys));
+    driverStationSubSys.RequestConeButton.onTrue(new Cmd_SetBlingColorValue(blingSubSys, Const_Bling.Controllers.controller1, Const_Bling.SolidColors.Yellow));
+    driverStationSubSys.RequestCubeButton.onTrue(new Cmd_SetBlingColorValue(blingSubSys, Const_Bling.Controllers.controller1, Const_Bling.SolidColors.Violet));
 
     // Gyro Reset Command Button
     driverStationSubSys.PoseResetButton.onTrue(
