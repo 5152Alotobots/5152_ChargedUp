@@ -120,20 +120,17 @@ public class MK4i_FalconFalcon_Module {
 
     // Set default angle to lastAngle
     double angle = lastAngle;
-    // if (Math.abs(desiredState.speedMetersPerSecond) >
-    // (SubSys_DriveTrain_Constants.DriveTrainMaxSpd * 0.01)){
-    angle = desiredState.angle.getDegrees();
-    // Set Steet Motor Command to angle
-    steerMotor.set(ControlMode.Position, TalonFX_Conversions.degreesToCANCoderCnts(angle));
-
-    // Update last angle
-    lastAngle = angle;
-    /*  }else{
-        steerMotor.set(
-            ControlMode.PercentOutput,0.0);
+    if (Math.abs(desiredState.speedMetersPerSecond) >
+      (SubSys_DriveTrain_Constants.DriveTrainMaxSpd * 0.01)){
+      angle = desiredState.angle.getDegrees();
+      // Set Steet Motor Command to angle
+      steerMotor.set(ControlMode.Position, TalonFX_Conversions.degreesToCANCoderCnts(angle));
+      // Update last angle
+      lastAngle = angle;
+    }else{
+      steerMotor.set(
+        ControlMode.PercentOutput,0.0);
     }
-    */
-
   }
 
   /**

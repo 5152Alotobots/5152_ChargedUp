@@ -29,54 +29,72 @@ public final class Constants {
         
         public static final class PerformanceMode_Default{
           // Default Performance Mode Speeds
-          public static double DriveTrainMaxPctOutput = 0.50;               // 0-1
+          //public static double DriveTrainMaxPctOutput = 0.50;               // 0-1
           public static double DriveTrainMaxSpd = 4.0;                      // m/s
           public static double DriveTrainMaxAccel = 0.35;                   // m/s^2
-          public static double DriveTrainMaxRotPctOutput = 0.4;             // 0-1
+          //public static double DriveTrainMaxRotPctOutput = 0.4;             // 0-1
           public static double DriveTrainMaxRotSpd = 140 * Math.PI / 180; // rad/s
           public static double DriveTrainMaxRotAccel = 200 * Math.PI / 180; // rad/s^2
         }
 
         public static final class PerformanceMode_A{
           // Performance Mode A Speeds (Fast)
-          public static double DriveTrainMaxPctOutput = 0.75;               // 0-1
+          //public static double DriveTrainMaxPctOutput = 0.75;               // 0-1
           public static double DriveTrainMaxSpd = 10.0;                     // m/s
           public static double DriveTrainMaxAccel = 1.00;                   // m/s^2
-          public static double DriveTrainMaxRotPctOutput = 0.6;             // 0-1
+          //public static double DriveTrainMaxRotPctOutput = 0.6;             // 0-1
           public static double DriveTrainMaxRotSpd = 200 * Math.PI / 180; // rad/s
           public static double DriveTrainMaxRotAccel = 200 * Math.PI / 180; // rad/s^2
         }
 
         public static final class PerformanceMode_B{
           // Performance Mode B Speeds (Slow)
-          public static double DriveTrainMaxPctOutput = 0.25;               // 0-1
+          //public static double DriveTrainMaxPctOutput = 0.25;               // 0-1
           public static double DriveTrainMaxSpd = 2.0;                      // m/s
           public static double DriveTrainMaxAccel = 0.35;                   // m/s^2
-          public static double DriveTrainMaxRotPctOutput = 0.2;             // 0-1
+          //public static double DriveTrainMaxRotPctOutput = 0.2;             // 0-1
           public static double DriveTrainMaxRotSpd = 100 * Math.PI / 180; // rad/s
           public static double DriveTrainMaxRotAccel = 100 * Math.PI / 180; // rad/s^2
         }
 
         public static final class DriveTrainTrajSettings{
           // PathPlanner Speeds 
-          public static double DriveTrainMaxPctOutput = 0.50;               // 0-1
+          //public static double DriveTrainMaxPctOutput = 0.50;               // 0-1
           public static double DriveTrainMaxSpd = 4.0;                      // m/s
           public static double DriveTrainMaxAccel = 0.35;                   // m/s^2
-          public static double DriveTrainMaxRotPctOutput = 0.4;             // 0-1
+          //public static double DriveTrainMaxRotPctOutput = 0.4;             // 0-1
           public static double DriveTrainMaxRotSpd = 140 * Math.PI / 180; // rad/s
           public static double DriveTrainMaxRotAccel = 200 * Math.PI / 180; // rad/s^2
         }
       }
+
+      public static final class Arm{
+        public static double ArmMaxRotSpd = 50 * Math.PI / 180;     // rad/s
+        public static double ArmMaxRotAccel = 50 * Math.PI / 180;   // rad/s/s
+
+        public static double ArmExtensionMaxSpd = 0.2;                        // m/s
+        public static double ArmExtensionMaxAccel = 0.2;                      // m/s/s
+      }
     }
 
     public static final class MaxSpeeds{
-      // Default Performance Mode Speeds
-      public static double DriveTrainMaxPctOutput = 1.00;               // 0-1
-      public static double DriveTrainMaxSpd = 5.0;                      // m/s
-      public static double DriveTrainMaxAccel = 5.0;                    // m/s^2
-      public static double DriveTrainMaxRotPctOutput = 1.0;             // 0-1
-      public static double DriveTrainMaxRotSpeed = 360 * Math.PI / 180; // rad/s
-      public static double DriveTrainMaxRotAccel = 360 * Math.PI / 180; // rad/s^2
+      // Maximum Achieveable Speeds
+      public static final class DriverTrain{
+        //public static double DriveTrainMaxPctOutput = 1.00;               // 0-1
+        public static double DriveTrainMaxSpd = 5.4;                      // m/s
+        public static double DriveTrainMaxAccel = 5.0;                    // m/s^2
+        //public static double DriveTrainMaxRotPctOutput = 1.0;             // 0-1
+        public static double DriveTrainMaxRotSpeed = 360 * Math.PI / 180; // rad/s
+        public static double DriveTrainMaxRotAccel = 360 * Math.PI / 180; // rad/s^2
+      }
+
+      public static final class Arm{
+        public static double ArmShoulderMaxRotSpd = 360 * Math.PI / 180;        // rad/s
+        public static double ArmShoulderMaxRotAccel = 360 * Math.PI / 180;  // rad/s
+
+        public static double ArmExtensionMaxSpd = 1.0;                        // m/s
+        public static double ArmExtensionMaxAccel = 1.0;                      // m/s/s
+      }
     }
     
     public static final class Dimensions{
@@ -96,12 +114,13 @@ public final class Constants {
       public static final class Arm{
         public static final Translation3d ArmShoulder =
           new Translation3d(0.05, 0, 0.58);   // Relative to Frame Origin
-        public static final double ArmMinLength = Units.inchesToMeters(12);
-        public static final double ArmMaxLength = Units.inchesToMeters(12);
+        public static final double ArmMinLength = Units.inchesToMeters(22);
+        public static final double ArmMaxExtensionLength = Units.inchesToMeters(54.5);
       }
   
       public static final class Hand{
-        public static final double HandLength = 0.35;
+        public static final double HandForwardLength = Units.inchesToMeters(9.75);
+        public static final double HandRetractLength = Units.inchesToMeters(7.75);
       }
       
       public static final class RobotBoundaries{

@@ -8,24 +8,38 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.Robot;
+import frc.robot.Constants.Robot.Dimensions.Hand;
 
 public class SubSys_Hand extends SubsystemBase {
   /** Creates a new SubSys_Hand. */
-  public SubSys_Hand() {}
+  public final DoubleSolenoid HandSolenoid = new DoubleSolenoid(21, PneumaticsModuleType.CTREPCM, 0, 1);
+
+  public SubSys_Hand() {
+  }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
   }
 
-  public final DoubleSolenoid m_handSolenoid =
-      new DoubleSolenoid(21, PneumaticsModuleType.CTREPCM, 0, 1);
-
   public void OpenHand() {
-    m_handSolenoid.set(Value.kReverse);
+    HandSolenoid.set(Value.kReverse);
   }
 
   public void CloseHand() {
-    m_handSolenoid.set(Value.kForward);
+    HandSolenoid.set(Value.kForward);
+  }
+
+  public Value getHandState(){
+    return HandSolenoid.get();
+  }
+
+  public double getHandLength(){
+    double handLength = Robot.Dimensions.Hand.HandForwardLength;
+    if(HandSolenoid.get()==Value.kReverse){
+      handLength = Robot.Dimensions.Hand.HandRetractLength;
+    }
+    return handLength;
   }
 }

@@ -4,32 +4,60 @@
 
 package frc.robot.ChargedUp.Arm;
 
+import frc.robot.Constants.Robot;
+
 /** Add your docs here. */
 public class SubSys_Arm_Constants {
-  public static final double ArmShoulderZeroAngle = 47.1;  // Degrees
-    
-    // *! Everything is in meters */
-  public static final double kMinAngle = 0;
-  public static final double kMaxAngle = 0;
-  public static final double kOffsetTo0 = 47.1;
+  public static final double ArmShoulderZeroAngle = 44.7;  // Degrees
+  public static final double ArmExtensionEncoderFullyExtendedDegrees = 3460;  // Degrees
+  public static final double ArmExtensionDegToMetersFactor = 
+  (Robot.Dimensions.Arm.ArmMaxExtensionLength-Robot.Dimensions.Arm.ArmMinLength)/ArmExtensionEncoderFullyExtendedDegrees;
 
-  public class FF {
-    public static final double kS = 0;
-    public static final double kV = 0;
+  public static final double ArmShoulderMinAngle = -180;//-220.0; // Deg
+  public static final double ArmShoulderMaxAngle = 25;//45.0;   // Deg
+
+  public class ArmShoulder{
+    public static final boolean ForwardSoftLimitEnable = false;
+    public static final double ForwardSoftLimitThreshold = ArmShoulderMaxAngle;
+    public static final boolean ReverseSoftLimitEnable = false;
+    public static final double ReverseSoftLimitThreshold = ArmShoulderMinAngle;
+
+    public static final double openloopRamp = 0.5;  // Seconds to Max Speed
+
+    public class FF {
+      public static final double kS = 0;
+      public static final double kV = 0;
+    }
+
+    public class PID {
+      public static final double kP = 2.5;
+      public static final double kI = 0.01;
+      public static final double kD = 0.0;
+      public static final double IntegralZone = 20;  // Sensor Units
+      public static final double closedLoopRamp = 0.5;  // Seconds to Max Speed
+      public static final double allowableClosedLoopError = 1.0;  // Sensor Units 
+      public static final double atSetpointAllowableError = 15;   // Sensor Units
+    }
   }
+  public class ArmExtension{
+    public static final boolean ForwardSoftLimitEnable = false;
+    public static final double ForwardSoftLimitThreshold = ArmExtensionEncoderFullyExtendedDegrees;
+    public static final boolean ReverseSoftLimitEnable = false;
+    public static final double ReverseSoftLimitThreshold = 0;
 
-  public class PID {
-    public static final double kP = 3.0;
-    public static final double kI = 0;
-    public static final double kD = 0;
-  }
+    public static final double openloopRamp = 0.5;  // Seconds to Max Speed
 
-  public class Trajectory {
-    public static final double kShoulderMaxRotSpeed = 270 * Math.PI / 180; // rad/s
-    public static final double kShoulderMaxRotAcelSpeed = 180 * Math.PI / 180; // rad/s^2
-  }
+    public class FF {
+      public static final double kS = 0;
+      public static final double kV = 0;
+    }
 
-  public class Positions {
-    public static final double pickup = 0;
+    public class PID {
+      public static final double kP = 0.0;
+      public static final double kI = 0.0;
+      public static final double kD = 0.0;
+      public static final double closedLoopRamp = 0.5;  // Seconds to Max Speed
+      public static final double allowableClosedLoopError = 1.0;  // Degrees 
+    }
   }
 }

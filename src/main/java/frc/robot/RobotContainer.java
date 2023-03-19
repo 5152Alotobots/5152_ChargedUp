@@ -14,6 +14,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.ChargedUp.Arm.Cmd.Cmd_ArmDefault;
+import frc.robot.ChargedUp.Arm.Cmds_SubSys_Arm.Cmd_SubSys_Arm_JoysticDefault;
+import frc.robot.ChargedUp.Arm.Cmds_SubSys_Arm.Cmd_SubSys_Arm_PosCmd;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
 import frc.robot.ChargedUp.AutoCommands.Auto_leftblueescape_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_RightChargeBlue_Cmd;
@@ -66,7 +68,7 @@ public class RobotContainer {
 
   // private final SubSys_LimeLight limeLightSubSys = new SubSys_LimeLight();
 
-  public final SubSys_MecanumDrive mecanumDriveSubSys = new SubSys_MecanumDrive();
+  //public final SubSys_MecanumDrive mecanumDriveSubSys = new SubSys_MecanumDrive();
 
   // public final SubSys_ColorSensor colorSubSys = new SubSys_ColorSensor();
 
@@ -77,7 +79,7 @@ public class RobotContainer {
   public final SubSys_Hand handSubSys = new SubSys_Hand();
 
   // Arm
-  public final SubSys_Arm armSubSys = new SubSys_Arm();
+  public final SubSys_Arm armSubSys = new SubSys_Arm(handSubSys.getHandLength());
 
   /*
    ***** Charged Up Componentes
@@ -127,24 +129,19 @@ public class RobotContainer {
 
     /** ***** Control System Components */
     armSubSys.setDefaultCommand(
-        new Cmd_ArmDefault(
+        new Cmd_SubSys_Arm_JoysticDefault(
             armSubSys,
             () -> driverStationSubSys.GetArmRotateAxis(),
             () -> driverStationSubSys.GetArmExtendAxis()));
 
-    // handSubSys.setDefaultCommand(new Cmd_HandWithSensor(
-    //  handSubSys,
-    //  colorSubSys,
-    //  distanceSubsys,
-    //  () ->  driverStationSubSys.HandSensorBtn())
-    // );
-
+    /*
     mecanumDriveSubSys.setDefaultCommand(
         new Cmd_MecanumDriveDefault(
             mecanumDriveSubSys,
             () -> driverStationSubSys.DriveFwdAxis(),
             () -> driverStationSubSys.DriveStrAxis(),
             () -> driverStationSubSys.DriveRotAxis()));
+    */
 
     driveSubSys.setDefaultCommand(
         new Cmd_SubSys_DriveTrain_JoysticDefault(
@@ -192,20 +189,13 @@ public class RobotContainer {
         // new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
         new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
         
-    //TODO: FIX THIS
-      driverStationSubSys.TurboButton.whileTrue(
-          new Cmd_SubSys_DriveTrain_JoysticTurbo(
-              driveSubSys,
-              () -> driverStationSubSys.DriveFwdAxis(),
-              () -> driverStationSubSys.DriveStrAxis(),
-              () -> driverStationSubSys.DriveRotAxis(),
-              true,
-              () -> driverStationSubSys.RotateLeftPt(),
-              () -> driverStationSubSys.RotateRightPt()));
+    driverStationSubSys.TestButton.whileTrue(
+        new Cmd_SubSys_Arm_PosCmd(
+            armSubSys, 
+            -10.0,
+            1.0)
+    );
   }
-
-  // when test button is pressed run the rotate to heading command to a random number between 0 and
-  // 360
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
