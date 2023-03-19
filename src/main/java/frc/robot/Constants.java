@@ -22,7 +22,7 @@ public final class Constants {
 
   /* Robot Constants */
   public static final class Robot {
-
+  
     public static final class Calibrations {
 
       public static final class DriveTrain {
@@ -79,7 +79,7 @@ public final class Constants {
       public static double DriveTrainMaxRotSpeed = 360 * Math.PI / 180; // rad/s
       public static double DriveTrainMaxRotAccel = 360 * Math.PI / 180; // rad/s^2
     }
-
+    
     public static final class Dimensions {
 
       public static final class Frame {

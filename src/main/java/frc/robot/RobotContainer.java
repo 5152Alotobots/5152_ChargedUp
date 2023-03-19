@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.ChargedUp.Arm.Cmd.Cmd_ArmDefault;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
+
 import frc.robot.ChargedUp.AutoCommands.Auto_LeftChargeRed_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_MiddleChargeBlue_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_MiddleChargeRed_Cmd;
@@ -23,6 +24,7 @@ import frc.robot.ChargedUp.AutoCommands.Auto_leftbluecharge_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_leftblueescape_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_leftredescape_Cmd;
 // import frc.robot.ChargedUp.DistanceSensor.SubSys_DistanceSensor;
+
 import frc.robot.ChargedUp.AutoCommands.Auto_rightredcharge_Cmd;
 import frc.robot.ChargedUp.DriverStation.SubSys_DriverStation;
 import frc.robot.ChargedUp.Hand.SubSys_Hand;
@@ -81,34 +83,26 @@ public class RobotContainer {
   public final SubSys_DriverStation driverStationSubSys = new SubSys_DriverStation();
   // SetUp Auto
   SendableChooser<Command> m_chooser = new SendableChooser<>();
-
-  private final Command m_rightchargeBlue = new Auto_RightChargeBlue_Cmd(driveSubSys, gyroSubSys);
-  private final Command m_leftchargeRed = new Auto_LeftChargeRed_Cmd(driveSubSys, gyroSubSys);
-
-  /*
-
-  private final Command m_Auto_PathPlanner_Test_Cmd =
-      new DriveSubSys_PathPlanner_Test_Cmd(driveSubSys);
-
-  private final Command m_Auto_PP_FollowTraj_Cmd =
-      new DriveSubSys_PP_FollowTraj_Cmd("New New Path",driveSubSys);
-
-  private final Command ihopethisworks =
-      new DriveSubSys_PathPlanner_Test_Cmd(driveSubSys);
-  */
-
-  private final Command m_blueleave = new Auto_leftblueescape_Cmd(driveSubSys, gyroSubSys);
-
-  private final Command m_redleave = new Auto_leftredescape_Cmd(driveSubSys, gyroSubSys);
-
-  private final Command m_middlechargeBlue = new Auto_MiddleChargeBlue_Cmd(driveSubSys, gyroSubSys);
-
-  private final Command m_middlechargeRed = new Auto_MiddleChargeRed_Cmd(driveSubSys, gyroSubSys);
-
   private final Command m_leftbluecharge = new Auto_leftbluecharge_Cmd(driveSubSys, gyroSubSys);
+
+  private final Command m_leftblueescape = new Auto_leftblueescape_Cmd(driveSubSys, gyroSubSys);
+
+  private final Command m_leftredcharge = new Auto_leftredcharge_Cmd(driveSubSys, gyroSubSys);
+
+  private final Command m_leftredescape = new Auto_leftredescape_Cmd(driveSubSys, gyroSubSys);
+
+  private final Command m_middlebluecharge = new Auto_middlebluecharge_Cmd(driveSubSys, gyroSubSys);
+
+  private final Command m_middleredcharge = new Auto_middleredcharge_Cmd(driveSubSys, gyroSubSys);
+
+  private final Command m_rightbluecharge = new Auto_rightbluecharge_Cmd(driveSubSys, gyroSubSys);
+
+  private final Command m_rightblueescape = new Auto_rightblueescape(driveSubSys, gyroSubSys);
 
   private final Command m_rightredcharge = new Auto_rightredcharge_Cmd(driveSubSys, gyroSubSys);
 
+  private final Command m_proofrightredescape =
+      new Auto_proofrightredescape(driveSubSys, gyroSubSys);
   /*
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -161,7 +155,6 @@ public class RobotContainer {
     m_chooser.addOption("middlechargered", m_middlechargeRed);
     m_chooser.addOption("leftchargeblue", m_leftbluecharge);
     m_chooser.addOption("rightchargered", m_rightredcharge);
-
     SmartDashboard.putData(m_chooser);
   }
 
@@ -186,6 +179,17 @@ public class RobotContainer {
     driverStationSubSys.PoseResetButton.onTrue(
         // new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
         new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
+
+    // TODO: FIX THIS
+    driverStationSubSys.TurboButton.whileTrue(
+        new Cmd_SubSys_DriveTrain_JoysticTurbo(
+            driveSubSys,
+            () -> driverStationSubSys.DriveFwdAxis(),
+            () -> driverStationSubSys.DriveStrAxis(),
+            () -> driverStationSubSys.DriveRotAxis(),
+            true,
+            () -> driverStationSubSys.RotateLeftPt(),
+            () -> driverStationSubSys.RotateRightPt()));
   }
 
   // when test button is pressed run the rotate to heading command to a random number between 0 and
