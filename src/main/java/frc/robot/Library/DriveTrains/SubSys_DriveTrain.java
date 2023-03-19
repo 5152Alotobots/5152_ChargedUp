@@ -104,7 +104,6 @@ public class SubSys_DriveTrain extends SubsystemBase {
     return SubSys_DriveTrain_Constants.DriveTrainMaxTurboAccel;
   }
 
-
   /**
    * getMaxDriveSubSysRotSpd Returns Max Drive Subsystem Rotation
    *
@@ -150,12 +149,10 @@ public class SubSys_DriveTrain extends SubsystemBase {
     // Limit Cmds to Chassis Limits
     driveXDirCmd =
         Math.min(
-            Math.max(xSpdCmd, -Robot.MaxSpeeds.DriveTrainMaxSpd),
-            Robot.MaxSpeeds.DriveTrainMaxSpd);
+            Math.max(xSpdCmd, -Robot.MaxSpeeds.DriveTrainMaxSpd), Robot.MaxSpeeds.DriveTrainMaxSpd);
     driveYDirCmd =
         Math.min(
-            Math.max(ySpdCmd, -Robot.MaxSpeeds.DriveTrainMaxSpd),
-            Robot.MaxSpeeds.DriveTrainMaxSpd);
+            Math.max(ySpdCmd, -Robot.MaxSpeeds.DriveTrainMaxSpd), Robot.MaxSpeeds.DriveTrainMaxSpd);
     driveZRotCmd =
         Math.min(
             Math.max(rotSpdCmd, -Robot.MaxSpeeds.DriveTrainMaxRotSpeed),

@@ -19,78 +19,79 @@ import edu.wpi.first.math.util.Units;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-  
-  /* Robot Constants */
-  public static final class Robot{
-    
-    public static final class Calibrations{
 
-      public static final class DriveTrain{
-        public static final double PerfModeTransitionTime = 2.0;            // s
-        
-        public static final class PerformanceMode_Default{
+  /* Robot Constants */
+  public static final class Robot {
+
+    public static final class Calibrations {
+
+      public static final class DriveTrain {
+        public static final double PerfModeTransitionTime = 2.0; // s
+
+        public static final class PerformanceMode_Default {
           // Default Performance Mode Speeds
-          public static double DriveTrainMaxPctOutput = 0.50;               // 0-1
-          public static double DriveTrainMaxSpd = 4.0;                      // m/s
-          public static double DriveTrainMaxAccel = 0.35;                   // m/s^2
-          public static double DriveTrainMaxRotPctOutput = 0.4;             // 0-1
+          public static double DriveTrainMaxPctOutput = 0.50; // 0-1
+          public static double DriveTrainMaxSpd = 4.0; // m/s
+          public static double DriveTrainMaxAccel = 0.35; // m/s^2
+          public static double DriveTrainMaxRotPctOutput = 0.4; // 0-1
           public static double DriveTrainMaxRotSpd = 140 * Math.PI / 180; // rad/s
           public static double DriveTrainMaxRotAccel = 200 * Math.PI / 180; // rad/s^2
         }
 
-        public static final class PerformanceMode_A{
+        public static final class PerformanceMode_A {
           // Performance Mode A Speeds (Fast)
-          public static double DriveTrainMaxPctOutput = 0.25;               // 0-1
-          public static double DriveTrainMaxSpd = 2.0;                     // m/s
-          public static double DriveTrainMaxAccel = 0.35;                   // m/s^2
-          public static double DriveTrainMaxRotPctOutput = 0.6;             // 0-1
+          public static double DriveTrainMaxPctOutput = 0.25; // 0-1
+          public static double DriveTrainMaxSpd = 2.0; // m/s
+          public static double DriveTrainMaxAccel = 0.35; // m/s^2
+          public static double DriveTrainMaxRotPctOutput = 0.6; // 0-1
           public static double DriveTrainMaxRotSpd = 100 * Math.PI / 180; // rad/s
           public static double DriveTrainMaxRotAccel = 100 * Math.PI / 180; // rad/s^2
         }
 
-        public static final class PerformanceMode_B{
+        public static final class PerformanceMode_B {
           // Performance Mode B Speeds (Slow)
-          public static double DriveTrainMaxPctOutput = 0.75;               // 0-1
-          public static double DriveTrainMaxSpd = 5;                      // m/s
-          public static double DriveTrainMaxAccel = 1.00;                   // m/s^2
-          public static double DriveTrainMaxRotPctOutput = 0.2;             // 0-1
+          public static double DriveTrainMaxPctOutput = 0.75; // 0-1
+          public static double DriveTrainMaxSpd = 5; // m/s
+          public static double DriveTrainMaxAccel = 1.00; // m/s^2
+          public static double DriveTrainMaxRotPctOutput = 0.2; // 0-1
           public static double DriveTrainMaxRotSpd = 200 * Math.PI / 180; // rad/s
           public static double DriveTrainMaxRotAccel = 200 * Math.PI / 180; // rad/s^2
         }
 
-        public static final class DriveTrainTrajSettings{
-          // PathPlanner Speeds 
-          public static double DriveTrainMaxPctOutput = 0.50;               // 0-1
-          public static double DriveTrainMaxSpd = 4.0;                      // m/s
-          public static double DriveTrainMaxAccel = 0.35;                   // m/s^2
-          public static double DriveTrainMaxRotPctOutput = 0.4;             // 0-1
+        public static final class DriveTrainTrajSettings {
+          // PathPlanner Speeds
+          public static double DriveTrainMaxPctOutput = 0.50; // 0-1
+          public static double DriveTrainMaxSpd = 4.0; // m/s
+          public static double DriveTrainMaxAccel = 0.35; // m/s^2
+          public static double DriveTrainMaxRotPctOutput = 0.4; // 0-1
           public static double DriveTrainMaxRotSpd = 140 * Math.PI / 180; // rad/s
           public static double DriveTrainMaxRotAccel = 200 * Math.PI / 180; // rad/s^2
         }
       }
     }
 
-    public static final class MaxSpeeds{
+    public static final class MaxSpeeds {
       // Default Performance Mode Speeds
-      public static double DriveTrainMaxPctOutput = 1.00;               // 0-1
-      public static double DriveTrainMaxSpd = 5.0;                      // m/s
-      public static double DriveTrainMaxAccel = 5.0;                    // m/s^2
-      public static double DriveTrainMaxRotPctOutput = 1.0;             // 0-1
+      public static double DriveTrainMaxPctOutput = 1.00; // 0-1
+      public static double DriveTrainMaxSpd = 5.0; // m/s
+      public static double DriveTrainMaxAccel = 5.0; // m/s^2
+      public static double DriveTrainMaxRotPctOutput = 1.0; // 0-1
       public static double DriveTrainMaxRotSpeed = 360 * Math.PI / 180; // rad/s
       public static double DriveTrainMaxRotAccel = 360 * Math.PI / 180; // rad/s^2
     }
-    
-    public static final class Dimensions{
-      
-      public static final class Frame{
-        public static final double Length = Units.inchesToMeters(23.75); 
+
+    public static final class Dimensions {
+
+      public static final class Frame {
+        public static final double Length = Units.inchesToMeters(23.75);
         public static final double Width = Units.inchesToMeters(23.85);
         public static final double BumperThickness = Units.inchesToMeters(3.25);
       }
-      public static final class DriveTrain{
+
+      public static final class DriveTrain {
         public static final double WheelBase = Units.inchesToMeters(18.5);
         public static final double TrackWidth = Units.inchesToMeters(18.5);
-      } 
+      }
 
       public static final class Limelight {
         public static final double kCameraHeight = Units.inchesToMeters(35); // m

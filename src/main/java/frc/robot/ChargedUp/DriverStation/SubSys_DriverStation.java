@@ -24,7 +24,7 @@ public class SubSys_DriverStation extends SubsystemBase {
   private XboxController m_CoDriverController = new XboxController(1);
 
   // AuxDriver Controller
-  private XboxController m_AuxDriverController = new XboxController(2); 
+  private XboxController m_AuxDriverController = new XboxController(2);
 
   public SubSys_DriverStation() {}
 
@@ -64,13 +64,13 @@ public class SubSys_DriverStation extends SubsystemBase {
   }
 
   // Drive Performance Mode A
-  public boolean DrivePerfModeAActive(){
-    return (m_DriverController.getRawAxis(2)> 0.3);
+  public boolean DrivePerfModeAActive() {
+    return (m_DriverController.getRawAxis(2) > 0.3);
   }
 
   // Drive Performance Mode B
-  public boolean DrivePerfModeBActive(){
-    return (m_DriverController.getRawAxis(3)> 0.3);
+  public boolean DrivePerfModeBActive() {
+    return (m_DriverController.getRawAxis(3) > 0.3);
   }
 
   // ----- Arm Subsystem

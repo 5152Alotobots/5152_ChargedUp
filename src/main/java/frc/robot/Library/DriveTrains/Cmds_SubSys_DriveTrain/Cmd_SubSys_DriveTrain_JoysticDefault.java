@@ -7,7 +7,6 @@
 
 package frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.Robot;
@@ -26,11 +25,10 @@ public class Cmd_SubSys_DriveTrain_JoysticDefault extends CommandBase {
   private final boolean fieldOriented;
   private final BooleanSupplier rotateLeftPt;
   private final BooleanSupplier rotateRightPt;
-  private final BooleanSupplier perfModeAActive;  // Mode 1
-  private final BooleanSupplier perfModeBActive;  // Mode 2
+  private final BooleanSupplier perfModeAActive; // Mode 1
+  private final BooleanSupplier perfModeBActive; // Mode 2
   private double maxSpd = 0;
   private double maxRotSpd = 0;
-
 
   /**
    * Cmd_SubSys_DriveTrain_JoysticDefault Joystick Drive Command
@@ -78,24 +76,21 @@ public class Cmd_SubSys_DriveTrain_JoysticDefault extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(perfModeAActive.getAsBoolean()){
+    if (perfModeAActive.getAsBoolean()) {
       this.maxSpd = Robot.Calibrations.DriveTrain.PerformanceMode_A.DriveTrainMaxSpd;
       this.maxRotSpd = Robot.Calibrations.DriveTrain.PerformanceMode_A.DriveTrainMaxRotSpd;
-    }else if(perfModeBActive.getAsBoolean()){
+    } else if (perfModeBActive.getAsBoolean()) {
       this.maxSpd = Robot.Calibrations.DriveTrain.PerformanceMode_B.DriveTrainMaxSpd;
       this.maxRotSpd = Robot.Calibrations.DriveTrain.PerformanceMode_B.DriveTrainMaxRotSpd;
-    }else{
+    } else {
       this.maxSpd = Robot.Calibrations.DriveTrain.PerformanceMode_Default.DriveTrainMaxSpd;
       this.maxRotSpd = Robot.Calibrations.DriveTrain.PerformanceMode_Default.DriveTrainMaxRotSpd;
     }
-      
+
     driveSubSys.Drive(
-        JoystickUtilities.joyDeadBndSqrdScaled(
-            fwdCmd.getAsDouble(), 0.05, maxSpd),
-        JoystickUtilities.joyDeadBndSqrdScaled(
-            strCmd.getAsDouble(), 0.05, maxSpd),
-        JoystickUtilities.joyDeadBndScaled(
-            rotCmd.getAsDouble(), 0.1, maxRotSpd),
+        JoystickUtilities.joyDeadBndSqrdScaled(fwdCmd.getAsDouble(), 0.05, maxSpd),
+        JoystickUtilities.joyDeadBndSqrdScaled(strCmd.getAsDouble(), 0.05, maxSpd),
+        JoystickUtilities.joyDeadBndScaled(rotCmd.getAsDouble(), 0.1, maxRotSpd),
         fieldOriented,
         rotateLeftPt.getAsBoolean(),
         rotateRightPt.getAsBoolean());
@@ -107,9 +102,8 @@ public class Cmd_SubSys_DriveTrain_JoysticDefault extends CommandBase {
     SmartDashboard.putNumber("MaxSpd", maxSpd);
     SmartDashboard.putNumber("MaxRotSpd", maxRotSpd);
 
-
-    SmartDashboard.putNumber("FwdCmd", JoystickUtilities.joyDeadBndSqrdScaled(
-      fwdCmd.getAsDouble(), 0.05, maxSpd));
+    SmartDashboard.putNumber(
+        "FwdCmd", JoystickUtilities.joyDeadBndSqrdScaled(fwdCmd.getAsDouble(), 0.05, maxSpd));
   }
 
   // Called once the command ends or is interrupted.
