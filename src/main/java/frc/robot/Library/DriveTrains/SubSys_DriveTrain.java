@@ -233,7 +233,7 @@ public class SubSys_DriveTrain extends SubsystemBase {
   }
 
   // PhotonVision
-  public void setPoseToAverageVisionAndOdometry() {
+  public void setPoseToAverageVisionAndOdometryEstimate() {
     // Get the estimated pose from the AprilTagPoseEstimator 
     Optional<EstimatedRobotPose> result = this.aprilTagPoseEstimation.getEstimatedGlobalPose(getPose());
 
@@ -246,6 +246,16 @@ public class SubSys_DriveTrain extends SubsystemBase {
       Pose2d avgPose = new Pose2d(avgX, avgY, avgRotation);
 
       this.driveTrain.setPose(avgPose);
+    }
+  }
+
+  public void setPoseToVisionEstimate() {
+    // Get the estimated pose from the AprilTagPoseEstimator 
+    Optional<EstimatedRobotPose> result = this.aprilTagPoseEstimation.getEstimatedGlobalPose(getPose());
+
+    // If the pose is valid, average it with the current pose and set the new pose
+    if (result.isPresent()) {
+      this.driveTrain.setPose(result.get().estimatedPose.toPose2d());
     }
   }
 }

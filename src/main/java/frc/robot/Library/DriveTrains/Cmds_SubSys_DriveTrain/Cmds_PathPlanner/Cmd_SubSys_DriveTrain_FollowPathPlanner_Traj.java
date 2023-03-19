@@ -118,7 +118,7 @@ public class Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj extends CommandBase {
   @Override
   public void execute() {
     // First, estimate the pose of the robot via apriltags
-    this.subSys_DriveTrain.setPoseToAverageVisionAndOdometry();
+    this.subSys_DriveTrain.setPoseToAverageVisionAndOdometryEstimate();
     
     double currentTime = this.timer.get();
     PathPlannerState desiredState = (PathPlannerState) ppTraj.sample(currentTime);
