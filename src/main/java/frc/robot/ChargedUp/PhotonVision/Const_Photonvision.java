@@ -30,5 +30,11 @@ public class Const_Photonvision {
         public static final PhotonCamera frontCamera = new PhotonCamera("frontCamera");
         public static final PhotonCamera backCamera = new PhotonCamera("backCamera");
     }
+
+    public static class Pipelines {
+        public static final int Apriltag = 0;
+        public static final int Cone = 1;
+        public static final int Cube = 2;
+    }
  
 }

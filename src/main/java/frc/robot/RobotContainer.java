@@ -218,7 +218,7 @@ public class RobotContainer {
 
     //Test Button
     driverStationSubSys.TestButton.onTrue(
-        new Cmd_NavigateToBestVisionTarget(driveSubSys, photonvisionSubSys, Const_Photonvision.Cameras.frontCamera, 0)
+        new Cmd_NavigateToBestVisionTarget(driveSubSys, photonvisionSubSys, Const_Photonvision.Cameras.frontCamera, Const_Photonvision.Pipelines.Cube)
     );
     
     //TODO: FIX THIS

@@ -55,7 +55,7 @@ public class Cmd_CloseHandInProximity extends CommandBase {
   public void execute() {
     result = camera.getLatestResult();
     
-    if (subSys_Photonvision.isInRange(result)){
+    if (subSys_Photonvision.isInRange(result, 0.6)){
       subSys_Hand.CloseHand();
       isFinished = true;
     }

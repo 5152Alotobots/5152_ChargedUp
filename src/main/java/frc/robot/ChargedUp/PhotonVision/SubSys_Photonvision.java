@@ -25,14 +25,18 @@ public class SubSys_Photonvision extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-    /* XY PID */
-    public PIDController XYcontroller = new PIDController(DriveTrainTrajSettings.DriveTrajectoryPID.Pgain, DriveTrainTrajSettings.DriveTrajectoryPID.Igain, DriveTrainTrajSettings.DriveTrajectoryPID.Dgain);
+    /* X PID */
+    public PIDController Xcontroller = new PIDController(DriveTrainTrajSettings.DriveTrajectoryPID.Pgain, DriveTrainTrajSettings.DriveTrajectoryPID.Igain, DriveTrainTrajSettings.DriveTrajectoryPID.Dgain);
+
+    /* Y PID */
+    public PIDController Ycontroller = new PIDController(DriveTrainTrajSettings.DriveTrajectoryPID.Pgain, DriveTrainTrajSettings.DriveTrajectoryPID.Igain, DriveTrainTrajSettings.DriveTrajectoryPID.Dgain);
 
     /* Z PID */
     
     public PIDController Zcontroller = new PIDController(DriveTrainTrajSettings.RotationTrajectoryPID.Pgain, DriveTrainTrajSettings.RotationTrajectoryPID.Igain, DriveTrainTrajSettings.RotationTrajectoryPID.Dgain);
 
-    /** VISION */
+    /* VISION */
+    /** Calculate distance to target */
     public double getRangeToTarget(PhotonPipelineResult result, Boolean UseArmCalculatedAngle){
       if (UseArmCalculatedAngle){
       return
@@ -63,7 +67,7 @@ public class SubSys_Photonvision extends SubsystemBase {
     /** Calculate forward speed */
     public double getVisionForwardSpeed(PhotonPipelineResult result){
       if (result.hasTargets()) {
-        return XYcontroller.calculate(getRangeToTarget(result, false), Const_Photonvision.GOAL_RANGE_METERS);
+        return Xcontroller.calculate(getRangeToTarget(result, false), Const_Photonvision.GOAL_RANGE_METERS);
       } else {
         return 0;
       }
@@ -72,7 +76,7 @@ public class SubSys_Photonvision extends SubsystemBase {
     /** Calculate strafe speed */
     public double getVisionStrafeSpeed(PhotonPipelineResult result){
       if (result.hasTargets()) {
-        return XYcontroller.calculate(result.getBestTarget().getYaw(), 0);
+        return Ycontroller.calculate(result.getBestTarget().getYaw(), 0);
       } else {
         return 0;
       }
@@ -81,16 +85,20 @@ public class SubSys_Photonvision extends SubsystemBase {
     /** Returns true if the PID controllers don't need to move any further/you are at the target */
     public boolean isAtTarget(PhotonPipelineResult result){
       if (result.hasTargets()) {
-        return XYcontroller.atSetpoint() && Zcontroller.atSetpoint();
+        return Xcontroller.atSetpoint() && Ycontroller.atSetpoint() && Zcontroller.atSetpoint();
       } else {
         return false;
       }
     }
   
-    /** Returns true if the camera is in the acceptable range to the target */
-    public boolean isInRange(PhotonPipelineResult result){
+    /** Returns true if the camera's target is taking up the acceptable percentage of the viewport
+     * @param acceptablePercentage The percentage of the viewport the target should take up 0-1
+     * @param result The result of the pipeline
+     * @return True if the target is taking up the acceptable percentage of the viewport
+     */
+    public boolean isInRange(PhotonPipelineResult result, double acceptablePercentage){
       if (result.hasTargets()) {
-        return result.getBestTarget().getArea() >= Const_Photonvision.IN_RANGE_AREA_PERCENT;
+        return result.getBestTarget().getArea() >= acceptablePercentage;
       } else {
         return false;
       }
