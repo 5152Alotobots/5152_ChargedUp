@@ -301,7 +301,7 @@ public class SubSys_Arm extends SubsystemBase {
     Arm_ShoulderMotor.selectProfileSlot(Const_Arm.HardwareConfigs.SLOT_0, Const_Arm.HardwareConfigs.PID_PRIMARY);
 
     // Then calculate the position in encoder ticks and drive the motor to that position
-     setPositionDegrees *= 4096 / 360;
+     setPositionDegrees *= (4096 / 360);
     Arm_ShoulderMotor.set(TalonFXControlMode.Position, setPositionDegrees);
   }
 
@@ -310,7 +310,7 @@ public class SubSys_Arm extends SubsystemBase {
     Arm_ExtensionMotor.selectProfileSlot(Const_Arm.HardwareConfigs.SLOT_0, Const_Arm.HardwareConfigs.PID_PRIMARY);
 
     // Then calculate the position in encoder ticks and drive the motor to that position
-    setPositionCM *= 4096 / 7.854 ;
+    setPositionCM *= (4096 / 7.854) ;
     Arm_ExtensionMotor.set(TalonFXControlMode.Position, setPositionCM);
   }
 
