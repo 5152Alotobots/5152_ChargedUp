@@ -26,7 +26,8 @@ public class Auto_rightbluecharge_Cmd extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "rightbluecharge", true, true),
+        new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
+            driveSubSys, "rightbluecharge", true, true),
         new Cmd_AutoBalance(pigeonGyro, driveSubSys));
   }
 }

@@ -27,7 +27,8 @@ public class Auto_proofrightredescape extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
         // new Cmd_whatever the arm one is
-        new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "proofrightredescape", true, true),
+        new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
+            driveSubSys, "proofrightredescape", true, true),
         new Cmd_AutoBalance(pigeonGyro, driveSubSys));
   }
 }

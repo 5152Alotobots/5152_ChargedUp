@@ -15,17 +15,17 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.ChargedUp.Arm.Cmd.Cmd_ArmDefault;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
+import frc.robot.ChargedUp.AutoCommands.Auto_leftbluecharge_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_leftblueescape_Cmd;
-import frc.robot.ChargedUp.AutoCommands.Auto_rightbluecharge_Cmd;
-import frc.robot.ChargedUp.AutoCommands.Auto_rightblueescape;
 import frc.robot.ChargedUp.AutoCommands.Auto_leftredcharge_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_leftredescape_Cmd;
+// import frc.robot.ChargedUp.DistanceSensor.SubSys_DistanceSensor;
 import frc.robot.ChargedUp.AutoCommands.Auto_middlebluecharge_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_middleredcharge_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_proofrightredescape;
-import frc.robot.ChargedUp.AutoCommands.Auto_leftbluecharge_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_rightbluecharge_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_rightblueescape;
 import frc.robot.ChargedUp.AutoCommands.Auto_rightredcharge_Cmd;
-import frc.robot.ChargedUp.AutoCommands.Auto_leftredescape_Cmd;
-// import frc.robot.ChargedUp.DistanceSensor.SubSys_DistanceSensor;
 import frc.robot.ChargedUp.DriverStation.SubSys_DriverStation;
 import frc.robot.ChargedUp.Hand.SubSys_Hand;
 import frc.robot.ChargedUp.MecanumDrive.Cmd.Cmd_MecanumDriveDefault;
@@ -90,25 +90,26 @@ public class RobotContainer {
   // SetUp Auto
   SendableChooser<Command> m_chooser = new SendableChooser<>();
   private final Command m_leftbluecharge = new Auto_leftbluecharge_Cmd(driveSubSys, gyroSubSys);
-  
+
   private final Command m_leftblueescape = new Auto_leftblueescape_Cmd(driveSubSys, gyroSubSys);
-  
+
   private final Command m_leftredcharge = new Auto_leftredcharge_Cmd(driveSubSys, gyroSubSys);
-  
+
   private final Command m_leftredescape = new Auto_leftredescape_Cmd(driveSubSys, gyroSubSys);
-  
+
   private final Command m_middlebluecharge = new Auto_middlebluecharge_Cmd(driveSubSys, gyroSubSys);
 
   private final Command m_middleredcharge = new Auto_middleredcharge_Cmd(driveSubSys, gyroSubSys);
 
   private final Command m_rightbluecharge = new Auto_rightbluecharge_Cmd(driveSubSys, gyroSubSys);
-  
+
   private final Command m_rightblueescape = new Auto_rightblueescape(driveSubSys, gyroSubSys);
 
   private final Command m_rightredcharge = new Auto_rightredcharge_Cmd(driveSubSys, gyroSubSys);
 
-  private final Command m_proofrightredescape = new Auto_proofrightredescape(driveSubSys, gyroSubSys);
-  
+  private final Command m_proofrightredescape =
+      new Auto_proofrightredescape(driveSubSys, gyroSubSys);
+
   /*
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -150,7 +151,7 @@ public class RobotContainer {
             () -> driverStationSubSys.RotateRightPt()));
 
     // Sendable Chooser
-// Always follow Location, Color, Action
+    // Always follow Location, Color, Action
     m_chooser.addOption("leftbluecharge", m_leftbluecharge);
     m_chooser.addOption("leftblueescape", m_leftblueescape);
     m_chooser.addOption("leftredcharge", m_leftredcharge);
@@ -162,7 +163,6 @@ public class RobotContainer {
     m_chooser.addOption("rightredcharge", m_rightredcharge);
     m_chooser.addOption("proofrightredescape", m_proofrightredescape);
     SmartDashboard.putData(m_chooser);
-
   }
 
   /**
@@ -186,17 +186,17 @@ public class RobotContainer {
     driverStationSubSys.PoseResetButton.onTrue(
         // new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
         new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
-        
-    //TODO: FIX THIS
-      driverStationSubSys.TurboButton.whileTrue(
-          new Cmd_SubSys_DriveTrain_JoysticTurbo(
-              driveSubSys,
-              () -> driverStationSubSys.DriveFwdAxis(),
-              () -> driverStationSubSys.DriveStrAxis(),
-              () -> driverStationSubSys.DriveRotAxis(),
-              true,
-              () -> driverStationSubSys.RotateLeftPt(),
-              () -> driverStationSubSys.RotateRightPt()));
+
+    // TODO: FIX THIS
+    driverStationSubSys.TurboButton.whileTrue(
+        new Cmd_SubSys_DriveTrain_JoysticTurbo(
+            driveSubSys,
+            () -> driverStationSubSys.DriveFwdAxis(),
+            () -> driverStationSubSys.DriveStrAxis(),
+            () -> driverStationSubSys.DriveRotAxis(),
+            true,
+            () -> driverStationSubSys.RotateLeftPt(),
+            () -> driverStationSubSys.RotateRightPt()));
   }
 
   // when test button is pressed run the rotate to heading command to a random number between 0 and
