@@ -33,7 +33,7 @@ public class Cmd_ArmDefault extends CommandBase {
 
     armSubsys.rotateArmMinMax(rotateAxis.getAsDouble() * Const_Arm.kMAX_ROTATION_SPEED, -43, 35);
     // armSubsys.ExtendArm(0, extendAxis.getAsDouble() * Const_Arm.kMAX_EXTENSION_SPEED);
-    armSubsys.armExtentionMinMax(extendAxis.getAsDouble() * Const_Arm.kMAX_EXTENSION_SPEED, 0, 52);
+    armSubsys.armExtentionMinMax(extendAxis.getAsDouble() * Const_Arm.kMAX_EXTENSION_SPEED, 0, 65);
   }
 
   // Called once the command ends or is interrupted.

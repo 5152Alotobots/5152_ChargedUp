@@ -31,7 +31,7 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Library.DriveTrains.SubSys_DriveTrain_Constants;
+import frc.robot.Constants.Robot;
 import frc.robot.Library.DriveTrains.SwerveDrive.SwerveModules.CTREModuleState;
 import frc.robot.Library.DriveTrains.SwerveDrive.SwerveModules.MK4i_FalconFalcon.MK4i_FalconFalcon_Module_Constants.*;
 import frc.robot.Library.DriveTrains.SwerveDrive.SwerveModules.SwerveModuleConstants;
@@ -98,9 +98,8 @@ public class MK4i_FalconFalcon_Module {
     /* Drive Motor Command */
     // Open Loop
     if (isOpenLoop) {
-      double percentOutput =
-          desiredState.speedMetersPerSecond / SubSys_DriveTrain_Constants.DriveTrainMaxSpd;
-      percentOutput = Util.cap(percentOutput, SubSys_DriveTrain_Constants.DriveTrainMaxPctOutput);
+      double percentOutput = desiredState.speedMetersPerSecond / Robot.MaxSpeeds.DriveTrainMaxSpd;
+      percentOutput = Util.cap(percentOutput, 1);
       driveMotor.set(ControlMode.PercentOutput, percentOutput);
       driveMotorOutputPctCmd = percentOutput;
     }
