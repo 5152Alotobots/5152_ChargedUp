@@ -101,15 +101,14 @@ public class RobotContainer {
 
   private final Command m_middleredcharge = new Auto_middleredcharge_Cmd(driveSubSys, gyroSubSys);
 
-  private final Command m_proofrightredescape = new Auto_proofrightredescape(driveSubSys, gyroSubSys);
-  
   private final Command m_rightbluecharge = new Auto_rightbluecharge_Cmd(driveSubSys, gyroSubSys);
   
   private final Command m_rightblueescape = new Auto_rightblueescape(driveSubSys, gyroSubSys);
 
   private final Command m_rightredcharge = new Auto_rightredcharge_Cmd(driveSubSys, gyroSubSys);
 
-
+  private final Command m_proofrightredescape = new Auto_proofrightredescape(driveSubSys, gyroSubSys);
+  
   /*
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -158,11 +157,10 @@ public class RobotContainer {
     m_chooser.addOption("leftredescape", m_leftredescape);
     m_chooser.addOption("middlebluecharge", m_middlebluecharge);
     m_chooser.addOption("middleredcharge", m_middleredcharge);
-    m_chooser.addOption("proofrightredescape", m_proofrightredescape);
     m_chooser.setDefaultOption("rightbluecharge", m_rightbluecharge);
     m_chooser.addOption("rightblueescape", m_rightblueescape);
     m_chooser.addOption("rightredcharge", m_rightredcharge);
-    
+    m_chooser.addOption("proofrightredescape", m_proofrightredescape);
     SmartDashboard.putData(m_chooser);
 
   }
