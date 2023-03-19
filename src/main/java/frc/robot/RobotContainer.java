@@ -17,8 +17,14 @@ import frc.robot.ChargedUp.Arm.Cmd.Cmd_ArmDefault;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
 import frc.robot.ChargedUp.AutoCommands.Auto_leftbluecharge_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_leftblueescape_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_leftredcharge_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_leftredescape_Cmd;
 // import frc.robot.ChargedUp.DistanceSensor.SubSys_DistanceSensor;
+import frc.robot.ChargedUp.AutoCommands.Auto_middlebluecharge_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_middleredcharge_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_proofrightredescape;
+import frc.robot.ChargedUp.AutoCommands.Auto_rightbluecharge_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_rightblueescape;
 import frc.robot.ChargedUp.AutoCommands.Auto_rightredcharge_Cmd;
 import frc.robot.ChargedUp.DriverStation.SubSys_DriverStation;
 import frc.robot.ChargedUp.Hand.SubSys_Hand;
@@ -140,15 +146,16 @@ public class RobotContainer {
             () -> driverStationSubSys.DrivePerfModeBActive()));
 
     // Sendable Chooser
-
-    m_chooser.setDefaultOption("rightchargeblue", m_rightchargeBlue);
-    m_chooser.addOption("leaveblue", m_blueleave);
-    m_chooser.addOption("middlechargeblue", m_middlechargeBlue);
-    m_chooser.addOption("leftchargered", m_leftchargeRed);
-    m_chooser.addOption("redleave", m_redleave);
-    m_chooser.addOption("middlechargered", m_middlechargeRed);
-    m_chooser.addOption("leftchargeblue", m_leftbluecharge);
-    m_chooser.addOption("rightchargered", m_rightredcharge);
+    m_chooser.addOption("leftbluecharge", m_leftbluecharge);
+    m_chooser.addOption("leftblueescape", m_leftblueescape);
+    m_chooser.addOption("leftredcharge", m_leftredcharge);
+    m_chooser.addOption("leftredescape", m_leftredescape);
+    m_chooser.addOption("middlebluecharge", m_middlebluecharge);
+    m_chooser.addOption("middleredcharge", m_middleredcharge);
+    m_chooser.setDefaultOption("rightbluecharge", m_rightbluecharge);
+    m_chooser.addOption("rightblueescape", m_rightblueescape);
+    m_chooser.addOption("rightredcharge", m_rightredcharge);
+    m_chooser.addOption("proofrightredescape", m_proofrightredescape);
     SmartDashboard.putData(m_chooser);
   }
 
@@ -173,19 +180,7 @@ public class RobotContainer {
     driverStationSubSys.PoseResetButton.onTrue(
         // new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
         new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
-
-    // TODO: FIX THIS
-    driverStationSubSys.TurboButton.whileTrue(
-        new Cmd_SubSys_DriveTrain_JoysticTurbo(
-            driveSubSys,
-            () -> driverStationSubSys.DriveFwdAxis(),
-            () -> driverStationSubSys.DriveStrAxis(),
-            () -> driverStationSubSys.DriveRotAxis(),
-            true,
-            () -> driverStationSubSys.RotateLeftPt(),
-            () -> driverStationSubSys.RotateRightPt()));
   }
-
   // when test button is pressed run the rotate to heading command to a random number between 0 and
   // 360
 
