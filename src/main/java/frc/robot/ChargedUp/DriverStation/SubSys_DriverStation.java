@@ -20,7 +20,7 @@ public class SubSys_DriverStation extends SubsystemBase {
   private XboxController m_CoDriverController = new XboxController(1);
 
   // AuxDriver Controller
-  //private XboxController m_AuxDriverController = new XboxController(2);
+  // private XboxController m_AuxDriverController = new XboxController(2);
 
   public JoystickButton GyroResetButton = new JoystickButton(m_DriverController, 4);
   public JoystickButton CloseHandButton = new JoystickButton(m_DriverController, 6);

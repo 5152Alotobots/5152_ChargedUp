@@ -11,10 +11,11 @@ import frc.robot.ChargedUp.Arm.SubSys_Arm;
 public class Cmd_SubSys_Arm_PosCmd extends CommandBase {
   /** Creates a new Cmd_SubSys_Arm_JoysticDefault. */
   SubSys_Arm subSys_Arm;
+
   private final double armRotatePosCmd;
   private final boolean armRotateEnable;
   private final double armExtendPosCmd;
-    private final boolean armExtendEnable;
+  private final boolean armExtendEnable;
   private boolean finished;
 
   public Cmd_SubSys_Arm_PosCmd(
@@ -23,7 +24,7 @@ public class Cmd_SubSys_Arm_PosCmd extends CommandBase {
       boolean armRotateEnable,
       double armExtendPosCmd,
       boolean armExtendEnable) {
-    
+
     this.subSys_Arm = subSys_Arm;
     this.armRotatePosCmd = armRotatePosCmd;
     this.armRotateEnable = armRotateEnable;
@@ -43,11 +44,9 @@ public class Cmd_SubSys_Arm_PosCmd extends CommandBase {
   @Override
   public void execute() {
     SmartDashboard.putNumber("ArmRotatePosCmd", this.armRotatePosCmd);
-    this.finished = this.subSys_Arm.setArmPosCmd(
-      this.armRotatePosCmd,
-      this.armRotateEnable, 
-      this.armExtendPosCmd,
-      this.armExtendEnable);
+    this.finished =
+        this.subSys_Arm.setArmPosCmd(
+            this.armRotatePosCmd, this.armRotateEnable, this.armExtendPosCmd, this.armExtendEnable);
   }
 
   // Called once the command ends or is interrupted.
@@ -60,7 +59,7 @@ public class Cmd_SubSys_Arm_PosCmd extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    //return this.finished;
+    // return this.finished;
     return false;
   }
 }

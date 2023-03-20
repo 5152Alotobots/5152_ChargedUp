@@ -6,7 +6,6 @@ package frc.robot.Library.DriveTrains.SwerveDrive;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.util.Units;
 import frc.robot.Constants;
 import frc.robot.Library.DriveTrains.SwerveDrive.SwerveModules.*;
 
@@ -14,8 +13,8 @@ import frc.robot.Library.DriveTrains.SwerveDrive.SwerveModules.*;
 public class SubSys_SwerveDrive_Constants {
 
   /* Swerve Drive Constants */
-  //public static final double trackWidth = Units.inchesToMeters(21.73);
-  //public static final double wheelBase = Units.inchesToMeters(21.73);
+  // public static final double trackWidth = Units.inchesToMeters(21.73);
+  // public static final double wheelBase = Units.inchesToMeters(21.73);
 
   /**
    * Swerve Kinematics
@@ -26,14 +25,18 @@ public class SubSys_SwerveDrive_Constants {
    */
   public static final SwerveDriveKinematics swerveKinematics =
       new SwerveDriveKinematics(
-          new Translation2d(Constants.Robot.Dimensions.DriveTrain.WheelBase*0.5,
-            Constants.Robot.Dimensions.DriveTrain.TrackWidth*0.5),     // FL - Front Left
-          new Translation2d(Constants.Robot.Dimensions.DriveTrain.WheelBase*0.5,
-            -Constants.Robot.Dimensions.DriveTrain.TrackWidth*0.5),    // FR - Front Right
-          new Translation2d(-Constants.Robot.Dimensions.DriveTrain.WheelBase*0.5,
-            Constants.Robot.Dimensions.DriveTrain.TrackWidth*0.5),     // BL - Back Left
-          new Translation2d(-Constants.Robot.Dimensions.DriveTrain.WheelBase*0.5, 
-            -Constants.Robot.Dimensions.DriveTrain.TrackWidth*0.5));   // BR - Back Right
+          new Translation2d(
+              Constants.Robot.Dimensions.DriveTrain.WheelBase * 0.5,
+              Constants.Robot.Dimensions.DriveTrain.TrackWidth * 0.5), // FL - Front Left
+          new Translation2d(
+              Constants.Robot.Dimensions.DriveTrain.WheelBase * 0.5,
+              -Constants.Robot.Dimensions.DriveTrain.TrackWidth * 0.5), // FR - Front Right
+          new Translation2d(
+              -Constants.Robot.Dimensions.DriveTrain.WheelBase * 0.5,
+              Constants.Robot.Dimensions.DriveTrain.TrackWidth * 0.5), // BL - Back Left
+          new Translation2d(
+              -Constants.Robot.Dimensions.DriveTrain.WheelBase * 0.5,
+              -Constants.Robot.Dimensions.DriveTrain.TrackWidth * 0.5)); // BR - Back Right
 
   /** MK4i Swerve Module Constants */
   public static final SwerveModuleConstants FL_constants =
@@ -123,21 +126,25 @@ public class SubSys_SwerveDrive_Constants {
        250.0);                                      // Degrees
   */
 
-  public static final Translation2d RotationPtFL = 
-    new Translation2d(Constants.Robot.Dimensions.DriveTrain.WheelBase*0.5,
-      Constants.Robot.Dimensions.DriveTrain.TrackWidth*0.5);
+  public static final Translation2d RotationPtFL =
+      new Translation2d(
+          Constants.Robot.Dimensions.DriveTrain.WheelBase * 0.5,
+          Constants.Robot.Dimensions.DriveTrain.TrackWidth * 0.5);
 
-  public static final Translation2d RotationPtFR = 
-    new Translation2d(Constants.Robot.Dimensions.DriveTrain.WheelBase*0.5,
-      -Constants.Robot.Dimensions.DriveTrain.TrackWidth*0.5);
+  public static final Translation2d RotationPtFR =
+      new Translation2d(
+          Constants.Robot.Dimensions.DriveTrain.WheelBase * 0.5,
+          -Constants.Robot.Dimensions.DriveTrain.TrackWidth * 0.5);
 
   public static final Translation2d RotationPtBL =
-      new Translation2d(-Constants.Robot.Dimensions.DriveTrain.WheelBase*0.5,
-        Constants.Robot.Dimensions.DriveTrain.TrackWidth*0.5);
+      new Translation2d(
+          -Constants.Robot.Dimensions.DriveTrain.WheelBase * 0.5,
+          Constants.Robot.Dimensions.DriveTrain.TrackWidth * 0.5);
 
   public static final Translation2d RotationPtBR =
-      new Translation2d(-Constants.Robot.Dimensions.DriveTrain.WheelBase*0.5,
-        -Constants.Robot.Dimensions.DriveTrain.TrackWidth*0.5);
+      new Translation2d(
+          -Constants.Robot.Dimensions.DriveTrain.WheelBase * 0.5,
+          -Constants.Robot.Dimensions.DriveTrain.TrackWidth * 0.5);
 
   public static final double RotateFieldRelativeMargin = 10; // Degrees
 }

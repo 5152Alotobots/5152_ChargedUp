@@ -4,24 +4,22 @@
 
 package frc.robot.ChargedUp.Arm.Cmds_SubSys_Arm;
 
-import java.util.function.DoubleSupplier;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
 import frc.robot.Constants.Robot;
 import frc.robot.Library.DriverStation.JoystickUtilities;
+import java.util.function.DoubleSupplier;
 
 public class Cmd_SubSys_Arm_JoysticDefault extends CommandBase {
   /** Creates a new Cmd_SubSys_Arm_JoysticDefault. */
   SubSys_Arm subSys_Arm;
+
   private final DoubleSupplier armRotateAxis;
   private final DoubleSupplier armExtendAxis;
 
   public Cmd_SubSys_Arm_JoysticDefault(
-      SubSys_Arm subSys_Arm,
-      DoubleSupplier armRotateAxis,
-      DoubleSupplier armExtendAxis) {
-    
+      SubSys_Arm subSys_Arm, DoubleSupplier armRotateAxis, DoubleSupplier armExtendAxis) {
+
     this.subSys_Arm = subSys_Arm;
     this.armRotateAxis = armRotateAxis;
     this.armExtendAxis = armExtendAxis;
@@ -37,10 +35,10 @@ public class Cmd_SubSys_Arm_JoysticDefault extends CommandBase {
   @Override
   public void execute() {
     this.subSys_Arm.setArmCmd(
-      JoystickUtilities.joyDeadBndSqrdScaled(
-        this.armRotateAxis.getAsDouble(), 0.05, Robot.Calibrations.Arm.ArmMaxRotSpd), 
-      JoystickUtilities.joyDeadBndSqrdScaled(
-        this.armExtendAxis.getAsDouble(),0.05, Robot.Calibrations.Arm.ArmExtensionMaxSpd));
+        JoystickUtilities.joyDeadBndSqrdScaled(
+            this.armRotateAxis.getAsDouble(), 0.05, Robot.Calibrations.Arm.ArmMaxRotSpd),
+        JoystickUtilities.joyDeadBndSqrdScaled(
+            this.armExtendAxis.getAsDouble(), 0.05, Robot.Calibrations.Arm.ArmExtensionMaxSpd));
   }
 
   // Called once the command ends or is interrupted.

@@ -31,7 +31,8 @@ public class Cmd_ArmDefault extends CommandBase {
   @Override
   public void execute() {
 
-    armSubsys.rotateArmMinMax(rotateAxis.getAsDouble() * Const_Arm.kMAX_ROTATION_SPEED, -1000, 1000);
+    armSubsys.rotateArmMinMax(
+        rotateAxis.getAsDouble() * Const_Arm.kMAX_ROTATION_SPEED, -1000, 1000);
     // armSubsys.ExtendArm(0, extendAxis.getAsDouble() * Const_Arm.kMAX_EXTENSION_SPEED);
     armSubsys.armExtentionMinMax(extendAxis.getAsDouble() * Const_Arm.kMAX_EXTENSION_SPEED, 0, 52);
   }
