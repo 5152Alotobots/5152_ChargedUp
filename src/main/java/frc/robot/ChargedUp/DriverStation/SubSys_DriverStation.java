@@ -76,16 +76,15 @@ public class SubSys_DriverStation extends SubsystemBase {
   // ----- Arm Subsystem
   // Arm ShoulderRotate Axis
   public double GetArmRotateAxis() {
-    return m_AuxDriverController.getRawAxis(1);
+    return -m_CoDriverController.getRawAxis(1);
   }
   // Arm Extend Axis
   public double GetArmExtendAxis() {
-    return m_AuxDriverController.getRawAxis(5);
+    return -m_CoDriverController.getRawAxis(5);
   }
 
-  /*
   public double HandSensorBtn() {
-    boolean buttonValue = m_AuxDriverController.getRawButton(0);
+    boolean buttonValue = m_CoDriverController.getRawButton(0);
     SmartDashboard.putBoolean("Hand Ready", buttonValue);
     if (buttonValue == true) return 1;
     else return 0;

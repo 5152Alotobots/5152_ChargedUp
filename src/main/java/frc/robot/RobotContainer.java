@@ -13,7 +13,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.ChargedUp.Arm.Cmd.Cmd_ArmDefault;
+import frc.robot.ChargedUp.Arm.Cmds_SubSys_Arm.Cmd_SubSys_Arm_JoysticDefault;
+import frc.robot.ChargedUp.Arm.Cmds_SubSys_Arm.Cmd_SubSys_Arm_PosCmd;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
 import frc.robot.ChargedUp.AutoCommands.Auto_leftbluecharge_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_leftblueescape_Cmd;
@@ -73,7 +74,7 @@ public class RobotContainer {
   public final SubSys_Hand handSubSys = new SubSys_Hand();
 
   // Arm
-  public final SubSys_Arm armSubSys = new SubSys_Arm();
+  public final SubSys_Arm armSubSys = new SubSys_Arm(handSubSys.getHandLength());
 
   /*
    ***** Charged Up Componentes
@@ -103,6 +104,7 @@ public class RobotContainer {
 
   private final Command m_proofrightredescape =
       new Auto_proofrightredescape(driveSubSys, gyroSubSys);
+
   /*
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -114,7 +116,7 @@ public class RobotContainer {
 
     /** ***** Control System Components */
     armSubSys.setDefaultCommand(
-        new Cmd_ArmDefault(
+        new Cmd_SubSys_Arm_JoysticDefault(
             armSubSys,
             () -> driverStationSubSys.GetArmRotateAxis(),
             () -> driverStationSubSys.GetArmExtendAxis()));
@@ -180,9 +182,11 @@ public class RobotContainer {
     driverStationSubSys.PoseResetButton.onTrue(
         // new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
         new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
+
+    driverStationSubSys.TestButton.whileTrue(
+        new Cmd_SubSys_Arm_PosCmd(armSubSys, -10.0, true, 1.0, true));
   }
-  // when test button is pressed run the rotate to heading command to a random number between 0 and
-  // 360
+
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

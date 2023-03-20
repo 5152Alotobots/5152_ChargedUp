@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
 
 /**
@@ -19,8 +20,6 @@ import edu.wpi.first.math.util.Units;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-
-  /* Robot Constants */
   public static final class Robot {
 
     public static final class Calibrations {
@@ -68,21 +67,47 @@ public final class Constants {
           public static double DriveTrainMaxRotAccel = 200 * Math.PI / 180; // rad/s^2
         }
       }
+
+      public static final class Arm {
+        public static double ArmMaxRotSpd = 50 * Math.PI / 180; // rad/s
+        public static double ArmMaxRotAccel = 50 * Math.PI / 180; // rad/s/s
+
+        public static double ArmExtensionMaxSpd = 0.2; // m/s
+        public static double ArmExtensionMaxAccel = 0.2; // m/s/s
+
+        public static double ArmExtendPosCtrlFastSpd = 0.3; // %
+        public static double ArmExtendPosCtrlSlowRange = 0.1; // m
+        public static double ArmExtendPosCtrlSlowSpd = 0.15; // %
+        public static double ArmExtendPosCtrlAtPositionRange = 0.02; // m
+      }
     }
 
     public static final class MaxSpeeds {
-      // Default Performance Mode Speeds
-      public static double DriveTrainMaxPctOutput = 1.00; // 0-1
-      public static double DriveTrainMaxSpd = 5.0; // m/s
-      public static double DriveTrainMaxAccel = 5.0; // m/s^2
-      public static double DriveTrainMaxRotPctOutput = 1.0; // 0-1
-      public static double DriveTrainMaxRotSpeed = 360 * Math.PI / 180; // rad/s
-      public static double DriveTrainMaxRotAccel = 360 * Math.PI / 180; // rad/s^2
+      // Maximum Achieveable Speeds
+      public static final class DriverTrain {
+        // public static double DriveTrainMaxPctOutput = 1.00;               // 0-1
+        public static double DriveTrainMaxSpd = 5.4; // m/s
+        public static double DriveTrainMaxAccel = 5.0; // m/s^2
+        // public static double DriveTrainMaxRotPctOutput = 1.0;             // 0-1
+        public static double DriveTrainMaxRotSpeed = 360 * Math.PI / 180; // rad/s
+        public static double DriveTrainMaxRotAccel = 360 * Math.PI / 180; // rad/s^2
+      }
+
+      public static final class Arm {
+        public static double ArmShoulderMaxRotSpd = 360 * Math.PI / 180; // rad/s
+        public static double ArmShoulderMaxRotAccel = 360 * Math.PI / 180; // rad/s
+
+        public static double ArmExtensionMaxSpd = 1.0; // m/s
+        public static double ArmExtensionMaxAccel = 1.0; // m/s/s
+      }
     }
 
     public static final class Dimensions {
 
       public static final class Frame {
+        // Robot Origin (0,0,0 at center and bottom of wheels)
+        public static final Translation3d FrameOrigin = new Translation3d(0, 0, 0);
+
         public static final double Length = Units.inchesToMeters(23.75);
         public static final double Width = Units.inchesToMeters(23.85);
         public static final double BumperThickness = Units.inchesToMeters(3.25);
@@ -91,6 +116,23 @@ public final class Constants {
       public static final class DriveTrain {
         public static final double WheelBase = Units.inchesToMeters(18.5);
         public static final double TrackWidth = Units.inchesToMeters(18.5);
+      }
+
+      public static final class Arm {
+        public static final Translation3d ArmShoulder =
+            new Translation3d(0.05, 0, 0.58); // Relative to Frame Origin
+        public static final double ArmMinLength = Units.inchesToMeters(22);
+        public static final double ArmMaxExtensionLength = Units.inchesToMeters(54.5);
+      }
+
+      public static final class Hand {
+        public static final double HandForwardLength = Units.inchesToMeters(9.75);
+        public static final double HandRetractLength = Units.inchesToMeters(7.75);
+      }
+
+      public static final class RobotBoundaries {
+        public static final double MaxExtensionOverFrame = 1.20; // .120m or 120cm (width)
+        public static final double MaxHeight = 1.98; // .198m or 198cm (Height)
       }
 
       public static final class Limelight {
