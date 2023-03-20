@@ -10,6 +10,7 @@ package frc.robot.Library.DriveTrains;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.Robot;
@@ -39,6 +40,11 @@ public class SubSys_DriveTrain extends SubsystemBase {
   private boolean driveFieldOriented = true;
   private boolean driveRotateLeftPtCmd = false;
   private boolean driveRotateRightPtCmd = false;
+  private boolean setSwerveStatesActive = false;
+  private SwerveModuleState FL_State;
+  private SwerveModuleState FR_State;
+  private SwerveModuleState BL_State;
+  private SwerveModuleState BR_State;
 
   // GyroScope
   private SubSys_PigeonGyro gyroSubSys;
@@ -57,15 +63,23 @@ public class SubSys_DriveTrain extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
 
-    // Send Drive Commands
-    driveTrain.drive(
-        new Translation2d(driveXDirCmd, driveYDirCmd),
-        driveZRotCmd,
-        driveFieldOriented,
-        true,
-        driveRotateLeftPtCmd,
-        driveRotateRightPtCmd);
-
+    if(this.setSwerveStatesActive){
+      driveTrain.setSwerveStates(
+        this.FL_State, 
+        this.FR_State, 
+        this.BL_State,  
+        this.BR_State);
+    }else{
+      // Send Drive Commands
+      driveTrain.drive(
+          new Translation2d(driveXDirCmd, driveYDirCmd),
+          driveZRotCmd,
+          driveFieldOriented,
+          false,
+          driveRotateLeftPtCmd,
+          driveRotateRightPtCmd);
+    }
+    
     // Put pose and Heading to smart dashboard
     SmartDashboard.putNumber("Pose X", getPose().getX());
     SmartDashboard.putNumber("Pose Y", getPose().getY());
@@ -146,6 +160,7 @@ public class SubSys_DriveTrain extends SubsystemBase {
       boolean rotateLeftPtCmd,
       boolean rotateRightPtCmd) {
 
+    this.setSwerveStatesActive = false;    
     // Limit Cmds to Chassis Limits
     driveXDirCmd =
         Math.min(
@@ -161,6 +176,19 @@ public class SubSys_DriveTrain extends SubsystemBase {
     driveRotateLeftPtCmd = rotateLeftPtCmd;
     driveRotateRightPtCmd = rotateRightPtCmd;
   }
+
+  public void setSwerveStates(
+    SwerveModuleState FL_State,
+    SwerveModuleState FR_State,
+    SwerveModuleState BL_State,
+    SwerveModuleState BR_State){
+      this.setSwerveStatesActive = true;
+
+      this.FL_State = FL_State;
+      this.FR_State = FR_State;
+      this.BL_State = BL_State;
+      this.BR_State = BR_State;
+    }
 
   // ***** Odometry *****
 

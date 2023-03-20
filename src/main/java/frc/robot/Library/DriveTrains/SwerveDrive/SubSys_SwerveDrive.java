@@ -239,6 +239,18 @@ public class SubSys_SwerveDrive extends SubsystemBase {
     SmartDashboard.putNumber("FL_xCmd", swerveModuleStates[0].speedMetersPerSecond);
   }
 
+  public void setSwerveStates(
+      SwerveModuleState FL_State,
+      SwerveModuleState FR_State,
+      SwerveModuleState BL_State,
+      SwerveModuleState BR_State){
+
+    swerveModules[0].setDesiredState(FL_State, false); // FL
+    swerveModules[1].setDesiredState(FR_State, false); // FR
+    swerveModules[2].setDesiredState(BL_State, false); // BL
+    swerveModules[3].setDesiredState(BR_State, false); // BR
+  }
+
   // ***** Odometry *****
 
   /**
