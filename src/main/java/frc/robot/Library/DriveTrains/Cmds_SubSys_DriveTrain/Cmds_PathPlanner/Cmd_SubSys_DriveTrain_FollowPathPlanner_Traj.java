@@ -9,6 +9,7 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -54,6 +55,7 @@ public class Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj extends CommandBase {
     this.ppTraj =
         PathPlanner.loadPath(
             this.pathPlannerTrajName, PathPlanner.getConstraintsFromPath(this.pathPlannerTrajName));
+    this.ppTraj = PathPlannerTrajectory.transformTrajectoryForAlliance(this.ppTraj, DriverStation.getAlliance());
 
     this.xDistancePID =
         new PIDController(
