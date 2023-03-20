@@ -12,17 +12,23 @@ public class Cmd_SubSys_Arm_PosCmd extends CommandBase {
   /** Creates a new Cmd_SubSys_Arm_JoysticDefault. */
   SubSys_Arm subSys_Arm;
   private final double armRotatePosCmd;
+  private final boolean armRotateEnable;
   private final double armExtendPosCmd;
+    private final boolean armExtendEnable;
   private boolean finished;
 
   public Cmd_SubSys_Arm_PosCmd(
       SubSys_Arm subSys_Arm,
       double armRotatePosCmd,
-      double armExtendPosCmd) {
+      boolean armRotateEnable,
+      double armExtendPosCmd,
+      boolean armExtendEnable) {
     
     this.subSys_Arm = subSys_Arm;
     this.armRotatePosCmd = armRotatePosCmd;
+    this.armRotateEnable = armRotateEnable;
     this.armExtendPosCmd = armExtendPosCmd;
+    this.armExtendEnable = armExtendEnable;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subSys_Arm);
   }
@@ -38,8 +44,10 @@ public class Cmd_SubSys_Arm_PosCmd extends CommandBase {
   public void execute() {
     SmartDashboard.putNumber("ArmRotatePosCmd", this.armRotatePosCmd);
     this.finished = this.subSys_Arm.setArmPosCmd(
-      this.armRotatePosCmd, 
-      this.armExtendPosCmd);
+      this.armRotatePosCmd,
+      this.armRotateEnable, 
+      this.armExtendPosCmd,
+      this.armExtendEnable);
   }
 
   // Called once the command ends or is interrupted.

@@ -29,6 +29,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.Robot;
 import frc.robot.Constants.Robot.Calibrations.Arm;
+import frc.robot.Library.MotorControllers.TalonFX.TalonFX_Conversions;
 
 public class SubSys_Arm extends SubsystemBase {
 
@@ -138,26 +139,41 @@ public class SubSys_Arm extends SubsystemBase {
     //        Arm_ShoulderMotor.getSelectedSensorPosition(),
     //        Arm_ExtensionMotor.getSelectedSensorPosition()));
 
-    isSlowSwitchClosed = !Arm_Extension_RetractSlowSwitch.get();
+    //isSlowSwitchClosed = !Arm_Extension_RetractSlowSwitch.get();
 
-    isStopSwitchClosed = !Arm_Extension_RetractStopSwitch.get();
+    //isStopSwitchClosed = !Arm_Extension_RetractStopSwitch.get();
 
-    SmartDashboard.putBoolean("isSwitchClosed", isStopSwitchClosed);
+    //SmartDashboard.putBoolean("isSwitchClosed", isStopSwitchClosed);
   }
   
   /***********************************************************************************/
   /* ***** Public Arm Methods *****                                                  */
   /***********************************************************************************/
 
+  /** setArmCmd
+   *  
+   * @param armShoulderRotCmd - 0-1 Percent Command
+   * @param armExtensionCmd - 0-1 Percent Command
+   */
   public void setArmCmd(double armShoulderRotCmd, double armExtensionCmd){
     setArmShoulderCmd(armShoulderRotCmd);
     setArmExtensionCmd(armExtensionCmd);
   }
 
-  public boolean setArmPosCmd(double armShouldPosCmd, double armExtensionPosCmd){
-    boolean ArmShoulderAtSetpoint = setArmShoulderPosCmd(armShouldPosCmd);
+  /** setArmPosCmd
+   * 
+   * @param armShouldPosCmd - Arm Angle in Degrees 45 - 225
+   * @param armExtensionPosCmd - ArmHand Length - 31.75 - 64.25
+   * @return
+   */
+  public boolean setArmPosCmd(
+      double armShouldPosCmd, 
+      boolean armShoulderEnable, 
+      double armExtensionPosCmd,
+      boolean armExtensionEnable){
+    boolean ArmShoulderAtSetpoint = setArmShoulderPosCmd(armShouldPosCmd, armShoulderEnable);
     SmartDashboard.putBoolean("ArmShoulderAtSetpoint", ArmShoulderAtSetpoint);
-    boolean ArmExtensionAtSetpoint = setArmExtensionPosCmd(armExtensionPosCmd);
+    boolean ArmExtensionAtSetpoint = setArmExtensionPosCmd(armExtensionPosCmd, armExtensionEnable);
     return (ArmShoulderAtSetpoint && ArmExtensionAtSetpoint);
   }
 
@@ -270,14 +286,24 @@ public class SubSys_Arm extends SubsystemBase {
     Arm_ShoulderMotor.set(TalonFXControlMode.PercentOutput, armRotCmd);
   }
 
-  private boolean setArmShoulderPosCmd(double armShoulderRotPosCmd){
-    // Check for Mechanical Rotation Limits
-    double rotPosCmd = Math.min(SubSys_Arm_Constants.ArmShoulderMaxAngle,
-      Math.max(armShoulderRotPosCmd, SubSys_Arm_Constants.ArmShoulderMinAngle)); 
+  private boolean setArmShoulderPosCmd(double armShoulderRotPosCmd, boolean armShoulderEnable){
+    boolean atSetpoint = false;
+    if(armShoulderEnable){
+      // Check for Mechanical Rotation Limits
+      double rotPosCmd = Math.min(SubSys_Arm_Constants.ArmShoulderMaxAngle,
+        Math.max(armShoulderRotPosCmd, SubSys_Arm_Constants.ArmShoulderMinAngle)); 
 
-    //Arm_ShoulderMotor.set(TalonFXControlMode.Position, rotPosCmd);
-    Arm_ShoulderMotor.set(TalonFXControlMode.MotionMagic, rotPosCmd);
-    return (Math.abs(Arm_ShoulderMotor.getClosedLoopError(0))< SubSys_Arm_Constants.ArmShoulder.PID.atSetpointAllowableError);
+      // Convert to TalonFX CANCoder Units
+      double armShoulderMotPosCmd = TalonFX_Conversions.degreesToCANCoderCnts(rotPosCmd);  
+
+      //Arm_ShoulderMotor.set(TalonFXControlMode.Position, rotPosCmd);
+      Arm_ShoulderMotor.set(TalonFXControlMode.MotionMagic, armShoulderMotPosCmd);
+      atSetpoint = (Math.abs(Arm_ShoulderMotor.getClosedLoopError(0))< SubSys_Arm_Constants.ArmShoulder.PID.atSetpointAllowableError);
+    }else{
+      Arm_ShoulderMotor.set(TalonFXControlMode.PercentOutput, 0);
+      atSetpoint = true;
+    }
+    return atSetpoint;
   }
 
   // ***** Arm Extension Methods *****
@@ -355,35 +381,44 @@ public class SubSys_Arm extends SubsystemBase {
     Arm_ExtensionMotor.set(TalonFXControlMode.PercentOutput, armExtCmd);
   }
 
-  private boolean setArmExtensionPosCmd(double armExtensionPosCmd){
-    double extPosCmd = Math.min(SubSys_Arm_Constants.ArmExtensionEncoderFullyExtendedDegrees*SubSys_Arm_Constants.ArmExtensionDegToMetersFactor,
-      Math.max(armExtensionPosCmd,0));
-
-    double posError = extPosCmd-getArmHandLength();
-    double extCmd = 0;
+  private boolean setArmExtensionPosCmd(double armExtensionPosCmd, boolean armExtensionEnable){
     boolean atPosition = false;
-    if (posError> 0.15){
-      extCmd = 0.25;
-      atPosition = false;
-    }else if(posError> 0.05){
-      extCmd = 0.1;
-      atPosition = false;
-    }else if(posError<-0.15){
-      extCmd = -0.25;
-      atPosition = false;
-    }else if(posError<-0.05){
-      extCmd = -0.1;
-      atPosition = false;
+    if(armExtensionEnable){
+      // Check for Mechanical Extension Limits
+      double extPosCmd = Math.min(Robot.Dimensions.Arm.ArmMaxExtensionLength+Robot.Dimensions.Hand.HandForwardLength,
+        Math.max(armExtensionPosCmd,Robot.Dimensions.Arm.ArmMinLength+Robot.Dimensions.Hand.HandForwardLength));
+
+      double posError = extPosCmd-getArmHandLength();
+      double extMtrCmd = 0;
+    
+      if (posError> Robot.Calibrations.Arm.ArmExtendPosCtrlSlowRange){
+        extMtrCmd = Robot.Calibrations.Arm.ArmExtendPosCtrlFastSpd;
+        atPosition = false;
+      }else if(posError> Robot.Calibrations.Arm.ArmExtendPosCtrlAtPositionRange){
+        extMtrCmd = Robot.Calibrations.Arm.ArmExtendPosCtrlSlowSpd;
+        atPosition = false;
+      }else if(posError<-Robot.Calibrations.Arm.ArmExtendPosCtrlSlowRange){
+        extMtrCmd = -Robot.Calibrations.Arm.ArmExtendPosCtrlFastSpd;
+        atPosition = false;
+      }else if(posError<-Robot.Calibrations.Arm.ArmExtendPosCtrlAtPositionRange){
+        extMtrCmd = -Robot.Calibrations.Arm.ArmExtendPosCtrlSlowSpd;
+        atPosition = false;
+      }else{
+        extMtrCmd = 0.0;
+        atPosition = true;
+      }
+      SmartDashboard.putNumber("extPosCmd", extPosCmd);
+      SmartDashboard.putNumber("posError", posError);
+      SmartDashboard.putNumber("extCmd", extMtrCmd);
+      
+      Arm_ExtensionMotor.set(TalonFXControlMode.PercentOutput, extMtrCmd);
     }else{
-      extCmd = 0.0;
+      Arm_ExtensionMotor.set(TalonFXControlMode.PercentOutput, 0);
       atPosition = true;
     }
-    SmartDashboard.putNumber("extPosCmd", extPosCmd);
-    SmartDashboard.putNumber("posError", posError);
-    SmartDashboard.putNumber("extCmd", extCmd);
+    
     SmartDashboard.putBoolean("atPosition", atPosition);
-    Arm_ExtensionMotor.set(TalonFXControlMode.PercentOutput, extCmd);
-    return (Math.abs(Arm_ExtensionMotor.getClosedLoopError(0))< SubSys_Arm_Constants.ArmExtension.PID.allowableClosedLoopError);
+    return atPosition;
   }
 
 

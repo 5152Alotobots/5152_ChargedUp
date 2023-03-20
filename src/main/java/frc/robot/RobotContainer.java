@@ -193,7 +193,9 @@ public class RobotContainer {
         new Cmd_SubSys_Arm_PosCmd(
             armSubSys, 
             -10.0,
-            1.0)
+            true,
+            1.0,
+            true)
     );
   }
 

@@ -74,6 +74,11 @@ public final class Constants {
 
         public static double ArmExtensionMaxSpd = 0.2;                        // m/s
         public static double ArmExtensionMaxAccel = 0.2;                      // m/s/s
+
+        public static double ArmExtendPosCtrlFastSpd = 0.3;           // %
+        public static double ArmExtendPosCtrlSlowRange = 0.1;         // m
+        public static double ArmExtendPosCtrlSlowSpd = 0.15;          // %
+        public static double ArmExtendPosCtrlAtPositionRange = 0.02;  // m
       }
     }
 
