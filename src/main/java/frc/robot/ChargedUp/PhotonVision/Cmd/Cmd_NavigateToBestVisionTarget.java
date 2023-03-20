@@ -52,7 +52,7 @@ public class Cmd_NavigateToBestVisionTarget extends CommandBase {
     
     // Use values to drive the robot
     subSys_DriveTrain.Drive(subSys_Photonvision.getVisionForwardSpeed(result), subSys_Photonvision.getVisionStrafeSpeed(result), subSys_Photonvision.getVisionRotSpeed(result), false, false, false);
-    subSys_Bling.setBlinkinLEDColor(Const_Bling.Controllers.controller1, Const_Bling.SolidColors.Aqua);
+    subSys_Bling.setBlinkinLEDColor(Const_Bling.Controllers.controller1, Const_Bling.Patterns.FixedPalette.BreathBlue);
   }
 
   // Called once the command ends or is interrupted.
@@ -60,7 +60,7 @@ public class Cmd_NavigateToBestVisionTarget extends CommandBase {
   public void end(boolean interrupted) {
     // Stop the robot
     subSys_DriveTrain.Drive(0, 0, 0, false, false, false);
-    subSys_Bling.setBlinkinLEDColor(Const_Bling.Controllers.controller1, Const_Bling.SolidColors.Green);
+    subSys_Bling.setBlinkinLEDColor(Const_Bling.Controllers.controller1, Const_Bling.SolidColors.Gold);
   }
 
   // Returns true when the command should end.  
