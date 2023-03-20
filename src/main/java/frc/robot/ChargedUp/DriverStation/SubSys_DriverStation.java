@@ -5,7 +5,6 @@
 package frc.robot.ChargedUp.DriverStation;
 
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -32,7 +31,8 @@ public class SubSys_DriverStation extends SubsystemBase {
     public JoystickButton PickUpPos      = new JoystickButton(m_CoDriverController, Const_DriverStation.XboxControllerButton.kLEFT_BUMPER);
     public JoystickButton PickUpPosFlip  = new JoystickButton(m_CoDriverController, Const_DriverStation.XboxControllerButton.kRIGHT_BUMPER);
 
-  private XboxController m_AuxDriverController = new XboxController(2);
+    //Aux driver
+    private XboxController m_AuxDriverController = new XboxController(2);
 
   @Override
   public void periodic() {
@@ -64,19 +64,32 @@ public class SubSys_DriverStation extends SubsystemBase {
     return m_DriverController.getRawButton(6);
   }
 
-  // Arm Rotation
-  public double GetArmRotateAxis() {
-    return m_CoDriverController.getRawAxis(1);
-  }
-  //Arm extension 
-  public double GetArmExtendAxis() {
-    return m_CoDriverController.getRawAxis(5);
+  // Drive Performance Mode A
+  public boolean DrivePerfModeAActive() {
+    return (m_DriverController.getRawAxis(2) > 0.3);
   }
 
+  // Drive Performance Mode B
+  public boolean DrivePerfModeBActive() {
+    return (m_DriverController.getRawAxis(3) > 0.3);
+  }
+
+  // ----- Arm Subsystem
+  // Arm ShoulderRotate Axis
+  public double GetArmRotateAxis() {
+    return m_AuxDriverController.getRawAxis(1);
+  }
+  // Arm Extend Axis
+  public double GetArmExtendAxis() {
+    return m_AuxDriverController.getRawAxis(5);
+  }
+
+  /*
   public double HandSensorBtn() {
     boolean buttonValue = m_CoDriverController.getRawButton(0);
     SmartDashboard.putBoolean("Hand Ready", buttonValue);
     if (buttonValue == true) return 1;
     else return 0;
   }
+  */
 }

@@ -14,7 +14,7 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Library.DriveTrains.SubSys_DriveTrain_Constants;
+import frc.robot.Constants.Robot;
 import frc.robot.Library.DriveTrains.SwerveDrive.SwerveModules.MK4i_FalconFalcon.MK4i_FalconFalcon_Module;
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
 
@@ -228,13 +228,15 @@ public class SubSys_SwerveDrive extends SubsystemBase {
                 : new ChassisSpeeds(translation.getX(), translation.getY(), rotation)),
             rotationPt);
     SwerveDriveKinematics.desaturateWheelSpeeds(
-        swerveModuleStates, SubSys_DriveTrain_Constants.DriveTrainMaxSpd);
+        swerveModuleStates, Robot.MaxSpeeds.DriveTrainMaxSpd);
 
     // Set Swerve Modules to Calculated States
     swerveModules[0].setDesiredState(swerveModuleStates[0], isOpenLoop); // FL
     swerveModules[1].setDesiredState(swerveModuleStates[1], isOpenLoop); // FR
     swerveModules[2].setDesiredState(swerveModuleStates[2], isOpenLoop); // BL
     swerveModules[3].setDesiredState(swerveModuleStates[3], isOpenLoop); // BR
+
+    SmartDashboard.putNumber("FL_xCmd", swerveModuleStates[0].speedMetersPerSecond);
   }
 
   // ***** Odometry *****
