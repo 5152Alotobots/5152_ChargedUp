@@ -17,8 +17,8 @@ public class CmdGrp_MoveToMidPos extends ParallelCommandGroup {
     m_Arm = armSubSys;
     
     addCommands(
-      new Cmd_ArmExtensionPID(armSubSys, 0),
-      new Cmd_ArmRotationPID(armSubSys, 0)
+     
+      new Cmd_ArmRotationPID(armSubSys, 20)
     );
   }
 }

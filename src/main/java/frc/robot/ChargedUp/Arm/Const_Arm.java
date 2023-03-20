@@ -1,5 +1,7 @@
 package frc.robot.ChargedUp.Arm;
 
+import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
+
 import edu.wpi.first.math.util.Units;
 
 public class Const_Arm {
@@ -19,18 +21,15 @@ public class Const_Arm {
   public static final double kROBOT_WIDTH = .6;
   public static final double kMinAngle = 0;
   public static final double kMaxAngle = 0;
-  public static final double kOffsetTo0 = 47.1;
+  public static final double kOffsetTo0 = 44.1+90;
 
-  public class FF {
-    public static final double kS = 0;
-    public static final double kV = 0;
-  }
+  public static final int kErrThreshold = 10; // how many sensor units until its close-enough
+  public static final int kLoopsToSettle = 10; // how many loops sensor must be close-enough
+  public static int _withinThresholdLoops = 0;
 
-  public class PID {
-    public static final double kP = 0.1;
-    public static final double kI = 0;
-    public static final double kD = 0;
-  }
+  public static final double kShoulderForwardSoftLimit = 0; // Encoder units
+  public static final double kShoulderReverseSoftLimit = 0; // Encoder units
+
 
   public class ExtendPID {
     public static final double kP = 3.0;
@@ -59,4 +58,53 @@ public class Const_Arm {
   public class Positions {
     public static final double pickup = 0;
   }
+
+  public class HardwareConfigs {
+    // Global
+    public static final int TIMEOUT_MS = 0;
+
+    // PID slot configs
+    public static final int PID_PRIMARY = 0;
+    public static final int PID_SECONDARY = 1;
+
+    // Remote sensors configs
+    public static final int REMOTE_0 = 0;
+    public static final int REMOTE_1 = 1;
+
+    // Hardware config slots
+    public static final int SLOT_0 = 0;
+    public static final int SLOT_1 = 1;
+
+  }
+
+  public class PidfPrimary {
+    public static final double kP = 0.05;
+    public static final double kI = 0;
+    public static final double kD = 0;
+    public static final double kF = 0;
+    public static final double kIZone = 0;
+    public static final double kAllowableError = 0;
+    public static final double kMaxIntegralAccumulator = 0;
+    public static final double kPeakOutputForward = 0;
+    public static final double kPeakOutputReverse = 0;
+    public static final double kNominalOutputForward = 0;
+    public static final double kNominalOutputReverse = 0;
+    public static final double kNeutralDeadband = 0;
+  }
+
+  public class PidfSecondary {
+    public static final double kP = 0.05;
+    public static final double kI = 0;
+    public static final double kD = 0;
+    public static final double kF = 0;
+    public static final double kIZone = 0;
+    public static final double kAllowableError = 0;
+    public static final double kMaxIntegralAccumulator = 0;
+    public static final double kPeakOutputForward = 0;
+    public static final double kPeakOutputReverse = 0;
+    public static final double kNominalOutputForward = 0;
+    public static final double kNominalOutputReverse = 0;
+    public static final double kNeutralDeadband = 0;
+  }
+  
 }
