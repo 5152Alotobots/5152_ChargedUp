@@ -133,6 +133,7 @@ public final class Constants {
       public static final class RobotBoundaries {
         public static final double MaxExtensionOverFrame = 1.20; // .120m or 120cm (width)
         public static final double MaxHeight = 1.98; // .198m or 198cm (Height)
+        public static final double MinHeight = 0.01;
       }
 
       public static final class Limelight {
