@@ -84,7 +84,7 @@ public final class Constants {
 
     public static final class MaxSpeeds {
       // Maximum Achieveable Speeds
-      public static final class DriverTrain {
+      public static final class DriveTrain {
         // public static double DriveTrainMaxPctOutput = 1.00;               // 0-1
         public static double DriveTrainMaxSpd = 5.4; // m/s
         public static double DriveTrainMaxAccel = 5.0; // m/s^2
