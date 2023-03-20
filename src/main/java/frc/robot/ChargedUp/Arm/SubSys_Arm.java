@@ -62,9 +62,14 @@ public class SubSys_Arm extends SubsystemBase {
     Arm_ShoulderCanCoder.setPositionToAbsolute();
 
     //* Arm Shoulder Motor */
-    Arm_ShoulderMotor.configFactoryDefault();
+    Arm_ShoulderMotor.configFactoryDefault(); // Reset to factory defaults
     Arm_ShoulderMotor.setInverted(false);
-    Arm_ShoulderMotor.setNeutralMode(NeutralMode.Brake);
+    Arm_ShoulderMotor.setNeutralMode(NeutralMode.Brake); // Set to brake mode
+    Arm_ShoulderMotor.configForwardSoftLimitEnable(true); // Enable soft limits
+    Arm_ShoulderMotor.configReverseSoftLimitEnable(true); // Enable soft limits
+    Arm_ShoulderMotor.configForwardSoftLimitThreshold(Const_Arm.kShoulderForwardSoftLimit, Const_Arm.HardwareConfigs.TIMEOUT_MS); // Set soft limits
+    Arm_ShoulderMotor.configReverseSoftLimitThreshold(Const_Arm.kShoulderReverseSoftLimit, Const_Arm.HardwareConfigs.TIMEOUT_MS); // Set soft limits
+
 
     // Integrated
     Arm_ShoulderMotor.configIntegratedSensorInitializationStrategy(SensorInitializationStrategy.BootToZero, Const_Arm.HardwareConfigs.TIMEOUT_MS);

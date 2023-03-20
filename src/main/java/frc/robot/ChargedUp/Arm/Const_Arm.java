@@ -27,6 +27,9 @@ public class Const_Arm {
   public static final int kLoopsToSettle = 10; // how many loops sensor must be close-enough
   public static int _withinThresholdLoops = 0;
 
+  public static final double kShoulderForwardSoftLimit = 0; // Encoder units
+  public static final double kShoulderReverseSoftLimit = 0; // Encoder units
+
 
   public class ExtendPID {
     public static final double kP = 3.0;
