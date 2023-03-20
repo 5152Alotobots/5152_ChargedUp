@@ -21,7 +21,8 @@ public class SubSys_DriverStation extends SubsystemBase {
     public JoystickButton OpenHandButton  = new JoystickButton(m_DriverController, Const_DriverStation.XboxControllerButton.kRIGHT_BUMPER);
     public JoystickButton CloseHandButton = new JoystickButton(m_DriverController, Const_DriverStation.XboxControllerButton.kLEFT_BUMPER);
 
-  public Trigger TurboButton = new Trigger(() -> m_DriverController.getRawAxis(3) > 0.5);
+    public Trigger TurboButton = new Trigger(() -> m_DriverController.getRawAxis(3) > 0.5);
+    
   //Co Driver
   private XboxController m_CoDriverController = new XboxController(1);
 
@@ -30,6 +31,9 @@ public class SubSys_DriverStation extends SubsystemBase {
     public JoystickButton LowLevelButton = new JoystickButton(m_CoDriverController, Const_DriverStation.XboxControllerButton.kX);
     public JoystickButton PickUpPos      = new JoystickButton(m_CoDriverController, Const_DriverStation.XboxControllerButton.kLEFT_BUMPER);
     public JoystickButton PickUpPosFlip  = new JoystickButton(m_CoDriverController, Const_DriverStation.XboxControllerButton.kRIGHT_BUMPER);
+
+    public JoystickButton RequestCubeButton = new JoystickButton(m_CoDriverController, Const_DriverStation.XboxControllerButton.kBACK);
+    public JoystickButton RequestConeButton = new JoystickButton(m_CoDriverController, Const_DriverStation.XboxControllerButton.kSTART);
 
     //Aux driver
     private XboxController m_AuxDriverController = new XboxController(2);

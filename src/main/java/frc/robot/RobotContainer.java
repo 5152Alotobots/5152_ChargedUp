@@ -22,6 +22,11 @@ import frc.robot.ChargedUp.Arm.SubSys_Arm;
 import frc.robot.ChargedUp.AutoCommands.Auto_leftbluecharge_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_leftblueescape_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_leftredcharge_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_rightredcharge_Cmd;
+import frc.robot.ChargedUp.Bling.Const_Bling;
+import frc.robot.ChargedUp.Bling.SubSys_Bling;
+import frc.robot.ChargedUp.Bling.Cmd.CmdGrp_IdleBlingColorSequence;
+import frc.robot.ChargedUp.Bling.Cmd.Cmd_SetBlingColorValue;
 import frc.robot.ChargedUp.AutoCommands.Auto_leftredescape_Cmd;
 // import frc.robot.ChargedUp.DistanceSensor.SubSys_DistanceSensor;
 import frc.robot.ChargedUp.AutoCommands.Auto_middlebluecharge_Cmd;
@@ -88,6 +93,8 @@ public class RobotContainer {
   //PhotonVision
   public final SubSys_Photonvision photonvisionSubSys = new SubSys_Photonvision(armSubSys);
 
+  // Bling
+    public final SubSys_Bling blingSubSys = new SubSys_Bling();
   /*
    ***** Charged Up Componentes
    */
@@ -161,6 +168,12 @@ public class RobotContainer {
         photonvisionSubSys.setDefaultCommand(
             new Cmd_GetDistanceToTarget(photonvisionSubSys, handSubSys, Const_Photonvision.Cameras.frontCamera, 1)
         );
+    blingSubSys.setDefaultCommand(
+        new CmdGrp_IdleBlingColorSequence(
+            blingSubSys,
+            Const_Bling.Controllers.controller1));
+
+    // Sendable Chooser
 
     // Sendable Chooser
     m_chooser.addOption("leftbluecharge", m_leftbluecharge);
@@ -194,6 +207,10 @@ public class RobotContainer {
         new InstantCommand(handSubSys::OpenHand, handSubSys));
     driverStationSubSys.GyroResetButton.onTrue(
         new InstantCommand(gyroSubSys::zeroYaw, gyroSubSys));
+
+    // LEDs
+    driverStationSubSys.RequestConeButton.onTrue(new Cmd_SetBlingColorValue(blingSubSys, Const_Bling.Controllers.controller1, Const_Bling.SolidColors.Yellow));
+    driverStationSubSys.RequestCubeButton.onTrue(new Cmd_SetBlingColorValue(blingSubSys, Const_Bling.Controllers.controller1, Const_Bling.SolidColors.Violet));
 
     // Gyro Reset Command Button
     driverStationSubSys.PoseResetButton.onTrue(
