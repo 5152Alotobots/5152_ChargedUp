@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
 
 /**
@@ -101,30 +102,37 @@ public final class Constants {
   }
 
   public static final class Field {
-    public static final class Hub {
-      public static final Translation2d kHubCenter =
-          new Translation2d(Units.inchesToMeters(324), Units.inchesToMeters(162));
+    public static final class Grid {
+      public static final double DividerLength = Units.inchesToMeters(56.25);
+      public static final double HybridNodeDepth = Units.inchesToMeters(16.0);
+      public static final Translation3d ConeNodeTopRow = 
+        new Translation3d(
+          Units.inchesToMeters(39.75),
+          Units.inchesToMeters(0),
+          Units.inchesToMeters(46.0)
+        );
+       public static final Translation3d ConeNodeMidRow = 
+        new Translation3d(
+          Units.inchesToMeters(22.75),
+          Units.inchesToMeters(0),
+          Units.inchesToMeters(34.0)
+        );
 
-      public static final Translation2d kH1 =
-          new Translation2d(Units.inchesToMeters(308), Units.inchesToMeters(130));
-
-      public static final Translation2d kH2 =
-          new Translation2d(Units.inchesToMeters(294), Units.inchesToMeters(174));
-
-      public static final double kTargetRingHeight = Units.inchesToMeters(105);
-
-      public static final double kTargetRingDist2Ctr = Units.inchesToMeters(26);
+      public static final Translation3d CubeNodeTopRow = 
+        new Translation3d(
+          Units.inchesToMeters(39.75),
+          Units.inchesToMeters(0),
+          Units.inchesToMeters(35.5)
+        );
+        
+      public static final Translation3d CubeNodeMidRow = 
+        new Translation3d(
+          Units.inchesToMeters(22.75),
+          Units.inchesToMeters(0),
+          Units.inchesToMeters(23.50)
+        );
     }
-
-    public static final class Tarmac {
-      public static final Translation2d kT11 =
-          new Translation2d(Units.inchesToMeters(364), Units.inchesToMeters(53));
-
-      public static final Translation2d kT12 =
-          new Translation2d(Units.inchesToMeters(281), Units.inchesToMeters(51));
-
-      public static final Translation2d kT13 =
-          new Translation2d(Units.inchesToMeters(221), Units.inchesToMeters(108));
+    public static final class ChargeStation {
     }
   }
 
