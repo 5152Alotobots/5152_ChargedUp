@@ -5,10 +5,8 @@
 package frc.robot.ChargedUp.DriverStation;
 
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public class SubSys_DriverStation extends SubsystemBase {
   /** Creates a new DriverStationSubSys. */
@@ -16,18 +14,17 @@ public class SubSys_DriverStation extends SubsystemBase {
   // Driver Controller
   private XboxController m_DriverController = new XboxController(0);
 
-  // Co-Driver Controller
-  private XboxController m_CoDriverController = new XboxController(1);
-
-  // AuxDriver Controller
-  // private XboxController m_AuxDriverController = new XboxController(2);
-
   public JoystickButton GyroResetButton = new JoystickButton(m_DriverController, 4);
   public JoystickButton CloseHandButton = new JoystickButton(m_DriverController, 6);
   public JoystickButton OpenHandButton = new JoystickButton(m_DriverController, 5);
   public JoystickButton PoseResetButton = new JoystickButton(m_DriverController, 1);
   public JoystickButton TestButton = new JoystickButton(m_DriverController, 3);
-  public Trigger TurboButton = new Trigger(() -> m_DriverController.getRawAxis(3) > 0.5);
+
+  // Co-Driver Controller
+  private XboxController m_CoDriverController = new XboxController(1);
+
+  // AuxDriver Controller
+  private XboxController m_AuxDriverController = new XboxController(2);
 
   public SubSys_DriverStation() {}
 
@@ -66,11 +63,22 @@ public class SubSys_DriverStation extends SubsystemBase {
     return m_DriverController.getRawButton(6);
   }
 
-  // Arm Rotate Axis
+  // Drive Performance Mode A
+  public boolean DrivePerfModeAActive() {
+    return (m_DriverController.getRawAxis(2) > 0.3);
+  }
+
+  // Drive Performance Mode B
+  public boolean DrivePerfModeBActive() {
+    return (m_DriverController.getRawAxis(3) > 0.3);
+  }
+
+  // ----- Arm Subsystem
+  // Arm ShoulderRotate Axis
   public double GetArmRotateAxis() {
     return -m_CoDriverController.getRawAxis(1);
   }
-
+  // Arm Extend Axis
   public double GetArmExtendAxis() {
     return -m_CoDriverController.getRawAxis(5);
   }
@@ -81,4 +89,5 @@ public class SubSys_DriverStation extends SubsystemBase {
     if (buttonValue == true) return 1;
     else return 0;
   }
+  */
 }

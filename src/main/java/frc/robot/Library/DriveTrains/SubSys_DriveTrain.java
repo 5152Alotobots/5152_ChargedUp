@@ -12,6 +12,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.Robot;
 import frc.robot.Library.DriveTrains.SwerveDrive.SubSys_SwerveDrive;
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
 
@@ -103,7 +104,6 @@ public class SubSys_DriveTrain extends SubsystemBase {
     return SubSys_DriveTrain_Constants.DriveTrainMaxTurboAccel;
   }
 
-
   /**
    * getMaxDriveSubSysRotSpd Returns Max Drive Subsystem Rotation
    *
@@ -149,16 +149,14 @@ public class SubSys_DriveTrain extends SubsystemBase {
     // Limit Cmds to Chassis Limits
     driveXDirCmd =
         Math.min(
-            Math.max(xSpdCmd, -SubSys_DriveTrain_Constants.DriveTrainMaxSpd),
-            SubSys_DriveTrain_Constants.DriveTrainMaxSpd);
+            Math.max(xSpdCmd, -Robot.MaxSpeeds.DriveTrainMaxSpd), Robot.MaxSpeeds.DriveTrainMaxSpd);
     driveYDirCmd =
         Math.min(
-            Math.max(ySpdCmd, -SubSys_DriveTrain_Constants.DriveTrainMaxSpd),
-            SubSys_DriveTrain_Constants.DriveTrainMaxSpd);
+            Math.max(ySpdCmd, -Robot.MaxSpeeds.DriveTrainMaxSpd), Robot.MaxSpeeds.DriveTrainMaxSpd);
     driveZRotCmd =
         Math.min(
-            Math.max(rotSpdCmd, -SubSys_DriveTrain_Constants.DriveTrainMaxRotSpeed),
-            SubSys_DriveTrain_Constants.DriveTrainMaxRotSpeed);
+            Math.max(rotSpdCmd, -Robot.MaxSpeeds.DriveTrainMaxRotSpeed),
+            Robot.MaxSpeeds.DriveTrainMaxRotSpeed);
     driveFieldOriented = fieldRelative;
     driveRotateLeftPtCmd = rotateLeftPtCmd;
     driveRotateRightPtCmd = rotateRightPtCmd;

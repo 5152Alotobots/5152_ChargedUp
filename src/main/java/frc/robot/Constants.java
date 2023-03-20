@@ -29,40 +29,40 @@ public final class Constants {
 
         public static final class PerformanceMode_Default {
           // Default Performance Mode Speeds
-          // public static double DriveTrainMaxPctOutput = 0.50;               // 0-1
+          public static double DriveTrainMaxPctOutput = 0.50; // 0-1
           public static double DriveTrainMaxSpd = 4.0; // m/s
           public static double DriveTrainMaxAccel = 0.35; // m/s^2
-          // public static double DriveTrainMaxRotPctOutput = 0.4;             // 0-1
+          public static double DriveTrainMaxRotPctOutput = 0.4; // 0-1
           public static double DriveTrainMaxRotSpd = 140 * Math.PI / 180; // rad/s
           public static double DriveTrainMaxRotAccel = 200 * Math.PI / 180; // rad/s^2
         }
 
         public static final class PerformanceMode_A {
           // Performance Mode A Speeds (Fast)
-          // public static double DriveTrainMaxPctOutput = 0.75;               // 0-1
-          public static double DriveTrainMaxSpd = 10.0; // m/s
-          public static double DriveTrainMaxAccel = 1.00; // m/s^2
-          // public static double DriveTrainMaxRotPctOutput = 0.6;             // 0-1
-          public static double DriveTrainMaxRotSpd = 200 * Math.PI / 180; // rad/s
-          public static double DriveTrainMaxRotAccel = 200 * Math.PI / 180; // rad/s^2
-        }
-
-        public static final class PerformanceMode_B {
-          // Performance Mode B Speeds (Slow)
-          // public static double DriveTrainMaxPctOutput = 0.25;               // 0-1
+          public static double DriveTrainMaxPctOutput = 0.25; // 0-1
           public static double DriveTrainMaxSpd = 2.0; // m/s
           public static double DriveTrainMaxAccel = 0.35; // m/s^2
-          // public static double DriveTrainMaxRotPctOutput = 0.2;             // 0-1
+          public static double DriveTrainMaxRotPctOutput = 0.6; // 0-1
           public static double DriveTrainMaxRotSpd = 100 * Math.PI / 180; // rad/s
           public static double DriveTrainMaxRotAccel = 100 * Math.PI / 180; // rad/s^2
         }
 
+        public static final class PerformanceMode_B {
+          // Performance Mode B Speeds (Slow)
+          public static double DriveTrainMaxPctOutput = 0.75; // 0-1
+          public static double DriveTrainMaxSpd = 5; // m/s
+          public static double DriveTrainMaxAccel = 1.00; // m/s^2
+          public static double DriveTrainMaxRotPctOutput = 0.2; // 0-1
+          public static double DriveTrainMaxRotSpd = 200 * Math.PI / 180; // rad/s
+          public static double DriveTrainMaxRotAccel = 200 * Math.PI / 180; // rad/s^2
+        }
+
         public static final class DriveTrainTrajSettings {
           // PathPlanner Speeds
-          // public static double DriveTrainMaxPctOutput = 0.50;               // 0-1
+          public static double DriveTrainMaxPctOutput = 0.50; // 0-1
           public static double DriveTrainMaxSpd = 4.0; // m/s
           public static double DriveTrainMaxAccel = 0.35; // m/s^2
-          // public static double DriveTrainMaxRotPctOutput = 0.4;             // 0-1
+          public static double DriveTrainMaxRotPctOutput = 0.4; // 0-1
           public static double DriveTrainMaxRotSpd = 140 * Math.PI / 180; // rad/s
           public static double DriveTrainMaxRotAccel = 200 * Math.PI / 180; // rad/s^2
         }
@@ -107,6 +107,7 @@ public final class Constants {
       public static final class Frame {
         // Robot Origin (0,0,0 at center and bottom of wheels)
         public static final Translation3d FrameOrigin = new Translation3d(0, 0, 0);
+
         public static final double Length = Units.inchesToMeters(23.75);
         public static final double Width = Units.inchesToMeters(23.85);
         public static final double BumperThickness = Units.inchesToMeters(3.25);
