@@ -6,6 +6,8 @@ package frc.robot.ChargedUp.ChargeStation;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.ChargedUp.Bling.Const_Bling;
+import frc.robot.ChargedUp.Bling.SubSys_Bling;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
 
@@ -14,21 +16,25 @@ public class Cmd_AutoBalance extends CommandBase {
   private final SubSys_PigeonGyro m_PigeonGyro;
 
   private final SubSys_DriveTrain m_DriveTrain;
+
+  private final SubSys_Bling subSys_Bling;
   Timer m_endTimer_seconds = new Timer();
   Boolean newMovement = true;
   Boolean finished = false;
 
-  public Cmd_AutoBalance(SubSys_PigeonGyro pigeonGyro, SubSys_DriveTrain driveTrain) {
+  public Cmd_AutoBalance(SubSys_PigeonGyro pigeonGyro, SubSys_DriveTrain driveTrain, SubSys_Bling subSys_Bling) {
     m_PigeonGyro = pigeonGyro;
     m_DriveTrain = driveTrain;
+    this.subSys_Bling = subSys_Bling;
 
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_PigeonGyro, m_DriveTrain);
+    addRequirements(m_PigeonGyro, m_DriveTrain, subSys_Bling);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    subSys_Bling.setBlinkinLEDColor(Const_Bling.Controllers.controller1, Const_Bling.Patterns.FixedPalette.ColorWavesLava);
     m_endTimer_seconds.reset();
     m_endTimer_seconds.start();
     newMovement = true;
@@ -61,6 +67,7 @@ public class Cmd_AutoBalance extends CommandBase {
         m_DriveTrain.Drive(0, (roll * speed) * SubSys_ChargeStation_Constants.speedMultiplier, 0, false, false, false);
       } else {
         finished = true;
+        subSys_Bling.setBlinkinLEDColor(Const_Bling.Controllers.controller1, Const_Bling.SolidColors.Green);
       }
       newMovement = false;
       if (speed > 0.015) {

@@ -9,6 +9,8 @@ import org.photonvision.PhotonCamera;
 import org.photonvision.targeting.PhotonPipelineResult;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.ChargedUp.Bling.Const_Bling;
+import frc.robot.ChargedUp.Bling.SubSys_Bling;
 import frc.robot.ChargedUp.PhotonVision.SubSys_Photonvision;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
 
@@ -16,6 +18,7 @@ public class Cmd_NavigateToBestVisionTarget extends CommandBase {
   //Declare Variables 
   private final SubSys_DriveTrain subSys_DriveTrain;
   private final SubSys_Photonvision subSys_Photonvision;
+  private final SubSys_Bling subSys_Bling;
   private final int pipelineIndex;
   private final PhotonCamera camera;
   
@@ -27,12 +30,13 @@ public class Cmd_NavigateToBestVisionTarget extends CommandBase {
    *  @param camera The PhotonVision camera to use
    *  @param pipelineIndex The index of the pipeline to use for targeting
    */
-  public Cmd_NavigateToBestVisionTarget(SubSys_DriveTrain subSys_DriveTrain, SubSys_Photonvision subSys_Photonvision, PhotonCamera camera, int pipelineIndex) {
+  public Cmd_NavigateToBestVisionTarget(SubSys_DriveTrain subSys_DriveTrain, SubSys_Photonvision subSys_Photonvision, SubSys_Bling subSys_Bling, PhotonCamera camera, int pipelineIndex) {
     this.subSys_DriveTrain = subSys_DriveTrain;
     this.subSys_Photonvision = subSys_Photonvision;
+    this.subSys_Bling = subSys_Bling;
     this.pipelineIndex = pipelineIndex;
     this.camera = camera;
-    addRequirements(subSys_DriveTrain, subSys_Photonvision);
+    addRequirements(subSys_DriveTrain, subSys_Photonvision, subSys_Bling);
   }
 
   // Called when the command is initially scheduled.
@@ -48,6 +52,7 @@ public class Cmd_NavigateToBestVisionTarget extends CommandBase {
     
     // Use values to drive the robot
     subSys_DriveTrain.Drive(subSys_Photonvision.getVisionForwardSpeed(result), subSys_Photonvision.getVisionStrafeSpeed(result), subSys_Photonvision.getVisionRotSpeed(result), false, false, false);
+    subSys_Bling.setBlinkinLEDColor(Const_Bling.Controllers.controller1, Const_Bling.SolidColors.Aqua);
   }
 
   // Called once the command ends or is interrupted.
@@ -55,6 +60,7 @@ public class Cmd_NavigateToBestVisionTarget extends CommandBase {
   public void end(boolean interrupted) {
     // Stop the robot
     subSys_DriveTrain.Drive(0, 0, 0, false, false, false);
+    subSys_Bling.setBlinkinLEDColor(Const_Bling.Controllers.controller1, Const_Bling.SolidColors.Green);
   }
 
   // Returns true when the command should end.  

@@ -106,26 +106,26 @@ public class RobotContainer {
   public final SubSys_DriverStation driverStationSubSys = new SubSys_DriverStation();
   // SetUp Auto
   SendableChooser<Command> m_chooser = new SendableChooser<>();
-  private final Command m_leftbluecharge = new Auto_leftbluecharge_Cmd(driveSubSys, gyroSubSys);
+  private final Command m_leftbluecharge = new Auto_leftbluecharge_Cmd(driveSubSys, gyroSubSys, blingSubSys);
 
   private final Command m_leftblueescape = new Auto_leftblueescape_Cmd(driveSubSys, gyroSubSys);
 
-  private final Command m_leftredcharge = new Auto_leftredcharge_Cmd(driveSubSys, gyroSubSys);
+  private final Command m_leftredcharge = new Auto_leftredcharge_Cmd(driveSubSys, gyroSubSys, blingSubSys);
 
   private final Command m_leftredescape = new Auto_leftredescape_Cmd(driveSubSys, gyroSubSys);
 
-  private final Command m_middlebluecharge = new Auto_middlebluecharge_Cmd(driveSubSys, gyroSubSys);
+  private final Command m_middlebluecharge = new Auto_middlebluecharge_Cmd(driveSubSys, gyroSubSys, blingSubSys);
 
-  private final Command m_middleredcharge = new Auto_middleredcharge_Cmd(driveSubSys, gyroSubSys);
+  private final Command m_middleredcharge = new Auto_middleredcharge_Cmd(driveSubSys, gyroSubSys, blingSubSys);
 
-  private final Command m_rightbluecharge = new Auto_rightbluecharge_Cmd(driveSubSys, gyroSubSys);
+  private final Command m_rightbluecharge = new Auto_rightbluecharge_Cmd(driveSubSys, gyroSubSys, blingSubSys);
 
-  private final Command m_rightblueescape = new Auto_rightblueescape(driveSubSys, gyroSubSys);
+  private final Command m_rightblueescape = new Auto_rightblueescape(driveSubSys, gyroSubSys, blingSubSys);
 
 //   private final Command m_OneConeRed = new Auto_OneConeRed_Cmd(driveSubSys, gyroSubSys);
 
   private final Command m_proofrightredescape =
-      new Auto_proofrightredescape(driveSubSys, gyroSubSys);
+      new Auto_proofrightredescape(driveSubSys, gyroSubSys, blingSubSys);
   /*
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -222,7 +222,7 @@ public class RobotContainer {
 
     //Test Button
     driverStationSubSys.TestButton.onTrue(
-        new Cmd_NavigateToBestVisionTarget(driveSubSys, photonvisionSubSys, Const_Photonvision.Cameras.frontCamera, Const_Photonvision.Pipelines.Cube)
+        new Cmd_NavigateToBestVisionTarget(driveSubSys, photonvisionSubSys, blingSubSys, Const_Photonvision.Cameras.frontCamera, Const_Photonvision.Pipelines.Cube)
     );
   }
   // when test button is pressed run the rotate to heading command to a random number between 0 and
