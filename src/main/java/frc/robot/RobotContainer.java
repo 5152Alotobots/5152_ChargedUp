@@ -168,9 +168,9 @@ public class RobotContainer {
             () -> driverStationSubSys.DrivePerfModeAActive(),
             () -> driverStationSubSys.DrivePerfModeBActive()));
 
-        photonvisionSubSys.setDefaultCommand(
-            new Cmd_GetDistanceToTarget(photonvisionSubSys, handSubSys, Const_Photonvision.Cameras.frontCamera, 1)
-        );
+        // photonvisionSubSys.setDefaultCommand(
+        //     new Cmd_GetDistanceToTarget(photonvisionSubSys, Const_Photonvision.Cameras.frontCamera, 1)
+        // );
     blingSubSys.setDefaultCommand(
         new CmdGrp_IdleBlingColorSequence(
             blingSubSys,
@@ -221,8 +221,8 @@ public class RobotContainer {
         new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
 
     //Test Button
-    driverStationSubSys.TestButton.onTrue(
-        new Cmd_NavigateToBestVisionTarget(driveSubSys, photonvisionSubSys, blingSubSys, Const_Photonvision.Cameras.frontCamera, Const_Photonvision.Pipelines.Cube)
+    driverStationSubSys.TestButton.whileTrue(
+        new Cmd_NavigateToBestVisionTarget(driveSubSys, photonvisionSubSys,  blingSubSys, Const_Photonvision.Cameras.frontCamera, Const_Photonvision.Pipelines.Cube)
     );
   }
   // when test button is pressed run the rotate to heading command to a random number between 0 and

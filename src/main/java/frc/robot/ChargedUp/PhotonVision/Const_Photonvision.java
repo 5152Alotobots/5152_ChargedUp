@@ -9,10 +9,10 @@ import edu.wpi.first.math.util.Units;
 
 public class Const_Photonvision {
     
-    public final static double CAMERA_HEIGHT_METERS = Units.inchesToMeters(4);
-    public final static double TARGET_HEIGHT_METERS = Units.inchesToMeters(9.5);
+    public final static double CAMERA_HEIGHT_METERS = 0.185;
+    public final static double TARGET_HEIGHT_METERS = Units.inchesToMeters(4.5);
     // Angle between horizontal and the camera.
-    public static final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(0);
+    public static final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(-30);
 
     // How far from the target we want to be
     public static final double GOAL_RANGE_METERS = Units.feetToMeters(1);
@@ -20,10 +20,10 @@ public class Const_Photonvision {
 
     public static final Transform3d robotToCam =
     new Transform3d(
-            new Translation3d(0.5, 0.0, 0.5),
+            new Translation3d(0.2, 0.105, 0.185),
             new Rotation3d(
-                    0, 0,
-                    0)); // Cam mounted facing forward, half a meter forward of center, half a meter up from center.
+                    0, -30,
+                    0)); // Cam mounted facing forward, 30deg pitched DOWN, 20cm forward of center, 10.5cm RIGHT of center, 18.5cm UP from center.
 
 
     public static class Cameras {
@@ -33,8 +33,8 @@ public class Const_Photonvision {
 
     public static class Pipelines {
         public static final int Apriltag = 0;
-        public static final int Cone = 1;
-        public static final int Cube = 2;
+        public static final int Cone = 2;
+        public static final int Cube = 1;
     }
  
 }

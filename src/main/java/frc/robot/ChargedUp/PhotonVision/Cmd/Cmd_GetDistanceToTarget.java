@@ -18,7 +18,6 @@ import frc.robot.ChargedUp.PhotonVision.SubSys_Photonvision;
 public class Cmd_GetDistanceToTarget extends CommandBase {
   
   private final SubSys_Photonvision subSys_Photonvision;
-  private final SubSys_Hand subSys_Hand;
   private final int pipelineIndex;
   private final PhotonCamera camera;
   private PhotonPipelineResult result;
@@ -29,16 +28,14 @@ public class Cmd_GetDistanceToTarget extends CommandBase {
    * and hand subsystem.
    *
    * @param subSys_Photonvision the PhotonVision subsystem
-   * @param subSys_Hand the hand subsystem
    * @param camera the PhotonVision camera
    * @param pipelineIndex the index of the pipeline to use
    */
-  public Cmd_GetDistanceToTarget(SubSys_Photonvision subSys_Photonvision, SubSys_Hand subSys_Hand, PhotonCamera camera, int pipelineIndex) {
+  public Cmd_GetDistanceToTarget(SubSys_Photonvision subSys_Photonvision, PhotonCamera camera, int pipelineIndex) {
     this.subSys_Photonvision = subSys_Photonvision;
-    this.subSys_Hand = subSys_Hand;
     this.pipelineIndex = pipelineIndex;
     this.camera = camera;
-    addRequirements(subSys_Photonvision, subSys_Hand);
+    addRequirements(subSys_Photonvision);
   }
 
   /**
@@ -57,6 +54,7 @@ public class Cmd_GetDistanceToTarget extends CommandBase {
     result = camera.getLatestResult();
     if (result.hasTargets()){
       SmartDashboard.putNumber("dist", subSys_Photonvision.getRangeToTarget(result, false));
+      // System.out.println("Distance to target: "+ subSys_Photonvision.getRangeToTarget(result, false));
     }
   }
 

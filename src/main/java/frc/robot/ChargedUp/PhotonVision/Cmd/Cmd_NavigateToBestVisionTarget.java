@@ -51,7 +51,7 @@ public class Cmd_NavigateToBestVisionTarget extends CommandBase {
     result = camera.getLatestResult();
     
     // Use values to drive the robot
-    subSys_DriveTrain.Drive(subSys_Photonvision.getVisionForwardSpeed(result), subSys_Photonvision.getVisionStrafeSpeed(result), subSys_Photonvision.getVisionRotSpeed(result), false, false, false);
+    subSys_DriveTrain.Drive(subSys_Photonvision.getVisionForwardSpeed(result)/4, subSys_Photonvision.getVisionStrafeSpeed(result)/4, 0/*subSys_Photonvision.getVisionRotSpeed(result)/4*/, false, false, false);
     subSys_Bling.setBlinkinLEDColor(Const_Bling.Controllers.controller1, Const_Bling.Patterns.FixedPalette.BreathBlue);
   }
 
