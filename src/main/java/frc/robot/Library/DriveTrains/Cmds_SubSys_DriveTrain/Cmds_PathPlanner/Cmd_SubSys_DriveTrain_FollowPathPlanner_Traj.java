@@ -4,6 +4,7 @@
 
 package frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmds_PathPlanner;
 
+import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
@@ -53,8 +54,9 @@ public class Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj extends CommandBase {
     // Load Path
     this.ppTraj =
         PathPlanner.loadPath(
-            this.pathPlannerTrajName, PathPlanner.getConstraintsFromPath(this.pathPlannerTrajName));
-
+            this.pathPlannerTrajName,
+            // PathPlanner.getConstraintsFromPath(this.pathPlannerTrajName));
+            new PathConstraints(2.8, 3.0));
     this.xDistancePID =
         new PIDController(
             SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.Pgain,
