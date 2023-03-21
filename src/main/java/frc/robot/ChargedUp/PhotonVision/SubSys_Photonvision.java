@@ -76,7 +76,7 @@ public class SubSys_Photonvision extends SubsystemBase {
     /** Calculate strafe speed */
     public double getVisionStrafeSpeed(PhotonPipelineResult result){
       if (result.hasTargets()) {
-        return Ycontroller.calculate(result.getBestTarget().getYaw(), 0);
+        return Ycontroller.calculate((result.getBestTarget().getYaw()) - Const_Photonvision.robotToCam.getY(), 0);
       } else {
         return 0;
       }
