@@ -51,7 +51,8 @@ public class SubSys_Photonvision extends SubsystemBase {
             Const_Photonvision.CAMERA_HEIGHT_METERS,
             Const_Photonvision.TARGET_HEIGHT_METERS,
             Const_Photonvision.CAMERA_PITCH_RADIANS,
-            Units.degreesToRadians(result.getBestTarget().getPitch()));
+            Units.degreesToRadians(result.getBestTarget().getPitch()))
+            - Const_Photonvision.robotToCam.getX(); //Subtract offset from camera to robot
       }
     }
 
