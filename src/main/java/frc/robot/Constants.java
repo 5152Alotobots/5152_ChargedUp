@@ -33,12 +33,12 @@ public final class Constants {
           public static double DriveTrainMaxSpd = 4.0; // m/s
           public static double DriveTrainMaxAccel = 0.35; // m/s^2
           public static double DriveTrainMaxRotPctOutput = 0.4; // 0-1
-          public static double DriveTrainMaxRotSpd = 140 * Math.PI / 180; // rad/s
+          public static double DriveTrainMaxRotSpd = 250 * Math.PI / 180; // rad/s
           public static double DriveTrainMaxRotAccel = 200 * Math.PI / 180; // rad/s^2
         }
 
         public static final class PerformanceMode_A {
-          // Performance Mode A Speeds (Fast)
+          // Performance Mode A Speeds (Slow)
           public static double DriveTrainMaxPctOutput = 0.25; // 0-1
           public static double DriveTrainMaxSpd = 2.0; // m/s
           public static double DriveTrainMaxAccel = 0.35; // m/s^2
@@ -48,13 +48,13 @@ public final class Constants {
         }
 
         public static final class PerformanceMode_B {
-          // Performance Mode B Speeds (Slow)
+          // Performance Mode B Speeds (Fast)
           public static double DriveTrainMaxPctOutput = 0.75; // 0-1
           public static double DriveTrainMaxSpd = 5; // m/s
           public static double DriveTrainMaxAccel = 1.00; // m/s^2
           public static double DriveTrainMaxRotPctOutput = 0.2; // 0-1
-          public static double DriveTrainMaxRotSpd = 200 * Math.PI / 180; // rad/s
-          public static double DriveTrainMaxRotAccel = 200 * Math.PI / 180; // rad/s^2
+          public static double DriveTrainMaxRotSpd = 360 * Math.PI / 180; // rad/s
+          public static double DriveTrainMaxRotAccel = 360 * Math.PI / 180; // rad/s^2
         }
 
         public static final class DriveTrainTrajSettings {
@@ -69,11 +69,11 @@ public final class Constants {
       }
 
       public static final class Arm {
-        public static double ArmMaxRotSpd = 50 * Math.PI / 180; // rad/s
-        public static double ArmMaxRotAccel = 50 * Math.PI / 180; // rad/s/s
+        public static double ArmMaxRotSpd = 150 * Math.PI / 180; // rad/s
+        public static double ArmMaxRotAccel = 150 * Math.PI / 180; // rad/s/s
 
-        public static double ArmExtensionMaxSpd = 0.2; // m/s
-        public static double ArmExtensionMaxAccel = 0.2; // m/s/s
+        public static double ArmExtensionMaxSpd = 0.5; // m/s
+        public static double ArmExtensionMaxAccel = 0.5; // m/s/s
 
         public static double ArmExtendPosCtrlFastSpd = 0.3; // %
         public static double ArmExtendPosCtrlSlowRange = 0.1; // m
@@ -120,7 +120,10 @@ public final class Constants {
 
       public static final class Arm {
         public static final Translation3d ArmShoulder =
-            new Translation3d(0.05, 0, 0.58); // Relative to Frame Origin
+            new Translation3d(
+              Units.inchesToMeters(-2.0),
+              Units.inchesToMeters(.0),
+              Units.inchesToMeters(23.5)); // Relative to Frame Origin
         public static final double ArmMinLength = Units.inchesToMeters(22);
         public static final double ArmMaxExtensionLength = Units.inchesToMeters(54.5);
       }

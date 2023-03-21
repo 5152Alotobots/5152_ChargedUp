@@ -22,11 +22,10 @@ import frc.robot.ChargedUp.AutoCommands.Auto_leftredcharge_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_leftredescape_Cmd;
 // import frc.robot.ChargedUp.DistanceSensor.SubSys_DistanceSensor;
 import frc.robot.ChargedUp.AutoCommands.Auto_middlebluecharge_Cmd;
-import frc.robot.ChargedUp.AutoCommands.Auto_middlebothonecube_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_middleredcharge_Cmd;
-import frc.robot.ChargedUp.AutoCommands.Auto_rightredescape_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_proofrightredescape;
 import frc.robot.ChargedUp.AutoCommands.Auto_rightbluecharge_Cmd;
-import frc.robot.ChargedUp.AutoCommands.Auto_rightblueescape_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_rightblueescape;
 import frc.robot.ChargedUp.AutoCommands.Auto_rightredcharge_Cmd;
 import frc.robot.ChargedUp.DriverStation.SubSys_DriverStation;
 import frc.robot.ChargedUp.Hand.SubSys_Hand;
@@ -99,13 +98,13 @@ public class RobotContainer {
 
   private final Command m_rightbluecharge = new Auto_rightbluecharge_Cmd(driveSubSys, gyroSubSys);
 
-  private final Command m_rightblueescape = new Auto_rightblueescape_Cmd(driveSubSys, gyroSubSys);
+  private final Command m_rightblueescape = new Auto_rightblueescape(driveSubSys, gyroSubSys);
 
   private final Command m_rightredcharge = new Auto_rightredcharge_Cmd(driveSubSys, gyroSubSys);
 
-  private final Command m_rightredescape = new Auto_rightredescape_Cmd(driveSubSys, gyroSubSys);
+  private final Command m_proofrightredescape =
+      new Auto_proofrightredescape(driveSubSys, gyroSubSys);
 
-  private final Command m_middlebothonecube = new Auto_middlebothonecube_Cmd(driveSubSys, gyroSubSys,armSubSys, handSubSys);
   /*
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -155,12 +154,10 @@ public class RobotContainer {
     m_chooser.addOption("leftredescape", m_leftredescape);
     m_chooser.addOption("middlebluecharge", m_middlebluecharge);
     m_chooser.addOption("middleredcharge", m_middleredcharge);
-   m_chooser.addOption("middlebothonecube", m_middlebothonecube);
     m_chooser.setDefaultOption("rightbluecharge", m_rightbluecharge);
     m_chooser.addOption("rightblueescape", m_rightblueescape);
     m_chooser.addOption("rightredcharge", m_rightredcharge);
-    m_chooser.addOption("rightredescape", m_rightredescape);
-   
+    m_chooser.addOption("proofrightredescape", m_proofrightredescape);
     SmartDashboard.putData(m_chooser);
   }
 

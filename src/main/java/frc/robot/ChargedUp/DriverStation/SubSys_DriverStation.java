@@ -23,7 +23,9 @@ public class SubSys_DriverStation extends SubsystemBase {
 
   // Co-Driver Controller
   private XboxController m_CoDriverController = new XboxController(1);
-
+  public JoystickButton GroundPickupButton = new JoystickButton(m_CoDriverController, 1);
+  public JoystickButton HighConeDelivery = new JoystickButton(m_CoDriverController, 4);
+  public JoystickButton MidConeDelivery = new JoystickButton(m_CoDriverController, 3);
   // AuxDriver Controller
   private XboxController m_AuxDriverController = new XboxController(2);
 
@@ -77,7 +79,7 @@ public class SubSys_DriverStation extends SubsystemBase {
   // ----- Arm Subsystem
   // Arm ShoulderRotate Axis
   public double GetArmRotateAxis() {
-    return -m_CoDriverController.getRawAxis(1);
+    return m_CoDriverController.getRawAxis(1);
   }
   // Arm Extend Axis
   public double GetArmExtendAxis() {

@@ -14,8 +14,8 @@ public class SubSys_Arm_Constants {
       (Robot.Dimensions.Arm.ArmMaxExtensionLength - Robot.Dimensions.Arm.ArmMinLength)
           / ArmExtensionEncoderFullyExtendedDegrees;
 
-  public static final double ArmShoulderMinAngle = -180; // -220.0; // Deg
-  public static final double ArmShoulderMaxAngle = 25; // 45.0;   // Deg
+  public static final double ArmShoulderMinAngle = -220.0; // Deg
+  public static final double ArmShoulderMaxAngle = 45.0;   // Deg
 
   public class ArmShoulder {
     public static final boolean ForwardSoftLimitEnable = false;
