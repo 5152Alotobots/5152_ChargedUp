@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -180,6 +181,9 @@ public class RobotContainer {
     driverStationSubSys.PoseResetButton.onTrue(
         // new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
         new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
+
+    driverStationSubSys.TestButton.whileTrue(
+      new InstantCommand(driveSubSys::setSwerveStates, driveSubSys));
   }
   // when test button is pressed run the rotate to heading command to a random number between 0 and
   // 360

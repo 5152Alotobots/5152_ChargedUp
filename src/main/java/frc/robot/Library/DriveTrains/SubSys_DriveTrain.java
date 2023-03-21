@@ -11,6 +11,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.Robot;
@@ -177,17 +178,13 @@ public class SubSys_DriveTrain extends SubsystemBase {
     driveRotateRightPtCmd = rotateRightPtCmd;
   }
 
-  public void setSwerveStates(
-    SwerveModuleState FL_State,
-    SwerveModuleState FR_State,
-    SwerveModuleState BL_State,
-    SwerveModuleState BR_State){
+  public void setSwerveStates(){
       this.setSwerveStatesActive = true;
 
-      this.FL_State = FL_State;
-      this.FR_State = FR_State;
-      this.BL_State = BL_State;
-      this.BR_State = BR_State;
+      this.FL_State = new SwerveModuleState(0.0, new Rotation2d(Units.degreesToRadians(45.0)));
+      this.FR_State = new SwerveModuleState(0.0, new Rotation2d(Units.degreesToRadians(-45.0)));
+      this.BL_State = new SwerveModuleState(0.0, new Rotation2d(Units.degreesToRadians(-45.0)));
+      this.BR_State = new SwerveModuleState(0.0, new Rotation2d(Units.degreesToRadians(45.0)));
     }
 
   // ***** Odometry *****
