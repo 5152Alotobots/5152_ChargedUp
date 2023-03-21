@@ -27,8 +27,7 @@ public class Auto_rightredescape_Cmd extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
         // new Cmd_whatever the arm one is
-        new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
-            driveSubSys, "rightredescape", true, true),
+        new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "rightredescape", true, true),
         new Cmd_AutoBalance(pigeonGyro, driveSubSys));
   }
 }

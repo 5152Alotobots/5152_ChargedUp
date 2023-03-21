@@ -24,10 +24,10 @@ import frc.robot.ChargedUp.AutoCommands.Auto_leftredescape_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_middlebluecharge_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_middlebothonecube_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_middleredcharge_Cmd;
-import frc.robot.ChargedUp.AutoCommands.Auto_rightredescape_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_rightbluecharge_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_rightblueescape_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_rightredcharge_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_rightredescape_Cmd;
 import frc.robot.ChargedUp.DriverStation.SubSys_DriverStation;
 import frc.robot.ChargedUp.Hand.SubSys_Hand;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmd_SubSys_DriveTrain_JoysticDefault;
@@ -105,7 +105,8 @@ public class RobotContainer {
 
   private final Command m_rightredescape = new Auto_rightredescape_Cmd(driveSubSys, gyroSubSys);
 
-  private final Command m_middlebothonecube = new Auto_middlebothonecube_Cmd(driveSubSys, gyroSubSys,armSubSys, handSubSys);
+  private final Command m_middlebothonecube =
+      new Auto_middlebothonecube_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
   /*
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -155,12 +156,12 @@ public class RobotContainer {
     m_chooser.addOption("leftredescape", m_leftredescape);
     m_chooser.addOption("middlebluecharge", m_middlebluecharge);
     m_chooser.addOption("middleredcharge", m_middleredcharge);
-   m_chooser.addOption("middlebothonecube", m_middlebothonecube);
+    m_chooser.addOption("middlebothonecube", m_middlebothonecube);
     m_chooser.setDefaultOption("rightbluecharge", m_rightbluecharge);
     m_chooser.addOption("rightblueescape", m_rightblueescape);
     m_chooser.addOption("rightredcharge", m_rightredcharge);
     m_chooser.addOption("rightredescape", m_rightredescape);
-   
+
     SmartDashboard.putData(m_chooser);
   }
 
@@ -187,15 +188,14 @@ public class RobotContainer {
         new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
 
     driverStationSubSys.GroundPickupButton.whileTrue(
-      new Cmd_SubSys_Arm_PosCmd(armSubSys, 42.0, true, 0.8, true));
+        new Cmd_SubSys_Arm_PosCmd(armSubSys, 42.0, true, 0.8, true));
 
     driverStationSubSys.HighConeDelivery.whileTrue(
         new Cmd_SubSys_Arm_PosCmd(armSubSys, -35.0, true, 1.65, true));
-  
+
     driverStationSubSys.MidConeDelivery.whileTrue(
         new Cmd_SubSys_Arm_PosCmd(armSubSys, -25.0, true, 1.00, true));
   }
-
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

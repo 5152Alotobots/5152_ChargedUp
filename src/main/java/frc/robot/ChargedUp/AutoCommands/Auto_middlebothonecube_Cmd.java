@@ -7,9 +7,8 @@ package frc.robot.ChargedUp.AutoCommands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.ChargedUp.Arm.SubSys_Arm;
 import frc.robot.ChargedUp.Arm.Cmds_SubSys_Arm.Cmd_SubSys_Arm_PosCmd;
-import frc.robot.ChargedUp.ChargeStation.Cmd_AutoBalance;
+import frc.robot.ChargedUp.Arm.SubSys_Arm;
 import frc.robot.ChargedUp.Hand.SubSys_Hand;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmds_PathPlanner.Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
@@ -27,31 +26,36 @@ public class Auto_middlebothonecube_Cmd extends SequentialCommandGroup {
   private final SubSys_Hand m_Hand;
 
   /** Creates a new Auto_Challenge1_Cmd. */
-  public Auto_middlebothonecube_Cmd(SubSys_DriveTrain driveSubSys, SubSys_PigeonGyro pigeonGyro, SubSys_Arm subsysArm, SubSys_Hand subsysHand ) {
+  public Auto_middlebothonecube_Cmd(
+      SubSys_DriveTrain driveSubSys,
+      SubSys_PigeonGyro pigeonGyro,
+      SubSys_Arm subsysArm,
+      SubSys_Hand subsysHand) {
     m_DriveTrain = driveSubSys;
     m_pigeonGyro = pigeonGyro;
     m_Arm = subsysArm;
     m_Hand = subsysHand;
-    
+
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
         // new Cmd_whatever the arm one is
-        //Hand is reversed
+        // Hand is reversed
         new Cmd_SubSys_Arm_PosCmd(subsysArm, -145.0, true, 1.65, true).withTimeout(3.3),
         new InstantCommand(subsysHand::CloseHand, subsysHand),
         new ParallelCommandGroup(
-          new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "middlebothonecube1", true, true),
-          new Cmd_SubSys_Arm_PosCmd(subsysArm, 42.0, true, 1.1, true).withTimeout(4.5)
-        ),
+            new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
+                driveSubSys, "middlebothonecube1", true, true),
+            new Cmd_SubSys_Arm_PosCmd(subsysArm, 42.0, true, 1.1, true).withTimeout(4.5)),
         new InstantCommand(subsysHand::OpenHand, subsysHand),
         new ParallelCommandGroup(
-          new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "middlebothonecube2", true, true),
-          new Cmd_SubSys_Arm_PosCmd(subsysArm, -155.0, true, 1.0, true).withTimeout(4)
-        ),
+            new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
+                driveSubSys, "middlebothonecube2", true, true),
+            new Cmd_SubSys_Arm_PosCmd(subsysArm, -155.0, true, 1.0, true).withTimeout(4)),
         new InstantCommand(subsysHand::CloseHand, subsysHand)
-        //new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "middlebothonecube3", true, true),
-       // new Cmd_AutoBalance(pigeonGyro, driveSubSys)
-    );
+        // new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "middlebothonecube3", true,
+        // true),
+        // new Cmd_AutoBalance(pigeonGyro, driveSubSys)
+        );
   }
 }

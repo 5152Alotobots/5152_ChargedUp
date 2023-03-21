@@ -98,7 +98,8 @@ public class MK4i_FalconFalcon_Module {
     /* Drive Motor Command */
     // Open Loop
     if (isOpenLoop) {
-      double percentOutput = desiredState.speedMetersPerSecond / Robot.MaxSpeeds.DriveTrain.DriveTrainMaxSpd;
+      double percentOutput =
+          desiredState.speedMetersPerSecond / Robot.MaxSpeeds.DriveTrain.DriveTrainMaxSpd;
       percentOutput = Util.cap(percentOutput, 1);
       driveMotor.set(ControlMode.PercentOutput, percentOutput);
       driveMotorOutputPctCmd = percentOutput;

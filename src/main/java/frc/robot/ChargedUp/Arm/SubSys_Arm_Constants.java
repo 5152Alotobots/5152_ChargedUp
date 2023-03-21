@@ -15,7 +15,7 @@ public class SubSys_Arm_Constants {
           / ArmExtensionEncoderFullyExtendedDegrees;
 
   public static final double ArmShoulderMinAngle = -220.0; // Deg
-  public static final double ArmShoulderMaxAngle = 45.0;   // Deg
+  public static final double ArmShoulderMaxAngle = 45.0; // Deg
 
   public class ArmShoulder {
     public static final boolean ForwardSoftLimitEnable = false;

@@ -149,10 +149,12 @@ public class SubSys_DriveTrain extends SubsystemBase {
     // Limit Cmds to Chassis Limits
     driveXDirCmd =
         Math.min(
-            Math.max(xSpdCmd, -Robot.MaxSpeeds.DriveTrain.DriveTrainMaxSpd), Robot.MaxSpeeds.DriveTrain.DriveTrainMaxSpd);
+            Math.max(xSpdCmd, -Robot.MaxSpeeds.DriveTrain.DriveTrainMaxSpd),
+            Robot.MaxSpeeds.DriveTrain.DriveTrainMaxSpd);
     driveYDirCmd =
         Math.min(
-            Math.max(ySpdCmd, -Robot.MaxSpeeds.DriveTrain.DriveTrainMaxSpd), Robot.MaxSpeeds.DriveTrain.DriveTrainMaxSpd);
+            Math.max(ySpdCmd, -Robot.MaxSpeeds.DriveTrain.DriveTrainMaxSpd),
+            Robot.MaxSpeeds.DriveTrain.DriveTrainMaxSpd);
     driveZRotCmd =
         Math.min(
             Math.max(rotSpdCmd, -Robot.MaxSpeeds.DriveTrain.DriveTrainMaxRotSpeed),

@@ -127,7 +127,7 @@ public class SubSys_Arm extends SubsystemBase {
         "ArmShoulderAngleArmHandTrans3d_Z",
         Units.metersToInches(getArmShoulderAngleArmHandTrans3d().getZ()));
 
-    SmartDashboard.putBoolean("OutsideBounds",checkOutsideBounds());
+    SmartDashboard.putBoolean("OutsideBounds", checkOutsideBounds());
     // SmartDashboard.putNumber("SubSys_Arm_ShoulderCanCoder_CalculatedPOS", getShoulderRotation());
     // SmartDashboard.putNumber(
     //    "SubSys_Arm_ShoulderCanCoder_Position",
@@ -216,19 +216,20 @@ public class SubSys_Arm extends SubsystemBase {
         getArmHandTrans3d().rotateBy(getArmShoulderRot3d()));
   }
 
-  private boolean checkOutsideBounds(){
+  private boolean checkOutsideBounds() {
     boolean outsideBounds = false;
     Translation3d handPosition = getArmShoulderAngleArmHandTrans3d();
     // Check Height
-    if(handPosition.getZ()<=Robot.Dimensions.RobotBoundaries.MinHeight){
+    if (handPosition.getZ() <= Robot.Dimensions.RobotBoundaries.MinHeight) {
       outsideBounds = true;
-    }else if(handPosition.getZ()>=Robot.Dimensions.RobotBoundaries.MaxHeight){
+    } else if (handPosition.getZ() >= Robot.Dimensions.RobotBoundaries.MaxHeight) {
       outsideBounds = true;
     }
-    
+
     // Check Extension
-    if(Math.abs(handPosition.getX())>=
-        (Robot.Dimensions.Frame.Length*0.5+Robot.Dimensions.RobotBoundaries.MaxExtensionOverFrame)){
+    if (Math.abs(handPosition.getX())
+        >= (Robot.Dimensions.Frame.Length * 0.5
+            + Robot.Dimensions.RobotBoundaries.MaxExtensionOverFrame)) {
       outsideBounds = true;
     }
     return outsideBounds;

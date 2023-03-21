@@ -121,9 +121,9 @@ public final class Constants {
       public static final class Arm {
         public static final Translation3d ArmShoulder =
             new Translation3d(
-              Units.inchesToMeters(-2.0),
-              Units.inchesToMeters(.0),
-              Units.inchesToMeters(23.5)); // Relative to Frame Origin
+                Units.inchesToMeters(-2.0),
+                Units.inchesToMeters(.0),
+                Units.inchesToMeters(23.5)); // Relative to Frame Origin
         public static final double ArmMinLength = Units.inchesToMeters(22);
         public static final double ArmMaxExtensionLength = Units.inchesToMeters(54.5);
       }

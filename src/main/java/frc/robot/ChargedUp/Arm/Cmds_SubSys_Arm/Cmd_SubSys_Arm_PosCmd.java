@@ -60,6 +60,6 @@ public class Cmd_SubSys_Arm_PosCmd extends CommandBase {
   @Override
   public boolean isFinished() {
     return this.finished;
-    //return false;
+    // return false;
   }
 }
