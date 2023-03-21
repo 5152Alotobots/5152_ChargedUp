@@ -59,7 +59,7 @@ public class Cmd_SubSys_Arm_PosCmd extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // return this.finished;
-    return false;
+    return this.finished;
+    //return false;
   }
 }
