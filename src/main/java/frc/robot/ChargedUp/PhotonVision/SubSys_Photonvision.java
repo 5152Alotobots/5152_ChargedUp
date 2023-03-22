@@ -14,10 +14,24 @@ import frc.robot.Library.DriveTrains.SubSys_DriveTrain_Constants.DriveTrainTrajS
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
 
 public class SubSys_Photonvision extends SubsystemBase {
+
+  /* X PID */
+  private PIDController Xcontroller = new PIDController(DriveTrainTrajSettings.DriveTrajectoryPID.Pgain, DriveTrainTrajSettings.DriveTrajectoryPID.Igain, DriveTrainTrajSettings.DriveTrajectoryPID.Dgain);
+  /* Y PID */
+  private PIDController Ycontroller = new PIDController(DriveTrainTrajSettings.DriveTrajectoryPID.Pgain, DriveTrainTrajSettings.DriveTrajectoryPID.Igain, DriveTrainTrajSettings.DriveTrajectoryPID.Dgain);
+  /* Z PID */
+  private PIDController Zcontroller = new PIDController(DriveTrainTrajSettings.RotationTrajectoryPID.Pgain, DriveTrainTrajSettings.RotationTrajectoryPID.Igain, DriveTrainTrajSettings.RotationTrajectoryPID.Dgain);
+    
   /** Creates a new PhotonVisionSubsytem. */
   private final SubSys_Arm m_Arm;
   public SubSys_Photonvision(SubSys_Arm armSubSys) {
     m_Arm = armSubSys;
+
+    /* CONFIG PID */
+    Xcontroller.setTolerance(0.3);
+    Ycontroller.setTolerance(0.25);
+    Zcontroller.setTolerance(0.3);
+
   }
 
   @Override
@@ -25,19 +39,10 @@ public class SubSys_Photonvision extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-    /* X PID */
-    public PIDController Xcontroller = new PIDController(DriveTrainTrajSettings.DriveTrajectoryPID.Pgain, DriveTrainTrajSettings.DriveTrajectoryPID.Igain, DriveTrainTrajSettings.DriveTrajectoryPID.Dgain);
-
-    /* Y PID */
-    public PIDController Ycontroller = new PIDController(DriveTrainTrajSettings.DriveTrajectoryPID.Pgain, DriveTrainTrajSettings.DriveTrajectoryPID.Igain, DriveTrainTrajSettings.DriveTrajectoryPID.Dgain);
-
-    /* Z PID */
-    
-    public PIDController Zcontroller = new PIDController(DriveTrainTrajSettings.RotationTrajectoryPID.Pgain, DriveTrainTrajSettings.RotationTrajectoryPID.Igain, DriveTrainTrajSettings.RotationTrajectoryPID.Dgain);
-
     /* VISION */
     /** Calculate distance to target */
     public double getRangeToTarget(PhotonPipelineResult result, Boolean UseArmCalculatedAngle){
+    if (result.hasTargets()) {
       if (UseArmCalculatedAngle){
       return
         PhotonUtils.calculateDistanceToTargetMeters(
@@ -55,7 +60,10 @@ public class SubSys_Photonvision extends SubsystemBase {
             Units.degreesToRadians(result.getBestTarget().getPitch()))
             - Const_Photonvision.CAMERA_TO_FRONT_ROBOT_METERS;
       }
+    } else {
+      return 0;
     }
+  }
 
     /** Calculate rotation speed */
     public double getVisionRotSpeed(PhotonPipelineResult result){
@@ -69,7 +77,7 @@ public class SubSys_Photonvision extends SubsystemBase {
     /** Calculate forward speed */
     public double getVisionForwardSpeed(PhotonPipelineResult result){
       if (result.hasTargets()) {
-        return -Xcontroller.calculate(getRangeToTarget(result, false), 0) * 0.2;
+        return -Xcontroller.calculate(getRangeToTarget(result, false), 0) * 0.8;
       } else {
         return 0;
       }

@@ -16,7 +16,7 @@ public class Const_Photonvision {
     public static final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(-28);
 
     // How far from the target we want to be
-    public static final double GOAL_RANGE_METERS = 0.5;
+    public static final double GOAL_RANGE_METERS = 0.2;
     public static final double IN_RANGE_AREA_PERCENT = 0.8; //TODO: MIGHT BE 80 INSTEAD OF 0.8
 
     // FORWARD: +, RIGHT: +, UP: + 

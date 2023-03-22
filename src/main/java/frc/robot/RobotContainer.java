@@ -171,11 +171,12 @@ public class RobotContainer {
         // photonvisionSubSys.setDefaultCommand(
         //     new Cmd_GetDistanceToTarget(photonvisionSubSys, Const_Photonvision.Cameras.frontCamera, 1)
         // );
+    /*
     blingSubSys.setDefaultCommand(
         new CmdGrp_IdleBlingColorSequence(
             blingSubSys,
             Const_Bling.Controllers.controller1));
-
+      */
     // Sendable Chooser
 
     // Sendable Chooser
@@ -221,7 +222,7 @@ public class RobotContainer {
         new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
 
     //Test Button
-    driverStationSubSys.TestButton.whileTrue(
+    driverStationSubSys.TestButton.onTrue(
         new Cmd_NavigateToBestVisionTarget(driveSubSys, photonvisionSubSys, blingSubSys, Const_Photonvision.Cameras.frontCamera, Const_Photonvision.Pipelines.Cube)
     );
   }
