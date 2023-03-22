@@ -8,6 +8,7 @@ package frc.robot.ChargedUp.PhotonVision.Cmd;
 import org.photonvision.PhotonCamera;
 import org.photonvision.targeting.PhotonPipelineResult;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.ChargedUp.Bling.Const_Bling;
 import frc.robot.ChargedUp.Bling.SubSys_Bling;
@@ -50,8 +51,10 @@ public class Cmd_NavigateToBestVisionTarget extends CommandBase {
   public void execute() {
     result = camera.getLatestResult();
     
+    SmartDashboard.putNumber("Vision Forward Speed", subSys_Photonvision.getVisionForwardSpeed(result));
+    SmartDashboard.putNumber("Vision Strafe Speed", subSys_Photonvision.getVisionStrafeSpeed(result));
     // Use values to drive the robot
-    subSys_DriveTrain.Drive(subSys_Photonvision.getVisionForwardSpeed(result)/4, subSys_Photonvision.getVisionStrafeSpeed(result)/4, 0/*subSys_Photonvision.getVisionRotSpeed(result)/4*/, false, false, false);
+    subSys_DriveTrain.Drive(subSys_Photonvision.getVisionForwardSpeed(result) , subSys_Photonvision.getVisionStrafeSpeed(result) , 0/*subSys_Photonvision.getVisionRotSpeed(result)/4*/, false, false, false);
     subSys_Bling.setBlinkinLEDColor(Const_Bling.Controllers.controller1, Const_Bling.Patterns.FixedPalette.BreathBlue);
   }
 

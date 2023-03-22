@@ -44,7 +44,8 @@ public class SubSys_Photonvision extends SubsystemBase {
             m_Arm.getCameraHeight(),
             Const_Photonvision.TARGET_HEIGHT_METERS,
             m_Arm.getShoulderRotationRadians() - 90,
-                Units.degreesToRadians(result.getBestTarget().getPitch()));
+                Units.degreesToRadians(result.getBestTarget().getPitch()))
+                - Const_Photonvision.CAMERA_TO_FRONT_ROBOT_METERS;
       } else {
         return
         PhotonUtils.calculateDistanceToTargetMeters(
@@ -52,7 +53,7 @@ public class SubSys_Photonvision extends SubsystemBase {
             Const_Photonvision.TARGET_HEIGHT_METERS,
             Const_Photonvision.CAMERA_PITCH_RADIANS,
             Units.degreesToRadians(result.getBestTarget().getPitch()))
-            - Const_Photonvision.robotToCam.getX(); //Subtract offset from camera to robot
+            - Const_Photonvision.CAMERA_TO_FRONT_ROBOT_METERS;
       }
     }
 
@@ -68,7 +69,7 @@ public class SubSys_Photonvision extends SubsystemBase {
     /** Calculate forward speed */
     public double getVisionForwardSpeed(PhotonPipelineResult result){
       if (result.hasTargets()) {
-        return Xcontroller.calculate(getRangeToTarget(result, false), Const_Photonvision.GOAL_RANGE_METERS);
+        return -Xcontroller.calculate(getRangeToTarget(result, false), 0) * 0.2;
       } else {
         return 0;
       }
@@ -77,7 +78,7 @@ public class SubSys_Photonvision extends SubsystemBase {
     /** Calculate strafe speed */
     public double getVisionStrafeSpeed(PhotonPipelineResult result){
       if (result.hasTargets()) {
-        return Ycontroller.calculate((result.getBestTarget().getYaw()) - Const_Photonvision.robotToCam.getY(), 0);
+        return Ycontroller.calculate((result.getBestTarget().getYaw()) - Const_Photonvision.robotToCam.getY(), 0) * 0.04;
       } else {
         return 0;
       }
@@ -86,7 +87,7 @@ public class SubSys_Photonvision extends SubsystemBase {
     /** Returns true if the PID controllers don't need to move any further/you are at the target */
     public boolean isAtTarget(PhotonPipelineResult result){
       if (result.hasTargets()) {
-        return Xcontroller.atSetpoint() && Ycontroller.atSetpoint() && Zcontroller.atSetpoint();
+        return Xcontroller.atSetpoint() && Ycontroller.atSetpoint() /*&& Zcontroller.atSetpoint()*/;
       } else {
         return false;
       }

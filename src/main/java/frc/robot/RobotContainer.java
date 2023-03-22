@@ -222,7 +222,7 @@ public class RobotContainer {
 
     //Test Button
     driverStationSubSys.TestButton.whileTrue(
-        new Cmd_NavigateToBestVisionTarget(driveSubSys, photonvisionSubSys,  blingSubSys, Const_Photonvision.Cameras.frontCamera, Const_Photonvision.Pipelines.Cube)
+        new Cmd_NavigateToBestVisionTarget(driveSubSys, photonvisionSubSys, blingSubSys, Const_Photonvision.Cameras.frontCamera, Const_Photonvision.Pipelines.Cube)
     );
   }
   // when test button is pressed run the rotate to heading command to a random number between 0 and
