@@ -42,13 +42,16 @@ public class Auto_leftbothtwocube_Cmd extends SequentialCommandGroup {
     addCommands(
         // new Cmd_whatever the arm one is
         // Hand is reversed
-        new Cmd_SubSys_Arm_PosCmd(subsysArm, -146.0, true, 1.5, true).withTimeout(4),
+        new Cmd_SubSys_Arm_PosCmd(subsysArm, -144.0, true, 1.54, true).withTimeout(4),
+        new WaitCommand(2.5),
         new InstantCommand(subsysHand::CloseHand, subsysHand),
         
         new ParallelCommandGroup(
             new SequentialCommandGroup( 
                 new Cmd_SubSys_Arm_PosCmd(subsysArm, 42.0, false, 0.8, true).withTimeout(4),
-                new Cmd_SubSys_Arm_PosCmd(subsysArm, 42.0, true, 0.8, false).withTimeout(4)),
+                new Cmd_SubSys_Arm_PosCmd(subsysArm, 42.0, true, 0.8, false).withTimeout(4),
+                new Cmd_SubSys_Arm_PosCmd(subsysArm, 42.0, false, 1.0, true).withTimeout(4)),
+                
            
             new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj( driveSubSys, "leftbothtwocube1", true, true)
             ),

@@ -41,19 +41,14 @@ public class Auto_middlebothtwocube_Cmd extends SequentialCommandGroup {
     addCommands(
         // new Cmd_whatever the arm one is
         // Hand is reversed
-        new Cmd_SubSys_Arm_PosCmd(subsysArm, -145.0, true, 1.65, true).withTimeout(3.3),
+        new Cmd_SubSys_Arm_PosCmd(subsysArm, -146.0, true, 1.5, true).withTimeout(3.3),
         new InstantCommand(subsysHand::CloseHand, subsysHand),
         new ParallelCommandGroup(
             new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
                 driveSubSys, "middlebothtwocube1", true, true),
             new Cmd_SubSys_Arm_PosCmd(subsysArm, 42.0, true, 1.1, true).withTimeout(4.5)),
         new InstantCommand(subsysHand::OpenHand, subsysHand),
-        new ParallelCommandGroup(
-            new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
-                driveSubSys, "middlebothtwocube2", true, true),
-            new Cmd_SubSys_Arm_PosCmd(subsysArm, -155.0, true, 1.0, true).withTimeout(4)),
-        new InstantCommand(subsysHand::CloseHand, subsysHand),
-        new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj( driveSubSys, "middlebothtwocube3", true, true),
-        new Cmd_AutoBalance(pigeonGyro, driveSubSys));
+            new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "middlebothtwocube2", true, true));
+
   }
 }

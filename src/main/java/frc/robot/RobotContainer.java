@@ -23,6 +23,7 @@ import frc.robot.ChargedUp.AutoCommands.Auto_leftredcharge_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_leftredescape_Cmd;
 // import frc.robot.ChargedUp.DistanceSensor.SubSys_DistanceSensor;
 import frc.robot.ChargedUp.AutoCommands.Auto_middlebluecharge_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_middlebothtwocube_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_rightbothtwocube_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_middleredcharge_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_rightbluecharge_Cmd;
@@ -109,6 +110,8 @@ public class RobotContainer {
   private final Command m_rightbothtwocube = new Auto_rightbothtwocube_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
  
   private final Command m_leftbothtwocube = new Auto_leftbothtwocube_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
+ 
+ private final Command m_middlebothtwocube = new Auto_middlebothtwocube_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
   /*
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -164,7 +167,7 @@ public class RobotContainer {
     m_chooser.addOption("rightredcharge", m_rightredcharge);
     m_chooser.addOption("rightredescape", m_rightredescape);
     m_chooser.addOption("leftbothtwocube", m_leftbothtwocube);
-  
+    m_chooser.addOption("middlebothtwocube", m_middlebothtwocube);
 
     SmartDashboard.putData(m_chooser);
   }
