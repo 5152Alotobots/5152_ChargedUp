@@ -183,6 +183,7 @@ public class SubSys_Arm extends SubsystemBase {
     boolean ArmShoulderAtSetpoint = setArmShoulderPosCmd(armShouldPosCmd, armShoulderEnable);
     SmartDashboard.putBoolean("ArmShoulderAtSetpoint", ArmShoulderAtSetpoint);
     boolean ArmExtensionAtSetpoint = setArmExtensionPosCmd(armExtensionPosCmd, armExtensionEnable);
+    SmartDashboard.putBoolean("ArmExtensionAtSetpoint", ArmExtensionAtSetpoint);
     return (ArmShoulderAtSetpoint && ArmExtensionAtSetpoint);
   }
 
@@ -332,7 +333,7 @@ public class SubSys_Arm extends SubsystemBase {
       // Arm_ShoulderMotor.set(TalonFXControlMode.Position, rotPosCmd);
       Arm_ShoulderMotor.set(TalonFXControlMode.MotionMagic, armShoulderMotPosCmd);
       atSetpoint =
-          (Math.abs(Arm_ShoulderMotor.getClosedLoopError(0))
+          ((Math.abs(getArmShoulderAngle().getDegrees()-rotPosCmd))
               < SubSys_Arm_Constants.ArmShoulder.PID.atSetpointAllowableError);
     } else {
       Arm_ShoulderMotor.set(TalonFXControlMode.PercentOutput, 0);
