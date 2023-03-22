@@ -29,6 +29,7 @@ import frc.robot.ChargedUp.AutoCommands.Auto_rightbluecharge_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_rightblueescape_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_rightredcharge_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_rightredescape_Cmd;
+import frc.robot.ChargedUp.Commands.Cmd_ConeRelease;
 import frc.robot.ChargedUp.DriverStation.SubSys_DriverStation;
 import frc.robot.ChargedUp.Hand.SubSys_Hand;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmd_SubSys_DriveTrain_JoysticDefault;
@@ -195,6 +196,8 @@ public class RobotContainer {
 
     driverStationSubSys.HighConeDelivery.whileTrue(
         new Cmd_SubSys_Arm_PosCmd(armSubSys, -35.0, true, 1.65, true));
+
+    driverStationSubSys.HighConeDelivery.onFalse(new Cmd_ConeRelease(armSubSys, handSubSys));
 
     driverStationSubSys.MidConeDelivery.whileTrue(
         new Cmd_SubSys_Arm_PosCmd(armSubSys, -25.0, true, 1.00, true));
