@@ -18,14 +18,14 @@ import frc.robot.Library.DriveTrains.SwerveDrive.*;
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
 
 /** *Link For PathPlaner * */
-public class Auto_leftbothtwocube_Cmd extends SequentialCommandGroup {
+public class Auto_leftbluecone_Cmd extends SequentialCommandGroup {
   private final SubSys_DriveTrain m_DriveTrain;
   private final SubSys_PigeonGyro m_pigeonGyro;
   private final SubSys_Arm m_Arm;
   private final SubSys_Hand m_Hand;
 
   /** Creates a new Auto_Challenge1_Cmd. */
-  public Auto_leftbothtwocube_Cmd(
+  public Auto_leftbluecone_Cmd(
       SubSys_DriveTrain driveSubSys,
       SubSys_PigeonGyro pigeonGyro,
       SubSys_Arm subsysArm,
@@ -49,11 +49,11 @@ public class Auto_leftbothtwocube_Cmd extends SequentialCommandGroup {
                 new Cmd_SubSys_Arm_PosCmd(subsysArm, 42.0, true, 0.8, false).withTimeout(4),
                 new Cmd_SubSys_Arm_PosCmd(subsysArm, 42.0, false, 1.0, true).withTimeout(4)),
             new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
-                driveSubSys, "leftbothtwocube1", true, true)),
+                driveSubSys, "leftbluecone1", true, true)),
         new InstantCommand(subsysHand::OpenHand, subsysHand),
         new ParallelCommandGroup(
             new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
-                driveSubSys, "leftbothtwocube2", false, true),
+                driveSubSys, "leftbluecone2", false, true),
             new Cmd_SubSys_Arm_PosCmd(subsysArm, 10.0, true, 0.8, true).withTimeout(4)),
         new Cmd_AutoBalance(pigeonGyro, driveSubSys));
   }
