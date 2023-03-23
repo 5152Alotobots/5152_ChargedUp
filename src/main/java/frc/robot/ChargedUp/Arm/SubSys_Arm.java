@@ -238,6 +238,11 @@ public class SubSys_Arm extends SubsystemBase {
             + Robot.Dimensions.RobotBoundaries.MaxExtensionOverFrame)) {
       outsideBounds = true;
     }
+
+    // Disable bounds if Extension is short
+    if(getArmExtensionFullyRetractSwitchActive()){
+      outsideBounds = false;
+    }
     return outsideBounds;
   }
 
