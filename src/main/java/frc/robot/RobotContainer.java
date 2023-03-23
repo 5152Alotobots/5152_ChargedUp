@@ -225,7 +225,20 @@ public class RobotContainer {
     driverStationSubSys.RequestCubeButton.onTrue(
         new Cmd_SetBlingColorValue(
             blingSubSys, Const_Bling.Controllers.controller1, Const_Bling.SolidColors.Violet));
+    
+        //Fun signaling
+    driverStationSubSys.ResetLEDColorButton.onTrue(
+    new Cmd_SetBlingColorValue(
+          blingSubSys, Const_Bling.Controllers.controller1, Const_Bling.Patterns.Color1Color2.ColorWaves));
+    driverStationSubSys.RainbowLEDColorButton.onTrue(
+    new Cmd_SetBlingColorValue(
+            blingSubSys, Const_Bling.Controllers.controller1, Const_Bling.Patterns.FixedPalette.RainbowRainbow));
+    driverStationSubSys.RainbowStrobeLEDColorButton.onTrue(
+      new Cmd_SetBlingColorValue(
+              blingSubSys, Const_Bling.Controllers.controller1, Const_Bling.Patterns.FixedPalette.StrobeRed));
   }
+  
+
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
