@@ -24,10 +24,10 @@ import frc.robot.ChargedUp.AutoCommands.Auto_leftredescape_Cmd;
 // import frc.robot.ChargedUp.DistanceSensor.SubSys_DistanceSensor;
 import frc.robot.ChargedUp.AutoCommands.Auto_middlebluecharge_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_middlebothtwocube_Cmd;
-import frc.robot.ChargedUp.AutoCommands.Auto_rightbothtwocube_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_middleredcharge_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_rightbluecharge_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_rightblueescape_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_rightbothtwocube_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_rightredcharge_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_rightredescape_Cmd;
 import frc.robot.ChargedUp.DriverStation.SubSys_DriverStation;
@@ -107,11 +107,14 @@ public class RobotContainer {
 
   private final Command m_rightredescape = new Auto_rightredescape_Cmd(driveSubSys, gyroSubSys);
 
-  private final Command m_rightbothtwocube = new Auto_rightbothtwocube_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
- 
-  private final Command m_leftbothtwocube = new Auto_leftbothtwocube_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
- 
- private final Command m_middlebothtwocube = new Auto_middlebothtwocube_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
+  private final Command m_rightbothtwocube =
+      new Auto_rightbothtwocube_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
+
+  private final Command m_leftbothtwocube =
+      new Auto_leftbothtwocube_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
+
+  private final Command m_middlebothtwocube =
+      new Auto_middlebothtwocube_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
   /*
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */

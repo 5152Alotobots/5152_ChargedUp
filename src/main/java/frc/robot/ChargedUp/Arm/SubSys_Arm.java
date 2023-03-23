@@ -333,7 +333,7 @@ public class SubSys_Arm extends SubsystemBase {
       // Arm_ShoulderMotor.set(TalonFXControlMode.Position, rotPosCmd);
       Arm_ShoulderMotor.set(TalonFXControlMode.MotionMagic, armShoulderMotPosCmd);
       atSetpoint =
-          ((Math.abs(getArmShoulderAngle().getDegrees()-rotPosCmd))
+          ((Math.abs(getArmShoulderAngle().getDegrees() - rotPosCmd))
               < SubSys_Arm_Constants.ArmShoulder.PID.atSetpointAllowableError);
     } else {
       Arm_ShoulderMotor.set(TalonFXControlMode.PercentOutput, 0);
