@@ -4,19 +4,18 @@
 
 package frc.robot.ChargedUp.AutoCommands;
 
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.ChargedUp.Arm.Cmds_SubSys_Arm.Cmd_SubSys_Arm_PosCmd;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
-import frc.robot.ChargedUp.ChargeStation.Cmd_AutoBalance;
 import frc.robot.ChargedUp.Hand.SubSys_Hand;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmds_PathPlanner.Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
 import frc.robot.Library.DriveTrains.SwerveDrive.*;
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
 /**
  * *Link For PathPlaner *
@@ -52,11 +51,12 @@ public class Auto_middleredconeleftescape_Cmd extends SequentialCommandGroup {
                 new Cmd_SubSys_Arm_PosCmd(subsysArm, 42.0, false, 0.8, true).withTimeout(4),
                 new Cmd_SubSys_Arm_PosCmd(subsysArm, 42.0, true, 0.8, false).withTimeout(4),
                 new Cmd_SubSys_Arm_PosCmd(subsysArm, 42.0, false, 1.0, true).withTimeout(4)),
-            new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "middleblueconeleftescape1", true, true, Alliance.Red)),
+            new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
+                driveSubSys, "middleblueconeleftescape1", true, true, Alliance.Red)),
         new InstantCommand(subsysHand::OpenHand, subsysHand),
         new ParallelCommandGroup(
-            new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "middleblueconeleftescape2", false, false, Alliance.Red),
-            new Cmd_SubSys_Arm_PosCmd(subsysArm, 10.0, true, 0.8, true).withTimeout(4))
-        );
+            new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
+                driveSubSys, "middleblueconeleftescape2", false, false, Alliance.Red),
+            new Cmd_SubSys_Arm_PosCmd(subsysArm, 10.0, true, 0.8, true).withTimeout(4)));
   }
 }

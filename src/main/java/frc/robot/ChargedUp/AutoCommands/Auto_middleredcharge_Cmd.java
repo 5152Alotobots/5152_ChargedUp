@@ -27,7 +27,8 @@ public class Auto_middleredcharge_Cmd extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "middleredcharge", true, true, Alliance.Red),
+        new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
+            driveSubSys, "middleredcharge", true, true, Alliance.Red),
         new Cmd_AutoBalance(pigeonGyro, driveSubSys));
   }
 }

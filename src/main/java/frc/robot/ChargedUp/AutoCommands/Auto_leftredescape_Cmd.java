@@ -26,6 +26,7 @@ public class Auto_leftredescape_Cmd extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "leftredescape", true, true, Alliance.Red));
+        new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
+            driveSubSys, "leftredescape", true, true, Alliance.Red));
   }
 }
