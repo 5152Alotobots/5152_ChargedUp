@@ -240,7 +240,7 @@ public class SubSys_Arm extends SubsystemBase {
     }
 
     // Disable bounds if Extension is short
-    if(getArmExtensionFullyRetractSwitchActive()){
+    if (getArmExtensionFullyRetractSwitchActive()) {
       outsideBounds = false;
     }
     return outsideBounds;
