@@ -17,19 +17,27 @@ import frc.robot.ChargedUp.Arm.Cmds_SubSys_Arm.Cmd_SubSys_Arm_JoysticDefault;
 import frc.robot.ChargedUp.Arm.Cmds_SubSys_Arm.Cmd_SubSys_Arm_PosCmd;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
 import frc.robot.ChargedUp.AutoCommands.Auto_leftbluecharge_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_leftbluecone_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_leftblueescape_Cmd;
-import frc.robot.ChargedUp.AutoCommands.Auto_leftbothtwocube_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_leftredcharge_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_leftredcone_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_leftredescape_Cmd;
 // import frc.robot.ChargedUp.DistanceSensor.SubSys_DistanceSensor;
 import frc.robot.ChargedUp.AutoCommands.Auto_middlebluecharge_Cmd;
-import frc.robot.ChargedUp.AutoCommands.Auto_middlebothtwocube_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_middlebluecone_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_middleblueconeleftescape_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_middleredcharge_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_middleredcone_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_middleredconeleftescape_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_rightbluecharge_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_rightbluecone_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_rightblueescape_Cmd;
-import frc.robot.ChargedUp.AutoCommands.Auto_rightbothtwocube_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_rightredcharge_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_rightredcone_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_rightredescape_Cmd;
+import frc.robot.ChargedUp.Bling.Cmd.Cmd_SetBlingColorValue;
+import frc.robot.ChargedUp.Bling.Const_Bling;
+import frc.robot.ChargedUp.Bling.SubSys_Bling;
 import frc.robot.ChargedUp.DriverStation.SubSys_DriverStation;
 import frc.robot.ChargedUp.Hand.SubSys_Hand;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmd_SubSys_DriveTrain_JoysticDefault;
@@ -79,6 +87,7 @@ public class RobotContainer {
   // Arm
   public final SubSys_Arm armSubSys = new SubSys_Arm(handSubSys.getHandLength());
 
+  public final SubSys_Bling blingSubSys = new SubSys_Bling();
   /*
    ***** Charged Up Componentes
    */
@@ -107,14 +116,29 @@ public class RobotContainer {
 
   private final Command m_rightredescape = new Auto_rightredescape_Cmd(driveSubSys, gyroSubSys);
 
-  private final Command m_rightbothtwocube =
-      new Auto_rightbothtwocube_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
+  private final Command m_rightbluecone =
+      new Auto_rightbluecone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
 
-  private final Command m_leftbothtwocube =
-      new Auto_leftbothtwocube_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
+  private final Command m_leftbluecone =
+      new Auto_leftbluecone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
 
-  private final Command m_middlebothtwocube =
-      new Auto_middlebothtwocube_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
+  private final Command m_middlebluecone =
+      new Auto_middlebluecone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
+
+  private final Command m_middleblueconeleftescape =
+      new Auto_middleblueconeleftescape_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
+
+  private final Command m_rightredcone =
+      new Auto_rightredcone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
+
+  private final Command m_leftredcone =
+      new Auto_leftredcone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
+
+  private final Command m_middleredcone =
+      new Auto_middleredcone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
+
+  private final Command m_middleredconeleftescape =
+      new Auto_middleredconeleftescape_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
   /*
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -164,13 +188,18 @@ public class RobotContainer {
     m_chooser.addOption("leftredescape", m_leftredescape);
     m_chooser.addOption("middlebluecharge", m_middlebluecharge);
     m_chooser.addOption("middleredcharge", m_middleredcharge);
-    m_chooser.addOption("rightbothtwocube", m_rightbothtwocube);
     m_chooser.setDefaultOption("rightbluecharge", m_rightbluecharge);
     m_chooser.addOption("rightblueescape", m_rightblueescape);
     m_chooser.addOption("rightredcharge", m_rightredcharge);
     m_chooser.addOption("rightredescape", m_rightredescape);
-    m_chooser.addOption("leftbothtwocube", m_leftbothtwocube);
-    m_chooser.addOption("middlebothtwocube", m_middlebothtwocube);
+    m_chooser.addOption("leftbluecone", m_leftbluecone);
+    m_chooser.addOption("middlebluecone", m_middlebluecone);
+    m_chooser.addOption("rightbluecone", m_rightbluecone);
+    m_chooser.addOption("middleblueconeleftescape", m_middleblueconeleftescape);
+    m_chooser.addOption("leftredcone", m_leftredcone);
+    m_chooser.addOption("middleredcone", m_middleredcone);
+    m_chooser.addOption("rightredcone", m_rightredcone);
+    m_chooser.addOption("middleredconeleftescape", m_middleredconeleftescape);
 
     SmartDashboard.putData(m_chooser);
   }
@@ -205,6 +234,31 @@ public class RobotContainer {
 
     driverStationSubSys.MidConeDelivery.whileTrue(
         new Cmd_SubSys_Arm_PosCmd(armSubSys, -25.0, true, 1.00, true));
+
+    // CONE/CUBE SIGNALING
+    driverStationSubSys.RequestConeButton.onTrue(
+        new Cmd_SetBlingColorValue(
+            blingSubSys, Const_Bling.Controllers.controller1, Const_Bling.SolidColors.Yellow));
+    driverStationSubSys.RequestCubeButton.onTrue(
+        new Cmd_SetBlingColorValue(
+            blingSubSys, Const_Bling.Controllers.controller1, Const_Bling.SolidColors.Violet));
+
+    // Fun signaling
+    driverStationSubSys.ResetLEDColorButton.onTrue(
+        new Cmd_SetBlingColorValue(
+            blingSubSys,
+            Const_Bling.Controllers.controller1,
+            Const_Bling.Patterns.Color1Color2.ColorWaves));
+    driverStationSubSys.RainbowLEDColorButton.onTrue(
+        new Cmd_SetBlingColorValue(
+            blingSubSys,
+            Const_Bling.Controllers.controller1,
+            Const_Bling.Patterns.FixedPalette.RainbowRainbow));
+    driverStationSubSys.RainbowStrobeLEDColorButton.onTrue(
+        new Cmd_SetBlingColorValue(
+            blingSubSys,
+            Const_Bling.Controllers.controller1,
+            Const_Bling.Patterns.FixedPalette.StrobeRed));
   }
 
   /**

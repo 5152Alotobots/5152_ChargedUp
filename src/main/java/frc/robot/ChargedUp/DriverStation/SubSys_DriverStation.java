@@ -7,6 +7,7 @@ package frc.robot.ChargedUp.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 
 public class SubSys_DriverStation extends SubsystemBase {
   /** Creates a new DriverStationSubSys. */
@@ -25,6 +26,12 @@ public class SubSys_DriverStation extends SubsystemBase {
   public JoystickButton GroundPickupButton = new JoystickButton(m_CoDriverController, 1);
   public JoystickButton HighConeDelivery = new JoystickButton(m_CoDriverController, 4);
   public JoystickButton MidConeDelivery = new JoystickButton(m_CoDriverController, 3);
+  public JoystickButton RequestConeButton = new JoystickButton(m_CoDriverController, 6);
+  public JoystickButton RequestCubeButton = new JoystickButton(m_CoDriverController, 5);
+  public POVButton ResetLEDColorButton = new POVButton(m_CoDriverController, 180);
+  public POVButton RainbowLEDColorButton = new POVButton(m_CoDriverController, 0);
+  public POVButton RainbowStrobeLEDColorButton = new POVButton(m_CoDriverController, 270);
+
   // AuxDriver Controller
   private XboxController m_AuxDriverController = new XboxController(2);
 
