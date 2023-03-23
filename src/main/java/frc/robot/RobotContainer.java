@@ -28,9 +28,9 @@ import frc.robot.ChargedUp.AutoCommands.Auto_rightbluecharge_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_rightblueescape_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_rightredcharge_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_rightredescape_Cmd;
+import frc.robot.ChargedUp.Bling.Cmd.Cmd_SetBlingColorValue;
 import frc.robot.ChargedUp.Bling.Const_Bling;
 import frc.robot.ChargedUp.Bling.SubSys_Bling;
-import frc.robot.ChargedUp.Bling.Cmd.Cmd_SetBlingColorValue;
 import frc.robot.ChargedUp.DriverStation.SubSys_DriverStation;
 import frc.robot.ChargedUp.Hand.SubSys_Hand;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmd_SubSys_DriveTrain_JoysticDefault;
@@ -201,8 +201,12 @@ public class RobotContainer {
         new Cmd_SubSys_Arm_PosCmd(armSubSys, -25.0, true, 1.00, true));
 
     // CONE/CUBE SIGNALING
-    driverStationSubSys.RequestConeButton.onTrue(new Cmd_SetBlingColorValue(blingSubSys, Const_Bling.Controllers.controller1, Const_Bling.SolidColors.Yellow));
-    driverStationSubSys.RequestCubeButton.onTrue(new Cmd_SetBlingColorValue(blingSubSys, Const_Bling.Controllers.controller1, Const_Bling.SolidColors.Violet));
+    driverStationSubSys.RequestConeButton.onTrue(
+        new Cmd_SetBlingColorValue(
+            blingSubSys, Const_Bling.Controllers.controller1, Const_Bling.SolidColors.Yellow));
+    driverStationSubSys.RequestCubeButton.onTrue(
+        new Cmd_SetBlingColorValue(
+            blingSubSys, Const_Bling.Controllers.controller1, Const_Bling.SolidColors.Violet));
   }
 
   /**

@@ -7,9 +7,8 @@ package frc.robot.ChargedUp.Bling.Cmd;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.ChargedUp.Bling.SubSys_Bling;
 import frc.robot.ChargedUp.Bling.Const_Bling.Patterns;
-import frc.robot.ChargedUp.Bling.Const_Bling.SolidColors;
+import frc.robot.ChargedUp.Bling.SubSys_Bling;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -29,9 +28,9 @@ public class Cmd_SetBlingColorAlliance extends InstantCommand {
   public void initialize() {
     if (DriverStation.isDisabled()) {
       if (DriverStation.getAlliance() == DriverStation.Alliance.Blue) {
-      subSys_Bling.setBlinkinLEDColor(controller, Patterns.FixedPalette.BreathBlue);
+        subSys_Bling.setBlinkinLEDColor(controller, Patterns.FixedPalette.BreathBlue);
       } else {
-      subSys_Bling.setBlinkinLEDColor(controller, Patterns.FixedPalette.BreathRed);
+        subSys_Bling.setBlinkinLEDColor(controller, Patterns.FixedPalette.BreathRed);
       }
     }
   }
