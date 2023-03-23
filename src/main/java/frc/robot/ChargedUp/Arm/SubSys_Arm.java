@@ -35,13 +35,15 @@ public class SubSys_Arm extends SubsystemBase {
   private CANCoder Arm_ExtensionEncoder =
       new CANCoder(Constants.CAN_IDs.ArmExtensionCANCoder_CAN_ID);
 
+  private Boolean outsideBounds;
+
   private DigitalInput Arm_Extension_RetractStopSwitch = new DigitalInput(0);
   private Boolean prevArmExtensionFullyRetractSwitchActive = false;
   private Boolean isSlowSwitchClosed;
 
   private DigitalInput Arm_Extension_RetractSlowSwitch = new DigitalInput(1);
   private Boolean isStopSwitchClosed;
-  private Boolean inSlowArea;
+  // private Boolean inSlowArea;
 
   private double handLength;
 
@@ -71,6 +73,8 @@ public class SubSys_Arm extends SubsystemBase {
     }
     SmartDashboard.putNumber("armShoulderAngle_Init", armShoulderAngle_Init);
     Arm_ShoulderEncoder.setPosition(armShoulderAngle_Init);
+
+    outsideBounds = checkOutsideBounds();
   }
 
   @Override
@@ -84,6 +88,8 @@ public class SubSys_Arm extends SubsystemBase {
       }
     }
 
+    outsideBounds = checkOutsideBounds();
+    SmartDashboard.putBoolean("outsideBounds", outsideBounds);
     // This method will be called once per scheduler run
     SmartDashboard.putNumber(
         "ArmShoulderEncoderAngleAbsolute", getArmShoulderEncoderAngleAbsolute().getDegrees());
@@ -127,7 +133,6 @@ public class SubSys_Arm extends SubsystemBase {
         "ArmShoulderAngleArmHandTrans3d_Z",
         Units.metersToInches(getArmShoulderAngleArmHandTrans3d().getZ()));
 
-    SmartDashboard.putBoolean("OutsideBounds", checkOutsideBounds());
     // SmartDashboard.putNumber("SubSys_Arm_ShoulderCanCoder_CalculatedPOS", getShoulderRotation());
     // SmartDashboard.putNumber(
     //    "SubSys_Arm_ShoulderCanCoder_Position",
@@ -183,6 +188,7 @@ public class SubSys_Arm extends SubsystemBase {
     boolean ArmShoulderAtSetpoint = setArmShoulderPosCmd(armShouldPosCmd, armShoulderEnable);
     SmartDashboard.putBoolean("ArmShoulderAtSetpoint", ArmShoulderAtSetpoint);
     boolean ArmExtensionAtSetpoint = setArmExtensionPosCmd(armExtensionPosCmd, armExtensionEnable);
+    SmartDashboard.putBoolean("ArmExtensionAtSetpoint", ArmExtensionAtSetpoint);
     return (ArmShoulderAtSetpoint && ArmExtensionAtSetpoint);
   }
 
@@ -307,19 +313,23 @@ public class SubSys_Arm extends SubsystemBase {
     // Convert from rotSpd to Percent
     double armRotCmd = armShoulderRotCmd / Robot.MaxSpeeds.Arm.ArmShoulderMaxRotSpd;
 
+    if (outsideBounds) {
+      armRotCmd = 0.0;
+    }
     // Check for Mechanical Rotation Limits
     if (getArmShoulderAngle().getDegrees() <= SubSys_Arm_Constants.ArmShoulderMinAngle) {
       armRotCmd = Math.max(armRotCmd, 0);
     } else if (getArmShoulderAngle().getDegrees() >= SubSys_Arm_Constants.ArmShoulderMaxAngle) {
       armRotCmd = Math.min(armRotCmd, 0);
     }
+
     SmartDashboard.putNumber("armRotCmd", armRotCmd);
     Arm_ShoulderMotor.set(TalonFXControlMode.PercentOutput, armRotCmd);
   }
 
   private boolean setArmShoulderPosCmd(double armShoulderRotPosCmd, boolean armShoulderEnable) {
     boolean atSetpoint = false;
-    if (armShoulderEnable) {
+    if (armShoulderEnable && !outsideBounds) {
       // Check for Mechanical Rotation Limits
       double rotPosCmd =
           Math.min(
@@ -332,7 +342,7 @@ public class SubSys_Arm extends SubsystemBase {
       // Arm_ShoulderMotor.set(TalonFXControlMode.Position, rotPosCmd);
       Arm_ShoulderMotor.set(TalonFXControlMode.MotionMagic, armShoulderMotPosCmd);
       atSetpoint =
-          (Math.abs(Arm_ShoulderMotor.getClosedLoopError(0))
+          ((Math.abs(getArmShoulderAngle().getDegrees() - rotPosCmd))
               < SubSys_Arm_Constants.ArmShoulder.PID.atSetpointAllowableError);
     } else {
       Arm_ShoulderMotor.set(TalonFXControlMode.PercentOutput, 0);
@@ -408,12 +418,23 @@ public class SubSys_Arm extends SubsystemBase {
 
   private void setArmExtensionCmd(double armExtensionCmd) {
     double armExtCmd = armExtensionCmd / Robot.MaxSpeeds.Arm.ArmExtensionMaxSpd;
+
+    if (outsideBounds) {
+      armExtCmd = -0.3;
+    }
     // Check for Mechanical Extension Limits
+    double maxExension =
+        SubSys_Arm_Constants.ArmExtensionEncoderFullyExtendedDegrees
+            * SubSys_Arm_Constants.ArmExtensionDegToMetersFactor;
     if (getArmExtensionFullyRetractSwitchActive()) {
       armExtCmd = Math.max(armExtCmd, 0);
     } else if (getArmExtensionEncoderLength()
-        >= SubSys_Arm_Constants.ArmExtensionEncoderFullyExtendedDegrees
-            * SubSys_Arm_Constants.ArmExtensionDegToMetersFactor) {
+        <= 0.0 + Robot.Calibrations.Arm.ArmExtendPosCtrlSlowRange) {
+      armExtCmd = Math.max(armExtCmd, -Robot.Calibrations.Arm.ArmExtendPosCtrlSlowSpd);
+    } else if (getArmExtensionEncoderLength()
+        >= maxExension - Robot.Calibrations.Arm.ArmExtendPosCtrlSlowRange) {
+      armExtCmd = Math.min(armExtCmd, Robot.Calibrations.Arm.ArmExtendPosCtrlSlowSpd);
+    } else if (getArmExtensionEncoderLength() >= maxExension) {
       armExtCmd = Math.min(armExtCmd, 0);
     }
     SmartDashboard.putNumber("armExtCmd", armExtCmd);
@@ -422,13 +443,19 @@ public class SubSys_Arm extends SubsystemBase {
 
   private boolean setArmExtensionPosCmd(double armExtensionPosCmd, boolean armExtensionEnable) {
     boolean atPosition = false;
-    if (armExtensionEnable) {
+    double extPosCmd = Robot.Dimensions.Arm.ArmMinLength;
+    if (armExtensionEnable || outsideBounds) {
       // Check for Mechanical Extension Limits
-      double extPosCmd =
+      if (outsideBounds) {
+        extPosCmd = Robot.Dimensions.Arm.ArmMinLength;
+      } else {
+        extPosCmd = armExtensionPosCmd;
+      }
+      extPosCmd =
           Math.min(
               Robot.Dimensions.Arm.ArmMaxExtensionLength + Robot.Dimensions.Hand.HandForwardLength,
               Math.max(
-                  armExtensionPosCmd,
+                  extPosCmd,
                   Robot.Dimensions.Arm.ArmMinLength + Robot.Dimensions.Hand.HandForwardLength));
 
       double posError = extPosCmd - getArmHandLength();
