@@ -202,7 +202,7 @@ public class RobotContainer {
         new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
 
     driverStationSubSys.GroundPickupButton.whileTrue(
-        new Cmd_SubSys_Arm_PosCmd(armSubSys, 42.0, true, 0.8, true));
+        new Cmd_SubSys_Arm_PosCmd(armSubSys, 45.0, true, 0.8, true));
 
     driverStationSubSys.HighConeDelivery.whileTrue(
         new Cmd_SubSys_Arm_PosCmd(armSubSys, -35.0, true, 1.65, true));
