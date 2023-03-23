@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.ChargedUp.Arm.Cmds_SubSys_Arm.Cmd_SubSys_Arm_PosCmd;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
-import frc.robot.ChargedUp.ChargeStation.Cmd_AutoBalance;
 import frc.robot.ChargedUp.Hand.SubSys_Hand;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmds_PathPlanner.Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
@@ -58,5 +57,5 @@ public class Auto_middleblueconeleftescape_Cmd extends SequentialCommandGroup {
             new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "middleblueconeleftescape2", false, false, Alliance.Blue),
             new Cmd_SubSys_Arm_PosCmd(subsysArm, 10.0, true, 0.8, true).withTimeout(4))
         );
-  }
+    }
 }
