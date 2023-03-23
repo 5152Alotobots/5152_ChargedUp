@@ -43,31 +43,29 @@ public class Auto_rightbothtwocube_Cmd extends SequentialCommandGroup {
     addCommands(
         // new Cmd_whatever the arm one is
         // Hand is reversed
-        new Cmd_SubSys_Arm_PosCmd(subsysArm, -146.0, true, 1.5, true).withTimeout(4),
-        new WaitCommand(1.5),
+        new Cmd_SubSys_Arm_PosCmd(subsysArm, -147.0, true, 1.54, true).withTimeout(4),
+        new WaitCommand(2.5),
         new InstantCommand(subsysHand::CloseHand, subsysHand),
+        
         new ParallelCommandGroup(
-           new SequentialCommandGroup( 
-            new Cmd_SubSys_Arm_PosCmd(subsysArm, -145.0, false, 1.0, true).withTimeout(4),
-            new Cmd_SubSys_Arm_PosCmd(subsysArm, -145.0, true, 1.0, false).withTimeout(4)
-            ),
+            new SequentialCommandGroup( 
+                new Cmd_SubSys_Arm_PosCmd(subsysArm, 42.0, false, 0.8, true).withTimeout(4),
+                new Cmd_SubSys_Arm_PosCmd(subsysArm, 42.0, true, 0.8, false).withTimeout(4),
+                new Cmd_SubSys_Arm_PosCmd(subsysArm, 42.0, false, 1.0, true).withTimeout(4)),
+                
+           
             new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj( driveSubSys, "rightbothtwocube1", true, true)
-        ),
-         new Cmd_AutoBalance(pigeonGyro, driveSubSys)
-      
-        /* / // new ParallelCommandGroup(
-            new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
-                driveSubSys, "rightbothtwocube1", true, true),
-            new Cmd_SubSys_Arm_PosCmd(subsysArm, 32.0, true, 1.1, true).withTimeout(4.5)),
+            ),
+        
         new InstantCommand(subsysHand::OpenHand, subsysHand),
-      //  new ParallelCommandGroup(
-          //  new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
-          //      driveSubSys, "rightbothtwocube2", true, true),
-         //   new Cmd_SubSys_Arm_PosCmd(subsysArm, -155.0, true, 1.0, true).withTimeout(4)),
-        //new InstantCommand(subsysHand::CloseHand, subsysHand)
-        // new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "middlebothonecube3", true,
-        // true),
-       */ // new Cmd_AutoBalance(pigeonGyro, driveSubSys)
+          new ParallelCommandGroup(
+            new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj( driveSubSys, "rightbothtwocube2", false, false),
+            new Cmd_SubSys_Arm_PosCmd(subsysArm, 10.0, true, 0.8, true).withTimeout(4)
+            ),
+        
+        
+        new Cmd_AutoBalance(pigeonGyro, driveSubSys)
+       
         );
   }
 }

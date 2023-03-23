@@ -42,8 +42,8 @@ public class Auto_leftbothtwocube_Cmd extends SequentialCommandGroup {
     addCommands(
         // new Cmd_whatever the arm one is
         // Hand is reversed
-        new Cmd_SubSys_Arm_PosCmd(subsysArm, -144.0, true, 1.54, true).withTimeout(4),
-        new WaitCommand(2.5),
+        new Cmd_SubSys_Arm_PosCmd(subsysArm, -147.0, true, 1.54, true).withTimeout(4),
+        new WaitCommand(1.5),
         new InstantCommand(subsysHand::CloseHand, subsysHand),
         
         new ParallelCommandGroup(
@@ -57,8 +57,11 @@ public class Auto_leftbothtwocube_Cmd extends SequentialCommandGroup {
             ),
         
         new InstantCommand(subsysHand::OpenHand, subsysHand),
-          
-        new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj( driveSubSys, "leftbothtwocube2", true, true),
+          new ParallelCommandGroup(
+            new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj( driveSubSys, "leftbothtwocube2", false, true),
+            new Cmd_SubSys_Arm_PosCmd(subsysArm, 10.0, true, 0.8, true).withTimeout(4)
+            ),
+        
         
         new Cmd_AutoBalance(pigeonGyro, driveSubSys)
        

@@ -7,6 +7,7 @@ package frc.robot.ChargedUp.AutoCommands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.ChargedUp.Arm.Cmds_SubSys_Arm.Cmd_SubSys_Arm_PosCmd;
 import frc.robot.ChargedUp.ChargeStation.Cmd_AutoBalance;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
@@ -41,14 +42,28 @@ public class Auto_middlebothtwocube_Cmd extends SequentialCommandGroup {
     addCommands(
         // new Cmd_whatever the arm one is
         // Hand is reversed
-        new Cmd_SubSys_Arm_PosCmd(subsysArm, -146.0, true, 1.5, true).withTimeout(3.3),
+        new Cmd_SubSys_Arm_PosCmd(subsysArm, -147.0, true, 1.54, true).withTimeout(4),
+        new WaitCommand(2.5),
         new InstantCommand(subsysHand::CloseHand, subsysHand),
+        
         new ParallelCommandGroup(
-            new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
-                driveSubSys, "middlebothtwocube1", true, true),
-            new Cmd_SubSys_Arm_PosCmd(subsysArm, 42.0, true, 1.1, true).withTimeout(4.5)),
+            new SequentialCommandGroup( 
+                new Cmd_SubSys_Arm_PosCmd(subsysArm, 42.0, false, 0.8, true).withTimeout(4),
+                new Cmd_SubSys_Arm_PosCmd(subsysArm, 42.0, true, 0.8, false).withTimeout(4),
+                new Cmd_SubSys_Arm_PosCmd(subsysArm, 42.0, false, 1.0, true).withTimeout(4)),
+                
+           
+            new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj( driveSubSys, "middlebothtwocube1", true, true)
+            ),
+        
         new InstantCommand(subsysHand::OpenHand, subsysHand),
-            new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "middlebothtwocube2", true, true));
-
+          new ParallelCommandGroup(
+            new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj( driveSubSys, "middlebothtwocube2", false, false),
+            new Cmd_SubSys_Arm_PosCmd(subsysArm, 10.0, true, 0.8, true).withTimeout(4)
+            ),
+        
+        
+        new Cmd_AutoBalance(pigeonGyro, driveSubSys));
+       
   }
 }
