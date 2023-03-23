@@ -10,6 +10,7 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -23,6 +24,8 @@ public class Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj extends CommandBase {
   private String pathPlannerTrajName;
   private boolean setPose;
   private boolean setYaw;
+  private Alliance setAlliance;
+
   private PathPlannerTrajectory ppTraj;
 
   private final PIDController xDistancePID;
@@ -41,12 +44,14 @@ public class Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj extends CommandBase {
       SubSys_DriveTrain subSys_DriveTrain,
       String pathPlannerTrajName,
       boolean setPose,
-      boolean setYaw) {
+      boolean setYaw,
+      Alliance setAlliance) {
 
     this.subSys_DriveTrain = subSys_DriveTrain;
     this.pathPlannerTrajName = pathPlannerTrajName;
     this.setPose = setPose;
     this.setYaw = setYaw;
+    this.setAlliance = setAlliance;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subSys_DriveTrain);
@@ -57,6 +62,8 @@ public class Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj extends CommandBase {
             this.pathPlannerTrajName,
             // PathPlanner.getConstraintsFromPath(this.pathPlannerTrajName));
             new PathConstraints(2.7, 3.0));
+
+    this.ppTraj = PathPlannerTrajectory.transformTrajectoryForAlliance(this.ppTraj, setAlliance);
     this.xDistancePID =
         new PIDController(
             SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.Pgain,

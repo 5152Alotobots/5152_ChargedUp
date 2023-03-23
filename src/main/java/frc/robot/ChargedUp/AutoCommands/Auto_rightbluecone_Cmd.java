@@ -4,6 +4,7 @@
 
 package frc.robot.ChargedUp.AutoCommands;
 
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -52,11 +53,11 @@ public class Auto_rightbluecone_Cmd extends SequentialCommandGroup {
                 new Cmd_SubSys_Arm_PosCmd(subsysArm, 42.0, true, 0.8, false).withTimeout(4),
                 new Cmd_SubSys_Arm_PosCmd(subsysArm, 42.0, false, 1.0, true).withTimeout(4)),
             new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
-                driveSubSys, "rightbluecone1", true, true)),
+                driveSubSys, "rightbluecone1", true, true, Alliance.Blue)),
         new InstantCommand(subsysHand::OpenHand, subsysHand),
         new ParallelCommandGroup(
             new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
-                driveSubSys, "rightbluecone2", false, false),
+                driveSubSys, "rightbluecone2", false, false, Alliance.Blue),
             new Cmd_SubSys_Arm_PosCmd(subsysArm, 10.0, true, 0.8, true).withTimeout(4)),
         new Cmd_AutoBalance(pigeonGyro, driveSubSys));
   }

@@ -17,19 +17,23 @@ import frc.robot.ChargedUp.Arm.Cmds_SubSys_Arm.Cmd_SubSys_Arm_JoysticDefault;
 import frc.robot.ChargedUp.Arm.Cmds_SubSys_Arm.Cmd_SubSys_Arm_PosCmd;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
 import frc.robot.ChargedUp.AutoCommands.Auto_leftbluecharge_Cmd;
-import frc.robot.ChargedUp.AutoCommands.Auto_leftblueescape_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_leftbluecone_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_leftblueescape_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_leftredcharge_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_leftredcone_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_leftredescape_Cmd;
 // import frc.robot.ChargedUp.DistanceSensor.SubSys_DistanceSensor;
 import frc.robot.ChargedUp.AutoCommands.Auto_middlebluecharge_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_middlebluecone_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_middleblueconeleftescape_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_middleredcharge_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_middleredcone_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_middleredconeleftescape_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_rightbluecharge_Cmd;
-import frc.robot.ChargedUp.AutoCommands.Auto_rightblueescape_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_rightbluecone_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_rightblueescape_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_rightredcharge_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Auto_rightredcone_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Auto_rightredescape_Cmd;
 import frc.robot.ChargedUp.Bling.Cmd.Cmd_SetBlingColorValue;
 import frc.robot.ChargedUp.Bling.Const_Bling;
@@ -121,11 +125,21 @@ public class RobotContainer {
   private final Command m_middlebluecone =
       new Auto_middlebluecone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
 
-  private final Command m_middleblueconeleftescape = 
+  private final Command m_middleblueconeleftescape =
       new Auto_middleblueconeleftescape_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
 
+  private final Command m_rightredcone =
+      new Auto_rightredcone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
 
-      /*
+  private final Command m_leftredcone =
+      new Auto_leftredcone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
+
+  private final Command m_middleredcone =
+      new Auto_middleredcone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
+
+  private final Command m_middleredconeleftescape =
+      new Auto_middleredconeleftescape_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
+  /*
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
@@ -181,8 +195,11 @@ public class RobotContainer {
     m_chooser.addOption("leftbluecone", m_leftbluecone);
     m_chooser.addOption("middlebluecone", m_middlebluecone);
     m_chooser.addOption("rightbluecone", m_rightbluecone);
-    m_chooser.addOption("middleblueconeleftescape", m_rightbluecone);
-
+    m_chooser.addOption("middleblueconeleftescape", m_middleblueconeleftescape);
+    m_chooser.addOption("leftredcone", m_leftredcone);
+    m_chooser.addOption("middleredcone", m_middleredcone);
+    m_chooser.addOption("rightredcone", m_rightredcone);
+    m_chooser.addOption("middleredconeleftescape", m_middleredconeleftescape);
 
     SmartDashboard.putData(m_chooser);
   }
