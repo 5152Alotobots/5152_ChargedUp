@@ -43,7 +43,7 @@ public class SubSys_Arm extends SubsystemBase {
 
   private DigitalInput Arm_Extension_RetractSlowSwitch = new DigitalInput(1);
   private Boolean isStopSwitchClosed;
-  //private Boolean inSlowArea;
+  // private Boolean inSlowArea;
 
   private double handLength;
 
@@ -313,7 +313,7 @@ public class SubSys_Arm extends SubsystemBase {
     // Convert from rotSpd to Percent
     double armRotCmd = armShoulderRotCmd / Robot.MaxSpeeds.Arm.ArmShoulderMaxRotSpd;
 
-    if(outsideBounds){
+    if (outsideBounds) {
       armRotCmd = 0.0;
     }
     // Check for Mechanical Rotation Limits
@@ -322,7 +322,7 @@ public class SubSys_Arm extends SubsystemBase {
     } else if (getArmShoulderAngle().getDegrees() >= SubSys_Arm_Constants.ArmShoulderMaxAngle) {
       armRotCmd = Math.min(armRotCmd, 0);
     }
-    
+
     SmartDashboard.putNumber("armRotCmd", armRotCmd);
     Arm_ShoulderMotor.set(TalonFXControlMode.PercentOutput, armRotCmd);
   }
@@ -419,18 +419,21 @@ public class SubSys_Arm extends SubsystemBase {
   private void setArmExtensionCmd(double armExtensionCmd) {
     double armExtCmd = armExtensionCmd / Robot.MaxSpeeds.Arm.ArmExtensionMaxSpd;
 
-    if(outsideBounds){
+    if (outsideBounds) {
       armExtCmd = -0.3;
     }
     // Check for Mechanical Extension Limits
-    double maxExension = SubSys_Arm_Constants.ArmExtensionEncoderFullyExtendedDegrees
-    * SubSys_Arm_Constants.ArmExtensionDegToMetersFactor;
+    double maxExension =
+        SubSys_Arm_Constants.ArmExtensionEncoderFullyExtendedDegrees
+            * SubSys_Arm_Constants.ArmExtensionDegToMetersFactor;
     if (getArmExtensionFullyRetractSwitchActive()) {
       armExtCmd = Math.max(armExtCmd, 0);
-    } else if (getArmExtensionEncoderLength()<= 0.0+Robot.Calibrations.Arm.ArmExtendPosCtrlSlowRange){
-      armExtCmd = Math.max(armExtCmd,-Robot.Calibrations.Arm.ArmExtendPosCtrlSlowSpd);
-    } else if (getArmExtensionEncoderLength()>= maxExension-Robot.Calibrations.Arm.ArmExtendPosCtrlSlowRange){
-      armExtCmd = Math.min(armExtCmd,Robot.Calibrations.Arm.ArmExtendPosCtrlSlowSpd);
+    } else if (getArmExtensionEncoderLength()
+        <= 0.0 + Robot.Calibrations.Arm.ArmExtendPosCtrlSlowRange) {
+      armExtCmd = Math.max(armExtCmd, -Robot.Calibrations.Arm.ArmExtendPosCtrlSlowSpd);
+    } else if (getArmExtensionEncoderLength()
+        >= maxExension - Robot.Calibrations.Arm.ArmExtendPosCtrlSlowRange) {
+      armExtCmd = Math.min(armExtCmd, Robot.Calibrations.Arm.ArmExtendPosCtrlSlowSpd);
     } else if (getArmExtensionEncoderLength() >= maxExension) {
       armExtCmd = Math.min(armExtCmd, 0);
     }
@@ -443,17 +446,17 @@ public class SubSys_Arm extends SubsystemBase {
     double extPosCmd = Robot.Dimensions.Arm.ArmMinLength;
     if (armExtensionEnable || outsideBounds) {
       // Check for Mechanical Extension Limits
-      if (outsideBounds){
+      if (outsideBounds) {
         extPosCmd = Robot.Dimensions.Arm.ArmMinLength;
-      } else{
+      } else {
         extPosCmd = armExtensionPosCmd;
       }
       extPosCmd =
           Math.min(
               Robot.Dimensions.Arm.ArmMaxExtensionLength + Robot.Dimensions.Hand.HandForwardLength,
               Math.max(
-                extPosCmd,
-                Robot.Dimensions.Arm.ArmMinLength + Robot.Dimensions.Hand.HandForwardLength));
+                  extPosCmd,
+                  Robot.Dimensions.Arm.ArmMinLength + Robot.Dimensions.Hand.HandForwardLength));
 
       double posError = extPosCmd - getArmHandLength();
       double extMtrCmd = 0;
