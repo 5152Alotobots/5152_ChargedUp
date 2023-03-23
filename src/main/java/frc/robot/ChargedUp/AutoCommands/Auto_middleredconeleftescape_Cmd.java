@@ -18,15 +18,18 @@ import frc.robot.Library.DriveTrains.SwerveDrive.*;
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
-/** *Link For PathPlaner * */
-public class Auto_middlebluecone_Cmd extends SequentialCommandGroup {
+/**
+ * *Link For PathPlaner *
+ * https://docs.google.com/presentation/d/1xjYSI4KpbmGBUY-ZMf1nAFrXIoJo1tl-HHNl8LLqa1I/edit#slide=id.g1e65ac68f1d_0_48
+ */
+public class Auto_middleredconeleftescape_Cmd extends SequentialCommandGroup {
   private final SubSys_DriveTrain m_DriveTrain;
   private final SubSys_PigeonGyro m_pigeonGyro;
   private final SubSys_Arm m_Arm;
   private final SubSys_Hand m_Hand;
 
   /** Creates a new Auto_Challenge1_Cmd. */
-  public Auto_middlebluecone_Cmd(
+  public Auto_middleredconeleftescape_Cmd(
       SubSys_DriveTrain driveSubSys,
       SubSys_PigeonGyro pigeonGyro,
       SubSys_Arm subsysArm,
@@ -49,11 +52,11 @@ public class Auto_middlebluecone_Cmd extends SequentialCommandGroup {
                 new Cmd_SubSys_Arm_PosCmd(subsysArm, 42.0, false, 0.8, true).withTimeout(4),
                 new Cmd_SubSys_Arm_PosCmd(subsysArm, 42.0, true, 0.8, false).withTimeout(4),
                 new Cmd_SubSys_Arm_PosCmd(subsysArm, 42.0, false, 1.0, true).withTimeout(4)),
-            new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "middlebluecone1", true, true, Alliance.Blue)),
+            new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "middleblueconeleftescape1", true, true, Alliance.Red)),
         new InstantCommand(subsysHand::OpenHand, subsysHand),
         new ParallelCommandGroup(
-            new  Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "middlebluecone2", false, false, Alliance.Blue),
-            new Cmd_SubSys_Arm_PosCmd(subsysArm, 10.0, true, 0.8, true).withTimeout(4)),
-        new Cmd_AutoBalance(pigeonGyro, driveSubSys));
+            new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "middleblueconeleftescape2", false, false, Alliance.Red),
+            new Cmd_SubSys_Arm_PosCmd(subsysArm, 10.0, true, 0.8, true).withTimeout(4))
+        );
   }
 }

@@ -4,6 +4,7 @@
 
 package frc.robot.ChargedUp.AutoCommands;
 
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.ChargedUp.ChargeStation.Cmd_AutoBalance;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmds_PathPlanner.Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj;
@@ -26,8 +27,7 @@ public class Auto_middleredcharge_Cmd extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
-            driveSubSys, "middleredcharge", true, true),
+        new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "middleredcharge", true, true, Alliance.Red),
         new Cmd_AutoBalance(pigeonGyro, driveSubSys));
   }
 }

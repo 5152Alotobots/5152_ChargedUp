@@ -4,6 +4,7 @@
 
 package frc.robot.ChargedUp.AutoCommands;
 
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmds_PathPlanner.Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
@@ -25,6 +26,6 @@ public class Auto_leftblueescape_Cmd extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "leftblueescape", true, true));
+        new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "leftblueescape", true, true, Alliance.Blue));
   }
 }
