@@ -116,22 +116,30 @@ public class RobotContainer {
 
   private final Command m_rightredescape = new Auto_rightredescape_Cmd(driveSubSys, gyroSubSys);
 
-  private final Command m_rightbluecone = new Auto_rightbluecone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
+  private final Command m_rightbluecone =
+      new Auto_rightbluecone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
 
-  private final Command m_leftbluecone = new Auto_leftbluecone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
+  private final Command m_leftbluecone =
+      new Auto_leftbluecone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
 
-  private final Command m_middlebluecone = new Auto_middlebluecone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
+  private final Command m_middlebluecone =
+      new Auto_middlebluecone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
 
-  private final Command m_middleblueconeleftescape = new Auto_middleblueconeleftescape_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
+  private final Command m_middleblueconeleftescape =
+      new Auto_middleblueconeleftescape_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
 
-  private final Command m_rightredcone = new Auto_rightredcone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
+  private final Command m_rightredcone =
+      new Auto_rightredcone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
 
-  private final Command m_leftredcone = new Auto_leftredcone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
+  private final Command m_leftredcone =
+      new Auto_leftredcone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
 
-  private final Command m_middleredcone = new Auto_middleredcone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
+  private final Command m_middleredcone =
+      new Auto_middleredcone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
 
-  private final Command m_middleredconeleftescape = new Auto_middleredconeleftescape_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
-      /*
+  private final Command m_middleredconeleftescape =
+      new Auto_middleredconeleftescape_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
+  /*
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
@@ -234,6 +242,23 @@ public class RobotContainer {
     driverStationSubSys.RequestCubeButton.onTrue(
         new Cmd_SetBlingColorValue(
             blingSubSys, Const_Bling.Controllers.controller1, Const_Bling.SolidColors.Violet));
+
+    // Fun signaling
+    driverStationSubSys.ResetLEDColorButton.onTrue(
+        new Cmd_SetBlingColorValue(
+            blingSubSys,
+            Const_Bling.Controllers.controller1,
+            Const_Bling.Patterns.Color1Color2.ColorWaves));
+    driverStationSubSys.RainbowLEDColorButton.onTrue(
+        new Cmd_SetBlingColorValue(
+            blingSubSys,
+            Const_Bling.Controllers.controller1,
+            Const_Bling.Patterns.FixedPalette.RainbowRainbow));
+    driverStationSubSys.RainbowStrobeLEDColorButton.onTrue(
+        new Cmd_SetBlingColorValue(
+            blingSubSys,
+            Const_Bling.Controllers.controller1,
+            Const_Bling.Patterns.FixedPalette.StrobeRed));
   }
 
   /**
