@@ -10,8 +10,9 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
@@ -25,6 +26,7 @@ public class Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj extends CommandBase {
   private boolean setPose;
   private boolean setYaw;
   private Alliance setAlliance;
+  private PathConstraints constraints;
 
   private PathPlannerTrajectory ppTraj;
 
@@ -57,11 +59,12 @@ public class Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj extends CommandBase {
     addRequirements(subSys_DriveTrain);
 
     // Load Path
+    this.constraints = PathPlanner.getConstraintsFromPath(this.pathPlannerTrajName);
     this.ppTraj =
         PathPlanner.loadPath(
             this.pathPlannerTrajName,
-            // PathPlanner.getConstraintsFromPath(this.pathPlannerTrajName));
-            new PathConstraints(2.7, 3.0));
+            this.constraints);
+            //new PathConstraints(2.7, 3.0));
 
     this.ppTraj = PathPlannerTrajectory.transformTrajectoryForAlliance(this.ppTraj, setAlliance);
     this.xDistancePID =
