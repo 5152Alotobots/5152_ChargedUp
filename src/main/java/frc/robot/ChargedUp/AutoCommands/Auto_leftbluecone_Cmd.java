@@ -1,6 +1,16 @@
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
+/*
+   _____                                                                _ 
+  / ____|                      /\                                      | |
+ | (___   ___  __ _ _ __      /  \   _ __  _ __  _ __ _____   _____  __| |
+  \___ \ / _ \/ _` | '_ \    / /\ \ | '_ \| '_ \| '__/ _ \ \ / / _ \/ _` |
+  ____) |  __/ (_| | | | |  / ____ \| |_) | |_) | | | (_) \ V /  __/ (_| |
+ |_____/ \___|\__,_|_| |_| /_/    \_\ .__/| .__/|_|  \___/ \_/ \___|\__,_|
+                                    | |   | |                             
+                                    |_|   |_|                             
+ */
 
 package frc.robot.ChargedUp.AutoCommands;
 
@@ -46,9 +56,9 @@ public class Auto_leftbluecone_Cmd extends SequentialCommandGroup {
         new InstantCommand(subsysHand::CloseHand, subsysHand),
         new ParallelCommandGroup(
             new SequentialCommandGroup(
-                new Cmd_SubSys_Arm_PosCmd(subsysArm, 42.0, false, 0.8, true).withTimeout(4),
-                new Cmd_SubSys_Arm_PosCmd(subsysArm, 42.0, true, 0.8, false).withTimeout(4),
-                new Cmd_SubSys_Arm_PosCmd(subsysArm, 42.0, false, 1.0, true).withTimeout(4)),
+                new Cmd_SubSys_Arm_PosCmd(subsysArm, 0, false, 0.8, true).withTimeout(4),
+                new Cmd_SubSys_Arm_PosCmd(subsysArm, 42, true, 0, false).withTimeout(4),
+                new Cmd_SubSys_Arm_PosCmd(subsysArm, 0, false, 1, true).withTimeout(4)),
             new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
                 driveSubSys, "leftbluecone1", true, true, Alliance.Blue)),
         new InstantCommand(subsysHand::OpenHand, subsysHand),
