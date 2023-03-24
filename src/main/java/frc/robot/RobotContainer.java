@@ -38,12 +38,14 @@ import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_leftbluecharge_1
 import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_leftblueescape_1cone_Cmd;
 import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_leftredcharge_1cone_Cmd;
 import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_leftredescape_1cone_Cmd;
-import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_middlebluecharge_1cone_Cmd;
-import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_middleredcharge_1cone_Cmd;
+// import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_middlebluecharge_1cone_Cmd;
+// import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_middleredcharge_1cone_Cmd;
 import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_rightbluecharge_1cone_Cmd;
 import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_rightblueescape_1cone_Cmd;
 import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_rightredcharge_1cone_Cmd;
 import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_rightredescape_1cone_Cmd;
+import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.Auto_Lakeview_1cube_Cmd;
+import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.Auto_rightbluecharge_1cube_Cmd;
 import frc.robot.ChargedUp.Bling.Cmd.Cmd_SetBlingColorValue;
 import frc.robot.ChargedUp.Bling.Const_Bling;
 import frc.robot.ChargedUp.Bling.SubSys_Bling;
@@ -161,13 +163,13 @@ public class RobotContainer {
 
     private final Command m_leftredescape_1cone =
         new Auto_leftredescape_1cone_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
-
+    /*
     private final Command m_middlebluecharge_1cone =
         new Auto_middlebluecharge_1cone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
-
-    private final Command m_middleredcharge_1cone =
+    */
+   /*  private final Command m_middleredcharge_1cone =
         new Auto_middleredcharge_1cone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
-
+    */
     private final Command m_rightbluecharge_1cone =
         new Auto_rightbluecharge_1cone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
 
@@ -180,6 +182,12 @@ public class RobotContainer {
     private final Command m_rightredescape_1cone =
         new Auto_rightredescape_1cone_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
     
+    private final Command m_lakeview_1cube =
+    new Auto_Lakeview_1cube_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
+    
+    private final Command m_rightbluecharge_1cube =
+    new Auto_rightbluecharge_1cube_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
+
 
   /*
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -239,12 +247,16 @@ public class RobotContainer {
     m_chooser.addOption("[SINGLE] leftblueescape_1cone", m_leftblueescape_1cone);
     m_chooser.addOption("[SINGLE] leftredcharge_1cone", m_leftredcharge_1cone);
     m_chooser.addOption("[SINGLE] leftredescape_1cone", m_leftredescape_1cone);
-    m_chooser.addOption("[SINGLE] middlebluecharge_1cone", m_middlebluecharge_1cone);
-    m_chooser.addOption("[SINGLE] middleredcharge_1cone", m_middleredcharge_1cone);
+    // m_chooser.addOption("[SINGLE] middlebluecharge_1cone", m_middlebluecharge_1cone);
+    // m_chooser.addOption("[SINGLE] middleredcharge_1cone", m_middleredcharge_1cone);
     m_chooser.addOption("[SINGLE] rightbluecharge_1cone", m_rightbluecharge_1cone);
     m_chooser.addOption("[SINGLE] rightblueescape_1cone", m_rightblueescape_1cone);
     m_chooser.addOption("[SINGLE] rightredcharge_1cone", m_rightredcharge_1cone);
     m_chooser.addOption("[SINGLE] rightredescape_1cone", m_rightredescape_1cone);
+    m_chooser.addOption("[SINGLE] rightbluecharge_1cube", m_rightbluecharge_1cube);
+
+    //LAKE VIEW
+    m_chooser.addOption("lakeview", m_lakeview_1cube);
     // DOUBLE ELEMENT COMMANDS //TODO: FIX THESE
     /*
     m_chooser.addOption("[DOUBLE] leftbluecone", m_leftbluecone);
