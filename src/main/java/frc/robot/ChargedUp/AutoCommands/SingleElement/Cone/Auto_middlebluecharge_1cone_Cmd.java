@@ -20,6 +20,9 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
 import frc.robot.ChargedUp.Arm.Cmds_SubSys_Arm.Cmd_SubSys_Arm_PosCmd;
+import frc.robot.ChargedUp.Bling.Const_Bling;
+import frc.robot.ChargedUp.Bling.SubSys_Bling;
+import frc.robot.ChargedUp.Bling.Cmd.Cmd_SetBlingColorValue;
 import frc.robot.ChargedUp.ChargeStation.Cmd_AutoBalance;
 import frc.robot.ChargedUp.Hand.SubSys_Hand;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmds_PathPlanner.Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj;
@@ -36,13 +39,15 @@ public class Auto_middlebluecharge_1cone_Cmd extends SequentialCommandGroup {
   private final SubSys_PigeonGyro m_pigeonGyro;
   private final SubSys_Arm subsysArm;
   private final SubSys_Hand subsysHand;
+  private final SubSys_Bling blingSubSys;
 
   /** Creates a new Auto_Challenge1_Cmd. */
-  public Auto_middlebluecharge_1cone_Cmd(SubSys_DriveTrain driveSubSys, SubSys_PigeonGyro pigeonGyro, SubSys_Arm arm, SubSys_Hand hand) {
+  public Auto_middlebluecharge_1cone_Cmd(SubSys_DriveTrain driveSubSys, SubSys_PigeonGyro pigeonGyro, SubSys_Arm arm, SubSys_Hand hand, SubSys_Bling bling) {
     m_DriveTrain = driveSubSys;
     m_pigeonGyro = pigeonGyro;
     subsysArm = arm;
     subsysHand = hand;
+    blingSubSys = bling;
 
     /* Construct parallel command groups */
     ParallelCommandGroup driveAndRetractArm = new ParallelCommandGroup(
@@ -58,7 +63,8 @@ public class Auto_middlebluecharge_1cone_Cmd extends SequentialCommandGroup {
         new WaitCommand(1.5), // Add buffer time
         new InstantCommand(subsysHand::CloseHand, subsysHand), // Open hand (reversed)
         driveAndRetractArm, // Drive to charge station whilst retracting arm
-        new Cmd_AutoBalance(pigeonGyro, driveSubSys) // Balance on charge station
+        new Cmd_AutoBalance(pigeonGyro, driveSubSys), // Balance on charge station
+        new Cmd_SetBlingColorValue(blingSubSys, Const_Bling.Controllers.controller1, Const_Bling.Patterns.FixedPalette.RainbowRainbow) // Celebrate!
     );
   }
 }

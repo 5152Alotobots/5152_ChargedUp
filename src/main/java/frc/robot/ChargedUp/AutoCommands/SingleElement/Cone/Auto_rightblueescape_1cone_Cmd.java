@@ -21,6 +21,9 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmds_PathPlanner.Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
 import frc.robot.ChargedUp.Arm.Cmds_SubSys_Arm.Cmd_SubSys_Arm_PosCmd;
+import frc.robot.ChargedUp.Bling.Const_Bling;
+import frc.robot.ChargedUp.Bling.SubSys_Bling;
+import frc.robot.ChargedUp.Bling.Cmd.Cmd_SetBlingColorValue;
 import frc.robot.ChargedUp.ChargeStation.Cmd_AutoBalance;
 import frc.robot.ChargedUp.Hand.SubSys_Hand;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
@@ -36,13 +39,15 @@ public class Auto_rightblueescape_1cone_Cmd extends SequentialCommandGroup {
   private final SubSys_PigeonGyro m_pigeonGyro;
   private final SubSys_Arm subsysArm;
   private final SubSys_Hand subsysHand;
+  private final SubSys_Bling blingSubSys;
 
   /** Creates a new Auto_Challenge1_Cmd. */
-  public Auto_rightblueescape_1cone_Cmd(SubSys_DriveTrain driveSubSys, SubSys_Arm arm, SubSys_Hand hand, SubSys_PigeonGyro pigeonGyro) {
+  public Auto_rightblueescape_1cone_Cmd(SubSys_DriveTrain driveSubSys, SubSys_Arm arm, SubSys_Hand hand, SubSys_PigeonGyro pigeonGyro, SubSys_Bling bling) {
     m_DriveTrain = driveSubSys;
     m_pigeonGyro = pigeonGyro;
     subsysArm = arm;
     subsysHand = hand;
+    blingSubSys = bling;
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
 
@@ -59,7 +64,8 @@ public class Auto_rightblueescape_1cone_Cmd extends SequentialCommandGroup {
         new Cmd_SubSys_Arm_PosCmd(subsysArm, -147.0, true, 1.54, true).withTimeout(4), // Lift arm to high position
         new WaitCommand(1.5), // Add buffer time
         new InstantCommand(subsysHand::CloseHand, subsysHand), // Open hand (reversed)
-        driveAndRetractArm // Drive to end position
+        driveAndRetractArm, // Drive to end position
+        new Cmd_SetBlingColorValue(blingSubSys, Const_Bling.Controllers.controller1, Const_Bling.Patterns.FixedPalette.RainbowRainbow) // Celebrate!
     );
   }
 }

@@ -151,34 +151,34 @@ public class RobotContainer {
 
 //! NEW SINGLE ELEMENT COMMANDS
     private final Command m_leftbluecharge_1cone =
-        new Auto_leftbluecharge_1cone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
+        new Auto_leftbluecharge_1cone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
 
     private final Command m_leftblueescape_1cone =
-        new Auto_leftblueescape_1cone_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys);
+        new Auto_leftblueescape_1cone_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
 
     private final Command m_leftredcharge_1cone =
-        new Auto_leftredcharge_1cone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
+        new Auto_leftredcharge_1cone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
 
     private final Command m_leftredescape_1cone =
-        new Auto_leftredescape_1cone_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys);
+        new Auto_leftredescape_1cone_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
 
     private final Command m_middlebluecharge_1cone =
-        new Auto_middlebluecharge_1cone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
+        new Auto_middlebluecharge_1cone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
 
     private final Command m_middleredcharge_1cone =
-        new Auto_middleredcharge_1cone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
+        new Auto_middleredcharge_1cone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
 
     private final Command m_rightbluecharge_1cone =
-        new Auto_rightbluecharge_1cone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
+        new Auto_rightbluecharge_1cone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
 
     private final Command m_rightblueescape_1cone =
-        new Auto_rightblueescape_1cone_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys);
+        new Auto_rightblueescape_1cone_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
 
     private final Command m_rightredcharge_1cone =
-        new Auto_rightredcharge_1cone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
+        new Auto_rightredcharge_1cone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
 
     private final Command m_rightredescape_1cone =
-        new Auto_rightredescape_1cone_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys);
+        new Auto_rightredescape_1cone_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
     
 
   /*
