@@ -44,8 +44,7 @@ import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_rightbluecharge_
 import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_rightblueescape_1cone_Cmd;
 import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_rightredcharge_1cone_Cmd;
 import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_rightredescape_1cone_Cmd;
-import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.Auto_Lakeview_1cube_Cmd;
-import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.Auto_rightbluecharge_1cube_Cmd;
+import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.*;
 import frc.robot.ChargedUp.Bling.Cmd.Cmd_SetBlingColorValue;
 import frc.robot.ChargedUp.Bling.Const_Bling;
 import frc.robot.ChargedUp.Bling.SubSys_Bling;
@@ -152,6 +151,7 @@ public class RobotContainer {
       new Auto_middleredconeleftescape_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
 
 //! NEW SINGLE ELEMENT COMMANDS
+    //Cones
     private final Command m_leftbluecharge_1cone =
         new Auto_leftbluecharge_1cone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
 
@@ -182,13 +182,37 @@ public class RobotContainer {
     private final Command m_rightredescape_1cone =
         new Auto_rightredescape_1cone_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
     
+    //Cubes
     private final Command m_lakeview_1cube =
-    new Auto_Lakeview_1cube_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
+        new Auto_Lakeview_1cube_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
+
+    private final Command Auto_leftbluecharge_1cube_Cmd =
+        new Auto_leftbluecharge_1cube_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
     
-    private final Command m_rightbluecharge_1cube =
-    new Auto_rightbluecharge_1cube_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
+    private final Command Auto_leftblueescape_1cube_Cmd =
+        new Auto_leftblueescape_1cube_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
+    
+    private final Command Auto_leftredcharge_1cube_Cmd =
+        new Auto_leftredcharge_1cube_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
+    
+    private final Command Auto_leftredescape_1cube_Cmd =
+        new Auto_leftredescape_1cube_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
+    
+    private final Command Auto_rightbluecharge_1cube_Cmd =
+        new Auto_rightbluecharge_1cube_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
+    
+    private final Command Auto_rightblueescape_1cube_Cmd =
+        new Auto_rightblueescape_1cube_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
+    
+    private final Command Auto_rightredcharge_1cube_Cmd =
+        new Auto_rightredcharge_1cube_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
+    
+    private final Command Auto_rightredescape_1cube_Cmd =
+        new Auto_rightredescape_1cube_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
 
-
+    
+    
+    
   /*
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -243,6 +267,7 @@ public class RobotContainer {
     m_chooser.addOption("[BASIC] rightredcharge", m_rightredcharge);
     m_chooser.addOption("[BASIC] rightredescape", m_rightredescape);
     // NEW SINGLE ELEMENT COMMANDS
+        //Cones
     m_chooser.addOption("[SINGLE] leftbluecharge_1cone", m_leftbluecharge_1cone);
     m_chooser.addOption("[SINGLE] leftblueescape_1cone", m_leftblueescape_1cone);
     m_chooser.addOption("[SINGLE] leftredcharge_1cone", m_leftredcharge_1cone);
@@ -253,7 +278,16 @@ public class RobotContainer {
     m_chooser.addOption("[SINGLE] rightblueescape_1cone", m_rightblueescape_1cone);
     m_chooser.addOption("[SINGLE] rightredcharge_1cone", m_rightredcharge_1cone);
     m_chooser.addOption("[SINGLE] rightredescape_1cone", m_rightredescape_1cone);
-    m_chooser.addOption("[SINGLE] rightbluecharge_1cube", m_rightbluecharge_1cube);
+        // Cubes    
+    m_chooser.addOption("[SINGLE] leftbluecharge_1cube", Auto_leftbluecharge_1cube_Cmd);
+    m_chooser.addOption("[SINGLE] leftblueescape_1cube", Auto_leftblueescape_1cube_Cmd);
+    m_chooser.addOption("[SINGLE] leftredcharge_1cube", Auto_leftredcharge_1cube_Cmd);
+    m_chooser.addOption("[SINGLE] leftredescape_1cube", Auto_leftredescape_1cube_Cmd);
+    m_chooser.addOption("[SINGLE] rightbluecharge_1cube", Auto_rightbluecharge_1cube_Cmd);
+    m_chooser.addOption("[SINGLE] rightblueescape_1cube", Auto_rightblueescape_1cube_Cmd);
+    m_chooser.addOption("[SINGLE] rightredcharge_1cube", Auto_rightredcharge_1cube_Cmd);
+    m_chooser.addOption("[SINGLE] rightredescape_1cube", Auto_rightredescape_1cube_Cmd);
+
 
     //LAKE VIEW
     m_chooser.addOption("lakeview", m_lakeview_1cube);

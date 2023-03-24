@@ -11,7 +11,6 @@
                    __/ |              __/ |                                                           
                   |___/              |___/                                                            
  */
-//WORKS - TESTED ON FIELD
 package frc.robot.ChargedUp.AutoCommands.SingleElement.Cube;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -35,16 +34,15 @@ import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
  * *Link For PathPlaner *
  * https://docs.google.com/presentation/d/1xjYSI4KpbmGBUY-ZMf1nAFrXIoJo1tl-HHNl8LLqa1I/edit#slide=id.g1e65ac68f1d_0_48
  */
-public class Auto_rightbluecharge_1cube_Cmd extends SequentialCommandGroup {
+public class Auto_leftredcharge_1cube_Cmd extends SequentialCommandGroup {
   private final SubSys_DriveTrain m_DriveTrain;
   private final SubSys_PigeonGyro m_pigeonGyro;
   private final SubSys_Arm subsysArm;
   private final SubSys_Hand subsysHand;
   private final SubSys_Bling blingSubSys;
-  
 
   /** Creates a new Auto_Challenge1_Cmd. */
-  public Auto_rightbluecharge_1cube_Cmd(SubSys_DriveTrain driveSubSys, SubSys_PigeonGyro pigeonGyro, SubSys_Arm arm, SubSys_Hand hand, SubSys_Bling bling) {
+  public Auto_leftredcharge_1cube_Cmd(SubSys_DriveTrain driveSubSys, SubSys_PigeonGyro pigeonGyro, SubSys_Arm arm, SubSys_Hand hand, SubSys_Bling bling) {
     m_DriveTrain = driveSubSys;
     m_pigeonGyro = pigeonGyro;
     subsysArm = arm;
@@ -54,7 +52,7 @@ public class Auto_rightbluecharge_1cube_Cmd extends SequentialCommandGroup {
     /* Construct parallel command groups */
     ParallelCommandGroup driveAndRetractArm = new ParallelCommandGroup(
         new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
-            driveSubSys, "rightcharge_1cube", true, true, Alliance.Blue),
+            driveSubSys, "leftcharge_1cube", true, true, Alliance.Red),
             new Cmd_SubSys_Arm_PosCmd(subsysArm, 10.0, true, 0.8, true).withTimeout(4)
             );
 
@@ -67,7 +65,6 @@ public class Auto_rightbluecharge_1cube_Cmd extends SequentialCommandGroup {
         driveAndRetractArm, // Drive to charge station whilst retracting arm
         new Cmd_AutoBalance(pigeonGyro, driveSubSys), // Balance on charge station
         new Cmd_SetBlingColorValue(blingSubSys, Const_Bling.Controllers.controller1, Const_Bling.Patterns.FixedPalette.RainbowRainbow) // Celebrate!
-
     );
   }
 }
