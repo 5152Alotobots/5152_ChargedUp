@@ -195,7 +195,7 @@ public class RobotContainer {
     m_chooser.addOption("leftbluecone", m_leftbluecone);
     m_chooser.addOption("middlebluecone", m_middlebluecone);
     m_chooser.addOption("rightbluecone", m_rightbluecone);
-    m_chooser.addOption("middleblueconeleftescape", m_middleblueconeleftescape);
+    m_chooser.addOption("middlebluecone", m_middlebluecone);
     m_chooser.addOption("leftredcone", m_leftredcone);
     m_chooser.addOption("middleredcone", m_middleredcone);
     m_chooser.addOption("rightredcone", m_rightredcone);
