@@ -54,7 +54,7 @@ public class Auto_leftredcone_Cmd extends SequentialCommandGroup {
         new InstantCommand(subsysHand::OpenHand, subsysHand),
         new ParallelCommandGroup(
             new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
-                driveSubSys, "leftbluecone2", false, true, Alliance.Red),
+                driveSubSys, "leftbluecone2", false, false, Alliance.Red),
             new Cmd_SubSys_Arm_PosCmd(subsysArm, 10.0, true, 0.8, true).withTimeout(4)),
         new Cmd_AutoBalance(pigeonGyro, driveSubSys));
   }
