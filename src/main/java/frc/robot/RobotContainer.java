@@ -245,7 +245,8 @@ public class RobotContainer {
     m_chooser.addOption("[SINGLE] rightblueescape_1cone", m_rightblueescape_1cone);
     m_chooser.addOption("[SINGLE] rightredcharge_1cone", m_rightredcharge_1cone);
     m_chooser.addOption("[SINGLE] rightredescape_1cone", m_rightredescape_1cone);
-    // DOUBLE ELEMENT COMMANDS
+    // DOUBLE ELEMENT COMMANDS //TODO: FIX THESE
+    /*
     m_chooser.addOption("[DOUBLE] leftbluecone", m_leftbluecone);
     m_chooser.addOption("[DOUBLE] middlebluecone", m_middlebluecone);
     m_chooser.addOption("[DOUBLE] rightbluecone", m_rightbluecone);
@@ -254,6 +255,7 @@ public class RobotContainer {
     m_chooser.addOption("[DOUBLE] middleredcone", m_middleredcone);
     m_chooser.addOption("[DOUBLE] rightredcone", m_rightredcone);
     m_chooser.addOption("[DOUBLE] middleredconeleftescape", m_middleredconeleftescape);
+    */
     SmartDashboard.putData(m_chooser);
   }
 
