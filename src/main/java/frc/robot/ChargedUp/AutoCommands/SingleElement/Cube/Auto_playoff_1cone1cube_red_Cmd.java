@@ -34,7 +34,7 @@ import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
 // Link For PathPlaner
 // https://docs.google.com/presentation/d/1xjYSI4KpbmGBUY-ZMf1nAFrXIoJo1tl-HHNl8LLqa1I/edit#slide=id.g1e64fa08ff8_0_0
 
-public class Auto_playoff_1cone1cube_Cmd extends SequentialCommandGroup {
+public class Auto_playoff_1cone1cube_red_Cmd extends SequentialCommandGroup {
   private final SubSys_DriveTrain m_DriveTrain;
   private final SubSys_PigeonGyro m_pigeonGyro;
   private final SubSys_Arm subsysArm;
@@ -43,7 +43,7 @@ public class Auto_playoff_1cone1cube_Cmd extends SequentialCommandGroup {
 
 
   /** Creates a new Auto_Challenge1_Cmd. */
-  public Auto_playoff_1cone1cube_Cmd(SubSys_DriveTrain driveSubSys, SubSys_Arm arm, SubSys_Hand hand, SubSys_PigeonGyro pigeonGyro, SubSys_Bling bling) {
+  public Auto_playoff_1cone1cube_red_Cmd(SubSys_DriveTrain driveSubSys, SubSys_Arm arm, SubSys_Hand hand, SubSys_PigeonGyro pigeonGyro, SubSys_Bling bling) {
     m_DriveTrain = driveSubSys;
     m_pigeonGyro = pigeonGyro;
     subsysArm = arm;
@@ -63,7 +63,7 @@ public class Auto_playoff_1cone1cube_Cmd extends SequentialCommandGroup {
             driveSubSys, "playoff2", false, false, Alliance.Red),
             new SequentialCommandGroup(
             new Cmd_SubSys_Arm_PosCmd(subsysArm, -90, true, 0, false).withTimeout(4),
-            new Cmd_SubSys_Arm_PosCmd(subsysArm, -147.0, true, 1.54, true).withTimeout(6)            
+            new Cmd_SubSys_Arm_PosCmd(subsysArm, -158.0, true, 1.54, true).withTimeout(6)
     ));
 
     // Add your commands in the addCommands() call, e.g.

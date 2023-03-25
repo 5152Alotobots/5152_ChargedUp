@@ -214,9 +214,11 @@ public class RobotContainer {
         new Auto_Lakeviewleave_1cube_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
     
     // Playoffs
-    private final Command Auto_playoff_1cone1cube_Cmd =
-    new Auto_playoff_1cone1cube_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
+    private final Command Auto_playoff_1cone1cube_red_Cmd =
+    new Auto_playoff_1cone1cube_red_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
 
+    private final Command Auto_playoff_1cone1cube_blue_Cmd =
+    new Auto_playoff_1cone1cube_blue_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
     
   /*
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -299,7 +301,9 @@ public class RobotContainer {
     m_chooser.addOption("lakeviewleave_1cube", Auto_lakeviewleave_1cube_Cmd);
 
     //Playoffs
-    m_chooser.addOption("playoffs - LEFT Blue", Auto_playoff_1cone1cube_Cmd);
+    m_chooser.addOption("playoffs - Red", Auto_playoff_1cone1cube_red_Cmd);
+    m_chooser.addOption("playoffs - Blue", Auto_playoff_1cone1cube_blue_Cmd);
+
     // DOUBLE ELEMENT COMMANDS //TODO: FIX THESE
     /*
     m_chooser.addOption("[DOUBLE] leftbluecone", m_leftbluecone);
