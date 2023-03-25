@@ -32,6 +32,8 @@ import frc.robot.ChargedUp.AutoCommands.DoubleElement.Auto_middlebluecone_Cmd;
 import frc.robot.ChargedUp.AutoCommands.DoubleElement.Auto_middleblueconeleftescape_Cmd;
 import frc.robot.ChargedUp.AutoCommands.DoubleElement.Auto_middleredcone_Cmd;
 import frc.robot.ChargedUp.AutoCommands.DoubleElement.Auto_middleredconeleftescape_Cmd;
+import frc.robot.ChargedUp.AutoCommands.DoubleElement.Auto_playoff_1cone1cube_blue_Cmd;
+import frc.robot.ChargedUp.AutoCommands.DoubleElement.Auto_playoff_1cone1cube_red_Cmd;
 import frc.robot.ChargedUp.AutoCommands.DoubleElement.Auto_rightbluecone_Cmd;
 import frc.robot.ChargedUp.AutoCommands.DoubleElement.Auto_rightredcone_Cmd;
 import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_leftbluecharge_1cone_Cmd;
@@ -300,7 +302,7 @@ public class RobotContainer {
     m_chooser.addOption("lakeview", m_lakeview_1cube);
     m_chooser.addOption("lakeviewleave_1cube", Auto_lakeviewleave_1cube_Cmd);
 
-    //Playoffs
+    //Playoffs - Now in DoubleElement
     m_chooser.addOption("playoffs - Red", Auto_playoff_1cone1cube_red_Cmd);
     m_chooser.addOption("playoffs - Blue", Auto_playoff_1cone1cube_blue_Cmd);
 
