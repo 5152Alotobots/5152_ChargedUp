@@ -227,7 +227,9 @@ public class RobotContainer {
         new Cmd_SubSys_Arm_JoysticDefault(
             armSubSys,
             () -> driverStationSubSys.GetArmRotateAxis(),
-            () -> driverStationSubSys.GetArmExtendAxis()));
+            () -> driverStationSubSys.GetArmExtendAxis(),
+            () -> driverStationSubSys.ArmRotateSlowModeEnabled()
+            ));
 
     // handSubSys.setDefaultCommand(new Cmd_HandWithSensor(
     //  handSubSys,

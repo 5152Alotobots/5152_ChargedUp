@@ -22,7 +22,7 @@ public class SubSys_Arm_Constants {
     public static final double ForwardSoftLimitThreshold = ArmShoulderMaxAngle;
     public static final boolean ReverseSoftLimitEnable = false;
     public static final double ReverseSoftLimitThreshold = ArmShoulderMinAngle;
-
+    public static final double SlowModeSpeed = 0.5;
     public static final double openloopRamp = 0.5; // Seconds to Max Speed
 
     public class FF {

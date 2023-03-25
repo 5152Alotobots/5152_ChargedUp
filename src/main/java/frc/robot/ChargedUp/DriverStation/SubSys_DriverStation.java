@@ -91,6 +91,10 @@ public class SubSys_DriverStation extends SubsystemBase {
   public double GetArmExtendAxis() {
     return -m_CoDriverController.getRawAxis(5);
   }
+  // Arm Shoulder Slow Mode
+  public boolean ArmRotateSlowModeEnabled(){
+    return (m_CoDriverController.getRawAxis(3) > 0.3);
+  }
 
   /*
   public double HandSensorBtn() {
