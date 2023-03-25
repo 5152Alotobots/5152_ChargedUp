@@ -11,7 +11,7 @@
                    __/ |              __/ |                                                           
                   |___/              |___/                                                            
  */
-package frc.robot.ChargedUp.AutoCommands.SingleElement.Cube;
+package frc.robot.ChargedUp.AutoCommands.DoubleElement;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
