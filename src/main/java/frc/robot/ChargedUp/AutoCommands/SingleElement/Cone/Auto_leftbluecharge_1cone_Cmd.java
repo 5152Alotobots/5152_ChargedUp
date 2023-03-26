@@ -2,15 +2,15 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 /*
- __          __           _                                      _          _                       _ 
- \ \        / /          | |                          /\        | |        | |                     | |
-  \ \  /\  / /_ _ _   _  | |_ ___     __ _  ___      /  \  _   _| |_ ___   | |_ ___  __ _ _ __ ___ | |
-   \ \/  \/ / _` | | | | | __/ _ \   / _` |/ _ \    / /\ \| | | | __/ _ \  | __/ _ \/ _` | '_ ` _ \| |
-    \  /\  / (_| | |_| | | || (_) | | (_| | (_) |  / ____ \ |_| | || (_) | | ||  __/ (_| | | | | | |_|
-     \/  \/ \__,_|\__, |  \__\___/   \__, |\___/  /_/    \_\__,_|\__\___/   \__\___|\__,_|_| |_| |_(_)
-                   __/ |              __/ |                                                           
-                  |___/              |___/                                                            
- */
+__          __           _                                      _          _                       _
+\ \        / /          | |                          /\        | |        | |                     | |
+ \ \  /\  / /_ _ _   _  | |_ ___     __ _  ___      /  \  _   _| |_ ___   | |_ ___  __ _ _ __ ___ | |
+  \ \/  \/ / _` | | | | | __/ _ \   / _` |/ _ \    / /\ \| | | | __/ _ \  | __/ _ \/ _` | '_ ` _ \| |
+   \  /\  / (_| | |_| | | || (_) | | (_| | (_) |  / ____ \ |_| | || (_) | | ||  __/ (_| | | | | | |_|
+    \/  \/ \__,_|\__, |  \__\___/   \__, |\___/  /_/    \_\__,_|\__\___/   \__\___|\__,_|_| |_| |_(_)
+                  __/ |              __/ |
+                 |___/              |___/
+*/
 package frc.robot.ChargedUp.AutoCommands.SingleElement.Cone;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -18,11 +18,11 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.ChargedUp.Arm.SubSys_Arm;
 import frc.robot.ChargedUp.Arm.Cmds_SubSys_Arm.Cmd_SubSys_Arm_PosCmd;
+import frc.robot.ChargedUp.Arm.SubSys_Arm;
+import frc.robot.ChargedUp.Bling.Cmd.Cmd_SetBlingColorValue;
 import frc.robot.ChargedUp.Bling.Const_Bling;
 import frc.robot.ChargedUp.Bling.SubSys_Bling;
-import frc.robot.ChargedUp.Bling.Cmd.Cmd_SetBlingColorValue;
 import frc.robot.ChargedUp.ChargeStation.Cmd_AutoBalance;
 import frc.robot.ChargedUp.Hand.SubSys_Hand;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmds_PathPlanner.Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj;
@@ -43,7 +43,12 @@ public class Auto_leftbluecharge_1cone_Cmd extends SequentialCommandGroup {
   private final SubSys_Bling subsysBling;
 
   /** Creates a new Auto_Challenge1_Cmd. */
-  public Auto_leftbluecharge_1cone_Cmd(SubSys_DriveTrain driveSubSys, SubSys_PigeonGyro pigeonGyro, SubSys_Arm arm, SubSys_Hand hand, SubSys_Bling blingSubSys) {
+  public Auto_leftbluecharge_1cone_Cmd(
+      SubSys_DriveTrain driveSubSys,
+      SubSys_PigeonGyro pigeonGyro,
+      SubSys_Arm arm,
+      SubSys_Hand hand,
+      SubSys_Bling blingSubSys) {
     m_DriveTrain = driveSubSys;
     m_pigeonGyro = pigeonGyro;
     subsysArm = arm;
@@ -60,7 +65,8 @@ public class Auto_leftbluecharge_1cone_Cmd extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new Cmd_SubSys_Arm_PosCmd(subsysArm, -147.0, true, 1.54, true).withTimeout(4), // Lift arm to high position
+        new Cmd_SubSys_Arm_PosCmd(subsysArm, -147.0, true, 1.54, true)
+            .withTimeout(4), // Lift arm to high position
         new WaitCommand(1.5), // Add buffer time
         new InstantCommand(subsysHand::CloseHand, subsysHand), // Open hand (reversed)
         driveAndRetractArm, // Drive to charge station whilst retracting arm

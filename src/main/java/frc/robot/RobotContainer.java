@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.*;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -165,71 +166,90 @@ public class RobotContainer {
   private final Command m_middleredconeleftescape =
       new Auto_middleredconeleftescape_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
 
-//! NEW SINGLE ELEMENT COMMANDS
-    //Cones
-    private final Command m_leftbluecharge_1cone =
-        new Auto_leftbluecharge_1cone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
+  // ! NEW SINGLE ELEMENT COMMANDS
+  // Cones
+  private final Command m_leftbluecharge_1cone =
+      new Auto_leftbluecharge_1cone_Cmd(
+          driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
 
-    private final Command m_leftblueescape_1cone =
-        new Auto_leftblueescape_1cone_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
+  private final Command m_leftblueescape_1cone =
+      new Auto_leftblueescape_1cone_Cmd(
+          driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
 
-    private final Command m_leftredcharge_1cone =
-        new Auto_leftredcharge_1cone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
+  private final Command m_leftredcharge_1cone =
+      new Auto_leftredcharge_1cone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
 
-    private final Command m_leftredescape_1cone =
-        new Auto_leftredescape_1cone_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
-    /*
-    private final Command m_middlebluecharge_1cone =
-        new Auto_middlebluecharge_1cone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
-    */
-   /*  private final Command m_middleredcharge_1cone =
-        new Auto_middleredcharge_1cone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
-    */
-    private final Command m_rightbluecharge_1cone =
-        new Auto_rightbluecharge_1cone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
+  private final Command m_leftredescape_1cone =
+      new Auto_leftredescape_1cone_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
+  /*
+  private final Command m_middlebluecharge_1cone =
+      new Auto_middlebluecharge_1cone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
+  */
+  /*  private final Command m_middleredcharge_1cone =
+      new Auto_middleredcharge_1cone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
+  */
+  private final Command m_rightbluecharge_1cone =
+      new Auto_rightbluecharge_1cone_Cmd(
+          driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
 
-    private final Command m_rightblueescape_1cone =
-        new Auto_rightblueescape_1cone_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
+  private final Command m_rightblueescape_1cone =
+      new Auto_rightblueescape_1cone_Cmd(
+          driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
 
-    private final Command m_rightredcharge_1cone =
-        new Auto_rightredcharge_1cone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
+  private final Command m_rightredcharge_1cone =
+      new Auto_rightredcharge_1cone_Cmd(
+          driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
 
-    private final Command m_rightredescape_1cone =
-        new Auto_rightredescape_1cone_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
-    
-    //Cubes
-    private final Command m_lakeview_1cube =
-        new Auto_Lakeview_1cube_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
+  private final Command m_rightredescape_1cone =
+      new Auto_rightredescape_1cone_Cmd(
+          driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
 
-    private final Command Auto_leftbluecharge_1cube_Cmd =
-        new Auto_leftbluecharge_1cube_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
-    
-    private final Command Auto_leftblueescape_1cube_Cmd =
-        new Auto_leftblueescape_1cube_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
-    
-    private final Command Auto_leftredcharge_1cube_Cmd =
-        new Auto_leftredcharge_1cube_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
-    
-    private final Command Auto_leftredescape_1cube_Cmd =
-        new Auto_leftredescape_1cube_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
-    
-    private final Command Auto_rightbluecharge_1cube_Cmd =
-        new Auto_rightbluecharge_1cube_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
-    
-    private final Command Auto_rightblueescape_1cube_Cmd =
-        new Auto_rightblueescape_1cube_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
-    
-    private final Command Auto_rightredcharge_1cube_Cmd =
-        new Auto_rightredcharge_1cube_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
-    
-    private final Command Auto_rightredescape_1cube_Cmd =
-        new Auto_rightredescape_1cube_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
-    
-    private final Command Auto_lakeviewleave_1cube_Cmd =
-        new Auto_Lakeviewleave_1cube_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
-    
-    
-    
+  // Cubes
+  private final Command m_lakeview_1cube =
+      new Auto_Lakeview_1cube_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
+
+  private final Command Auto_leftbluecharge_1cube_Cmd =
+      new Auto_leftbluecharge_1cube_Cmd(
+          driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
+
+  private final Command Auto_leftblueescape_1cube_Cmd =
+      new Auto_leftblueescape_1cube_Cmd(
+          driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
+
+  private final Command Auto_leftredcharge_1cube_Cmd =
+      new Auto_leftredcharge_1cube_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
+
+  private final Command Auto_leftredescape_1cube_Cmd =
+      new Auto_leftredescape_1cube_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
+
+  private final Command Auto_rightbluecharge_1cube_Cmd =
+      new Auto_rightbluecharge_1cube_Cmd(
+          driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
+
+  private final Command Auto_rightblueescape_1cube_Cmd =
+      new Auto_rightblueescape_1cube_Cmd(
+          driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
+
+  private final Command Auto_rightredcharge_1cube_Cmd =
+      new Auto_rightredcharge_1cube_Cmd(
+          driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
+
+  private final Command Auto_rightredescape_1cube_Cmd =
+      new Auto_rightredescape_1cube_Cmd(
+          driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
+
+  private final Command Auto_lakeviewleave_1cube_Cmd =
+      new Auto_Lakeviewleave_1cube_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
+
+  // Playoffs
+  private final Command Auto_playoff_1cone1cube_red_Cmd =
+      new Auto_playoff_1cone1cube_blue_Cmd(
+          driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
+
+  private final Command Auto_playoff_1cone1cube_blue_Cmd =
+      new Auto_playoff_1cone1cube_blue_Cmd(
+          driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
+
   /*
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -286,7 +306,7 @@ public class RobotContainer {
     m_chooser.addOption("[BASIC] rightredescape", m_rightredescape);
     */
     // NEW SINGLE ELEMENT COMMANDS
-        //Cones
+    // Cones
     m_chooser.addOption("[SINGLE] leftbluecharge_1cone", m_leftbluecharge_1cone);
     m_chooser.addOption("[SINGLE] leftblueescape_1cone", m_leftblueescape_1cone);
     m_chooser.addOption("[SINGLE] leftredcharge_1cone", m_leftredcharge_1cone);
@@ -297,7 +317,7 @@ public class RobotContainer {
     m_chooser.addOption("[SINGLE] rightblueescape_1cone", m_rightblueescape_1cone);
     m_chooser.addOption("[SINGLE] rightredcharge_1cone", m_rightredcharge_1cone);
     m_chooser.addOption("[SINGLE] rightredescape_1cone", m_rightredescape_1cone);
-        // Cubes    
+    // Cubes
     m_chooser.addOption("[SINGLE] leftbluecharge_1cube", Auto_leftbluecharge_1cube_Cmd);
     m_chooser.addOption("[SINGLE] leftblueescape_1cube", Auto_leftblueescape_1cube_Cmd);
     m_chooser.addOption("[SINGLE] leftredcharge_1cube", Auto_leftredcharge_1cube_Cmd);
@@ -307,10 +327,14 @@ public class RobotContainer {
     m_chooser.addOption("[SINGLE] rightredcharge_1cube", Auto_rightredcharge_1cube_Cmd);
     m_chooser.addOption("[SINGLE] rightredescape_1cube", Auto_rightredescape_1cube_Cmd);
 
-
-    //LAKE VIEW
+    // LAKE VIEW
     m_chooser.addOption("lakeview", m_lakeview_1cube);
     m_chooser.addOption("lakeviewleave_1cube", Auto_lakeviewleave_1cube_Cmd);
+
+    // Playoffs
+    m_chooser.addOption("playoffs - Red", Auto_playoff_1cone1cube_red_Cmd);
+    m_chooser.addOption("playoffs - Blue", Auto_playoff_1cone1cube_blue_Cmd);
+
     // DOUBLE ELEMENT COMMANDS //TODO: FIX THESE
     /*
     m_chooser.addOption("[DOUBLE] leftbluecone", m_leftbluecone);
