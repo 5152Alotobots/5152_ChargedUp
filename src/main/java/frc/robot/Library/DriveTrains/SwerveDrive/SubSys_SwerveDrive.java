@@ -228,7 +228,7 @@ public class SubSys_SwerveDrive extends SubsystemBase {
                 : new ChassisSpeeds(translation.getX(), translation.getY(), rotation)),
             rotationPt);
     SwerveDriveKinematics.desaturateWheelSpeeds(
-        swerveModuleStates, Robot.MaxSpeeds.DriveTrainMaxSpd);
+        swerveModuleStates, Robot.MaxSpeeds.DriveTrain.DriveTrainMaxSpd);
 
     // Set Swerve Modules to Calculated States
     swerveModules[0].setDesiredState(swerveModuleStates[0], isOpenLoop); // FL

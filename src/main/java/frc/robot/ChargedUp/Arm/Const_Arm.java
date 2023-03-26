@@ -6,8 +6,8 @@ import edu.wpi.first.math.util.Units;
 
 public class Const_Arm {
   // *! Everything is in meters */
-  public static final int RotateMotorCanID = 0;
-  public static final int ExtendMotorCanID = 0;
+  // public static final int RotateMotorCanID = 0;
+  // public static final int ExtendMotorCanID = 0;
   public static final double kARM_SHOULDER_z = .58; // VERTICAL DIRECTION
   public static final double kARM_SHOULDER_x = .05;
   public static final double kHAND_LENGTH = .35;

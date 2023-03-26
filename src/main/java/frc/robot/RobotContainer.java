@@ -13,43 +13,57 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.ChargedUp.Arm.Cmd.CmdGrp_MoveToLowPos;
-import frc.robot.ChargedUp.Arm.Cmd.Cmd_ArmDefault;
-import frc.robot.ChargedUp.Arm.Cmd.Cmd_ArmExtensionPID;
-import frc.robot.ChargedUp.Arm.Cmd.Cmd_ArmRotationPID;
-import frc.robot.ChargedUp.Arm.Cmd.Cmd_ArmRotationPIDOnboard;
 // import frc.robot.ChargedUp.Arm.Cmd.Cmd_HighLevelExtend;
 // import frc.robot.ChargedUp.Arm.Cmd.Cmd_HighLevelRotate;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
-import frc.robot.ChargedUp.AutoCommands.Auto_leftbluecharge_Cmd;
-import frc.robot.ChargedUp.AutoCommands.Auto_leftblueescape_Cmd;
-import frc.robot.ChargedUp.AutoCommands.Auto_leftredcharge_Cmd;
-import frc.robot.ChargedUp.AutoCommands.Auto_rightredcharge_Cmd;
+import frc.robot.ChargedUp.Arm.Cmds_SubSys_Arm.Cmd_SubSys_Arm_JoysticDefault;
+import frc.robot.ChargedUp.Arm.Cmds_SubSys_Arm.Cmd_SubSys_Arm_PosCmd;
+import frc.robot.ChargedUp.AutoCommands.Basic.Auto_leftbluecharge_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Basic.Auto_leftblueescape_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Basic.Auto_leftredescape_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Basic.Auto_rightblueescape_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Basic.Auto_rightredcharge_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Basic.Auto_rightredescape_Cmd;
+import frc.robot.ChargedUp.AutoCommands.DoubleElement.Auto_leftbluecone_Cmd;
+import frc.robot.ChargedUp.AutoCommands.DoubleElement.Auto_leftredcone_Cmd;
+import frc.robot.ChargedUp.AutoCommands.DoubleElement.Auto_middlebluecone_Cmd;
+import frc.robot.ChargedUp.AutoCommands.DoubleElement.Auto_middleblueconeleftescape_Cmd;
+import frc.robot.ChargedUp.AutoCommands.DoubleElement.Auto_middleredcone_Cmd;
+import frc.robot.ChargedUp.AutoCommands.DoubleElement.Auto_middleredconeleftescape_Cmd;
+import frc.robot.ChargedUp.AutoCommands.DoubleElement.Auto_rightbluecone_Cmd;
+import frc.robot.ChargedUp.AutoCommands.DoubleElement.Auto_rightredcone_Cmd;
+import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_leftbluecharge_1cone_Cmd;
+import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_leftblueescape_1cone_Cmd;
+import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_leftredcharge_1cone_Cmd;
+import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_leftredescape_1cone_Cmd;
+// import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_middlebluecharge_1cone_Cmd;
+// import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_middleredcharge_1cone_Cmd;
+import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_rightbluecharge_1cone_Cmd;
+import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_rightblueescape_1cone_Cmd;
+import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_rightredcharge_1cone_Cmd;
+import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_rightredescape_1cone_Cmd;
+import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.Auto_Lakeview_1cube_Cmd;
+import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.Auto_Lakeviewleave_1cube_Cmd;
+import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.Auto_leftbluecharge_1cube_Cmd;
+import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.Auto_leftblueescape_1cube_Cmd;
+import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.Auto_leftredcharge_1cube_Cmd;
+import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.Auto_leftredescape_1cube_Cmd;
+import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.Auto_rightbluecharge_1cube_Cmd;
+import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.Auto_rightblueescape_1cube_Cmd;
+import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.Auto_rightredcharge_1cube_Cmd;
+import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.Auto_rightredescape_1cube_Cmd;
 import frc.robot.ChargedUp.Bling.Const_Bling;
 import frc.robot.ChargedUp.Bling.SubSys_Bling;
-import frc.robot.ChargedUp.Bling.Cmd.CmdGrp_IdleBlingColorSequence;
 import frc.robot.ChargedUp.Bling.Cmd.Cmd_SetBlingColorValue;
-import frc.robot.ChargedUp.AutoCommands.Auto_leftredescape_Cmd;
-// import frc.robot.ChargedUp.DistanceSensor.SubSys_DistanceSensor;
-import frc.robot.ChargedUp.AutoCommands.Auto_middlebluecharge_Cmd;
-import frc.robot.ChargedUp.AutoCommands.Auto_middleredcharge_Cmd;
-import frc.robot.ChargedUp.AutoCommands.Auto_proofrightredescape;
-import frc.robot.ChargedUp.AutoCommands.Auto_rightbluecharge_Cmd;
-import frc.robot.ChargedUp.AutoCommands.Auto_rightblueescape;
-import frc.robot.ChargedUp.AutoCommands.Auto_rightredcharge_Cmd;
 import frc.robot.ChargedUp.DriverStation.SubSys_DriverStation;
 import frc.robot.ChargedUp.Hand.SubSys_Hand;
-import frc.robot.ChargedUp.MecanumDrive.Cmd.Cmd_MecanumDriveDefault;
 import frc.robot.ChargedUp.PhotonVision.Const_Photonvision;
 import frc.robot.ChargedUp.PhotonVision.SubSys_Photonvision;
-import frc.robot.ChargedUp.PhotonVision.Cmd.Cmd_GetDistanceToTarget;
 import frc.robot.ChargedUp.PhotonVision.Cmd.Cmd_NavigateToBestVisionTarget;
-import frc.robot.ChargedUp.MecanumDrive.SubSys_MecanumDrive;
-import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmd_SubSys_DriveTrain_JoysticDefault;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
+import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmd_SubSys_DriveTrain_JoysticDefault;
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
 import frc.robot.Library.Vision.Limelight.SubSys_LimeLight;
-import frc.robot.ChargedUp.Arm.Cmd.CmdGrp_MoveToLowPos;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -91,7 +105,7 @@ public class RobotContainer {
   public final SubSys_Hand handSubSys = new SubSys_Hand();
 
   // Arm
-  public final SubSys_Arm armSubSys = new SubSys_Arm();
+  public final SubSys_Arm armSubSys = new SubSys_Arm(handSubSys.getHandLength());
 
   //PhotonVision
   public final SubSys_Photonvision photonvisionSubSys = new SubSys_Photonvision(armSubSys);
@@ -106,6 +120,7 @@ public class RobotContainer {
   public final SubSys_DriverStation driverStationSubSys = new SubSys_DriverStation();
   // SetUp Auto
   SendableChooser<Command> m_chooser = new SendableChooser<>();
+  /* OLD AUTOS
   private final Command m_leftbluecharge = new Auto_leftbluecharge_Cmd(driveSubSys, gyroSubSys, blingSubSys);
 
   private final Command m_leftblueescape = new Auto_leftblueescape_Cmd(driveSubSys, gyroSubSys);
@@ -120,12 +135,101 @@ public class RobotContainer {
 
   private final Command m_rightbluecharge = new Auto_rightbluecharge_Cmd(driveSubSys, gyroSubSys, blingSubSys);
 
-  private final Command m_rightblueescape = new Auto_rightblueescape(driveSubSys, gyroSubSys, blingSubSys);
+  private final Command m_rightblueescape = new Auto_rightblueescape_Cmd(driveSubSys, gyroSubSys);
 
-//   private final Command m_OneConeRed = new Auto_OneConeRed_Cmd(driveSubSys, gyroSubSys);
+  private final Command m_rightredcharge = new Auto_rightredcharge_Cmd(driveSubSys, gyroSubSys, blingSubSys);
 
-  private final Command m_proofrightredescape =
-      new Auto_proofrightredescape(driveSubSys, gyroSubSys, blingSubSys);
+  private final Command m_rightredescape = new Auto_rightredescape_Cmd(driveSubSys, gyroSubSys);
+*/
+  private final Command m_rightbluecone =
+      new Auto_rightbluecone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
+
+  private final Command m_leftbluecone =
+      new Auto_leftbluecone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
+
+  private final Command m_middlebluecone =
+      new Auto_middlebluecone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
+
+  private final Command m_middleblueconeleftescape =
+      new Auto_middleblueconeleftescape_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
+
+  private final Command m_rightredcone =
+      new Auto_rightredcone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
+
+  private final Command m_leftredcone =
+      new Auto_leftredcone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
+
+  private final Command m_middleredcone =
+      new Auto_middleredcone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
+
+  private final Command m_middleredconeleftescape =
+      new Auto_middleredconeleftescape_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys);
+
+//! NEW SINGLE ELEMENT COMMANDS
+    //Cones
+    private final Command m_leftbluecharge_1cone =
+        new Auto_leftbluecharge_1cone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
+
+    private final Command m_leftblueescape_1cone =
+        new Auto_leftblueescape_1cone_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
+
+    private final Command m_leftredcharge_1cone =
+        new Auto_leftredcharge_1cone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
+
+    private final Command m_leftredescape_1cone =
+        new Auto_leftredescape_1cone_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
+    /*
+    private final Command m_middlebluecharge_1cone =
+        new Auto_middlebluecharge_1cone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
+    */
+   /*  private final Command m_middleredcharge_1cone =
+        new Auto_middleredcharge_1cone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
+    */
+    private final Command m_rightbluecharge_1cone =
+        new Auto_rightbluecharge_1cone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
+
+    private final Command m_rightblueescape_1cone =
+        new Auto_rightblueescape_1cone_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
+
+    private final Command m_rightredcharge_1cone =
+        new Auto_rightredcharge_1cone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
+
+    private final Command m_rightredescape_1cone =
+        new Auto_rightredescape_1cone_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
+    
+    //Cubes
+    private final Command m_lakeview_1cube =
+        new Auto_Lakeview_1cube_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
+
+    private final Command Auto_leftbluecharge_1cube_Cmd =
+        new Auto_leftbluecharge_1cube_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
+    
+    private final Command Auto_leftblueescape_1cube_Cmd =
+        new Auto_leftblueescape_1cube_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
+    
+    private final Command Auto_leftredcharge_1cube_Cmd =
+        new Auto_leftredcharge_1cube_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
+    
+    private final Command Auto_leftredescape_1cube_Cmd =
+        new Auto_leftredescape_1cube_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
+    
+    private final Command Auto_rightbluecharge_1cube_Cmd =
+        new Auto_rightbluecharge_1cube_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
+    
+    private final Command Auto_rightblueescape_1cube_Cmd =
+        new Auto_rightblueescape_1cube_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
+    
+    private final Command Auto_rightredcharge_1cube_Cmd =
+        new Auto_rightredcharge_1cube_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
+    
+    private final Command Auto_rightredescape_1cube_Cmd =
+        new Auto_rightredescape_1cube_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
+    
+    private final Command Auto_lakeviewleave_1cube_Cmd =
+        new Auto_Lakeviewleave_1cube_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
+    
+    
+    
   /*
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -137,7 +241,7 @@ public class RobotContainer {
 
     /** ***** Control System Components */
     armSubSys.setDefaultCommand(
-        new Cmd_ArmDefault(
+        new Cmd_SubSys_Arm_JoysticDefault(
             armSubSys,
             () -> driverStationSubSys.GetArmRotateAxis(),
             () -> driverStationSubSys.GetArmExtendAxis()));
@@ -168,28 +272,56 @@ public class RobotContainer {
             () -> driverStationSubSys.DrivePerfModeAActive(),
             () -> driverStationSubSys.DrivePerfModeBActive()));
 
-        // photonvisionSubSys.setDefaultCommand(
-        //     new Cmd_GetDistanceToTarget(photonvisionSubSys, Const_Photonvision.Cameras.frontCamera, 1)
-        // );
-    /*
-    blingSubSys.setDefaultCommand(
-        new CmdGrp_IdleBlingColorSequence(
-            blingSubSys,
-            Const_Bling.Controllers.controller1));
-      */
     // Sendable Chooser
+    /* Old options
+    m_chooser.addOption("[BASIC] leftbluecharge", m_leftbluecharge);
+    m_chooser.addOption("[BASIC] leftblueescape", m_leftblueescape);
+    m_chooser.addOption("[BASIC] leftredcharge", m_leftredcharge);
+    m_chooser.addOption("[BASIC] leftredescape", m_leftredescape);
+    m_chooser.addOption("[BASIC] middlebluecharge", m_middlebluecharge);
+    m_chooser.addOption("[BASIC] middleredcharge", m_middleredcharge);
+    m_chooser.setDefaultOption("[BASIC] rightbluecharge", m_rightbluecharge);
+    m_chooser.addOption("[BASIC] rightblueescape", m_rightblueescape);
+    m_chooser.addOption("[BASIC] rightredcharge", m_rightredcharge);
+    m_chooser.addOption("[BASIC] rightredescape", m_rightredescape);
+    */
+    // NEW SINGLE ELEMENT COMMANDS
+        //Cones
+    m_chooser.addOption("[SINGLE] leftbluecharge_1cone", m_leftbluecharge_1cone);
+    m_chooser.addOption("[SINGLE] leftblueescape_1cone", m_leftblueescape_1cone);
+    m_chooser.addOption("[SINGLE] leftredcharge_1cone", m_leftredcharge_1cone);
+    m_chooser.addOption("[SINGLE] leftredescape_1cone", m_leftredescape_1cone);
+    // m_chooser.addOption("[SINGLE] middlebluecharge_1cone", m_middlebluecharge_1cone);
+    // m_chooser.addOption("[SINGLE] middleredcharge_1cone", m_middleredcharge_1cone);
+    m_chooser.addOption("[SINGLE] rightbluecharge_1cone", m_rightbluecharge_1cone);
+    m_chooser.addOption("[SINGLE] rightblueescape_1cone", m_rightblueescape_1cone);
+    m_chooser.addOption("[SINGLE] rightredcharge_1cone", m_rightredcharge_1cone);
+    m_chooser.addOption("[SINGLE] rightredescape_1cone", m_rightredescape_1cone);
+        // Cubes    
+    m_chooser.addOption("[SINGLE] leftbluecharge_1cube", Auto_leftbluecharge_1cube_Cmd);
+    m_chooser.addOption("[SINGLE] leftblueescape_1cube", Auto_leftblueescape_1cube_Cmd);
+    m_chooser.addOption("[SINGLE] leftredcharge_1cube", Auto_leftredcharge_1cube_Cmd);
+    m_chooser.addOption("[SINGLE] leftredescape_1cube", Auto_leftredescape_1cube_Cmd);
+    m_chooser.addOption("[SINGLE] rightbluecharge_1cube", Auto_rightbluecharge_1cube_Cmd);
+    m_chooser.addOption("[SINGLE] rightblueescape_1cube", Auto_rightblueescape_1cube_Cmd);
+    m_chooser.addOption("[SINGLE] rightredcharge_1cube", Auto_rightredcharge_1cube_Cmd);
+    m_chooser.addOption("[SINGLE] rightredescape_1cube", Auto_rightredescape_1cube_Cmd);
 
-    // Sendable Chooser
-    m_chooser.addOption("leftbluecharge", m_leftbluecharge);
-    m_chooser.addOption("leftblueescape", m_leftblueescape);
-    m_chooser.addOption("leftredcharge", m_leftredcharge);
-    m_chooser.addOption("leftredescape", m_leftredescape);
-    m_chooser.addOption("middlebluecharge", m_middlebluecharge);
-    m_chooser.addOption("middleredcharge", m_middleredcharge);
-    m_chooser.setDefaultOption("rightbluecharge", m_rightbluecharge);
-    m_chooser.addOption("rightblueescape", m_rightblueescape);
-    // m_chooser.addOption("rightredcharge", m_rightredcharge);
-    m_chooser.addOption("proofrightredescape", m_proofrightredescape);
+
+    //LAKE VIEW
+    m_chooser.addOption("lakeview", m_lakeview_1cube);
+    m_chooser.addOption("lakeviewleave_1cube", Auto_lakeviewleave_1cube_Cmd);
+    // DOUBLE ELEMENT COMMANDS //TODO: FIX THESE
+    /*
+    m_chooser.addOption("[DOUBLE] leftbluecone", m_leftbluecone);
+    m_chooser.addOption("[DOUBLE] middlebluecone", m_middlebluecone);
+    m_chooser.addOption("[DOUBLE] rightbluecone", m_rightbluecone);
+    m_chooser.addOption("[DOUBLE] middleblueconeleftescape", m_middleblueconeleftescape);
+    m_chooser.addOption("[DOUBLE] leftredcone", m_leftredcone);
+    m_chooser.addOption("[DOUBLE] middleredcone", m_middleredcone);
+    m_chooser.addOption("[DOUBLE] rightredcone", m_rightredcone);
+    m_chooser.addOption("[DOUBLE] middleredconeleftescape", m_middleredconeleftescape);
+    */
     SmartDashboard.putData(m_chooser);
   }
 
@@ -225,9 +357,41 @@ public class RobotContainer {
     driverStationSubSys.TestButton.onTrue(
         new Cmd_NavigateToBestVisionTarget(driveSubSys, photonvisionSubSys, blingSubSys, Const_Photonvision.Cameras.frontCamera, Const_Photonvision.Pipelines.Cube)
     );
+
+    driverStationSubSys.GroundPickupButton.whileTrue(
+        new Cmd_SubSys_Arm_PosCmd(armSubSys, 45.0, true, 0.8, true));
+
+    driverStationSubSys.HighConeDelivery.whileTrue(
+        new Cmd_SubSys_Arm_PosCmd(armSubSys, -35.0, true, 1.65, true));
+
+    driverStationSubSys.MidConeDelivery.whileTrue(
+        new Cmd_SubSys_Arm_PosCmd(armSubSys, -25.0, true, 1.00, true));
+
+    // CONE/CUBE SIGNALING
+    driverStationSubSys.RequestConeButton.onTrue(
+        new Cmd_SetBlingColorValue(
+            blingSubSys, Const_Bling.Controllers.controller1, Const_Bling.SolidColors.Yellow));
+    driverStationSubSys.RequestCubeButton.onTrue(
+        new Cmd_SetBlingColorValue(
+            blingSubSys, Const_Bling.Controllers.controller1, Const_Bling.SolidColors.Violet));
+
+    // Fun signaling
+    driverStationSubSys.ResetLEDColorButton.onTrue(
+        new Cmd_SetBlingColorValue(
+            blingSubSys,
+            Const_Bling.Controllers.controller1,
+            Const_Bling.Patterns.Color1Color2.ColorWaves));
+    driverStationSubSys.RainbowLEDColorButton.onTrue(
+        new Cmd_SetBlingColorValue(
+            blingSubSys,
+            Const_Bling.Controllers.controller1,
+            Const_Bling.Patterns.FixedPalette.RainbowRainbow));
+    driverStationSubSys.RainbowStrobeLEDColorButton.onTrue(
+        new Cmd_SetBlingColorValue(
+            blingSubSys,
+            Const_Bling.Controllers.controller1,
+            Const_Bling.Patterns.FixedPalette.StrobeRed));
   }
-  // when test button is pressed run the rotate to heading command to a random number between 0 and
-  // 360
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

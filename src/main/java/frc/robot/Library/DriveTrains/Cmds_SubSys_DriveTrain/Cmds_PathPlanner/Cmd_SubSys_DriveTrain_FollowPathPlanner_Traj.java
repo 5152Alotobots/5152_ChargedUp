@@ -4,16 +4,23 @@
 
 package frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmds_PathPlanner;
 
+import java.util.Optional;
+import java.util.OptionalInt;
+
+import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain_Constants;
+import frc.robot.Library.DriveTrains.SubSys_DriveTrain_Constants.DriveTrainTrajSettings.PoseEstimationStrategy;
 
 public class Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj extends CommandBase {
   /** Creates a new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj. */
@@ -22,6 +29,10 @@ public class Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj extends CommandBase {
   private String pathPlannerTrajName;
   private boolean setPose;
   private boolean setYaw;
+  private Alliance setAlliance;
+  private PathConstraints constraints;
+  private int poseEstimationStrategy;
+
   private PathPlannerTrajectory ppTraj;
 
   private final PIDController xDistancePID;
@@ -40,21 +51,29 @@ public class Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj extends CommandBase {
       SubSys_DriveTrain subSys_DriveTrain,
       String pathPlannerTrajName,
       boolean setPose,
-      boolean setYaw) {
+      boolean setYaw,
+      Alliance setAlliance,
+      int poseEstimationStrategy) {
 
     this.subSys_DriveTrain = subSys_DriveTrain;
     this.pathPlannerTrajName = pathPlannerTrajName;
     this.setPose = setPose;
     this.setYaw = setYaw;
+    this.setAlliance = setAlliance;
+    this.poseEstimationStrategy = poseEstimationStrategy;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subSys_DriveTrain);
 
     // Load Path
+    this.constraints = PathPlanner.getConstraintsFromPath(this.pathPlannerTrajName);
     this.ppTraj =
         PathPlanner.loadPath(
-            this.pathPlannerTrajName, PathPlanner.getConstraintsFromPath(this.pathPlannerTrajName));
+            this.pathPlannerTrajName,
+            this.constraints);
+            //new PathConstraints(2.7, 3.0));
 
+    this.ppTraj = PathPlannerTrajectory.transformTrajectoryForAlliance(this.ppTraj, setAlliance);
     this.xDistancePID =
         new PIDController(
             SubSys_DriveTrain_Constants.DriveTrainTrajSettings.DriveTrajectoryPID.Pgain,
@@ -113,8 +132,13 @@ public class Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // First, estimate the pose of the robot via apriltags
-    this.subSys_DriveTrain.setPoseToAverageVisionAndOdometryEstimate();
+    // Decide PoseEstimationStrategy
+    switch(poseEstimationStrategy){
+      case PoseEstimationStrategy.VisionANDOdometryAverage : subSys_DriveTrain.setPoseToAverageVisionAndOdometryEstimate();
+      break;
+      case PoseEstimationStrategy.VisionONLY: subSys_DriveTrain.setPoseToVisionEstimate();
+      break;
+    }
     
     double currentTime = this.timer.get();
     PathPlannerState desiredState = (PathPlannerState) ppTraj.sample(currentTime);

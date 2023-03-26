@@ -51,7 +51,7 @@ public class Cmd_NavigateToBestVisionTarget extends CommandBase {
   public void execute() {
     result = camera.getLatestResult();
     
-    SmartDashboard.putNumber("Distance to Target", subSys_Photonvision.getRangeToTarget(result, false));
+    SmartDashboard.putNumber("Distance to Target", subSys_Photonvision.getRangeToTarget(result));
     SmartDashboard.putNumber("Vision Forward Speed", subSys_Photonvision.getVisionForwardSpeed(result));
     SmartDashboard.putNumber("Vision Strafe Speed", subSys_Photonvision.getVisionStrafeSpeed(result));
     // Use values to drive the robot

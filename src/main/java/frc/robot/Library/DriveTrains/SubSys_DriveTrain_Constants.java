@@ -70,5 +70,11 @@ public static final double DriveTrainMaxTurboRotAccel = 330 * Math.PI / 180; // 
       public static final double kV = 0;
       public static final double kA = 0;
     }
+
+    public static final class PoseEstimationStrategy {
+      public static final int OdometryONLY = 0;
+      public static final int VisionONLY = 1;
+      public static final int VisionANDOdometryAverage = 2;
+    }
   }
 }

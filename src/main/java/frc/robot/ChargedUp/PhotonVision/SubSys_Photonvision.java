@@ -41,17 +41,8 @@ public class SubSys_Photonvision extends SubsystemBase {
 
     /* VISION */
     /** Calculate distance to target */
-    public double getRangeToTarget(PhotonPipelineResult result, Boolean UseArmCalculatedAngle){
+    public double getRangeToTarget(PhotonPipelineResult result){
     if (result.hasTargets()) {
-      if (UseArmCalculatedAngle){
-      return
-        PhotonUtils.calculateDistanceToTargetMeters(
-            m_Arm.getCameraHeight(),
-            Const_Photonvision.TARGET_HEIGHT_METERS,
-            m_Arm.getShoulderRotationRadians() - 90,
-                Units.degreesToRadians(result.getBestTarget().getPitch()))
-                - Const_Photonvision.CAMERA_TO_FRONT_ROBOT_METERS;
-      } else {
         return
         PhotonUtils.calculateDistanceToTargetMeters(
             Const_Photonvision.CAMERA_HEIGHT_METERS,
@@ -59,8 +50,7 @@ public class SubSys_Photonvision extends SubsystemBase {
             Const_Photonvision.CAMERA_PITCH_RADIANS,
             Units.degreesToRadians(result.getBestTarget().getPitch()))
             - Const_Photonvision.CAMERA_TO_FRONT_ROBOT_METERS;
-      }
-    } else {
+      } else {
       return 0;
     }
   }
@@ -77,7 +67,7 @@ public class SubSys_Photonvision extends SubsystemBase {
     /** Calculate forward speed */
     public double getVisionForwardSpeed(PhotonPipelineResult result){
       if (result.hasTargets()) {
-        return -Xcontroller.calculate(getRangeToTarget(result, false), 0) * 0.8;
+        return -Xcontroller.calculate(getRangeToTarget(result), 0) * 0.8;
       } else {
         return 0;
       }

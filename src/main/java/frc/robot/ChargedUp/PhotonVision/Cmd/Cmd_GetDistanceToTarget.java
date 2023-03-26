@@ -53,7 +53,7 @@ public class Cmd_GetDistanceToTarget extends CommandBase {
   public void execute() {
     result = camera.getLatestResult();
     if (result.hasTargets()){
-      SmartDashboard.putNumber("dist", subSys_Photonvision.getRangeToTarget(result, false));
+      SmartDashboard.putNumber("dist", subSys_Photonvision.getRangeToTarget(result));
       // System.out.println("Distance to target: "+ subSys_Photonvision.getRangeToTarget(result, false));
     }
   }

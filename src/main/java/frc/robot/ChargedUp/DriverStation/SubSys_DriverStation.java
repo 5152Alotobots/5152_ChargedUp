@@ -7,36 +7,32 @@ package frc.robot.ChargedUp.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 
 public class SubSys_DriverStation extends SubsystemBase {
 
   //Driver
   private XboxController m_DriverController = new XboxController(0);
  
-    public JoystickButton GyroResetButton = new JoystickButton(m_DriverController, Const_DriverStation.XboxControllerButton.kY); 
-    public JoystickButton PoseResetButton = new JoystickButton(m_DriverController, Const_DriverStation.XboxControllerButton.kA);
-    public JoystickButton TestButton      = new JoystickButton(m_DriverController, Const_DriverStation.XboxControllerButton.kX);
+  public JoystickButton GyroResetButton = new JoystickButton(m_DriverController, 4);
+  public JoystickButton CloseHandButton = new JoystickButton(m_DriverController, 6);
+  public JoystickButton OpenHandButton = new JoystickButton(m_DriverController, 5);
+  public JoystickButton PoseResetButton = new JoystickButton(m_DriverController, 1);
+  public JoystickButton TestButton = new JoystickButton(m_DriverController, 3);
 
-    public JoystickButton OpenHandButton  = new JoystickButton(m_DriverController, Const_DriverStation.XboxControllerButton.kRIGHT_BUMPER);
-    public JoystickButton CloseHandButton = new JoystickButton(m_DriverController, Const_DriverStation.XboxControllerButton.kLEFT_BUMPER);
-
-    public Trigger TurboButton = new Trigger(() -> m_DriverController.getRawAxis(3) > 0.5);
-    
-  //Co Driver
+  // Co-Driver Controller
   private XboxController m_CoDriverController = new XboxController(1);
+  public JoystickButton GroundPickupButton = new JoystickButton(m_CoDriverController, 1);
+  public JoystickButton HighConeDelivery = new JoystickButton(m_CoDriverController, 4);
+  public JoystickButton MidConeDelivery = new JoystickButton(m_CoDriverController, 3);
+  public JoystickButton RequestConeButton = new JoystickButton(m_CoDriverController, 6);
+  public JoystickButton RequestCubeButton = new JoystickButton(m_CoDriverController, 5);
+  public POVButton ResetLEDColorButton = new POVButton(m_CoDriverController, 180);
+  public POVButton RainbowLEDColorButton = new POVButton(m_CoDriverController, 0);
+  public POVButton RainbowStrobeLEDColorButton = new POVButton(m_CoDriverController, 270);
 
-    public JoystickButton TopLevelButton = new JoystickButton(m_CoDriverController, Const_DriverStation.XboxControllerButton.kA);
-    public JoystickButton MidLevelButton = new JoystickButton(m_CoDriverController, Const_DriverStation.XboxControllerButton.kB);
-    public JoystickButton LowLevelButton = new JoystickButton(m_CoDriverController, Const_DriverStation.XboxControllerButton.kX);
-    public JoystickButton PickUpPos      = new JoystickButton(m_CoDriverController, Const_DriverStation.XboxControllerButton.kLEFT_BUMPER);
-    public JoystickButton PickUpPosFlip  = new JoystickButton(m_CoDriverController, Const_DriverStation.XboxControllerButton.kRIGHT_BUMPER);
-
-    public JoystickButton RequestCubeButton = new JoystickButton(m_CoDriverController, Const_DriverStation.XboxControllerButton.kBACK);
-    public JoystickButton RequestConeButton = new JoystickButton(m_CoDriverController, Const_DriverStation.XboxControllerButton.kSTART);
-
-    //Aux driver
-    private XboxController m_AuxDriverController = new XboxController(2);
+  // AuxDriver Controller
+  private XboxController m_AuxDriverController = new XboxController(2);
 
   @Override
   public void periodic() {
@@ -81,11 +77,11 @@ public class SubSys_DriverStation extends SubsystemBase {
   // ----- Arm Subsystem
   // Arm ShoulderRotate Axis
   public double GetArmRotateAxis() {
-    return m_AuxDriverController.getRawAxis(1);
+    return m_CoDriverController.getRawAxis(1);
   }
   // Arm Extend Axis
   public double GetArmExtendAxis() {
-    return m_AuxDriverController.getRawAxis(5);
+    return -m_CoDriverController.getRawAxis(5);
   }
 
   /*

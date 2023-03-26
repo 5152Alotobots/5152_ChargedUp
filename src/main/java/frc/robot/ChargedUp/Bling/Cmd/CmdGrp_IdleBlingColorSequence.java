@@ -7,9 +7,9 @@ package frc.robot.ChargedUp.Bling.Cmd;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.ChargedUp.Bling.SubSys_Bling;
-import frc.robot.ChargedUp.Bling.Const_Bling.SolidColors;
 import frc.robot.ChargedUp.Bling.Const_Bling.Patterns;
+import frc.robot.ChargedUp.Bling.Const_Bling.SolidColors;
+import frc.robot.ChargedUp.Bling.SubSys_Bling;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -24,9 +24,8 @@ public class CmdGrp_IdleBlingColorSequence extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new Cmd_SetBlingColorValue(subSys_Bling, controller, Patterns.FixedPalette.StrobeRed),
-      new WaitCommand(5),
-      new Cmd_SetBlingColorValue(subSys_Bling, controller, SolidColors.DarkRed)
-    );
+        new Cmd_SetBlingColorValue(subSys_Bling, controller, Patterns.FixedPalette.StrobeRed),
+        new WaitCommand(5),
+        new Cmd_SetBlingColorValue(subSys_Bling, controller, SolidColors.DarkRed));
   }
 }
