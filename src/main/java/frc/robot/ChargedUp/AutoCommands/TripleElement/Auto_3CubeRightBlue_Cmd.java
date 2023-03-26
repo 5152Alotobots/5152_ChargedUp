@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.ChargedUp.AutoCommands;
+package frc.robot.ChargedUp.AutoCommands.TripleElement;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -32,7 +32,25 @@ public class Auto_3CubeRightBlue_Cmd extends SequentialCommandGroup {
   private final SubSys_Photonvision m_photonvision;
   private final SubSys_Bling m_bling;
 
-  /** Creates a new Auto_Challenge1_Cmd. */
+  /** Auto mode sequence:
+   * <p>
+   * 1. Deliver cone to high position<br>
+   * 2. Drive to pickup cube<br>
+   * 3. Pickup cube via vision<br>
+   * 4. Drive to deliver cube<br>
+   * 5. Deliver cube to high position<br>
+   * 6. Drive to pickup cone<br>
+   * 7. Pickup cone via vision<br>
+   * 8. Drive to deliver cone<br>
+   * 9. Deliver cone to high position<br>
+   * </p>
+   * @param driveSubSys Drive subsystem
+   * @param pigeonGyro Pigeon Gyro subsystem
+   * @param handSubSys Hand subsystem
+   * @param armSubSys Arm subsystem
+   * @param photonvisionSubSys Photonvision subsystem
+   * @param blingSubSys Bling subsystem
+  */
   public Auto_3CubeRightBlue_Cmd(SubSys_DriveTrain driveSubSys, SubSys_PigeonGyro pigeonGyro, SubSys_Hand handSubSys, SubSys_Arm armSubSys, SubSys_Photonvision photonvisionSubSys, SubSys_Bling blingSubSys) {
     m_DriveTrain = driveSubSys;
     m_pigeonGyro = pigeonGyro;
@@ -69,12 +87,12 @@ public class Auto_3CubeRightBlue_Cmd extends SequentialCommandGroup {
       new Cmd_SubSys_Arm_PosCmd(armSubSys, -147.0, true, 1.54, true).withTimeout(4), // Lift arm to high position
         new InstantCommand(handSubSys::CloseHand),
         armRotateAndRetractDriveToPickup1Parallel,
-        new Cmd_NavigateToBestVisionTarget(driveSubSys, m_photonvision, m_bling, Const_Photonvision.Cameras.frontCamera, Const_Photonvision.Pipelines.Cone),
+        new Cmd_NavigateToBestVisionTarget(driveSubSys, m_photonvision, m_bling, Const_Photonvision.Cameras.frontCamera, Const_Photonvision.Pipelines.Cone).withTimeout(3),
         new InstantCommand(handSubSys::OpenHand),
         armRotateAndExtendDriveToDeliverCone1HighLevelParallel,
         new InstantCommand(handSubSys::CloseHand),
         armRotateAndRetractDriveToPickup2Parallel,
-        new Cmd_NavigateToBestVisionTarget(driveSubSys, m_photonvision, m_bling, Const_Photonvision.Cameras.frontCamera, Const_Photonvision.Pipelines.Cone),
+        new Cmd_NavigateToBestVisionTarget(driveSubSys, m_photonvision, m_bling, Const_Photonvision.Cameras.frontCamera, Const_Photonvision.Pipelines.Cone).withTimeout(3),
         new InstantCommand(handSubSys::OpenHand),
         armRotateAndExtendDriveToDeliverCone2HighLevelParallel,
         new InstantCommand(handSubSys::CloseHand),
