@@ -8,20 +8,17 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.ChargedUp.Arm.SubSys_Arm;
 import frc.robot.ChargedUp.Arm.Cmds_SubSys_Arm.Cmd_SubSys_Arm_PosCmd;
 import frc.robot.ChargedUp.Bling.SubSys_Bling;
-import frc.robot.ChargedUp.ChargeStation.Cmd_AutoBalance;
-import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmds_PathPlanner.Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj;
-import frc.robot.Library.DriveTrains.SubSys_DriveTrain_Constants.DriveTrainTrajSettings.PoseEstimationStrategy;
-import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
-import frc.robot.Library.DriveTrains.SwerveDrive.*;
-import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
 import frc.robot.ChargedUp.Hand.SubSys_Hand;
 import frc.robot.ChargedUp.PhotonVision.Const_Photonvision;
 import frc.robot.ChargedUp.PhotonVision.SubSys_Photonvision;
 import frc.robot.ChargedUp.PhotonVision.Cmd.Cmd_NavigateToBestVisionTarget;
-import frc.robot.ChargedUp.Arm.SubSys_Arm;
+import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
+import frc.robot.Library.DriveTrains.SubSys_DriveTrain_Constants.DriveTrainTrajSettings.PoseEstimationStrategy;
+import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmds_PathPlanner.Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj;
+import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
 
 
 public class Auto_LinkHPBlue_Cmd extends SequentialCommandGroup {
@@ -98,7 +95,7 @@ public class Auto_LinkHPBlue_Cmd extends SequentialCommandGroup {
       new Cmd_SubSys_Arm_PosCmd(armSubSys, -147.0, true, 1.54, true).withTimeout(4), // Lift arm to high position
         new InstantCommand(handSubSys::CloseHand),
         armRotateAndRetractDriveToPickup1Parallel,
-        new Cmd_NavigateToBestVisionTarget(driveSubSys, m_photonvision, m_bling, Const_Photonvision.Cameras.frontCamera, Const_Photonvision.Pipelines.Cone).withTimeout(3),
+        new Cmd_NavigateToBestVisionTarget(driveSubSys, m_photonvision, m_bling, Const_Photonvision.Cameras.frontCamera, Const_Photonvision.Pipelines.Cube).withTimeout(3),
         new InstantCommand(handSubSys::OpenHand),
         armRotateAndExtendDriveToDeliverCube1HighLevelParallel,
         new InstantCommand(handSubSys::CloseHand),
