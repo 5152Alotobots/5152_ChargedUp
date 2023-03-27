@@ -18,14 +18,13 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmds_PathPlanner.Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj;
-import frc.robot.ChargedUp.Arm.SubSys_Arm;
 import frc.robot.ChargedUp.Arm.Cmds_SubSys_Arm.Cmd_SubSys_Arm_PosCmd;
+import frc.robot.ChargedUp.Arm.SubSys_Arm;
+import frc.robot.ChargedUp.Bling.Cmd.Cmd_SetBlingColorValue;
 import frc.robot.ChargedUp.Bling.Const_Bling;
 import frc.robot.ChargedUp.Bling.SubSys_Bling;
-import frc.robot.ChargedUp.Bling.Cmd.Cmd_SetBlingColorValue;
-import frc.robot.ChargedUp.ChargeStation.Cmd_AutoBalance;
 import frc.robot.ChargedUp.Hand.SubSys_Hand;
+import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmds_PathPlanner.Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
 import frc.robot.Library.DriveTrains.SwerveDrive.*;
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
@@ -41,9 +40,13 @@ public class Auto_playoff_1cone1cube_red_Cmd extends SequentialCommandGroup {
   private final SubSys_Hand subsysHand;
   private final SubSys_Bling blingSubSys;
 
-
   /** Creates a new Auto_Challenge1_Cmd. */
-  public Auto_playoff_1cone1cube_red_Cmd(SubSys_DriveTrain driveSubSys, SubSys_Arm arm, SubSys_Hand hand, SubSys_PigeonGyro pigeonGyro, SubSys_Bling bling) {
+  public Auto_playoff_1cone1cube_red_Cmd(
+      SubSys_DriveTrain driveSubSys,
+      SubSys_Arm arm,
+      SubSys_Hand hand,
+      SubSys_PigeonGyro pigeonGyro,
+      SubSys_Bling bling) {
     m_DriveTrain = driveSubSys;
     m_pigeonGyro = pigeonGyro;
     subsysArm = arm;
@@ -53,23 +56,24 @@ public class Auto_playoff_1cone1cube_red_Cmd extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
 
     /* Construct parallel command groups */
-    ParallelCommandGroup driveAndMoveToPickupPosition = new ParallelCommandGroup(
-        new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
-            driveSubSys, "playoff1", true, true, Alliance.Red),
-            new Cmd_SubSys_Arm_PosCmd(subsysArm, 45.0, true, 0.8, true)
-            );
-    ParallelCommandGroup driveAndDeliverCone = new ParallelCommandGroup(
-        new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
-            driveSubSys, "playoff2", false, false, Alliance.Red),
+    ParallelCommandGroup driveAndMoveToPickupPosition =
+        new ParallelCommandGroup(
+            new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
+                driveSubSys, "playoff1", true, true, Alliance.Red),
+            new Cmd_SubSys_Arm_PosCmd(subsysArm, 45.0, true, 0.8, true));
+    ParallelCommandGroup driveAndDeliverCone =
+        new ParallelCommandGroup(
+            new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
+                driveSubSys, "playoff2", false, false, Alliance.Red),
             new SequentialCommandGroup(
-            new Cmd_SubSys_Arm_PosCmd(subsysArm, -90, true, 0, false).withTimeout(4),
-            new Cmd_SubSys_Arm_PosCmd(subsysArm, -158.0, true, 1.54, true).withTimeout(6)
-    ));
+                new Cmd_SubSys_Arm_PosCmd(subsysArm, -90, true, 0, false).withTimeout(4),
+                new Cmd_SubSys_Arm_PosCmd(subsysArm, -158.0, true, 1.54, true).withTimeout(6)));
 
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new Cmd_SubSys_Arm_PosCmd(subsysArm, -147.0, true, 1.54, true).withTimeout(4), // Lift arm to high position
+        new Cmd_SubSys_Arm_PosCmd(subsysArm, -147.0, true, 1.54, true)
+            .withTimeout(4), // Lift arm to high position
         new WaitCommand(1.5), // Add buffer time
         new InstantCommand(subsysHand::CloseHand, subsysHand), // Open hand (reversed)
         driveAndMoveToPickupPosition, // Drive to end position
@@ -77,7 +81,10 @@ public class Auto_playoff_1cone1cube_red_Cmd extends SequentialCommandGroup {
         driveAndDeliverCone,
         new InstantCommand(subsysHand::CloseHand, subsysHand), // Open hand (reversed)
         new Cmd_SubSys_Arm_PosCmd(subsysArm, 45, true, 0, true).withTimeout(4),
-        new Cmd_SetBlingColorValue(blingSubSys, Const_Bling.Controllers.controller1, Const_Bling.Patterns.FixedPalette.RainbowRainbow) // Celebrate!
-    );
+        new Cmd_SetBlingColorValue(
+            blingSubSys,
+            Const_Bling.Controllers.controller1,
+            Const_Bling.Patterns.FixedPalette.RainbowRainbow) // Celebrate!
+        );
   }
 }
