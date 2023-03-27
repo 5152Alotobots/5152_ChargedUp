@@ -24,7 +24,7 @@ import frc.robot.ChargedUp.PhotonVision.Cmd.Cmd_NavigateToBestVisionTarget;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
 
 
-public class Auto_3CubeRightBlue_Cmd extends SequentialCommandGroup {
+public class Auto_LinkHPBlue_Cmd extends SequentialCommandGroup {
   private final SubSys_DriveTrain m_DriveTrain;
   private final SubSys_PigeonGyro m_pigeonGyro;
   private final SubSys_Hand m_hand;
@@ -51,7 +51,7 @@ public class Auto_3CubeRightBlue_Cmd extends SequentialCommandGroup {
    * @param photonvisionSubSys Photonvision subsystem
    * @param blingSubSys Bling subsystem
   */
-  public Auto_3CubeRightBlue_Cmd(SubSys_DriveTrain driveSubSys, SubSys_PigeonGyro pigeonGyro, SubSys_Hand handSubSys, SubSys_Arm armSubSys, SubSys_Photonvision photonvisionSubSys, SubSys_Bling blingSubSys) {
+  public Auto_LinkHPBlue_Cmd(SubSys_DriveTrain driveSubSys, SubSys_PigeonGyro pigeonGyro, SubSys_Hand handSubSys, SubSys_Arm armSubSys, SubSys_Photonvision photonvisionSubSys, SubSys_Bling blingSubSys) {
     m_DriveTrain = driveSubSys;
     m_pigeonGyro = pigeonGyro;
     m_hand = handSubSys;
@@ -59,26 +59,37 @@ public class Auto_3CubeRightBlue_Cmd extends SequentialCommandGroup {
     m_photonvision = photonvisionSubSys;
     m_bling = blingSubSys;
     
+    /* Lift arm to high position from pickup sequential command group */
+    SequentialCommandGroup armRotateAndExtendToHighLevelConeFromPickupSequential = new SequentialCommandGroup(
+        new Cmd_SubSys_Arm_PosCmd(armSubSys, -90, true, 0, false).withTimeout(4),
+        new Cmd_SubSys_Arm_PosCmd(armSubSys, -155.0, true, 1.54, true).withTimeout(4) //TODO: Change value to whatever is on local driver station
+    );
+
+    /* Lift arm to high position for cube from pickup sequential command group */
+    SequentialCommandGroup armRotateAndExtendToHighLevelCubeFromPickupSequential = new SequentialCommandGroup(
+        new Cmd_SubSys_Arm_PosCmd(armSubSys, -90, true, 0, false).withTimeout(4),
+        new Cmd_SubSys_Arm_PosCmd(armSubSys, -147.0, true, 1.54, true).withTimeout(4)
+    );
 
     /* Parallel commands */
     ParallelCommandGroup armRotateAndRetractDriveToPickup1Parallel = new ParallelCommandGroup(
       new Cmd_SubSys_Arm_PosCmd(armSubSys, 42, true, 0.8, true).withTimeout(4), // Lift arm to pickup pos
-      new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "leftbluedrivetopickup1", true, true, Alliance.Blue, PoseEstimationStrategy.OdometryONLY)
+      new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "humanplayerside_pickup1_3element", true, true, Alliance.Blue, PoseEstimationStrategy.OdometryONLY)
     );
 
-    ParallelCommandGroup armRotateAndExtendDriveToDeliverCone1HighLevelParallel = new ParallelCommandGroup(
-      new Cmd_SubSys_Arm_PosCmd(armSubSys, -147.0, true, 1.54, true).withTimeout(4), // Lift arm to high position
-      new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "leftbluedrivetodeliver1", false, false, Alliance.Blue, PoseEstimationStrategy.OdometryONLY)
+    ParallelCommandGroup armRotateAndExtendDriveToDeliverCube1HighLevelParallel = new ParallelCommandGroup(
+      armRotateAndExtendToHighLevelCubeFromPickupSequential.withTimeout(6), // Lift arm to high position
+      new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "humanplayerside_deliver1_3element", false, false, Alliance.Blue, PoseEstimationStrategy.OdometryONLY)
     );
 
     ParallelCommandGroup armRotateAndRetractDriveToPickup2Parallel = new ParallelCommandGroup(
       new Cmd_SubSys_Arm_PosCmd(armSubSys, 42, true, 0.8, true).withTimeout(4), // Lift arm to pickup pos
-      new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "leftbluedrivetopickup2", true, true, Alliance.Blue, PoseEstimationStrategy.OdometryONLY)
+      new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "humanplayerside_pickup2_3element", false, false, Alliance.Blue, PoseEstimationStrategy.OdometryONLY)
     );
 
     ParallelCommandGroup armRotateAndExtendDriveToDeliverCone2HighLevelParallel = new ParallelCommandGroup(
-      new Cmd_SubSys_Arm_PosCmd(armSubSys, 42, true, 0.8, true).withTimeout(4), // Lift arm to pickup pos
-      new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "leftbluedrivetodeliver2", false, false, Alliance.Blue, PoseEstimationStrategy.OdometryONLY)
+      armRotateAndExtendToHighLevelConeFromPickupSequential.withTimeout(6), // Lift arm to pickup pos
+      new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "humanplayerside_deliver2_3element", false, false, Alliance.Blue, PoseEstimationStrategy.OdometryONLY)
     );
 
     // Add your commands in the addCommands() call, e.g.
@@ -89,14 +100,13 @@ public class Auto_3CubeRightBlue_Cmd extends SequentialCommandGroup {
         armRotateAndRetractDriveToPickup1Parallel,
         new Cmd_NavigateToBestVisionTarget(driveSubSys, m_photonvision, m_bling, Const_Photonvision.Cameras.frontCamera, Const_Photonvision.Pipelines.Cone).withTimeout(3),
         new InstantCommand(handSubSys::OpenHand),
-        armRotateAndExtendDriveToDeliverCone1HighLevelParallel,
+        armRotateAndExtendDriveToDeliverCube1HighLevelParallel,
         new InstantCommand(handSubSys::CloseHand),
         armRotateAndRetractDriveToPickup2Parallel,
         new Cmd_NavigateToBestVisionTarget(driveSubSys, m_photonvision, m_bling, Const_Photonvision.Cameras.frontCamera, Const_Photonvision.Pipelines.Cone).withTimeout(3),
         new InstantCommand(handSubSys::OpenHand),
         armRotateAndExtendDriveToDeliverCone2HighLevelParallel,
-        new InstantCommand(handSubSys::CloseHand),
-        new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "leftbluedrivetocharge", false, false, Alliance.Blue, PoseEstimationStrategy.OdometryONLY) //ONLY IF TIME
+        new InstantCommand(handSubSys::CloseHand)
         );
   }
 }

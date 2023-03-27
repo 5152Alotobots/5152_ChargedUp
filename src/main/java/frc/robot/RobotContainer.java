@@ -8,6 +8,10 @@
 package frc.robot;
 
 import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.*;
+import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.*;
+import frc.robot.ChargedUp.AutoCommands.DoubleElement.*;
+import frc.robot.ChargedUp.AutoCommands.Basic.*;
+import frc.robot.ChargedUp.AutoCommands.TripleElement.*;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -249,6 +253,10 @@ public class RobotContainer {
   private final Command Auto_playoff_1cone1cube_blue_Cmd =
       new Auto_playoff_1cone1cube_blue_Cmd(
           driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
+  
+  private final Command Auto_LinkHPBlue_Cmd =
+      new Auto_LinkHPBlue_Cmd(
+        driveSubSys, gyroSubSys, handSubSys, armSubSys, photonvisionSubSys, blingSubSys);
 
   /*
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -334,6 +342,9 @@ public class RobotContainer {
     // Playoffs
     m_chooser.addOption("playoffs - Red", Auto_playoff_1cone1cube_red_Cmd);
     m_chooser.addOption("playoffs - Blue", Auto_playoff_1cone1cube_blue_Cmd);
+
+    // BETA 3 element
+    m_chooser.addOption("[TRIPLE] Link Human Player Side", Auto_LinkHPBlue_Cmd);
 
     // DOUBLE ELEMENT COMMANDS //TODO: FIX THESE
     /*
