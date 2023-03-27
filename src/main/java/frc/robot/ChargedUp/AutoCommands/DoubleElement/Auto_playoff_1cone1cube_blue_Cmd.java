@@ -13,6 +13,7 @@
  */
 package frc.robot.ChargedUp.AutoCommands.DoubleElement;
 
+import edu.wpi.first.vision.VisionPipeline;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -52,16 +53,23 @@ public class Auto_playoff_1cone1cube_blue_Cmd extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
 
+   //If doesn't work revert to cone blue
+   
+   
+   
     /* Construct parallel command groups */
     ParallelCommandGroup driveAndMoveToPickupPosition = new ParallelCommandGroup(
-        new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
-            driveSubSys, "playoff1", true, true, Alliance.Blue),
+     new SequentialCommandGroup(new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
+            driveSubSys, "playoff1", true, true, Alliance.Blue)
+            //Vision
+            ),
             new Cmd_SubSys_Arm_PosCmd(subsysArm, 45.0, true, 0.8, true)
             );
     ParallelCommandGroup driveAndDeliverCone = new ParallelCommandGroup(
         new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
             driveSubSys, "playoff2", false, false, Alliance.Blue),
             new SequentialCommandGroup(
+              //Vison
             new Cmd_SubSys_Arm_PosCmd(subsysArm, -90, true, 0, false).withTimeout(4),
             new Cmd_SubSys_Arm_PosCmd(subsysArm, -147.0, true, 1.54, true).withTimeout(6)            
     ));
