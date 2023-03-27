@@ -32,7 +32,7 @@ import frc.robot.ChargedUp.AutoCommands.DoubleElement.Auto_middlebluecone_Cmd;
 import frc.robot.ChargedUp.AutoCommands.DoubleElement.Auto_middleblueconeleftescape_Cmd;
 import frc.robot.ChargedUp.AutoCommands.DoubleElement.Auto_middleredcone_Cmd;
 import frc.robot.ChargedUp.AutoCommands.DoubleElement.Auto_middleredconeleftescape_Cmd;
-import frc.robot.ChargedUp.AutoCommands.DoubleElement.Auto_playoff_1cone1cube_blue_Cmd;
+import frc.robot.ChargedUp.AutoCommands.DoubleElement.Auto_playoff_1cone1cube_blue_nonwire_Cmd;
 import frc.robot.ChargedUp.AutoCommands.DoubleElement.Auto_playoff_1cone1cube_red_Cmd;
 import frc.robot.ChargedUp.AutoCommands.DoubleElement.Auto_rightbluecone_Cmd;
 import frc.robot.ChargedUp.AutoCommands.DoubleElement.Auto_rightredcone_Cmd;
@@ -228,12 +228,12 @@ public class RobotContainer {
       new Auto_Lakeviewleave_1cube_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
 
   // Playoffs
-  private final Command Auto_playoff_1cone1cube_red_Cmd =
+  private final Command Auto_playoff_1cone1cube_red_nonwire_Cmd =
       new Auto_playoff_1cone1cube_red_Cmd(
           driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
 
-  private final Command Auto_playoff_1cone1cube_blue_Cmd =
-      new Auto_playoff_1cone1cube_blue_Cmd(
+  private final Command Auto_playoff_1cone1cube_blue_nonwire_Cmd =
+      new Auto_playoff_1cone1cube_blue_nonwire_Cmd(
           driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
 
   /*
@@ -320,8 +320,8 @@ public class RobotContainer {
     m_chooser.addOption("lakeviewleave_1cube", Auto_lakeviewleave_1cube_Cmd);
 
     //Playoffs - Now in DoubleElement
-    m_chooser.addOption("playoffs - Red", Auto_playoff_1cone1cube_red_Cmd);
-    m_chooser.addOption("playoffs - Blue", Auto_playoff_1cone1cube_blue_Cmd);
+    m_chooser.addOption("playoffs - Red", Auto_playoff_1cone1cube_red_nonwire_Cmd);
+    m_chooser.addOption("playoffs - Blue", Auto_playoff_1cone1cube_blue_nonwire_Cmd);
 
     // DOUBLE ELEMENT COMMANDS //TODO: FIX THESE
     /*
