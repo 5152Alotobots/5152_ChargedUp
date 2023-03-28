@@ -4,6 +4,7 @@
 
 package frc.robot.ChargedUp.Arm;
 
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
@@ -317,6 +318,7 @@ public class SubSys_Arm extends SubsystemBase {
   private void setArmShoulderCmd(double armShoulderRotCmd) {
     // Convert from rotSpd to Percent
     double armRotCmd = armShoulderRotCmd / Robot.MaxSpeeds.Arm.ArmShoulderMaxRotSpd;
+    armRotCmd = armRotCmd+calcArmShoulderFF();
 
     if (outsideBounds) {
       armRotCmd = 0.0;
@@ -345,7 +347,11 @@ public class SubSys_Arm extends SubsystemBase {
       double armShoulderMotPosCmd = TalonFX_Conversions.degreesToCANCoderCnts(rotPosCmd);
 
       // Arm_ShoulderMotor.set(TalonFXControlMode.Position, rotPosCmd);
-      Arm_ShoulderMotor.set(TalonFXControlMode.MotionMagic, armShoulderMotPosCmd);
+      Arm_ShoulderMotor.set(TalonFXControlMode.MotionMagic, 
+        armShoulderMotPosCmd, 
+        DemandType.ArbitraryFeedForward,
+        calcArmShoulderFF());
+      
       atSetpoint =
           ((Math.abs(getArmShoulderAngle().getDegrees() - rotPosCmd))
               < SubSys_Arm_Constants.ArmShoulder.PID.atSetpointAllowableError);
@@ -354,6 +360,17 @@ public class SubSys_Arm extends SubsystemBase {
       atSetpoint = true;
     }
     return atSetpoint;
+  }
+
+  private double calcArmShoulderFF(){
+    double FFFactor = 
+      ((getArmLength()-Robot.Dimensions.Arm.ArmMinLength)*
+      (SubSys_Arm_Constants.ArmShoulder.FF.MaxFFPct-SubSys_Arm_Constants.ArmShoulder.FF.MinFFPct))/
+      (Robot.Dimensions.Arm.ArmMaxExtensionLength-Robot.Dimensions.Arm.ArmMinLength);
+    double MaxFFCmd = SubSys_Arm_Constants.ArmShoulder.FF.MinFFPct+FFFactor;
+    double FFCmd = MaxFFCmd*Math.cos(getArmShoulderAngle().getRadians());
+    SmartDashboard.putNumber("ArmShoulder_FFCmd", FFCmd);
+    return 0.0;
   }
 
   // ***** Arm Extension Methods *****
