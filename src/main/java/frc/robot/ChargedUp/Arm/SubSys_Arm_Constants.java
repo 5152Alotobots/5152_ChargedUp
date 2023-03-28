@@ -26,8 +26,8 @@ public class SubSys_Arm_Constants {
     public static final double openloopRamp = 0.5; // Seconds to Max Speed
 
     public class FF {
-      public static final double kS = 0;
-      public static final double kV = 0;
+      public static final double MaxFFPct = -0.075;   // Max FF Pct
+      public static final double MinFFPct = 0.00;   // Min FF Pct
     }
 
     public class PID {
