@@ -60,11 +60,13 @@ import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.Auto_rightredescape_1
 import frc.robot.ChargedUp.Bling.Const_Bling;
 import frc.robot.ChargedUp.Bling.SubSys_Bling;
 import frc.robot.ChargedUp.Bling.Cmd.Cmd_SetBlingColorValue;
+import frc.robot.ChargedUp.Commands.CmdGrp_TestVisionAuto;
+import frc.robot.ChargedUp.Commands.Cmd_NavigateToBestVisionTarget;
 import frc.robot.ChargedUp.DriverStation.SubSys_DriverStation;
 import frc.robot.ChargedUp.Hand.SubSys_Hand;
 import frc.robot.ChargedUp.PhotonVision.Const_Photonvision;
 import frc.robot.ChargedUp.PhotonVision.SubSys_Photonvision;
-import frc.robot.ChargedUp.PhotonVision.Cmd.Cmd_NavigateToBestVisionTarget;
+import frc.robot.ChargedUp.PhotonVision.Cmd.Cmd_GetDistanceToTarget;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmd_SubSys_DriveTrain_JoysticDefault;
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
@@ -390,7 +392,7 @@ public class RobotContainer {
 
     //Test Button
     driverStationSubSys.TestButton.onTrue(
-        new Cmd_NavigateToBestVisionTarget(driveSubSys, photonvisionSubSys, blingSubSys, Const_Photonvision.Cameras.frontCamera, Const_Photonvision.Pipelines.Cube)
+        new CmdGrp_TestVisionAuto(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys, photonvisionSubSys)
     );
 
     driverStationSubSys.GroundPickupButton.whileTrue(

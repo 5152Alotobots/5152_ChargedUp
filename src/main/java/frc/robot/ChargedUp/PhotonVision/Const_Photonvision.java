@@ -34,9 +34,9 @@ public class Const_Photonvision {
     }
 
     public static class Pipelines {
-        public static final int Apriltag = 0;
-        public static final int Cone = 2;
-        public static final int Cube = 1;
+        public static final int Apriltag = 2;
+        public static final int Cone = 1;
+        public static final int Cube = 0;
     }
  
 }

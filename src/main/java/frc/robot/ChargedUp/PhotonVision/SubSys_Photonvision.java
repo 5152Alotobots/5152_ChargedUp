@@ -15,8 +15,6 @@ import frc.robot.ChargedUp.Arm.SubSys_Arm;
 
 public class SubSys_Photonvision extends SubsystemBase {
 
-  /* X PID */
-  private PIDController Xcontroller = new PIDController(DriveTrainTrajSettings.DriveTrajectoryPID.Pgain, DriveTrainTrajSettings.DriveTrajectoryPID.Igain, DriveTrainTrajSettings.DriveTrajectoryPID.Dgain);
   /* Y PID */
   private PIDController Ycontroller = new PIDController(DriveTrainTrajSettings.DriveTrajectoryPID.Pgain, DriveTrainTrajSettings.DriveTrajectoryPID.Igain, DriveTrainTrajSettings.DriveTrajectoryPID.Dgain);
   /* Z PID */
@@ -28,7 +26,6 @@ public class SubSys_Photonvision extends SubsystemBase {
     m_Arm = armSubSys;
 
     /* CONFIG PID */
-    Xcontroller.setTolerance(0.3);
     Ycontroller.setTolerance(0.25);
     Zcontroller.setTolerance(0.3);
 
@@ -48,48 +45,22 @@ public class SubSys_Photonvision extends SubsystemBase {
             Const_Photonvision.CAMERA_HEIGHT_METERS,
             Const_Photonvision.TARGET_HEIGHT_METERS,
             Const_Photonvision.CAMERA_PITCH_RADIANS,
-            Units.degreesToRadians(result.getBestTarget().getPitch()))
-            - Const_Photonvision.CAMERA_TO_FRONT_ROBOT_METERS;
+            Units.degreesToRadians(result.getBestTarget().getPitch()));
       } else {
       return 0;
     }
   }
 
-    /** Calculate rotation speed */
-    public double getVisionRotSpeed(PhotonPipelineResult result){
-      if (result.hasTargets()) {
-        return Zcontroller.calculate(result.getBestTarget().getSkew(), 0);
-      } else {
-        return 0;
-      }
-    }
-    
-    /** Calculate forward speed */
-    public double getVisionForwardSpeed(PhotonPipelineResult result){
-      if (result.hasTargets()) {
-        return -Xcontroller.calculate(getRangeToTarget(result), 0) * 0.8;
-      } else {
-        return 0;
-      }
-    }
 
     /** Calculate strafe speed */
     public double getVisionStrafeSpeed(PhotonPipelineResult result){
       if (result.hasTargets()) {
-        return Ycontroller.calculate((result.getBestTarget().getYaw()) - Const_Photonvision.robotToCam.getY(), 0) * 0.04;
+        return Ycontroller.calculate((result.getBestTarget().getYaw()), 0) * 0.04;
       } else {
         return 0;
       }
     }
 
-    /** Returns true if the PID controllers don't need to move any further/you are at the target */
-    public boolean isAtTarget(PhotonPipelineResult result){
-      if (result.hasTargets()) {
-        return Xcontroller.atSetpoint() && Ycontroller.atSetpoint() /*&& Zcontroller.atSetpoint()*/;
-      } else {
-        return false;
-      }
-    }
   
     /** Returns true if the camera's target is taking up the acceptable percentage of the viewport
      * @param acceptablePercentage The percentage of the viewport the target should take up 0-1
