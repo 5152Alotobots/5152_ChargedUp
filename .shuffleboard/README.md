@@ -1,0 +1,1 @@
+# Move the folder 5152custom to this directory `~/Shuffleboard/themes/5152custom/5152custom.css`

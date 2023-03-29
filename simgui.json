@@ -115,6 +115,7 @@
       "/LiveWindow/Ungrouped/PIDController[9]": "PIDController",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
       "/LiveWindow/Ungrouped/Spark[0]": "Motor Controller",
+      "/Shuffleboard/Autonomous/Auto Mode": "String Chooser",
       "/SmartDashboard/SendableChooser[0]": "String Chooser"
     }
   }

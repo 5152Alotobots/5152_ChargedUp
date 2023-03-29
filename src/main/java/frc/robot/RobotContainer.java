@@ -14,6 +14,7 @@ import frc.robot.ChargedUp.AutoCommands.Basic.*;
 import frc.robot.ChargedUp.AutoCommands.TripleElement.*;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -359,7 +360,8 @@ public class RobotContainer {
     m_chooser.addOption("[DOUBLE] rightredcone", m_rightredcone);
     m_chooser.addOption("[DOUBLE] middleredconeleftescape", m_middleredconeleftescape);
     */
-    SmartDashboard.putData(m_chooser);
+    // Use shuffleboard now!
+    Shuffleboard.getTab("Autonomous").add("Auto Mode", m_chooser);
   }
 
   /**

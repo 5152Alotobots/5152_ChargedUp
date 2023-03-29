@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Library.Pneumatics.SubSys_Pneumatics;
@@ -36,6 +37,7 @@ public class Robot extends TimedRobot {
 
     robotContainer = new RobotContainer();
     m_subSys_Pneumatics.compressorOn();
+    Shuffleboard.selectTab("Autonomous");
     // CameraServer.startAutomaticCapture(0);
   }
 
@@ -67,7 +69,6 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     autonomousCommand = robotContainer.getAutonomousCommand();
-
     // schedule the autonomous command (example)
     if (autonomousCommand != null) {
       autonomousCommand.schedule();
@@ -87,6 +88,7 @@ public class Robot extends TimedRobot {
     if (autonomousCommand != null) {
       autonomousCommand.cancel();
     }
+    Shuffleboard.selectTab("Teleop");
   }
 
   /** This function is called periodically during operator control. */
