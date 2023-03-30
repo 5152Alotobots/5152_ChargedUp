@@ -34,7 +34,7 @@ import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
 // Link For PathPlaner
 // https://docs.google.com/presentation/d/1xjYSI4KpbmGBUY-ZMf1nAFrXIoJo1tl-HHNl8LLqa1I/edit#slide=id.g1e64fa08ff8_0_0
 
-public class Auto_playoff_1cone1cube_red_Cmd extends SequentialCommandGroup {
+public class Auto_Statebarrier_1cone1cube_red_Cmd extends SequentialCommandGroup {
   private final SubSys_DriveTrain m_DriveTrain;
   private final SubSys_PigeonGyro m_pigeonGyro;
   private final SubSys_Arm subsysArm;
@@ -42,7 +42,7 @@ public class Auto_playoff_1cone1cube_red_Cmd extends SequentialCommandGroup {
   private final SubSys_Bling blingSubSys;
 
   /** Creates a new Auto_Challenge1_Cmd. */
-  public Auto_playoff_1cone1cube_red_Cmd(
+  public Auto_Statebarrier_1cone1cube_red_Cmd(
       SubSys_DriveTrain driveSubSys,
       SubSys_Arm arm,
       SubSys_Hand hand,
