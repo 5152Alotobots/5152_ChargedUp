@@ -241,7 +241,7 @@ public class SubSys_Arm extends SubsystemBase {
     }
 
     // Disable bounds if Extension is short
-    if(getArmExtensionFullyRetractSwitchActive()){
+    if (getArmExtensionFullyRetractSwitchActive()) {
       outsideBounds = false;
     }
     return outsideBounds;
@@ -318,7 +318,7 @@ public class SubSys_Arm extends SubsystemBase {
   private void setArmShoulderCmd(double armShoulderRotCmd) {
     // Convert from rotSpd to Percent
     double armRotCmd = armShoulderRotCmd / Robot.MaxSpeeds.Arm.ArmShoulderMaxRotSpd;
-    armRotCmd = armRotCmd+calcArmShoulderFF();
+    armRotCmd = armRotCmd + calcArmShoulderFF();
 
     if (outsideBounds) {
       armRotCmd = 0.0;
@@ -347,11 +347,12 @@ public class SubSys_Arm extends SubsystemBase {
       double armShoulderMotPosCmd = TalonFX_Conversions.degreesToCANCoderCnts(rotPosCmd);
 
       // Arm_ShoulderMotor.set(TalonFXControlMode.Position, rotPosCmd);
-      Arm_ShoulderMotor.set(TalonFXControlMode.MotionMagic, 
-        armShoulderMotPosCmd, 
-        DemandType.ArbitraryFeedForward,
-        calcArmShoulderFF());
-      
+      Arm_ShoulderMotor.set(
+          TalonFXControlMode.MotionMagic,
+          armShoulderMotPosCmd,
+          DemandType.ArbitraryFeedForward,
+          calcArmShoulderFF());
+
       atSetpoint =
           ((Math.abs(getArmShoulderAngle().getDegrees() - rotPosCmd))
               < SubSys_Arm_Constants.ArmShoulder.PID.atSetpointAllowableError);
@@ -362,13 +363,14 @@ public class SubSys_Arm extends SubsystemBase {
     return atSetpoint;
   }
 
-  private double calcArmShoulderFF(){
-    double FFFactor = 
-      ((getArmLength()-Robot.Dimensions.Arm.ArmMinLength)*
-      (SubSys_Arm_Constants.ArmShoulder.FF.MaxFFPct-SubSys_Arm_Constants.ArmShoulder.FF.MinFFPct))/
-      (Robot.Dimensions.Arm.ArmMaxExtensionLength-Robot.Dimensions.Arm.ArmMinLength);
-    double MaxFFCmd = SubSys_Arm_Constants.ArmShoulder.FF.MinFFPct+FFFactor;
-    double FFCmd = MaxFFCmd*Math.cos(getArmShoulderAngle().getRadians());
+  private double calcArmShoulderFF() {
+    double FFFactor =
+        ((getArmLength() - Robot.Dimensions.Arm.ArmMinLength)
+                * (SubSys_Arm_Constants.ArmShoulder.FF.MaxFFPct
+                    - SubSys_Arm_Constants.ArmShoulder.FF.MinFFPct))
+            / (Robot.Dimensions.Arm.ArmMaxExtensionLength - Robot.Dimensions.Arm.ArmMinLength);
+    double MaxFFCmd = SubSys_Arm_Constants.ArmShoulder.FF.MinFFPct + FFFactor;
+    double FFCmd = MaxFFCmd * Math.cos(getArmShoulderAngle().getRadians());
     SmartDashboard.putNumber("ArmShoulder_FFCmd", FFCmd);
     return 0.0;
   }
