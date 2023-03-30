@@ -23,7 +23,7 @@ import frc.robot.ChargedUp.AutoCommands.Basic.Auto_leftredescape_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Basic.Auto_middlebluecharge_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Basic.Auto_middleredcharge_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Basic.Auto_rightbluecharge_Cmd;
-import frc.robot.ChargedUp.AutoCommands.Basic.Auto_rightblueescape_Cmd;
+import frc.robot.ChargedUp.AutoCommands.Basic.Auto_stateescape_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Basic.Auto_rightredcharge_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Basic.Auto_rightredescape_Cmd;
 import frc.robot.ChargedUp.AutoCommands.DoubleElement.Auto_leftbluecone_Cmd;
@@ -120,7 +120,7 @@ public class RobotContainer {
 
   private final Command m_rightbluecharge = new Auto_rightbluecharge_Cmd(driveSubSys, gyroSubSys);
 
-  private final Command m_rightblueescape = new Auto_rightblueescape_Cmd(driveSubSys, gyroSubSys);
+  private final Command m_stateescape = new Auto_stateescape_Cmd(driveSubSys, gyroSubSys);
 
   private final Command m_rightredcharge = new Auto_rightredcharge_Cmd(driveSubSys, gyroSubSys);
 
@@ -222,16 +222,16 @@ public class RobotContainer {
       new Auto_rightredescape_1cube_Cmd(
           driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
 
-  private final Command Auto_lakeviewleave_1cube_Cmd =
-      new Auto_Lakeviewleave_1cube_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
+  private final Command Auto_Statemiddleleave_1cube_Cmd =
+      new Auto_Statemiddleleave_1cube_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
 
   // Playoffs
-  private final Command Auto_playoff_1cone1cube_red_Cmd =
-      new Auto_playoff_1cone1cube_red_Cmd(
+  private final Command Auto_Statebarrier_1cone1cube_red_Cmd =
+      new Auto_Statebarrier_1cone1cube_red_Cmd(
           driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
 
-  private final Command Auto_playoff_1cone1cube_blue_Cmd =
-      new Auto_playoff_1cone1cube_blue_Cmd(
+  private final Command Auto_Statebarrier_1cone1cube_blue_Cmd =
+      new Auto_Statebarrier_1cone1cube_blue_Cmd(
           driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
 
   /*
@@ -277,19 +277,19 @@ public class RobotContainer {
             () -> driverStationSubSys.DrivePerfModeBActive()));
 
     // Sendable Chooser
-    m_chooser.addOption("[BASIC] leftbluecharge", m_leftbluecharge);
+   /*  m_chooser.addOption("[BASIC] leftbluecharge", m_leftbluecharge);
     m_chooser.addOption("[BASIC] leftblueescape", m_leftblueescape);
     m_chooser.addOption("[BASIC] leftredcharge", m_leftredcharge);
     m_chooser.addOption("[BASIC] leftredescape", m_leftredescape);
     m_chooser.addOption("[BASIC] middlebluecharge", m_middlebluecharge);
     m_chooser.addOption("[BASIC] middleredcharge", m_middleredcharge);
-    m_chooser.setDefaultOption("[BASIC] rightbluecharge", m_rightbluecharge);
-    m_chooser.addOption("[BASIC] rightblueescape", m_rightblueescape);
-    m_chooser.addOption("[BASIC] rightredcharge", m_rightredcharge);
-    m_chooser.addOption("[BASIC] rightredescape", m_rightredescape);
+    m_chooser.setDefaultOption("[BASIC] rightbluecharge", m_rightbluecharge);*/
+    m_chooser.addOption("[BASIC] stateescape", m_stateescape);
+   /* m_chooser.addOption("[BASIC] rightredcharge", m_rightredcharge);
+    m_chooser.addOption("[BASIC] rightredescape", m_rightredescape);*/
     // NEW SINGLE ELEMENT COMMANDS
     // Cones
-    m_chooser.addOption("[SINGLE] leftbluecharge_1cone", m_leftbluecharge_1cone);
+  /*   m_chooser.addOption("[SINGLE] leftbluecharge_1cone", m_leftbluecharge_1cone);
     m_chooser.addOption("[SINGLE] leftblueescape_1cone", m_leftblueescape_1cone);
     m_chooser.addOption("[SINGLE] leftredcharge_1cone", m_leftredcharge_1cone);
     m_chooser.addOption("[SINGLE] leftredescape_1cone", m_leftredescape_1cone);
@@ -310,12 +310,12 @@ public class RobotContainer {
     m_chooser.addOption("[SINGLE] rightredescape_1cube", Auto_rightredescape_1cube_Cmd);
 
     // LAKE VIEW
-    m_chooser.addOption("lakeview", m_lakeview_1cube);
-    m_chooser.addOption("lakeviewleave_1cube", Auto_lakeviewleave_1cube_Cmd);
+    m_chooser.addOption("lakeview", m_lakeview_1cube);*/
+    m_chooser.addOption("Statemiddleleave_1cube", Auto_Statemiddleleave_1cube_Cmd);
 
     // Playoffs
-    m_chooser.addOption("playoffs - Red", Auto_playoff_1cone1cube_red_Cmd);
-    m_chooser.addOption("playoffs - Blue", Auto_playoff_1cone1cube_blue_Cmd);
+    m_chooser.addOption("StateBarrier - Red", Auto_Statebarrier_1cone1cube_red_Cmd);
+    m_chooser.addOption("StateBarrier - Blue", Auto_Statebarrier_1cone1cube_blue_Cmd);
 
     // DOUBLE ELEMENT COMMANDS //TODO: FIX THESE
     /*
