@@ -11,14 +11,14 @@ public class Const_Photonvision {
     // Camera constants
     public final static double CAMERA_HEIGHT_METERS = 0.47;
     public final static double CAMERA_TO_FRONT_ROBOT_METERS = 0.28;
-    public static final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(-28);
+    public static final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(-19);
 
     // FORWARD: +, RIGHT: +, UP: + (USED FOR APRILTAGS)
     public static final Transform3d robotToCam =
     new Transform3d(
             new Translation3d(0.2, 0.105, 0.47),
             new Rotation3d(
-                    0, -28,
+                    0, -19,
                     0)); // Cam mounted facing forward, 28deg pitched DOWN, 20cm forward of center, 10.5cm RIGHT of center, 47cm UP from center.
 
 
@@ -47,9 +47,9 @@ public class Const_Photonvision {
     public static class TargetingConstants {
         public static class GridApriltag {
             // Target
-            public final static double TARGET_HEIGHT_METERS = Units.inchesToMeters(15.13);
-            public static final double GOAL_RANGE_METERS = 0.7;
-            public static final double IN_RANGE_AREA_PERCENT = 0.8;
+            public final static double TARGET_HEIGHT_METERS = Units.inchesToMeters(18.2);
+            public static final double GOAL_RANGE_METERS = 0.71;
+            public static final double IN_RANGE_AREA_PERCENT = 0.2;
         }
         public static class Cone {
             // Target

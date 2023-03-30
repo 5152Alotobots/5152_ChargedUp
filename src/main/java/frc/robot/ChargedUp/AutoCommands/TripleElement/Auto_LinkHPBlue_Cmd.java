@@ -97,12 +97,12 @@ public class Auto_LinkHPBlue_Cmd extends SequentialCommandGroup {
       new Cmd_SubSys_Arm_PosCmd(armSubSys, -147.0, true, 1.54, true).withTimeout(4), // Lift arm to high position
         new InstantCommand(handSubSys::CloseHand),
         armRotateAndRetractDriveToPickup1Parallel,
-        new Cmd_NavigateToBestVisionTarget(driveSubSys, m_photonvision, m_bling, Const_Photonvision.Cameras.frontCamera, Const_Photonvision.Pipelines.Cube, true, true).withTimeout(3),
+        new Cmd_NavigateToBestVisionTarget(driveSubSys, m_photonvision, m_bling, Const_Photonvision.Cameras.frontCamera, Const_Photonvision.Pipelines.Cube, true, false, true).withTimeout(3),
         new InstantCommand(handSubSys::OpenHand),
         armRotateAndExtendDriveToDeliverCube1HighLevelParallel,
         new InstantCommand(handSubSys::CloseHand),
         armRotateAndRetractDriveToPickup2Parallel,
-        new Cmd_NavigateToBestVisionTarget(driveSubSys, m_photonvision, m_bling, Const_Photonvision.Cameras.frontCamera, Const_Photonvision.Pipelines.Cone, true, true).withTimeout(3),
+        new Cmd_NavigateToBestVisionTarget(driveSubSys, m_photonvision, m_bling, Const_Photonvision.Cameras.frontCamera, Const_Photonvision.Pipelines.Cone, true, false, true).withTimeout(3),
         new InstantCommand(handSubSys::OpenHand),
         armRotateAndExtendDriveToDeliverCone2HighLevelParallel,
         new InstantCommand(handSubSys::CloseHand)
