@@ -9,6 +9,7 @@ import org.photonvision.targeting.PhotonPipelineResult;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain_Constants.DriveTrainTrajSettings;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
@@ -16,7 +17,6 @@ import frc.robot.ChargedUp.Arm.SubSys_Arm;
 public class SubSys_Photonvision extends SubsystemBase {
 
   /* Y PID */
-  private PIDController Ycontroller = new PIDController(DriveTrainTrajSettings.DriveTrajectoryPID.Pgain, DriveTrainTrajSettings.DriveTrajectoryPID.Igain, DriveTrainTrajSettings.DriveTrajectoryPID.Dgain);
   /* Z PID */
   private PIDController Zcontroller = new PIDController(DriveTrainTrajSettings.RotationTrajectoryPID.Pgain, DriveTrainTrajSettings.RotationTrajectoryPID.Igain, DriveTrainTrajSettings.RotationTrajectoryPID.Dgain);
     
@@ -26,7 +26,6 @@ public class SubSys_Photonvision extends SubsystemBase {
     m_Arm = armSubSys;
 
     /* CONFIG PID */
-    Ycontroller.setTolerance(0.25);
     Zcontroller.setTolerance(0.3);
 
   }
@@ -34,33 +33,56 @@ public class SubSys_Photonvision extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+
+    //Log target data to the dashboard if we have a target
+    if (Const_Photonvision.Cameras.frontCamera.getLatestResult().hasTargets()) {
+      PhotonPipelineResult result = Const_Photonvision.Cameras.frontCamera.getLatestResult();
+      int pipelineIndex = Const_Photonvision.Cameras.frontCamera.getPipelineIndex();
+      double rangeToTarget = getRangeToTarget(result, pipelineIndex);
+      double targetArea = result.getBestTarget().getArea();
+      double targetPitch = result.getBestTarget().getPitch();
+      double targetYaw = result.getBestTarget().getYaw();
+      double targetSkew = result.getBestTarget().getSkew();
+
+      //Log target data to the dashboard (shuffleboard)
+      Shuffleboard.getTab("PhotonVision").add("Pipeline Index", pipelineIndex);
+      Shuffleboard.getTab("PhotonVision").add("Range to Target", rangeToTarget);
+      Shuffleboard.getTab("PhotonVision").add("Target Area", targetArea);
+      Shuffleboard.getTab("PhotonVision").add("Target Pitch", targetPitch);
+      Shuffleboard.getTab("PhotonVision").add("Target Yaw", targetYaw);
+      Shuffleboard.getTab("PhotonVision").add("Target Skew", targetSkew);
+
+      //Log target data to the dashboard (SmartDashboard)
+      //SmartDashboard.putNumber("Pipeline Index", pipelineIndex);
+      //SmartDashboard.putNumber("Range to Target", rangeToTarget);
+      //SmartDashboard.putNumber("Target Area", targetArea);
+      //SmartDashboard.putNumber("Target Pitch", targetPitch);
+      //SmartDashboard.putNumber("Target Yaw", targetYaw);
+      //SmartDashboard.putNumber("Target Skew", targetSkew);
+
+    }
   }
 
     /* VISION */
     /** Calculate distance to target */
-    public double getRangeToTarget(PhotonPipelineResult result){
+    public double getRangeToTarget(PhotonPipelineResult result, int pipelineIndex){
+    double TARGET_HEIGHT_METERS;
     if (result.hasTargets()) {
+      switch(pipelineIndex){
+        default: TARGET_HEIGHT_METERS = Const_Photonvision.TargetingConstants.Cube.TARGET_HEIGHT_METERS; break;
+        case Const_Photonvision.Pipelines.Cone: TARGET_HEIGHT_METERS = Const_Photonvision.TargetingConstants.Cone.TARGET_HEIGHT_METERS; break;
+        case Const_Photonvision.Pipelines.Apriltag: TARGET_HEIGHT_METERS = Const_Photonvision.TargetingConstants.GridApriltag.TARGET_HEIGHT_METERS; break;
+      }
         return
         PhotonUtils.calculateDistanceToTargetMeters(
             Const_Photonvision.CAMERA_HEIGHT_METERS,
-            Const_Photonvision.TARGET_HEIGHT_METERS,
+            TARGET_HEIGHT_METERS,
             Const_Photonvision.CAMERA_PITCH_RADIANS,
             Units.degreesToRadians(result.getBestTarget().getPitch()));
       } else {
       return 0;
     }
   }
-
-
-    /** Calculate strafe speed */
-    public double getVisionStrafeSpeed(PhotonPipelineResult result){
-      if (result.hasTargets()) {
-        return Ycontroller.calculate((result.getBestTarget().getYaw()), 0) * 0.04;
-      } else {
-        return 0;
-      }
-    }
-
   
     /** Returns true if the camera's target is taking up the acceptable percentage of the viewport
      * @param acceptablePercentage The percentage of the viewport the target should take up 0-1
