@@ -147,7 +147,6 @@ public class Cmd_NavigateToBestVisionTarget extends CommandBase {
   /** Calculate forward speed */
   private double getVisionForwardSpeed(PhotonPipelineResult result){
     if (result.hasTargets()) {
-      SmartDashboard.putNumber("Xcontroller vision cmd", Math.min(Math.max(-Xcontroller.calculate(subSys_Photonvision.getRangeToTarget(result, pipelineIndex), acceptableDistanceToTarget), -PIDspeeds.Max_X_PID_Speed), PIDspeeds.Max_X_PID_Speed));
       return Math.min(Math.max(-Xcontroller.calculate(subSys_Photonvision.getRangeToTarget(result, pipelineIndex), acceptableDistanceToTarget), -PIDspeeds.Max_X_PID_Speed), PIDspeeds.Max_X_PID_Speed);
     } else {
       return 0;
