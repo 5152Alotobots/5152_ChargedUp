@@ -90,10 +90,6 @@ public class Cmd_NavigateToBestVisionTarget extends CommandBase {
     SmartDashboard.putNumber("Error Y PID VISION", Ycontroller.getPositionError());
     SmartDashboard.putNumber("Error Z PID VISION", Zcontroller.getPositionError());
 
-    if (latestResult.hasTargets()){
-    SmartDashboard.putNumber("Distance to Target", subSys_Photonvision.getRangeToTarget(latestResult, pipelineIndex));
-    SmartDashboard.putNumber("Yaw to Target", latestResult.getBestTarget().getYaw());
-    }
 
   // Forward/Backward
   double xSpd;
@@ -151,6 +147,7 @@ public class Cmd_NavigateToBestVisionTarget extends CommandBase {
   /** Calculate forward speed */
   private double getVisionForwardSpeed(PhotonPipelineResult result){
     if (result.hasTargets()) {
+      SmartDashboard.putNumber("Xcontroller vision cmd", Math.min(Math.max(-Xcontroller.calculate(subSys_Photonvision.getRangeToTarget(result, pipelineIndex), acceptableDistanceToTarget), -PIDspeeds.Max_X_PID_Speed), PIDspeeds.Max_X_PID_Speed));
       return Math.min(Math.max(-Xcontroller.calculate(subSys_Photonvision.getRangeToTarget(result, pipelineIndex), acceptableDistanceToTarget), -PIDspeeds.Max_X_PID_Speed), PIDspeeds.Max_X_PID_Speed);
     } else {
       return 0;

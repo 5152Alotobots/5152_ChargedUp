@@ -11,7 +11,7 @@ __          __           _                                      _          _    
                   __/ |              __/ |
                  |___/              |___/
 */
-package frc.robot.ChargedUp.AutoCommands.SingleElement.Cube;
+package frc.robot.ChargedUp.AutoCommands.DoubleElement.Mixed;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -21,9 +21,12 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.ChargedUp.Arm.Cmds_SubSys_Arm.Cmd_SubSys_Arm_PosCmd;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
 import frc.robot.ChargedUp.Bling.Cmd.Cmd_SetBlingColorValue;
+import frc.robot.ChargedUp.Commands.Cmd_NavigateToBestVisionTarget;
 import frc.robot.ChargedUp.Bling.Const_Bling;
 import frc.robot.ChargedUp.Bling.SubSys_Bling;
 import frc.robot.ChargedUp.Hand.SubSys_Hand;
+import frc.robot.ChargedUp.PhotonVision.Const_Photonvision;
+import frc.robot.ChargedUp.PhotonVision.SubSys_Photonvision;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmds_PathPlanner.Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain_Constants.DriveTrainTrajSettings.PoseEstimationStrategy;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
@@ -34,41 +37,54 @@ import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
 // Link For PathPlaner
 // https://docs.google.com/presentation/d/1xjYSI4KpbmGBUY-ZMf1nAFrXIoJo1tl-HHNl8LLqa1I/edit#slide=id.g1e64fa08ff8_0_0
 
-public class Auto_Statebarrier_1cone1cube_red_Cmd extends SequentialCommandGroup {
+public class Auto_Statebarrier_1cone1cube_blue_Cmd extends SequentialCommandGroup {
   private final SubSys_DriveTrain m_DriveTrain;
   private final SubSys_PigeonGyro m_pigeonGyro;
   private final SubSys_Arm subsysArm;
   private final SubSys_Hand subsysHand;
   private final SubSys_Bling blingSubSys;
+  private final SubSys_Photonvision photonvision;
 
   /** Creates a new Auto_Challenge1_Cmd. */
-  public Auto_Statebarrier_1cone1cube_red_Cmd(
+  public Auto_Statebarrier_1cone1cube_blue_Cmd(
       SubSys_DriveTrain driveSubSys,
       SubSys_Arm arm,
       SubSys_Hand hand,
       SubSys_PigeonGyro pigeonGyro,
-      SubSys_Bling bling) {
+      SubSys_Bling bling,
+      SubSys_Photonvision photonvision) {
     m_DriveTrain = driveSubSys;
     m_pigeonGyro = pigeonGyro;
     subsysArm = arm;
     subsysHand = hand;
     blingSubSys = bling;
+    this.photonvision = photonvision;
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
 
     /* Construct parallel command groups */
-    ParallelCommandGroup driveAndMoveToPickupPosition =
-        new ParallelCommandGroup(
-            new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
-                driveSubSys, "playoff1", true, true, Alliance.Red, PoseEstimationStrategy.OdometryONLY),
-            new Cmd_SubSys_Arm_PosCmd(subsysArm, 45.0, true, 0.8, true));
-    ParallelCommandGroup driveAndDeliverCone =
-        new ParallelCommandGroup(
-            new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
-                driveSubSys, "playoff2", false, false, Alliance.Red, PoseEstimationStrategy.OdometryONLY),
-            new SequentialCommandGroup(
-                new Cmd_SubSys_Arm_PosCmd(subsysArm, -90, true, 0, false).withTimeout(4),
-                new Cmd_SubSys_Arm_PosCmd(subsysArm, -158.0, true, 1.54, true).withTimeout(6)));
+    SequentialCommandGroup driveAndMoveToPickupPosition =
+        new SequentialCommandGroup(
+            new ParallelCommandGroup( 
+                new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
+                driveSubSys, "playoff1", true, true, Alliance.Blue, PoseEstimationStrategy.OdometryONLY),
+            new Cmd_SubSys_Arm_PosCmd(subsysArm, 0.0, true, 0.8, true).withTimeout(4)
+            ),
+            //Vision for cube
+           new Cmd_NavigateToBestVisionTarget(driveSubSys, photonvision, bling, Const_Photonvision.Cameras.frontCamera, Const_Photonvision.Pipelines.Cube, true, false, true).withTimeout(5),
+           new Cmd_SubSys_Arm_PosCmd(subsysArm, 45.0, true, 0.8, false).withTimeout(4)
+           );
+
+
+           ParallelCommandGroup driveAndDeliverCone =
+           new ParallelCommandGroup(
+               new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
+                   driveSubSys, "playoff2", false, false, Alliance.Blue, PoseEstimationStrategy.OdometryONLY),
+               new SequentialCommandGroup(
+                   new Cmd_SubSys_Arm_PosCmd(subsysArm, -90, true, 0, false).withTimeout(4),
+                   new Cmd_SubSys_Arm_PosCmd(subsysArm, -158.0, true, 1.54, true).withTimeout(6)));
+       
+        
 
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());

@@ -10,6 +10,7 @@ import org.photonvision.targeting.PhotonPipelineResult;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain_Constants.DriveTrainTrajSettings;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
@@ -35,8 +36,8 @@ public class SubSys_Photonvision extends SubsystemBase {
     // This method will be called once per scheduler run
 
     //Log target data to the dashboard if we have a target
-    if (Const_Photonvision.Cameras.frontCamera.getLatestResult().hasTargets()) {
       PhotonPipelineResult result = Const_Photonvision.Cameras.frontCamera.getLatestResult();
+      if (result.hasTargets()) {
       int pipelineIndex = Const_Photonvision.Cameras.frontCamera.getPipelineIndex();
       double rangeToTarget = getRangeToTarget(result, pipelineIndex);
       double targetArea = result.getBestTarget().getArea();
@@ -45,20 +46,20 @@ public class SubSys_Photonvision extends SubsystemBase {
       double targetSkew = result.getBestTarget().getSkew();
 
       //Log target data to the dashboard (shuffleboard)
-      Shuffleboard.getTab("PhotonVision").add("Pipeline Index", pipelineIndex);
-      Shuffleboard.getTab("PhotonVision").add("Range to Target", rangeToTarget);
-      Shuffleboard.getTab("PhotonVision").add("Target Area", targetArea);
-      Shuffleboard.getTab("PhotonVision").add("Target Pitch", targetPitch);
-      Shuffleboard.getTab("PhotonVision").add("Target Yaw", targetYaw);
-      Shuffleboard.getTab("PhotonVision").add("Target Skew", targetSkew);
+      // Shuffleboard.getTab("PhotonVision").add("Pipeline Index", pipelineIndex);
+      // Shuffleboard.getTab("PhotonVision").add("Range to Target", rangeToTarget);
+      // Shuffleboard.getTab("PhotonVision").add("Target Area", targetArea);
+      // Shuffleboard.getTab("PhotonVision").add("Target Pitch", targetPitch);
+      // Shuffleboard.getTab("PhotonVision").add("Target Yaw", targetYaw);
+      // Shuffleboard.getTab("PhotonVision").add("Target Skew", targetSkew);
 
       //Log target data to the dashboard (SmartDashboard)
-      //SmartDashboard.putNumber("Pipeline Index", pipelineIndex);
-      //SmartDashboard.putNumber("Range to Target", rangeToTarget);
-      //SmartDashboard.putNumber("Target Area", targetArea);
-      //SmartDashboard.putNumber("Target Pitch", targetPitch);
-      //SmartDashboard.putNumber("Target Yaw", targetYaw);
-      //SmartDashboard.putNumber("Target Skew", targetSkew);
+      SmartDashboard.putNumber("Pipeline Index", pipelineIndex);
+      SmartDashboard.putNumber("Range to Target", rangeToTarget);
+      SmartDashboard.putNumber("Target Area", targetArea);
+      SmartDashboard.putNumber("Target Pitch", targetPitch);
+      SmartDashboard.putNumber("Target Yaw", targetYaw);
+      SmartDashboard.putNumber("Target Skew", targetSkew);
 
     }
   }

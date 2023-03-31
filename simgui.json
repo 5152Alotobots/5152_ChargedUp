@@ -117,5 +117,15 @@
       "/LiveWindow/Ungrouped/Spark[0]": "Motor Controller",
       "/SmartDashboard/SendableChooser[0]": "String Chooser"
     }
+  },
+  "NetworkTables": {
+    "transitory": {
+      "Shuffleboard": {
+        "open": true
+      }
+    }
+  },
+  "NetworkTables View": {
+    "visible": false
   }
 }

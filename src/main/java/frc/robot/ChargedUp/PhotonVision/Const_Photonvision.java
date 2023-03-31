@@ -23,9 +23,9 @@ public class Const_Photonvision {
 
 
     public static class PIDspeeds {
-        public static final double Max_X_PID_Speed = 0.5;
-        public static final double Max_Y_PID_Speed = 0.5;
-        public static final double Max_Z_PID_Speed = 0.5;
+        public static final double Max_X_PID_Speed = 0.04;
+        public static final double Max_Y_PID_Speed = 0.2;
+        public static final double Max_Z_PID_Speed = 0.2;
     }
 
     public static class AcceptablePIDError {
@@ -60,7 +60,7 @@ public class Const_Photonvision {
         public static class Cube {
             // Target
             public final static double TARGET_HEIGHT_METERS = Units.inchesToMeters(4.5);
-            public static final double GOAL_RANGE_METERS = 0.45;
+            public static final double GOAL_RANGE_METERS = 0.56;
             public static final double IN_RANGE_AREA_PERCENT = 0.8;
         }
     }

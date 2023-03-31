@@ -12,7 +12,7 @@
                                    |_|   |_|
 */
 
-package frc.robot.ChargedUp.AutoCommands.DoubleElement;
+package frc.robot.ChargedUp.AutoCommands.DoubleElement.Cone;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -30,11 +30,8 @@ import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
 import frc.robot.Library.DriveTrains.SwerveDrive.*;
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
 
-/**
- * *Link For PathPlaner *
- * https://docs.google.com/presentation/d/1xjYSI4KpbmGBUY-ZMf1nAFrXIoJo1tl-HHNl8LLqa1I/edit#slide=id.g1e65ac68f1d_0_48
- */
-public class Auto_rightredcone_Cmd extends SequentialCommandGroup {
+/** *Link For PathPlaner * */
+public class Auto_middleredcone_Cmd extends SequentialCommandGroup {
   private final SubSys_DriveTrain m_DriveTrain;
   private final SubSys_PigeonGyro m_pigeonGyro;
   private final SubSys_Arm m_Arm;
@@ -42,7 +39,7 @@ public class Auto_rightredcone_Cmd extends SequentialCommandGroup {
   private final SubSys_Bling m_Bling;
 
   /** Creates a new Auto_Challenge1_Cmd. */
-  public Auto_rightredcone_Cmd(
+  public Auto_middleredcone_Cmd(
       SubSys_DriveTrain driveSubSys,
       SubSys_PigeonGyro pigeonGyro,
       SubSys_Arm subsysArm,
@@ -53,7 +50,6 @@ public class Auto_rightredcone_Cmd extends SequentialCommandGroup {
     m_Arm = subsysArm;
     m_Hand = subsysHand;
     m_Bling = bling;
-    
 
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
@@ -69,11 +65,11 @@ public class Auto_rightredcone_Cmd extends SequentialCommandGroup {
                 new Cmd_SubSys_Arm_PosCmd(subsysArm, 42, true, 0, false).withTimeout(4),
                 new Cmd_SubSys_Arm_PosCmd(subsysArm, 0, false, 1, true).withTimeout(4)),
             new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
-                driveSubSys, "rightbluecone1", true, true, Alliance.Red, PoseEstimationStrategy.OdometryONLY)),
+                driveSubSys, "middlebluecone1", true, true, Alliance.Red, PoseEstimationStrategy.OdometryONLY)),
         new InstantCommand(subsysHand::OpenHand, subsysHand),
         new ParallelCommandGroup(
             new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
-                driveSubSys, "rightbluecone2", false, false, Alliance.Red, PoseEstimationStrategy.OdometryONLY),
+                driveSubSys, "middlebluecone2", false, false, Alliance.Red, PoseEstimationStrategy.OdometryONLY),
             new Cmd_SubSys_Arm_PosCmd(subsysArm, 10.0, true, 0.8, true).withTimeout(4)),
         new Cmd_AutoBalance(pigeonGyro, driveSubSys, bling));
   }

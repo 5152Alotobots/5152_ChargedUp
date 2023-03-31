@@ -12,7 +12,7 @@
                                    |_|   |_|
 */
 
-package frc.robot.ChargedUp.AutoCommands.DoubleElement;
+package frc.robot.ChargedUp.AutoCommands.DoubleElement.Cone;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.InstantCommand;

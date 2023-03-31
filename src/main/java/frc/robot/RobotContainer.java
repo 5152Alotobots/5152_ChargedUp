@@ -7,11 +7,6 @@
 
 package frc.robot;
 
-import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.*;
-import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.*;
-import frc.robot.ChargedUp.AutoCommands.DoubleElement.*;
-import frc.robot.ChargedUp.AutoCommands.Basic.*;
-import frc.robot.ChargedUp.AutoCommands.TripleElement.*;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -23,23 +18,17 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
 import frc.robot.ChargedUp.Arm.Cmds_SubSys_Arm.Cmd_SubSys_Arm_JoysticDefault;
 import frc.robot.ChargedUp.Arm.Cmds_SubSys_Arm.Cmd_SubSys_Arm_PosCmd;
-import frc.robot.ChargedUp.AutoCommands.Basic.Auto_leftbluecharge_Cmd;
-import frc.robot.ChargedUp.AutoCommands.Basic.Auto_leftblueescape_Cmd;
-import frc.robot.ChargedUp.AutoCommands.Basic.Auto_leftredescape_Cmd;
-import frc.robot.ChargedUp.AutoCommands.Basic.Auto_middlebluecharge_Cmd;
-import frc.robot.ChargedUp.AutoCommands.Basic.Auto_middleredcharge_Cmd;
-import frc.robot.ChargedUp.AutoCommands.Basic.Auto_rightbluecharge_Cmd;
 import frc.robot.ChargedUp.AutoCommands.Basic.Auto_stateescape_Cmd;
-import frc.robot.ChargedUp.AutoCommands.Basic.Auto_rightredcharge_Cmd;
-import frc.robot.ChargedUp.AutoCommands.Basic.Auto_rightredescape_Cmd;
-import frc.robot.ChargedUp.AutoCommands.DoubleElement.Auto_leftbluecone_Cmd;
-import frc.robot.ChargedUp.AutoCommands.DoubleElement.Auto_leftredcone_Cmd;
-import frc.robot.ChargedUp.AutoCommands.DoubleElement.Auto_middlebluecone_Cmd;
-import frc.robot.ChargedUp.AutoCommands.DoubleElement.Auto_middleblueconeleftescape_Cmd;
-import frc.robot.ChargedUp.AutoCommands.DoubleElement.Auto_middleredcone_Cmd;
-import frc.robot.ChargedUp.AutoCommands.DoubleElement.Auto_middleredconeleftescape_Cmd;
-import frc.robot.ChargedUp.AutoCommands.DoubleElement.Auto_rightbluecone_Cmd;
-import frc.robot.ChargedUp.AutoCommands.DoubleElement.Auto_rightredcone_Cmd;
+import frc.robot.ChargedUp.AutoCommands.DoubleElement.Cone.Auto_leftbluecone_Cmd;
+import frc.robot.ChargedUp.AutoCommands.DoubleElement.Cone.Auto_leftredcone_Cmd;
+import frc.robot.ChargedUp.AutoCommands.DoubleElement.Cone.Auto_middlebluecone_Cmd;
+import frc.robot.ChargedUp.AutoCommands.DoubleElement.Cone.Auto_middleblueconeleftescape_Cmd;
+import frc.robot.ChargedUp.AutoCommands.DoubleElement.Cone.Auto_middleredcone_Cmd;
+import frc.robot.ChargedUp.AutoCommands.DoubleElement.Cone.Auto_middleredconeleftescape_Cmd;
+import frc.robot.ChargedUp.AutoCommands.DoubleElement.Cone.Auto_rightbluecone_Cmd;
+import frc.robot.ChargedUp.AutoCommands.DoubleElement.Cone.Auto_rightredcone_Cmd;
+import frc.robot.ChargedUp.AutoCommands.DoubleElement.Mixed.Auto_Statebarrier_1cone1cube_blue_Cmd;
+import frc.robot.ChargedUp.AutoCommands.DoubleElement.Mixed.Auto_Statebarrier_1cone1cube_red_Cmd;
 import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_leftbluecharge_1cone_Cmd;
 import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_leftblueescape_1cone_Cmd;
 import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_leftredcharge_1cone_Cmd;
@@ -51,6 +40,7 @@ import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_rightblueescape_
 import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_rightredcharge_1cone_Cmd;
 import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_rightredescape_1cone_Cmd;
 import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.Auto_Lakeview_1cube_Cmd;
+import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.Auto_Statemiddleleave_1cube_Cmd;
 import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.Auto_leftbluecharge_1cube_Cmd;
 import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.Auto_leftblueescape_1cube_Cmd;
 import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.Auto_leftredcharge_1cube_Cmd;
@@ -59,16 +49,14 @@ import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.Auto_rightbluecharge_
 import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.Auto_rightblueescape_1cube_Cmd;
 import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.Auto_rightredcharge_1cube_Cmd;
 import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.Auto_rightredescape_1cube_Cmd;
+import frc.robot.ChargedUp.AutoCommands.TripleElement.Auto_LinkHPBlue_Cmd;
 import frc.robot.ChargedUp.Bling.Const_Bling;
 import frc.robot.ChargedUp.Bling.SubSys_Bling;
 import frc.robot.ChargedUp.Bling.Cmd.Cmd_SetBlingColorValue;
 import frc.robot.ChargedUp.Commands.CmdGrp_TestVisionAuto;
-import frc.robot.ChargedUp.Commands.Cmd_NavigateToBestVisionTarget;
 import frc.robot.ChargedUp.DriverStation.SubSys_DriverStation;
 import frc.robot.ChargedUp.Hand.SubSys_Hand;
-import frc.robot.ChargedUp.PhotonVision.Const_Photonvision;
 import frc.robot.ChargedUp.PhotonVision.SubSys_Photonvision;
-import frc.robot.ChargedUp.PhotonVision.Cmd.Cmd_GetDistanceToTarget;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmd_SubSys_DriveTrain_JoysticDefault;
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
@@ -130,6 +118,7 @@ public class RobotContainer {
   // SetUp Auto
   SendableChooser<Command> m_chooser = new SendableChooser<>();
   // OLD AUTOS
+  /*
   private final Command m_leftbluecharge = new Auto_leftbluecharge_Cmd(driveSubSys, gyroSubSys, blingSubSys);
 
   private final Command m_leftblueescape = new Auto_leftblueescape_Cmd(driveSubSys, gyroSubSys);
@@ -144,11 +133,11 @@ public class RobotContainer {
 
   private final Command m_rightbluecharge = new Auto_rightbluecharge_Cmd(driveSubSys, gyroSubSys, blingSubSys);
 
-  private final Command m_stateescape = new Auto_stateescape_Cmd(driveSubSys, gyroSubSys);
-
   private final Command m_rightredcharge = new Auto_rightredcharge_Cmd(driveSubSys, gyroSubSys, blingSubSys);
 
   private final Command m_rightredescape = new Auto_rightredescape_Cmd(driveSubSys, gyroSubSys);
+*/
+  private final Command m_stateescape = new Auto_stateescape_Cmd(driveSubSys, gyroSubSys);
 
   private final Command m_rightbluecone =
       new Auto_rightbluecone_Cmd(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys);
@@ -252,11 +241,11 @@ public class RobotContainer {
   // Playoffs
   private final Command Auto_Statebarrier_1cone1cube_red_Cmd =
       new Auto_Statebarrier_1cone1cube_red_Cmd(
-          driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
+          driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys, photonvisionSubSys);
 
   private final Command Auto_Statebarrier_1cone1cube_blue_Cmd =
       new Auto_Statebarrier_1cone1cube_blue_Cmd(
-          driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
+          driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys, photonvisionSubSys);
   
   private final Command Auto_LinkHPBlue_Cmd =
       new Auto_LinkHPBlue_Cmd(
@@ -391,7 +380,7 @@ public class RobotContainer {
         new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
 
     //Test Button
-    driverStationSubSys.TestButton.onTrue(
+    driverStationSubSys.TestButton.whileTrue(
         new CmdGrp_TestVisionAuto(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys, photonvisionSubSys)
     );
 
