@@ -23,7 +23,7 @@ public class Const_Photonvision {
 
 
     public static class PIDspeeds {
-        public static final double Max_X_PID_Speed = 0.04;
+        public static final double Max_X_PID_Speed = 0.2;
         public static final double Max_Y_PID_Speed = 0.2;
         public static final double Max_Z_PID_Speed = 0.2;
     }

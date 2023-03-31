@@ -18,38 +18,6 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
 import frc.robot.ChargedUp.Arm.Cmds_SubSys_Arm.Cmd_SubSys_Arm_JoysticDefault;
 import frc.robot.ChargedUp.Arm.Cmds_SubSys_Arm.Cmd_SubSys_Arm_PosCmd;
-import frc.robot.ChargedUp.AutoCommands.Basic.Auto_stateescape_Cmd;
-import frc.robot.ChargedUp.AutoCommands.DoubleElement.Cone.Auto_leftbluecone_Cmd;
-import frc.robot.ChargedUp.AutoCommands.DoubleElement.Cone.Auto_leftredcone_Cmd;
-import frc.robot.ChargedUp.AutoCommands.DoubleElement.Cone.Auto_middlebluecone_Cmd;
-import frc.robot.ChargedUp.AutoCommands.DoubleElement.Cone.Auto_middleblueconeleftescape_Cmd;
-import frc.robot.ChargedUp.AutoCommands.DoubleElement.Cone.Auto_middleredcone_Cmd;
-import frc.robot.ChargedUp.AutoCommands.DoubleElement.Cone.Auto_middleredconeleftescape_Cmd;
-import frc.robot.ChargedUp.AutoCommands.DoubleElement.Cone.Auto_rightbluecone_Cmd;
-import frc.robot.ChargedUp.AutoCommands.DoubleElement.Cone.Auto_rightredcone_Cmd;
-import frc.robot.ChargedUp.AutoCommands.DoubleElement.Mixed.Auto_Statebarrier_1cone1cube_blue_Cmd;
-import frc.robot.ChargedUp.AutoCommands.DoubleElement.Mixed.Auto_Statebarrier_1cone1cube_red_Cmd;
-import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_leftbluecharge_1cone_Cmd;
-import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_leftblueescape_1cone_Cmd;
-import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_leftredcharge_1cone_Cmd;
-import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_leftredescape_1cone_Cmd;
-// import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_middlebluecharge_1cone_Cmd;
-// import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_middleredcharge_1cone_Cmd;
-import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_rightbluecharge_1cone_Cmd;
-import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_rightblueescape_1cone_Cmd;
-import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_rightredcharge_1cone_Cmd;
-import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_rightredescape_1cone_Cmd;
-import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.Auto_Lakeview_1cube_Cmd;
-import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.Auto_Statemiddleleave_1cube_Cmd;
-import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.Auto_leftbluecharge_1cube_Cmd;
-import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.Auto_leftblueescape_1cube_Cmd;
-import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.Auto_leftredcharge_1cube_Cmd;
-import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.Auto_leftredescape_1cube_Cmd;
-import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.Auto_rightbluecharge_1cube_Cmd;
-import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.Auto_rightblueescape_1cube_Cmd;
-import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.Auto_rightredcharge_1cube_Cmd;
-import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.Auto_rightredescape_1cube_Cmd;
-import frc.robot.ChargedUp.AutoCommands.TripleElement.Auto_LinkHPBlue_Cmd;
 import frc.robot.ChargedUp.Bling.Const_Bling;
 import frc.robot.ChargedUp.Bling.SubSys_Bling;
 import frc.robot.ChargedUp.Bling.Cmd.Cmd_SetBlingColorValue;
@@ -61,6 +29,14 @@ import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmd_SubSys_DriveTrain_JoysticDefault;
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
 import frc.robot.Library.Vision.Limelight.SubSys_LimeLight;
+
+// Autos
+import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.*;
+import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.*;
+import frc.robot.ChargedUp.AutoCommands.DoubleElement.Mixed.*;
+import frc.robot.ChargedUp.AutoCommands.DoubleElement.Cone.*;
+import frc.robot.ChargedUp.AutoCommands.TripleElement.*;
+import frc.robot.ChargedUp.AutoCommands.Basic.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a

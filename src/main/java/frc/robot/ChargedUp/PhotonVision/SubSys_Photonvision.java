@@ -29,6 +29,13 @@ public class SubSys_Photonvision extends SubsystemBase {
     /* CONFIG PID */
     Zcontroller.setTolerance(0.3);
 
+      //Log target data to the dashboard (shuffleboard)
+      // Shuffleboard.getTab("PhotonVision").add("Pipeline Index", pipelineIndex);
+      // Shuffleboard.getTab("PhotonVision").add("Range to Target", rangeToTarget);
+      // Shuffleboard.getTab("PhotonVision").add("Target Area", targetArea);
+      // Shuffleboard.getTab("PhotonVision").add("Target Pitch", targetPitch);
+      // Shuffleboard.getTab("PhotonVision").add("Target Yaw", targetYaw);
+      // Shuffleboard.getTab("PhotonVision").add("Target Skew", targetSkew);
   }
 
   @Override
@@ -45,16 +52,11 @@ public class SubSys_Photonvision extends SubsystemBase {
       double targetYaw = result.getBestTarget().getYaw();
       double targetSkew = result.getBestTarget().getSkew();
 
-      //Log target data to the dashboard (shuffleboard)
-      // Shuffleboard.getTab("PhotonVision").add("Pipeline Index", pipelineIndex);
-      // Shuffleboard.getTab("PhotonVision").add("Range to Target", rangeToTarget);
-      // Shuffleboard.getTab("PhotonVision").add("Target Area", targetArea);
-      // Shuffleboard.getTab("PhotonVision").add("Target Pitch", targetPitch);
-      // Shuffleboard.getTab("PhotonVision").add("Target Yaw", targetYaw);
-      // Shuffleboard.getTab("PhotonVision").add("Target Skew", targetSkew);
+      //Log target data to the dashboard (Shuffleboard)
+      //Shuffleboard.update();
 
       //Log target data to the dashboard (SmartDashboard)
-      SmartDashboard.putNumber("Pipeline Index", pipelineIndex);
+      SmartDashboard.putNumber("Pipeline Index - Front cam", pipelineIndex);
       SmartDashboard.putNumber("Range to Target", rangeToTarget);
       SmartDashboard.putNumber("Target Area", targetArea);
       SmartDashboard.putNumber("Target Pitch", targetPitch);
