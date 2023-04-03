@@ -69,7 +69,7 @@ public final class Constants {
       }
 
       public static final class Arm {
-        public static double ArmMaxRotSpd = 150 * Math.PI / 180; // rad/s
+        public static double ArmMaxRotSpd = 100 * Math.PI / 180; // rad/s    //150
         public static double ArmMaxRotAccel = 150 * Math.PI / 180; // rad/s/s
 
         public static double ArmExtensionMaxSpd = 0.5; // m/s
@@ -79,6 +79,11 @@ public final class Constants {
         public static double ArmExtendPosCtrlSlowRange = 0.1; // m
         public static double ArmExtendPosCtrlSlowSpd = 0.15; // %
         public static double ArmExtendPosCtrlAtPositionRange = 0.02; // m
+
+        public static double HighConeArmPosInit = -158; // degree
+        public static double HighConeArmExtensionInit = -158; // degree
+        public static double HighConeArmPosFinal = -158; // degree
+        public static double HighConeArmExtensionFinal = -158; // degree
       }
     }
 
