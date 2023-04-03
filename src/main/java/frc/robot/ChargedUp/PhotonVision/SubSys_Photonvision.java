@@ -7,28 +7,19 @@ package frc.robot.ChargedUp.PhotonVision;
 import org.photonvision.PhotonUtils;
 import org.photonvision.targeting.PhotonPipelineResult;
 
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Library.DriveTrains.SubSys_DriveTrain_Constants.DriveTrainTrajSettings;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
 
 public class SubSys_Photonvision extends SubsystemBase {
 
-  /* Y PID */
-  /* Z PID */
-  private PIDController Zcontroller = new PIDController(DriveTrainTrajSettings.RotationTrajectoryPID.Pgain, DriveTrainTrajSettings.RotationTrajectoryPID.Igain, DriveTrainTrajSettings.RotationTrajectoryPID.Dgain);
-    
   /** Creates a new PhotonVisionSubsytem. */
   private final SubSys_Arm m_Arm;
   public SubSys_Photonvision(SubSys_Arm armSubSys) {
     m_Arm = armSubSys;
 
     /* CONFIG PID */
-    Zcontroller.setTolerance(0.3);
-
       //Log target data to the dashboard (shuffleboard)
       // Shuffleboard.getTab("PhotonVision").add("Pipeline Index", pipelineIndex);
       // Shuffleboard.getTab("PhotonVision").add("Range to Target", rangeToTarget);

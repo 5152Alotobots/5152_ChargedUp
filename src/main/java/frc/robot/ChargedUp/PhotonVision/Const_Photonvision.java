@@ -39,9 +39,9 @@ public class Const_Photonvision {
     }
 
     public static class Pipelines {
-        public static final int Apriltag = 2;
-        public static final int Cone = 1;
         public static final int Cube = 0;
+        public static final int Cone = 1;
+        public static final int Apriltag = 2;
     }
  
     public static class TargetingConstants {
@@ -53,14 +53,14 @@ public class Const_Photonvision {
         }
         public static class Cone {
             // Target
-            public final static double TARGET_HEIGHT_METERS = Units.inchesToMeters(5);
-            public static final double GOAL_RANGE_METERS = 0.45;
+            public final static double TARGET_HEIGHT_METERS = Units.inchesToMeters(6.4);
+            public static final double GOAL_RANGE_METERS = 0.56;
             public static final double IN_RANGE_AREA_PERCENT = 0.8;
         }
         public static class Cube {
             // Target
             public final static double TARGET_HEIGHT_METERS = Units.inchesToMeters(4.5);
-            public static final double GOAL_RANGE_METERS = 0.56;
+            public static final double GOAL_RANGE_METERS = 0.56; // used to be .45
             public static final double IN_RANGE_AREA_PERCENT = 0.8;
         }
     }
