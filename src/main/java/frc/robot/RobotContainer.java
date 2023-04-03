@@ -81,7 +81,7 @@ public class RobotContainer {
   public final SubSys_Arm armSubSys = new SubSys_Arm(handSubSys.getHandLength());
 
   //PhotonVision
-  public final SubSys_Photonvision photonvisionSubSys = new SubSys_Photonvision(armSubSys);
+  public final SubSys_Photonvision photonvisionSubSys = new SubSys_Photonvision();
 
   // Bling
     public final SubSys_Bling blingSubSys = new SubSys_Bling();

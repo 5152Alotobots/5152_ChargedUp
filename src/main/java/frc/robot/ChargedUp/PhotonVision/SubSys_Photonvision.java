@@ -10,14 +10,11 @@ import org.photonvision.targeting.PhotonPipelineResult;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.ChargedUp.Arm.SubSys_Arm;
 
 public class SubSys_Photonvision extends SubsystemBase {
 
   /** Creates a new PhotonVisionSubsytem. */
-  private final SubSys_Arm m_Arm;
-  public SubSys_Photonvision(SubSys_Arm armSubSys) {
-    m_Arm = armSubSys;
+  public SubSys_Photonvision() {
 
     /* CONFIG PID */
       //Log target data to the dashboard (shuffleboard)
