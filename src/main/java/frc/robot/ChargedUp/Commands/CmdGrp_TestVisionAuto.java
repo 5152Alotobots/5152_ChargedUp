@@ -70,7 +70,7 @@ public class CmdGrp_TestVisionAuto extends SequentialCommandGroup {
     addCommands(
         // new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "TestVisionAuto1", true, true, Alliance.Red, PoseEstimationStrategy.OdometryONLY),
         new Cmd_SubSys_Arm_PosCmd(subsysArm, 0, true, 0.8, true).withTimeout(4),
-        new Cmd_NavigateToBestVisionTarget(driveSubSys, photonvision, bling, Const_Photonvision.Cameras.frontCamera, Const_Photonvision.Pipelines.Cube, true, false, true).withTimeout(5),
+        new Cmd_NavigateToBestVisionTarget(driveSubSys, photonvision, bling, Const_Photonvision.Cameras.frontCamera, Const_Photonvision.Pipelines.Cube, true, false, true).withTimeout(3),
         new Cmd_SubSys_Arm_PosCmd(subsysArm, 40, true, 0.8, true).withTimeout(4),
         new InstantCommand(subsysHand::OpenHand, subsysHand),
         new Cmd_SubSys_Arm_PosCmd(subsysArm, 0, true, 0.8, true).withTimeout(4)

@@ -37,7 +37,7 @@ public class Cmd_NavigateToBestVisionTarget extends CommandBase {
   /* Y PID */
   private PIDController Ycontroller = new PIDController(DriveTrainTrajSettings.DriveTrajectoryPID.Pgain, DriveTrainTrajSettings.DriveTrajectoryPID.Igain, DriveTrainTrajSettings.DriveTrajectoryPID.Dgain);
   /* Z PID */
-  private PIDController Zcontroller = new PIDController(DriveTrainTrajSettings.RotationTrajectoryPID.Pgain*1.4, DriveTrainTrajSettings.RotationTrajectoryPID.Igain, DriveTrainTrajSettings.RotationTrajectoryPID.Dgain);
+  private PIDController Zcontroller = new PIDController(DriveTrainTrajSettings.RotationTrajectoryPID.Pgain*2.6, DriveTrainTrajSettings.RotationTrajectoryPID.Igain, DriveTrainTrajSettings.RotationTrajectoryPID.Dgain);
 
   /** Constructor
    *  @param subSys_DriveTrain The subsystem used for controlling the robot's drivetrain
@@ -95,13 +95,15 @@ public class Cmd_NavigateToBestVisionTarget extends CommandBase {
   double xSpd;
   if (enableX){
     xSpd = getVisionForwardSpeed(latestResult);
+    SmartDashboard.putNumber("xSpd Vision", xSpd);
   } else {
     xSpd = 0;
   }
   // Strafe
   double ySpd;
-  if (enableX){
+  if (enableY){
     ySpd = getVisionStrafeSpeed(latestResult);
+    SmartDashboard.putNumber("ySpd Vision", ySpd);
   } else {
     ySpd = 0;
   }
@@ -109,6 +111,7 @@ public class Cmd_NavigateToBestVisionTarget extends CommandBase {
   double rotSpd;
   if (enableRotation) {
    rotSpd = getVisionRotSpeed(latestResult);
+   SmartDashboard.putNumber("zSpd Vision", rotSpd);
   } else {
     rotSpd = 0;
   }
