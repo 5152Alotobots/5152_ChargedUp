@@ -46,10 +46,12 @@ import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_rightredcharge_1
 import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_rightredescape_1cone_Cmd;
 import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.*;
 import frc.robot.ChargedUp.Bling.Cmd.Cmd_SetBlingColorValue;
+import frc.robot.ChargedUp.Commands.CmdGrp_TestVisionAuto;
 import frc.robot.ChargedUp.Bling.Const_Bling;
 import frc.robot.ChargedUp.Bling.SubSys_Bling;
 import frc.robot.ChargedUp.DriverStation.SubSys_DriverStation;
 import frc.robot.ChargedUp.Hand.SubSys_Hand;
+import frc.robot.ChargedUp.PhotonVision.SubSys_Photonvision;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmd_SubSys_DriveTrain_JoysticDefault;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
@@ -80,6 +82,9 @@ public class RobotContainer {
 
   // ---- Drive Subsystem (Swerve)
   public final SubSys_DriveTrain driveSubSys = new SubSys_DriveTrain(gyroSubSys);
+
+  public final SubSys_Photonvision photonvisionSubSys = new SubSys_Photonvision();
+
   // private final PDPSubSys m_PDPSubSys = new PDPSubSys();
 
   // private final SubSys_LimeLight limeLightSubSys = new SubSys_LimeLight();
@@ -356,6 +361,11 @@ public class RobotContainer {
         // new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
         new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
 
+    //Test Button
+    driverStationSubSys.TestButton.whileTrue(
+        new CmdGrp_TestVisionAuto(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys, photonvisionSubSys)
+    );
+        
     driverStationSubSys.GroundPickupButton.whileTrue(
         new Cmd_SubSys_Arm_PosCmd(armSubSys, 45.0, true, 0.8, true));
 
