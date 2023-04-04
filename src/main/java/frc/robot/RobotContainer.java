@@ -247,7 +247,10 @@ public class RobotContainer {
       new Auto_vision_blue_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys, photonvisionSubSys);
 
  private final Command Auto_vision_red_Cmd =
-      new Auto_vision_blue_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys, photonvisionSubSys);
+      new Auto_vision_red_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys, photonvisionSubSys);
+
+private final Command Auto_Statebestcharge_blue_Cmd =
+      new Auto_Statebestcharge_blue_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys, photonvisionSubSys);
   /*
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -333,6 +336,7 @@ public class RobotContainer {
     m_chooser.addOption("autolink - Red", Auto_autolink_red_Cmd);
     m_chooser.addOption("vision - blue", Auto_vision_blue_Cmd);
     m_chooser.addOption("vision - red", Auto_vision_red_Cmd);
+    m_chooser.addOption("Statebestcharge - blue", Auto_Statebestcharge_blue_Cmd);
     // DOUBLE ELEMENT COMMANDS //TODO: FIX THESE
     /*
     m_chooser.addOption("[DOUBLE] leftbluecone", m_leftbluecone);
@@ -370,9 +374,9 @@ public class RobotContainer {
         new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
 
     //Test Button
-    driverStationSubSys.TestButton.whileTrue(
-        new CmdGrp_TestVisionAuto(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys, photonvisionSubSys)
-    );
+    //driverStationSubSys.TestButton.whileTrue(
+     //   new CmdGrp_TestVisionAuto(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys, photonvisionSubSys)
+ //   );
         
     driverStationSubSys.GroundPickupButton.whileTrue(
         new Cmd_SubSys_Arm_PosCmd(armSubSys, 45.0, true, 0.8, true));
