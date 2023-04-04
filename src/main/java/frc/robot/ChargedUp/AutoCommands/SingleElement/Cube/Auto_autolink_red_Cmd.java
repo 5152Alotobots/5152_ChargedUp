@@ -25,6 +25,7 @@ import frc.robot.ChargedUp.Bling.Const_Bling;
 import frc.robot.ChargedUp.Bling.SubSys_Bling;
 import frc.robot.ChargedUp.Hand.SubSys_Hand;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmds_PathPlanner.Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj;
+import frc.robot.Library.DriveTrains.SubSys_DriveTrain_Constants.DriveTrainTrajSettings.PoseEstimationStrategy;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
 import frc.robot.Library.DriveTrains.SwerveDrive.*;
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
@@ -59,24 +60,24 @@ public class Auto_autolink_red_Cmd extends SequentialCommandGroup {
     ParallelCommandGroup driveAndMoveToPickupPosition =
         new ParallelCommandGroup(
             new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
-                driveSubSys, "playoff1", true, true, Alliance.Blue),
+                driveSubSys, "playoff1", true, true, Alliance.Blue, PoseEstimationStrategy.OdometryONLY),
             new Cmd_SubSys_Arm_PosCmd(subsysArm, 45.0, true, 0.8, true));
     ParallelCommandGroup driveAndDeliverCone =
         new ParallelCommandGroup(
             new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
-                driveSubSys, "playoff2", false, false, Alliance.Blue),
+                driveSubSys, "playoff2", false, false, Alliance.Blue, PoseEstimationStrategy.OdometryONLY),
             new SequentialCommandGroup(
                 new Cmd_SubSys_Arm_PosCmd(subsysArm, -90, true, 0, false).withTimeout(4),
                 new Cmd_SubSys_Arm_PosCmd(subsysArm, -158.0, true, 1.54, true).withTimeout(6)));
     ParallelCommandGroup secondconepickup =
         new ParallelCommandGroup(
             new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
-                driveSubSys, "playoff3", true, true, Alliance.Blue),
+                driveSubSys, "playoff3", true, true, Alliance.Blue, PoseEstimationStrategy.OdometryONLY),
             new Cmd_SubSys_Arm_PosCmd(subsysArm, 47.0, true, 0.8, true));
     ParallelCommandGroup placesecondcone =
         new ParallelCommandGroup(
             new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
-                driveSubSys, "playoff4", false, false, Alliance.Blue),
+                driveSubSys, "playoff4", false, false, Alliance.Blue, PoseEstimationStrategy.OdometryONLY),
             new SequentialCommandGroup(
                 new Cmd_SubSys_Arm_PosCmd(subsysArm, -90, true, 0, false).withTimeout(4),
                 new Cmd_SubSys_Arm_PosCmd(subsysArm, -147.0, true, 1.54, true).withTimeout(6)));
