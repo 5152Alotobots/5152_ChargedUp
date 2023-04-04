@@ -96,12 +96,12 @@ public class Auto_1cone2ubeHPBlue_Cmd extends SequentialCommandGroup {
     );
 
     ParallelCommandGroup visionNavigateAndRotateArm = new ParallelCommandGroup(
-      new Cmd_NavigateToBestVisionTarget(driveSubSys, m_photonvision, m_bling, Const_Photonvision.Cameras.frontCamera, Const_Photonvision.Pipelines.Cube, true, false, true).withTimeout(1.5),
+      new Cmd_NavigateToBestVisionTarget(driveSubSys, m_photonvision, m_bling, Const_Photonvision.Cameras.frontCamera, Const_Photonvision.Pipelines.Cube, true, false, true).withTimeout(2),
       new Cmd_SubSys_Arm_PosCmd(armSubSys, 42, true, 0.8, true).withTimeout(2) // Lift arm to pickup pos
       );
     
       ParallelCommandGroup visionNavigateAndRotateArm2 = new ParallelCommandGroup(
-        new Cmd_NavigateToBestVisionTarget(driveSubSys, m_photonvision, m_bling, Const_Photonvision.Cameras.frontCamera, Const_Photonvision.Pipelines.Cube, true, false, true).withTimeout(1.5),
+        new Cmd_NavigateToBestVisionTarget(driveSubSys, m_photonvision, m_bling, Const_Photonvision.Cameras.frontCamera, Const_Photonvision.Pipelines.Cube, true, false, true).withTimeout(2),
         new Cmd_SubSys_Arm_PosCmd(armSubSys, 42, true, 0.8, true).withTimeout(2) // Lift arm to pickup pos
         );
 
