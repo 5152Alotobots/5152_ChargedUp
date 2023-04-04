@@ -4,13 +4,13 @@
 
 package frc.robot.ChargedUp.Commands;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.ChargedUp.Arm.Cmds_SubSys_Arm.Cmd_SubSys_Arm_PosCmd;
-import frc.robot.Constants;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
 import frc.robot.ChargedUp.Hand.SubSys_Hand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.Constants;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 public class Cmd_HighConePlacement extends SequentialCommandGroup {
   private final SubSys_Arm subsysArm;
   private final SubSys_Hand subsysHand;
- 
+
   /** Creates a new Cmd_HighConePlacement. */
   public Cmd_HighConePlacement(SubSys_Arm subSys_Arm, SubSys_Hand subSys_Hand) {
     this.subsysArm = subSys_Arm;
@@ -38,11 +38,12 @@ public class Cmd_HighConePlacement extends SequentialCommandGroup {
            Constants.Robot.Calibrations.Arm.HighConeArmExtensionInit, true).withTimeout(2),
         new WaitCommand(1.5), // Add buffer time
         new Cmd_SubSys_Arm_PosCmd(
-          subsysArm,
-           Constants.Robot.Calibrations.Arm.HighConeArmPosFinal,
-            true,
-          Constants.Robot.Calibrations.Arm.HighConeArmExtensionFinal, false).withTimeout(4),
-        new InstantCommand(subsysHand::CloseHand, subsysHand)
-    );
+                subsysArm,
+                Constants.Robot.Calibrations.Arm.HighConeArmPosFinal,
+                true,
+                Constants.Robot.Calibrations.Arm.HighConeArmExtensionFinal,
+                false)
+            .withTimeout(4),
+        new InstantCommand(subsysHand::CloseHand, subsysHand));
   }
 }
