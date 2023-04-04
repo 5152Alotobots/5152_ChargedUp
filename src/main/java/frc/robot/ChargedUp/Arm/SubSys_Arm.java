@@ -267,7 +267,7 @@ public class SubSys_Arm extends SubsystemBase {
         SubSys_Arm_Constants.ArmShoulder.ReverseSoftLimitEnable);
     Arm_ShoulderMotor.configReverseSoftLimitThreshold(
         SubSys_Arm_Constants.ArmShoulder.ReverseSoftLimitThreshold);
-    Arm_ShoulderMotor.configMotionCruiseVelocity(100); //used to be 100
+    Arm_ShoulderMotor.configMotionCruiseVelocity(180); //used to be 100
     Arm_ShoulderMotor.configMotionAcceleration(100); //used to be 100
     // Slot 0
     Arm_ShoulderMotor.config_kP(0, SubSys_Arm_Constants.ArmShoulder.PID.kP);

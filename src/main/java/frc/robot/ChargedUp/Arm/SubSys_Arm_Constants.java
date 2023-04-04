@@ -35,7 +35,7 @@ public class SubSys_Arm_Constants {
       public static final double kI = 0.01;
       public static final double kD = 0.0;
       public static final double IntegralZone = 20; // Sensor Units
-      public static final double closedLoopRamp = 0.2; // Seconds to Max Speed
+      public static final double closedLoopRamp = 0.5; // Seconds to Max Speed
       public static final double allowableClosedLoopError = 1.0; // Sensor Units
       public static final double atSetpointAllowableError = 2; // Sensor Units
     }
