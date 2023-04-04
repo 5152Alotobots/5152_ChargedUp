@@ -24,7 +24,7 @@ public class Const_Photonvision {
 
     public static class PIDspeeds {
         public static final double Max_X_PID_Speed = 0.55;
-        public static final double Max_Y_PID_Speed = 0.3;
+        public static final double Max_Y_PID_Speed = 0.5;
         public static final double Max_Z_PID_Speed = 0.6;
     }
 
@@ -35,26 +35,26 @@ public class Const_Photonvision {
     }
     public static class Cameras {
         public static final PhotonCamera frontCamera = new PhotonCamera("frontCamera");
-        public static final PhotonCamera backCamera = new PhotonCamera("backCamera");
+        //public static final PhotonCamera backCamera = new PhotonCamera("backCamera");
     }
 
     public static class Pipelines {
         public static final int Cube = 0;
         public static final int Cone = 1;
-        public static final int Apriltag = 2;
+        public static final int Apriltag = 2; //NOT IMPLEMENTED YET
     }
  
     public static class TargetingConstants {
         public static class GridApriltag {
             // Target
             public final static double TARGET_HEIGHT_METERS = Units.inchesToMeters(18.2);
-            public static final double GOAL_RANGE_METERS = 0.71;
+            public static final double GOAL_RANGE_METERS = 0.035;
             public static final double IN_RANGE_AREA_PERCENT = 0.2;
         }
         public static class Cone {
             // Target
             public final static double TARGET_HEIGHT_METERS = Units.inchesToMeters(6.4);
-            public static final double GOAL_RANGE_METERS = 0.56;
+            public static final double GOAL_RANGE_METERS = 0.85;
             public static final double IN_RANGE_AREA_PERCENT = 0.8;
         }
         public static class Cube {

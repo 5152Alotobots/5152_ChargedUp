@@ -8,6 +8,7 @@ package frc.robot.ChargedUp.Commands;
 import org.photonvision.PhotonCamera;
 import org.photonvision.targeting.PhotonPipelineResult;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.ChargedUp.Bling.Const_Bling;
@@ -39,6 +40,8 @@ public class Cmd_NavigateToBestVisionTarget extends CommandBase {
   /* Z PID */
   private PIDController Zcontroller = new PIDController(DriveTrainTrajSettings.RotationTrajectoryPID.Pgain*2.6, DriveTrainTrajSettings.RotationTrajectoryPID.Igain, DriveTrainTrajSettings.RotationTrajectoryPID.Dgain);
 
+  //Timer
+  Timer pipelineSwitchBufferTimer = new Timer();
   /** Constructor
    *  @param subSys_DriveTrain The subsystem used for controlling the robot's drivetrain
    *  @param subSys_Photonvision The subsystem used for interfacing with the PhotonVision camera
@@ -70,6 +73,8 @@ public class Cmd_NavigateToBestVisionTarget extends CommandBase {
   @Override
   public void initialize() {
     camera.setPipelineIndex(pipelineIndex);
+    pipelineSwitchBufferTimer.reset();
+    pipelineSwitchBufferTimer.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -125,6 +130,7 @@ public class Cmd_NavigateToBestVisionTarget extends CommandBase {
   public void end(boolean interrupted) {
     // Stop the robot
     subSys_DriveTrain.Drive(0, 0, 0, false, false, false);
+    pipelineSwitchBufferTimer.stop();
     subSys_Bling.setBlinkinLEDColor(Const_Bling.Controllers.controller1, Const_Bling.SolidColors.Gold);
   }
 
@@ -144,7 +150,7 @@ public class Cmd_NavigateToBestVisionTarget extends CommandBase {
     if (enableRotation) {
       zFinished = (Zcontroller.getPositionError() < AcceptablePIDError.Z_PID_Error && Zcontroller.getPositionError() > -AcceptablePIDError.Z_PID_Error);
     }
-    return (xFinished && yFinished && zFinished);
+    return (xFinished && yFinished && zFinished && pipelineSwitchBufferTimer.get() > 1);
   }
 
   /** Calculate forward speed */
