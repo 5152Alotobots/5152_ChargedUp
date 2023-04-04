@@ -245,6 +245,9 @@ public class RobotContainer {
 
  private final Command Auto_vision_blue_Cmd =
       new Auto_vision_blue_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys, photonvisionSubSys);
+
+ private final Command Auto_vision_red_Cmd =
+      new Auto_vision_blue_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys, photonvisionSubSys);
   /*
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -329,6 +332,7 @@ public class RobotContainer {
     m_chooser.addOption("StateBarrier - Blue", Auto_Statebarrier_1cone1cube_blue_Cmd);
     m_chooser.addOption("autolink - Red", Auto_autolink_red_Cmd);
     m_chooser.addOption("vision - blue", Auto_vision_blue_Cmd);
+    m_chooser.addOption("vision - red", Auto_vision_red_Cmd);
     // DOUBLE ELEMENT COMMANDS //TODO: FIX THESE
     /*
     m_chooser.addOption("[DOUBLE] leftbluecone", m_leftbluecone);
