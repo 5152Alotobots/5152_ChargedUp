@@ -45,6 +45,7 @@ import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_rightblueescape_
 import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_rightredcharge_1cone_Cmd;
 import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_rightredescape_1cone_Cmd;
 import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.*;
+import frc.robot.ChargedUp.AutoCommands.TripleElement.Auto_1cone2ubeHPBlue_Cmd;
 import frc.robot.ChargedUp.Bling.Cmd.Cmd_SetBlingColorValue;
 import frc.robot.ChargedUp.Commands.CmdGrp_TestVisionAuto;
 import frc.robot.ChargedUp.Bling.Const_Bling;
@@ -245,6 +246,11 @@ public class RobotContainer {
 
  private final Command Auto_vision_blue_Cmd =
       new Auto_vision_blue_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys, photonvisionSubSys);
+
+private final Command Auto_1cone2CubeHPBlue_Cmd =
+      new Auto_1cone2ubeHPBlue_Cmd(
+        driveSubSys, gyroSubSys, handSubSys, armSubSys, photonvisionSubSys, blingSubSys);
+
   /*
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -329,6 +335,7 @@ public class RobotContainer {
     m_chooser.addOption("StateBarrier - Blue", Auto_Statebarrier_1cone1cube_blue_Cmd);
     m_chooser.addOption("autolink - Red", Auto_autolink_red_Cmd);
     m_chooser.addOption("vision - blue", Auto_vision_blue_Cmd);
+    m_chooser.addOption("[TRIPLE] 1 cone, 2 cube Human Player Side", Auto_1cone2CubeHPBlue_Cmd);
     // DOUBLE ELEMENT COMMANDS //TODO: FIX THESE
     /*
     m_chooser.addOption("[DOUBLE] leftbluecone", m_leftbluecone);
