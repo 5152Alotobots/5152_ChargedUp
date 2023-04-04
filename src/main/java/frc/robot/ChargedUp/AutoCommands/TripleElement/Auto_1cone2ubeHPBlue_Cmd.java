@@ -24,7 +24,7 @@ import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmds_PathPlanner.Cmd
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
 
 
-public class Auto_LinkHPBlue_Cmd extends SequentialCommandGroup {
+public class Auto_1cone2ubeHPBlue_Cmd extends SequentialCommandGroup {
   private final SubSys_DriveTrain m_DriveTrain;
   private final SubSys_PigeonGyro m_pigeonGyro;
   private final SubSys_Hand m_hand;
@@ -51,7 +51,7 @@ public class Auto_LinkHPBlue_Cmd extends SequentialCommandGroup {
    * @param photonvisionSubSys Photonvision subsystem
    * @param blingSubSys Bling subsystem
   */
-  public Auto_LinkHPBlue_Cmd(SubSys_DriveTrain driveSubSys, SubSys_PigeonGyro pigeonGyro, SubSys_Hand handSubSys, SubSys_Arm armSubSys, SubSys_Photonvision photonvisionSubSys, SubSys_Bling blingSubSys) {
+  public Auto_1cone2ubeHPBlue_Cmd(SubSys_DriveTrain driveSubSys, SubSys_PigeonGyro pigeonGyro, SubSys_Hand handSubSys, SubSys_Arm armSubSys, SubSys_Photonvision photonvisionSubSys, SubSys_Bling blingSubSys) {
     m_DriveTrain = driveSubSys;
     m_pigeonGyro = pigeonGyro;
     m_hand = handSubSys;
@@ -66,29 +66,35 @@ public class Auto_LinkHPBlue_Cmd extends SequentialCommandGroup {
 
     /* Lift arm to high position for cube from pickup sequential command group */
     SequentialCommandGroup armRotateAndExtendToHighLevelCubeFromPickupSequential = new SequentialCommandGroup(
-        new Cmd_SubSys_Arm_PosCmd(armSubSys, -90, true, 0, false).withTimeout(4),
+        new Cmd_SubSys_Arm_PosCmd(armSubSys, -120, true, 0, false).withTimeout(4),
         new Cmd_SubSys_Arm_PosCmd(armSubSys, -158.0, true, 1.54, true).withTimeout(6)
+        );
+  
+    /* Lift arm to high position for cube from pickup sequential command group */
+    SequentialCommandGroup armRotateAndExtendToMidLevelCubeFromPickupSequential = new SequentialCommandGroup(
+        new Cmd_SubSys_Arm_PosCmd(armSubSys, -120, true, 0, false).withTimeout(4),
+        new Cmd_SubSys_Arm_PosCmd(armSubSys, -168, true, 1.08, true).withTimeout(6)
         );
 
     /* Parallel commands */
     ParallelCommandGroup armRotateAndRetractDriveToPickup1Parallel = new ParallelCommandGroup(
-      new Cmd_SubSys_Arm_PosCmd(armSubSys, 0, true, 0.8, true).withTimeout(4), // Lift arm to pickup pos
+      new Cmd_SubSys_Arm_PosCmd(armSubSys, -20, true, 0.8, true).withTimeout(4), // Lift arm to pickup pos
       new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "humanplayerside_pickup1_3element", true, true, Alliance.Blue, PoseEstimationStrategy.OdometryONLY)
     );
 
     ParallelCommandGroup armRotateAndExtendDriveToDeliverCube1HighLevelParallel = new ParallelCommandGroup(
-      armRotateAndExtendToHighLevelCubeFromPickupSequential.withTimeout(6), // Lift arm to high position
+      armRotateAndExtendToHighLevelCubeFromPickupSequential.withTimeout(4), // Lift arm to high position
       new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "humanplayerside_deliver1_3element", false, false, Alliance.Blue, PoseEstimationStrategy.OdometryONLY)
     );
 
     ParallelCommandGroup armRotateAndRetractDriveToPickup2Parallel = new ParallelCommandGroup(
-      new Cmd_SubSys_Arm_PosCmd(armSubSys, 0, true, 0.8, true).withTimeout(4), // Lift arm to pickup pos
+      new Cmd_SubSys_Arm_PosCmd(armSubSys, -20, true, 0.8, true).withTimeout(4), // Lift arm to pickup pos
       new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "humanplayerside_pickup2_3element", false, false, Alliance.Blue, PoseEstimationStrategy.OdometryONLY)
     );
 
-    ParallelCommandGroup armRotateAndExtendDriveToDeliverCone2HighLevelParallel = new ParallelCommandGroup(
-      armRotateAndExtendToHighLevelConeFromPickupSequential.withTimeout(6), // Lift arm to pickup pos
-      new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "humanplayerside_deliver2_3element", false, false, Alliance.Blue, PoseEstimationStrategy.OdometryONLY)
+    ParallelCommandGroup armRotateAndExtendDriveToDeliverCube2MidLevelParallel = new ParallelCommandGroup(
+      armRotateAndExtendToMidLevelCubeFromPickupSequential.withTimeout(4), // Lift arm to pickup pos
+      new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "humanplayerside_deliver2_3elementCube", false, false, Alliance.Blue, PoseEstimationStrategy.OdometryONLY)
     );
 
     // Add your commands in the addCommands() call, e.g.
@@ -96,23 +102,27 @@ public class Auto_LinkHPBlue_Cmd extends SequentialCommandGroup {
     addCommands(
         new Cmd_SubSys_Arm_PosCmd(armSubSys, -147.0, true, 1.54, true)
         .withTimeout(4), // Lift arm to high position
-        new WaitCommand(0.5), // Add buffer time
+        //new WaitCommand(0.5), // Add buffer time
         new InstantCommand(handSubSys::CloseHand),
         armRotateAndRetractDriveToPickup1Parallel,
-        new Cmd_NavigateToBestVisionTarget(driveSubSys, m_photonvision, m_bling, Const_Photonvision.Cameras.frontCamera, Const_Photonvision.Pipelines.Cube, true, false, true).withTimeout(3),
-        new Cmd_SubSys_Arm_PosCmd(armSubSys, 42, true, 0.8, true).withTimeout(4), // Lift arm to pickup pos
+        new ParallelCommandGroup(
+        new Cmd_NavigateToBestVisionTarget(driveSubSys, m_photonvision, m_bling, Const_Photonvision.Cameras.frontCamera, Const_Photonvision.Pipelines.Cube, true, false, true).withTimeout(1.5),
+        new Cmd_SubSys_Arm_PosCmd(armSubSys, 42, true, 0.8, true).withTimeout(2) // Lift arm to pickup pos
+        ),
         new InstantCommand(handSubSys::OpenHand),
         armRotateAndExtendDriveToDeliverCube1HighLevelParallel,
         new InstantCommand(handSubSys::CloseHand),
-        new WaitCommand(0.5), // Add buffer time
+        //new WaitCommand(0.5), // Add buffer time
         armRotateAndRetractDriveToPickup2Parallel,
-        new Cmd_NavigateToBestVisionTarget(driveSubSys, m_photonvision, m_bling, Const_Photonvision.Cameras.frontCamera, Const_Photonvision.Pipelines.Cone, true, false, true).withTimeout(5),
-        new Cmd_SubSys_Arm_PosCmd(armSubSys, 42, true, 0.8, true).withTimeout(4), // Lift arm to pickup pos
+        new ParallelCommandGroup(
+        new Cmd_NavigateToBestVisionTarget(driveSubSys, m_photonvision, m_bling, Const_Photonvision.Cameras.frontCamera, Const_Photonvision.Pipelines.Cube, true, false, true).withTimeout(1.5),
+        new Cmd_SubSys_Arm_PosCmd(armSubSys, 42, true, 0.8, true).withTimeout(2) // Lift arm to pickup pos
+        ),
         new InstantCommand(handSubSys::OpenHand),
-        armRotateAndExtendDriveToDeliverCone2HighLevelParallel,
-        new Cmd_SubSys_Arm_PosCmd(armSubSys, -155.0, true, 1.54, true).withTimeout(4), //TODO: Change value to whatever is on local driver station
-        new WaitCommand(0.5), // Add buffer time
-        new InstantCommand(handSubSys::CloseHand)
+        armRotateAndExtendDriveToDeliverCube2MidLevelParallel,
+        //new WaitCommand(0.5), // Add buffer time
+        new InstantCommand(handSubSys::CloseHand),
+        new Cmd_SubSys_Arm_PosCmd(armSubSys, 45, true, 0, true).withTimeout(4) // Lift arm to pickup pos
         );
   }
 }

@@ -54,7 +54,7 @@ public class Const_Photonvision {
         public static class Cone {
             // Target
             public final static double TARGET_HEIGHT_METERS = Units.inchesToMeters(6.4);
-            public static final double GOAL_RANGE_METERS = 0.85;
+            public static final double GOAL_RANGE_METERS = 0.80;
             public static final double IN_RANGE_AREA_PERCENT = 0.8;
         }
         public static class Cube {

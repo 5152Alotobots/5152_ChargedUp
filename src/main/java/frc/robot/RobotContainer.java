@@ -227,6 +227,10 @@ public class RobotContainer {
       new Auto_LinkHPBlue_Cmd(
         driveSubSys, gyroSubSys, handSubSys, armSubSys, photonvisionSubSys, blingSubSys);
 
+    private final Command Auto_1cone2CubeHPBlue_Cmd =
+        new Auto_1cone2ubeHPBlue_Cmd(
+          driveSubSys, gyroSubSys, handSubSys, armSubSys, photonvisionSubSys, blingSubSys);
+  
   /*
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -312,6 +316,7 @@ public class RobotContainer {
 
     // BETA 3 element
     m_chooser.addOption("[TRIPLE] Link Human Player Side", Auto_LinkHPBlue_Cmd);
+    m_chooser.addOption("[TRIPLE] 1 cone, 2 cube Human Player Side", Auto_1cone2CubeHPBlue_Cmd);
 
     // DOUBLE ELEMENT COMMANDS //TODO: FIX THESE
     /*
@@ -357,7 +362,7 @@ public class RobotContainer {
 
     //Test Button
     driverStationSubSys.TestButton.whileTrue(
-        new CmdGrp_TestVisionAuto(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys, photonvisionSubSys)
+        new Cmd_SubSys_Arm_PosCmd(armSubSys, 0, true, 0, true)
     );
 
     driverStationSubSys.GroundPickupButton.whileTrue(
