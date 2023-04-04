@@ -46,6 +46,7 @@ import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_rightredcharge_1
 import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.Auto_rightredescape_1cone_Cmd;
 import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.*;
 import frc.robot.ChargedUp.Bling.Cmd.Cmd_SetBlingColorValue;
+import frc.robot.ChargedUp.Commands.Cmd_HighConePlacement;
 import frc.robot.ChargedUp.Bling.Const_Bling;
 import frc.robot.ChargedUp.Bling.SubSys_Bling;
 import frc.robot.ChargedUp.DriverStation.SubSys_DriverStation;
@@ -237,9 +238,15 @@ public class RobotContainer {
     private final Command Auto_autolink_red_Cmd =
           new Auto_autolink_red_Cmd(
               driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
-  /*
-   * The container for the robot. Contains subsystems, OI devices, and commands.
-   */
+    
+              
+    private final Command Auto_Stateplacepickupcharge_blue_Cmd =
+    new Auto_Stateplacepickupcharge_blue_Cmd(
+        driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
+
+
+   // The container for the robot. Contains subsystems, OI devices, and commands.
+   
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
@@ -320,6 +327,7 @@ public class RobotContainer {
     m_chooser.addOption("StateBarrier - Red", Auto_Statebarrier_1cone1cube_red_Cmd);
     m_chooser.addOption("StateBarrier - Blue", Auto_Statebarrier_1cone1cube_blue_Cmd);
     m_chooser.addOption("autolink - Red", Auto_autolink_red_Cmd);
+    m_chooser.addOption("Stateplacepickupcharge - Blue", Auto_Stateplacepickupcharge_blue_Cmd);
     // DOUBLE ELEMENT COMMANDS //TODO: FIX THESE
     /*
     m_chooser.addOption("[DOUBLE] leftbluecone", m_leftbluecone);
@@ -344,6 +352,11 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+
+//Conetest
+    driverStationSubSys.TestButton.onTrue(
+        new Cmd_HighConePlacement(armSubSys, handSubSys));
+
 
     // Gyro Reset Command Button
     driverStationSubSys.OpenHandButton.onTrue(new InstantCommand(handSubSys::OpenHand, handSubSys));

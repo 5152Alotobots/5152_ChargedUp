@@ -80,10 +80,10 @@ public final class Constants {
         public static double ArmExtendPosCtrlSlowSpd = 0.15; // %
         public static double ArmExtendPosCtrlAtPositionRange = 0.02; // m
 
-        public static double HighConeArmPosInit = -158; //degree
-        public static double HighConeArmExtensionInit = -158; //degree
-        public static double HighConeArmPosFinal = -158; //degree
-        public static double HighConeArmExtensionFinal = -158; //degree
+        public static double HighConeArmPosInit = -145; //degree
+        public static double HighConeArmExtensionInit = 1.54; //m
+        public static double HighConeArmPosFinal = -158; //deggre
+        public static double HighConeArmExtensionFinal = 1.54; //m
       }
     }
 

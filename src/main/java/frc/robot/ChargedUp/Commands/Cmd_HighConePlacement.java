@@ -26,10 +26,15 @@ public class Cmd_HighConePlacement extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new Cmd_SubSys_Arm_PosCmd(
+    new Cmd_SubSys_Arm_PosCmd( subsysArm,
+    Constants.Robot.Calibrations.Arm.HighConeArmPosInit,
+    true,
+    Constants.Robot.Calibrations.Arm.HighConeArmExtensionInit, false).withTimeout(2),
+    
+    new Cmd_SubSys_Arm_PosCmd(
           subsysArm,
            Constants.Robot.Calibrations.Arm.HighConeArmPosInit,
-           true,
+           false,
            Constants.Robot.Calibrations.Arm.HighConeArmExtensionInit, true).withTimeout(2),
         new WaitCommand(1.5), // Add buffer time
         new Cmd_SubSys_Arm_PosCmd(
