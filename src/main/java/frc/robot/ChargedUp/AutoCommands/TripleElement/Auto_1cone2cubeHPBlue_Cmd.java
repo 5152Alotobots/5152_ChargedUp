@@ -21,7 +21,7 @@ import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmds_PathPlanner.Cmd
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
 
 
-public class Auto_1cone2ubeHPBlue_Cmd extends SequentialCommandGroup {
+public class Auto_1cone2cubeHPBlue_Cmd extends SequentialCommandGroup {
   private final SubSys_DriveTrain m_DriveTrain;
   private final SubSys_PigeonGyro m_pigeonGyro;
   private final SubSys_Hand m_hand;
@@ -36,10 +36,10 @@ public class Auto_1cone2ubeHPBlue_Cmd extends SequentialCommandGroup {
    * 3. Pickup cube via vision<br>
    * 4. Drive to deliver cube<br>
    * 5. Deliver cube to high position<br>
-   * 6. Drive to pickup cone<br>
-   * 7. Pickup cone via vision<br>
-   * 8. Drive to deliver cone<br>
-   * 9. Deliver cone to high position<br>
+   * 6. Drive to pickup cube<br>
+   * 7. Pickup cube via vision<br>
+   * 8. Drive to deliver cube<br>
+   * 9. Deliver cube to mid position<br>
    * </p>
    * @param driveSubSys Drive subsystem
    * @param pigeonGyro Pigeon Gyro subsystem
@@ -48,18 +48,13 @@ public class Auto_1cone2ubeHPBlue_Cmd extends SequentialCommandGroup {
    * @param photonvisionSubSys Photonvision subsystem
    * @param blingSubSys Bling subsystem
   */
-  public Auto_1cone2ubeHPBlue_Cmd(SubSys_DriveTrain driveSubSys, SubSys_PigeonGyro pigeonGyro, SubSys_Hand handSubSys, SubSys_Arm armSubSys, SubSys_Photonvision photonvisionSubSys, SubSys_Bling blingSubSys) {
+  public Auto_1cone2cubeHPBlue_Cmd(SubSys_DriveTrain driveSubSys, SubSys_PigeonGyro pigeonGyro, SubSys_Hand handSubSys, SubSys_Arm armSubSys, SubSys_Photonvision photonvisionSubSys, SubSys_Bling blingSubSys) {
     m_DriveTrain = driveSubSys;
     m_pigeonGyro = pigeonGyro;
     m_hand = handSubSys;
     m_Arm = armSubSys;
     m_photonvision = photonvisionSubSys;
     m_bling = blingSubSys;
-    
-    /* Lift arm to high position from pickup sequential command group */
-    SequentialCommandGroup armRotateAndExtendToHighLevelConeFromPickupSequential = new SequentialCommandGroup(
-        new Cmd_SubSys_Arm_PosCmd(armSubSys, -90, true, 0, false).withTimeout(4)
-    );
 
     /* Lift arm to high position for cube from pickup sequential command group */
     SequentialCommandGroup armRotateAndExtendToHighLevelCubeFromPickupSequential = new SequentialCommandGroup(
