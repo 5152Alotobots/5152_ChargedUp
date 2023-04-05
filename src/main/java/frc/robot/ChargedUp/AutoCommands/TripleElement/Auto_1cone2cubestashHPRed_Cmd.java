@@ -21,7 +21,7 @@ import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmds_PathPlanner.Cmd
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
 
 
-public class Auto_1cone2cubepickupHPBlue_Cmd extends SequentialCommandGroup {
+public class Auto_1cone2cubestashHPRed_Cmd extends SequentialCommandGroup {
   private final SubSys_DriveTrain m_DriveTrain;
   private final SubSys_PigeonGyro m_pigeonGyro;
   private final SubSys_Hand m_hand;
@@ -47,7 +47,7 @@ public class Auto_1cone2cubepickupHPBlue_Cmd extends SequentialCommandGroup {
    * @param photonvisionSubSys Photonvision subsystem
    * @param blingSubSys Bling subsystem
   */
-  public Auto_1cone2cubepickupHPBlue_Cmd(SubSys_DriveTrain driveSubSys, SubSys_PigeonGyro pigeonGyro, SubSys_Hand handSubSys, SubSys_Arm armSubSys, SubSys_Photonvision photonvisionSubSys, SubSys_Bling blingSubSys) {
+  public Auto_1cone2cubestashHPRed_Cmd(SubSys_DriveTrain driveSubSys, SubSys_PigeonGyro pigeonGyro, SubSys_Hand handSubSys, SubSys_Arm armSubSys, SubSys_Photonvision photonvisionSubSys, SubSys_Bling blingSubSys) {
     m_DriveTrain = driveSubSys;
     m_pigeonGyro = pigeonGyro;
     m_hand = handSubSys;
@@ -60,32 +60,26 @@ public class Auto_1cone2cubepickupHPBlue_Cmd extends SequentialCommandGroup {
         new Cmd_SubSys_Arm_PosCmd(armSubSys, -158.0, true, 0, true).withTimeout(4),
         new Cmd_SubSys_Arm_PosCmd(armSubSys, -158.0, true, 1.54, true).withTimeout(3)
         );
-  
-    /* Lift arm to high position for cube from pickup sequential command group */
-    SequentialCommandGroup armRotateAndExtendToMidLevelCubeFromPickupSequential = new SequentialCommandGroup(
-        new Cmd_SubSys_Arm_PosCmd(armSubSys, -168, true, 0, true).withTimeout(4),
-        new Cmd_SubSys_Arm_PosCmd(armSubSys, -168, true, 1.08, true).withTimeout(3)
-        );
 
     /* Parallel commands */
     ParallelCommandGroup armRotateAndRetractDriveToPickup1Parallel = new ParallelCommandGroup(
       new Cmd_SubSys_Arm_PosCmd(armSubSys, -20, true, 0.8, true).withTimeout(4), // Lift arm to pickup pos
-      new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "humanplayerside_pickup1_3element", true, true, Alliance.Blue)
+      new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "humanplayerside_pickup1_3element", true, true, Alliance.Red)
     );
 
     ParallelCommandGroup armRotateAndExtendDriveToDeliverCube1HighLevelParallel = new ParallelCommandGroup(
       armRotateAndExtendToHighLevelCubeFromPickupSequential.withTimeout(5), // Lift arm to high position
-      new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "humanplayerside_deliver1_3element", false, false, Alliance.Blue)
+      new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "humanplayerside_deliver1_3element", false, false, Alliance.Red)
     );
 
     ParallelCommandGroup armRotateAndRetractDriveToPickup2Parallel = new ParallelCommandGroup(
       new Cmd_SubSys_Arm_PosCmd(armSubSys, -20, true, 0.8, true).withTimeout(4), // Lift arm to pickup pos
-      new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "humanplayerside_pickup2_3element", false, false, Alliance.Blue)
+      new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "humanplayerside_pickup2_3element", false, false, Alliance.Red)
     );
 
     ParallelCommandGroup armRotateAndExtendDriveToGridParallel = new ParallelCommandGroup(
      new Cmd_SubSys_Arm_PosCmd(armSubSys, -90, true, 0, true), // Lift arm to pickup pos
-      new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "humanplayerside_deliver2_3elementCube", false, false, Alliance.Blue)
+      new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "humanplayerside_deliver2_3elementCube", false, false, Alliance.Red)
     );
 
     ParallelCommandGroup visionNavigateAndRotateArm = new ParallelCommandGroup(

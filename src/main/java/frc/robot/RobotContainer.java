@@ -236,11 +236,11 @@ private final Command Auto_1cone2CubeHPRed_Cmd =
 private final Command Auto_Statebestcharge_blue_Cmd =
       new Auto_Statebestcharge_blue_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys, photonvisionSubSys);
 
-private final Command Auto_1cone2cubepickupHPBlue_Cmd =
-      new Auto_1cone2cubepickupHPBlue_Cmd(driveSubSys, gyroSubSys, handSubSys, armSubSys, photonvisionSubSys, blingSubSys);
+private final Command Auto_1cone2cubestashHPBlue_Cmd =
+      new Auto_1cone2cubestashHPBlue_Cmd(driveSubSys, gyroSubSys, handSubSys, armSubSys, photonvisionSubSys, blingSubSys);
 
-private final Command Auto_1cone2cubepickupHPRed_Cmd =
-        new Auto_1cone2cubepickupHPRed_Cmd(driveSubSys, gyroSubSys, handSubSys, armSubSys, photonvisionSubSys, blingSubSys);
+private final Command Auto_1cone2cubestashHPRed_Cmd =
+        new Auto_1cone2cubestashHPRed_Cmd(driveSubSys, gyroSubSys, handSubSys, armSubSys, photonvisionSubSys, blingSubSys);
 
 
   /*
@@ -329,8 +329,8 @@ private final Command Auto_1cone2cubepickupHPRed_Cmd =
     m_chooser.addOption("vision - blue", Auto_vision_blue_Cmd);
     m_chooser.addOption("vision - red", Auto_vision_red_Cmd);
     m_chooser.addOption("Statebestcharge - blue", Auto_Statebestcharge_blue_Cmd);
-    m_chooser.addOption("[TRIPLE] 1 cone, 2 cube stash - Blue", Auto_1cone2cubepickupHPBlue_Cmd);
-    m_chooser.addOption("[TRIPLE] 1 cone, 2 cube stash - Red", Auto_1cone2cubepickupHPRed_Cmd);
+    m_chooser.addOption("[TRIPLE] 1 cone, 2 cube stash - Blue", Auto_1cone2cubestashHPBlue_Cmd);
+    m_chooser.addOption("[TRIPLE] 1 cone, 2 cube stash - Red", Auto_1cone2cubestashHPRed_Cmd);
     m_chooser.addOption("[TRIPLE] 1 cone, 2 cube Human Player Side - Blue", Auto_1cone2CubeHPBlue_Cmd);
     m_chooser.addOption("[TRIPLE] 1 cone, 2 cube Human Player Side - Red", Auto_1cone2CubeHPRed_Cmd);
 
