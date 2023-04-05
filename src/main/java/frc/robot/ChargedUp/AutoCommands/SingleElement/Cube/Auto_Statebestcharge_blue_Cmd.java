@@ -71,7 +71,7 @@ public class Auto_Statebestcharge_blue_Cmd extends SequentialCommandGroup {
     ParallelCommandGroup driveAndRetractArm =
             new ParallelCommandGroup(
                 new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
-                    driveSubSys, "bestcharge2", true, true, Alliance.Blue),
+                    driveSubSys, "bestcharge2", false, false, Alliance.Blue),
                 new Cmd_SubSys_Arm_PosCmd(subsysArm, 10.0, true, 0.8, true).withTimeout(4));
 
     // Add your commands in the addCommands() call, e.g.
