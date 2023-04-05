@@ -58,13 +58,13 @@ public class Auto_1cone2cubeHPBlue_Cmd extends SequentialCommandGroup {
 
     /* Lift arm to high position for cube from pickup sequential command group */
     SequentialCommandGroup armRotateAndExtendToHighLevelCubeFromPickupSequential = new SequentialCommandGroup(
-        new Cmd_SubSys_Arm_PosCmd(armSubSys, -158.0, true, 0, true).withTimeout(4),
+        new Cmd_SubSys_Arm_PosCmd(armSubSys, -158.0, true, 0, true).withTimeout(2.5),
         new Cmd_SubSys_Arm_PosCmd(armSubSys, -158.0, true, 1.54, true).withTimeout(3)
         );
   
     /* Lift arm to high position for cube from pickup sequential command group */
     SequentialCommandGroup armRotateAndExtendToMidLevelCubeFromPickupSequential = new SequentialCommandGroup(
-        new Cmd_SubSys_Arm_PosCmd(armSubSys, -168, true, 0, true).withTimeout(4),
+        new Cmd_SubSys_Arm_PosCmd(armSubSys, -168, true, 0, true).withTimeout(2.5),
         new Cmd_SubSys_Arm_PosCmd(armSubSys, -168, true, 1.08, true).withTimeout(3)
         );
 
@@ -103,7 +103,7 @@ public class Auto_1cone2cubeHPBlue_Cmd extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
         new Cmd_SubSys_Arm_PosCmd(armSubSys, -147.0, true, 1.54, true)
-        .withTimeout(4), // Lift arm to high position
+        .withTimeout(3), // Lift arm to high position
         new WaitCommand(0.5), // Add buffer time
         new InstantCommand(handSubSys::CloseHand),
         armRotateAndRetractDriveToPickup1Parallel,
