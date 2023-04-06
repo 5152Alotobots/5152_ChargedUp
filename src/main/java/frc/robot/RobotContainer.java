@@ -371,9 +371,10 @@ private final Command Auto_1cone2cubestashHPRed_Cmd =
         new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
 
     //Test Button
-    //driverStationSubSys.TestButton.whileTrue(
+    driverStationSubSys.TestButton.whileTrue(
+        new Cmd_SubSys_Arm_PosCmd(armSubSys, -145.0, true, 1.54, true)
      //   new CmdGrp_TestVisionAuto(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys, photonvisionSubSys)
- //   );
+    );
         
     driverStationSubSys.GroundPickupButton.whileTrue(
         new Cmd_SubSys_Arm_PosCmd(armSubSys, 45.0, true, 0.8, true));

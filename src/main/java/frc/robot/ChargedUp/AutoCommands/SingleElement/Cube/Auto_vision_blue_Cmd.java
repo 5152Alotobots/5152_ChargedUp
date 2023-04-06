@@ -74,17 +74,17 @@ public class Auto_vision_blue_Cmd extends SequentialCommandGroup {
                 driveSubSys, "vision2", false, false, Alliance.Blue),
             new SequentialCommandGroup(
                 new Cmd_SubSys_Arm_PosCmd(subsysArm, -90, true, 0, false).withTimeout(4),
-                new Cmd_SubSys_Arm_PosCmd(subsysArm, -147.0, true, 1.54, true).withTimeout(6)));
+                new Cmd_SubSys_Arm_PosCmd(subsysArm, -158.0, true, 1.54, true).withTimeout(6)));
 
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new Cmd_SubSys_Arm_PosCmd(subsysArm, -147.0, true, 1.54, true)
+        new Cmd_SubSys_Arm_PosCmd(subsysArm, -145.0, true, 1.54, true)
             .withTimeout(4), // Lift arm to high position
         new WaitCommand(1.5), // Add buffer time
         new InstantCommand(subsysHand::CloseHand, subsysHand), // Open hand (reversed)
         driveAndMoveToPickupPosition, // Drive to end position
-        new Cmd_NavigateToBestVisionTarget(driveSubSys, photonvision, bling, Const_Photonvision.Cameras.frontCamera, Const_Photonvision.Pipelines.Cube, true, false, true).withTimeout(3),
+        new Cmd_NavigateToBestVisionTarget(driveSubSys, photonvision, bling, Const_Photonvision.Cameras.frontCamera, Const_Photonvision.Pipelines.Cube, true, false, true).withTimeout(2.5),
         new Cmd_SubSys_Arm_PosCmd(subsysArm, 40, true, 0.8, true),
         new InstantCommand(subsysHand::OpenHand, subsysHand), // Close hand (reversed)
         driveAndDeliverCone,

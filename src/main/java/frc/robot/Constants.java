@@ -69,7 +69,7 @@ public final class Constants {
       }
 
       public static final class Arm {
-        public static double ArmMaxRotSpd = 100 * Math.PI / 180; // rad/s    //150
+        public static double ArmMaxRotSpd = 100 * Math.PI / 150; // rad/s    //150
         public static double ArmMaxRotAccel = 150 * Math.PI / 180; // rad/s/s
 
         public static double ArmExtensionMaxSpd = 0.5; // m/s

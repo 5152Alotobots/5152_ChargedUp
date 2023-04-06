@@ -95,7 +95,7 @@ public class Auto_1cone2cubestashHPRed_Cmd extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new Cmd_SubSys_Arm_PosCmd(armSubSys, -147.0, true, 1.54, true)
+        new Cmd_SubSys_Arm_PosCmd(armSubSys, -143.0, true, 1.54, true)
         .withTimeout(4), // Lift arm to high position
         new WaitCommand(0.5), // Add buffer time
         new InstantCommand(handSubSys::CloseHand),
