@@ -71,7 +71,7 @@ public class Auto_vision_red_Cmd extends SequentialCommandGroup {
     ParallelCommandGroup driveAndDeliverCone =
         new ParallelCommandGroup(
             new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
-                driveSubSys, "vision2red", false, false, Alliance.Red),
+                driveSubSys, "vision2", false, false, Alliance.Red),
             new SequentialCommandGroup(
                 new Cmd_SubSys_Arm_PosCmd(subsysArm, -90, true, 0, false).withTimeout(4),
                 new Cmd_SubSys_Arm_PosCmd(subsysArm, -158.0, true, 1.54, true).withTimeout(6)));
