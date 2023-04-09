@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public class SubSys_DriverStation extends SubsystemBase {
   /** Creates a new DriverStationSubSys. */
@@ -32,6 +33,10 @@ public class SubSys_DriverStation extends SubsystemBase {
   public POVButton ResetLEDColorButton = new POVButton(m_CoDriverController, 180);
   public POVButton RainbowLEDColorButton = new POVButton(m_CoDriverController, 0);
   public POVButton RainbowStrobeLEDColorButton = new POVButton(m_CoDriverController, 270);
+
+  /** True if the user is moving the arm */
+  public Trigger ArmRotationInUse =
+      new Trigger(() -> GetArmExtendAxis() > 0.1 || GetArmExtendAxis() < -0.1);
 
   // AuxDriver Controller
   private XboxController m_AuxDriverController = new XboxController(2);
