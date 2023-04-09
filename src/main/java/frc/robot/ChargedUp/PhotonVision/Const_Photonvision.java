@@ -19,7 +19,7 @@ public class Const_Photonvision {
           new Rotation3d(
               0, -19,
               0)); // Cam mounted facing forward, 28deg pitched DOWN, 20cm forward of center, 10.5cm
-                   // RIGHT of center, 47cm UP from center.
+  // RIGHT of center, 47cm UP from center.
 
   public static class PIDspeeds {
     public static final double Max_X_PID_Speed = 0.55;
