@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.ChargedUp.Arm.Cmds_SubSys_Arm.Cmd_SubSys_Arm_IdlePositionHold;
 import frc.robot.ChargedUp.Arm.Cmds_SubSys_Arm.Cmd_SubSys_Arm_JoysticDefault;
 import frc.robot.ChargedUp.Arm.Cmds_SubSys_Arm.Cmd_SubSys_Arm_PosCmd;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
@@ -387,6 +388,11 @@ private final Command Auto_1cone2cubestashHPRed_Cmd =
 
     driverStationSubSys.HighSafePos.whileTrue(
         new Cmd_SubSys_Arm_PosCmd(armSubSys, -80.0, true, 0.8, true));
+
+    // Auto hold position when not rotating
+    driverStationSubSys.ArmRotationInUse.whileFalse(
+        new Cmd_SubSys_Arm_IdlePositionHold(armSubSys)
+    );
 
     // CONE/CUBE SIGNALING
     driverStationSubSys.RequestConeButton.onTrue(
