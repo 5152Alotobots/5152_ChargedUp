@@ -16,6 +16,11 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.ChargedUp.Arm.Cmds_SubSys_Arm.Cmd_SubSys_Arm_JoysticDefault;
 import frc.robot.ChargedUp.Arm.Cmds_SubSys_Arm.Cmd_SubSys_Arm_PosCmd;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
+import frc.robot.ChargedUp.AutoCommands.Basic.*;
+import frc.robot.ChargedUp.AutoCommands.DoubleElement.*;
+import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.*;
+import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.*;
+import frc.robot.ChargedUp.AutoCommands.TripleElement.*;
 import frc.robot.ChargedUp.Bling.Cmd.Cmd_SetBlingColorValue;
 import frc.robot.ChargedUp.Bling.Const_Bling;
 import frc.robot.ChargedUp.Bling.SubSys_Bling;
@@ -26,12 +31,6 @@ import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmd_SubSys_DriveTrai
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
 import frc.robot.Library.Vision.Limelight.SubSys_LimeLight;
-
-import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.*;
-import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.*;
-import frc.robot.ChargedUp.AutoCommands.DoubleElement.*;
-import frc.robot.ChargedUp.AutoCommands.TripleElement.*;
-import frc.robot.ChargedUp.AutoCommands.Basic.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -219,29 +218,33 @@ public class RobotContainer {
   private final Command Auto_autolink_red_Cmd =
       new Auto_autolink_red_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys);
 
- private final Command Auto_vision_blue_Cmd =
-      new Auto_vision_blue_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys, photonvisionSubSys);
+  private final Command Auto_vision_blue_Cmd =
+      new Auto_vision_blue_Cmd(
+          driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys, photonvisionSubSys);
 
-private final Command Auto_1cone2CubeHPBlue_Cmd =
+  private final Command Auto_1cone2CubeHPBlue_Cmd =
       new Auto_1cone2cubeHPBlue_Cmd(
-        driveSubSys, gyroSubSys, handSubSys, armSubSys, photonvisionSubSys, blingSubSys);
+          driveSubSys, gyroSubSys, handSubSys, armSubSys, photonvisionSubSys, blingSubSys);
 
-private final Command Auto_1cone2CubeHPRed_Cmd =
+  private final Command Auto_1cone2CubeHPRed_Cmd =
       new Auto_1cone2cubeHPRed_Cmd(
-        driveSubSys, gyroSubSys, handSubSys, armSubSys, photonvisionSubSys, blingSubSys);
+          driveSubSys, gyroSubSys, handSubSys, armSubSys, photonvisionSubSys, blingSubSys);
 
- private final Command Auto_vision_red_Cmd =
-      new Auto_vision_red_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys, photonvisionSubSys);
+  private final Command Auto_vision_red_Cmd =
+      new Auto_vision_red_Cmd(
+          driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys, photonvisionSubSys);
 
-private final Command Auto_Statebestcharge_blue_Cmd =
-      new Auto_Statebestcharge_blue_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys, photonvisionSubSys);
+  private final Command Auto_Statebestcharge_blue_Cmd =
+      new Auto_Statebestcharge_blue_Cmd(
+          driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys, photonvisionSubSys);
 
-private final Command Auto_1cone2cubestashHPBlue_Cmd =
-      new Auto_1cone2cubestashHPBlue_Cmd(driveSubSys, gyroSubSys, handSubSys, armSubSys, photonvisionSubSys, blingSubSys);
+  private final Command Auto_1cone2cubestashHPBlue_Cmd =
+      new Auto_1cone2cubestashHPBlue_Cmd(
+          driveSubSys, gyroSubSys, handSubSys, armSubSys, photonvisionSubSys, blingSubSys);
 
-private final Command Auto_1cone2cubestashHPRed_Cmd =
-        new Auto_1cone2cubestashHPRed_Cmd(driveSubSys, gyroSubSys, handSubSys, armSubSys, photonvisionSubSys, blingSubSys);
-
+  private final Command Auto_1cone2cubestashHPRed_Cmd =
+      new Auto_1cone2cubestashHPRed_Cmd(
+          driveSubSys, gyroSubSys, handSubSys, armSubSys, photonvisionSubSys, blingSubSys);
 
   /*
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -331,8 +334,10 @@ private final Command Auto_1cone2cubestashHPRed_Cmd =
     m_chooser.addOption("Statebestcharge - blue", Auto_Statebestcharge_blue_Cmd);
     m_chooser.addOption("[TRIPLE] 1 cone, 2 cube stash - Blue", Auto_1cone2cubestashHPBlue_Cmd);
     m_chooser.addOption("[TRIPLE] 1 cone, 2 cube stash - Red", Auto_1cone2cubestashHPRed_Cmd);
-    m_chooser.addOption("[TRIPLE] 1 cone, 2 cube Human Player Side - Blue", Auto_1cone2CubeHPBlue_Cmd);
-    m_chooser.addOption("[TRIPLE] 1 cone, 2 cube Human Player Side - Red", Auto_1cone2CubeHPRed_Cmd);
+    m_chooser.addOption(
+        "[TRIPLE] 1 cone, 2 cube Human Player Side - Blue", Auto_1cone2CubeHPBlue_Cmd);
+    m_chooser.addOption(
+        "[TRIPLE] 1 cone, 2 cube Human Player Side - Red", Auto_1cone2CubeHPRed_Cmd);
 
     // DOUBLE ELEMENT COMMANDS
     /*
@@ -370,12 +375,13 @@ private final Command Auto_1cone2cubestashHPRed_Cmd =
         // new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
         new InstantCommand(driveSubSys::setPoseToOrigin, driveSubSys));
 
-    //Test Button
+    // Test Button
     driverStationSubSys.TestButton.whileTrue(
         new Cmd_SubSys_Arm_PosCmd(armSubSys, -145.0, true, 1.54, true)
-     //   new CmdGrp_TestVisionAuto(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys, photonvisionSubSys)
-    );
-        
+        //   new CmdGrp_TestVisionAuto(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys,
+        // photonvisionSubSys)
+        );
+
     driverStationSubSys.GroundPickupButton.whileTrue(
         new Cmd_SubSys_Arm_PosCmd(armSubSys, 45.0, true, 0.8, true));
 
