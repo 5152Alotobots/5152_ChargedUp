@@ -6,9 +6,6 @@ package frc.robot.ChargedUp.Arm.Cmds_SubSys_Arm;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
-import frc.robot.Constants.Robot;
-import frc.robot.Library.DriverStation.JoystickUtilities;
-import java.util.function.DoubleSupplier;
 
 public class Cmd_SubSys_Arm_IdlePositionHold extends CommandBase {
   /** Creates a new Cmd_SubSys_Arm_JoysticDefault. */
@@ -16,8 +13,7 @@ public class Cmd_SubSys_Arm_IdlePositionHold extends CommandBase {
 
   private double posToHold;
 
-  public Cmd_SubSys_Arm_IdlePositionHold(
-      SubSys_Arm subSys_Arm) {
+  public Cmd_SubSys_Arm_IdlePositionHold(SubSys_Arm subSys_Arm) {
 
     this.subSys_Arm = subSys_Arm;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -38,9 +34,7 @@ public class Cmd_SubSys_Arm_IdlePositionHold extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override

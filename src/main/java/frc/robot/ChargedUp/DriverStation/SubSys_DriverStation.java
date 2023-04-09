@@ -35,8 +35,9 @@ public class SubSys_DriverStation extends SubsystemBase {
   public POVButton RainbowStrobeLEDColorButton = new POVButton(m_CoDriverController, 270);
 
   /** True if the user is moving the arm */
-  public Trigger ArmRotationInUse = new Trigger(() -> GetArmExtendAxis() > 0.1 || GetArmExtendAxis() < -0.1);
-  
+  public Trigger ArmRotationInUse =
+      new Trigger(() -> GetArmExtendAxis() > 0.1 || GetArmExtendAxis() < -0.1);
+
   // AuxDriver Controller
   private XboxController m_AuxDriverController = new XboxController(2);
 
