@@ -65,7 +65,9 @@ public class Auto_leftblueescape_1cone_Cmd extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new Cmd_SubSys_Arm_PosCmd(subsysArm, -147.0, true, 1.54, true)
+        new Cmd_SubSys_Arm_PosCmd(subsysArm, -100.0, true, 1.54, false)
+            .withTimeout(1.5), // Lift arm to high position
+        new Cmd_SubSys_Arm_PosCmd(subsysArm, -145.0, true, 1.54, true)
             .withTimeout(4), // Lift arm to high position
         new WaitCommand(1.5), // Add buffer time
         new InstantCommand(subsysHand::CloseHand, subsysHand), // Open hand (reversed)

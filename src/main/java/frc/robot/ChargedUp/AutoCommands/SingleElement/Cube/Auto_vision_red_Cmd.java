@@ -71,7 +71,7 @@ public class Auto_vision_red_Cmd extends SequentialCommandGroup {
     ParallelCommandGroup driveAndDeliverCone =
         new ParallelCommandGroup(
             new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
-                driveSubSys, "vision2red", false, false, Alliance.Red),
+                driveSubSys, "vision2", false, false, Alliance.Red),
             new SequentialCommandGroup(
                 new Cmd_SubSys_Arm_PosCmd(subsysArm, -90, true, 0, false).withTimeout(4),
                 new Cmd_SubSys_Arm_PosCmd(subsysArm, -158.0, true, 1.54, true).withTimeout(6)));
@@ -79,6 +79,8 @@ public class Auto_vision_red_Cmd extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
+        new Cmd_SubSys_Arm_PosCmd(subsysArm, -100.0, true, 1.54, false)
+        .withTimeout(1.5), // Lift arm to high position
         new Cmd_SubSys_Arm_PosCmd(subsysArm, -145.0, true, 1.54, true)
             .withTimeout(4), // Lift arm to high position
         new WaitCommand(1.5), // Add buffer time
