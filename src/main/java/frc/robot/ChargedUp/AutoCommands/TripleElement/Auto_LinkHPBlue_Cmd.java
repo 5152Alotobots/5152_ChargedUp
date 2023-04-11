@@ -4,7 +4,6 @@
 
 package frc.robot.ChargedUp.AutoCommands.TripleElement;
 
-
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
