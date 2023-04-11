@@ -72,9 +72,11 @@ public class Auto_Statebarrier_1cone1cube_blue_Cmd extends SequentialCommandGrou
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new Cmd_SubSys_Arm_PosCmd(subsysArm, -147.0, true, 1.54, true)
-            .withTimeout(4), // Lift arm to high position
-        new WaitCommand(1.5), // Add buffer time
+        new Cmd_SubSys_Arm_PosCmd(subsysArm, -100.0, true, 0.85, false)
+            .withTimeout(1.5), // Lift arm to high position
+        new Cmd_SubSys_Arm_PosCmd(subsysArm, -145.0, true, 1.54, true)
+            .withTimeout(3), // Lift arm to high position
+        new WaitCommand(1), // Add buffer time
         new InstantCommand(subsysHand::CloseHand, subsysHand), // Open hand (reversed)
         driveAndMoveToPickupPosition, // Drive to end position
         new InstantCommand(subsysHand::OpenHand, subsysHand), // Close hand (reversed)

@@ -11,7 +11,7 @@ __          __           _                                      _          _    
                   __/ |              __/ |
                  |___/              |___/
 */
-package frc.robot.ChargedUp.AutoCommands.SingleElement.Cone;
+package frc.robot.ChargedUp.AutoCommands.SingleElement.Cube;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -23,7 +23,10 @@ import frc.robot.ChargedUp.Arm.SubSys_Arm;
 import frc.robot.ChargedUp.Bling.Cmd.Cmd_SetBlingColorValue;
 import frc.robot.ChargedUp.Bling.Const_Bling;
 import frc.robot.ChargedUp.Bling.SubSys_Bling;
+import frc.robot.ChargedUp.Commands.Cmd_NavigateToBestVisionTarget;
 import frc.robot.ChargedUp.Hand.SubSys_Hand;
+import frc.robot.ChargedUp.PhotonVision.Const_Photonvision;
+import frc.robot.ChargedUp.PhotonVision.SubSys_Photonvision;
 import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmds_PathPlanner.Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
 import frc.robot.Library.DriveTrains.SwerveDrive.*;
@@ -33,34 +36,44 @@ import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
 // Link For PathPlaner
 // https://docs.google.com/presentation/d/1xjYSI4KpbmGBUY-ZMf1nAFrXIoJo1tl-HHNl8LLqa1I/edit#slide=id.g1e64fa08ff8_0_0
 
-public class Auto_leftblueescape_1cone_Cmd extends SequentialCommandGroup {
+public class Auto_vision_red_Cmd extends SequentialCommandGroup {
   private final SubSys_DriveTrain m_DriveTrain;
   private final SubSys_PigeonGyro m_pigeonGyro;
   private final SubSys_Arm subsysArm;
   private final SubSys_Hand subsysHand;
   private final SubSys_Bling blingSubSys;
+  private final SubSys_Photonvision photonvision;
 
   /** Creates a new Auto_Challenge1_Cmd. */
-  public Auto_leftblueescape_1cone_Cmd(
+  public Auto_vision_red_Cmd(
       SubSys_DriveTrain driveSubSys,
       SubSys_Arm arm,
       SubSys_Hand hand,
       SubSys_PigeonGyro pigeonGyro,
-      SubSys_Bling bling) {
+      SubSys_Bling bling,
+      SubSys_Photonvision photonvision) {
     m_DriveTrain = driveSubSys;
     m_pigeonGyro = pigeonGyro;
     subsysArm = arm;
     subsysHand = hand;
     blingSubSys = bling;
+    this.photonvision = photonvision;
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
 
     /* Construct parallel command groups */
-    ParallelCommandGroup driveAndRetractArm =
+    ParallelCommandGroup driveAndMoveToPickupPosition =
         new ParallelCommandGroup(
             new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
-                driveSubSys, "leftescape_1cone", true, true, Alliance.Blue),
-            new Cmd_SubSys_Arm_PosCmd(subsysArm, 10.0, true, 0.8, true).withTimeout(4));
+                driveSubSys, "vision1", true, true, Alliance.Red),
+            new Cmd_SubSys_Arm_PosCmd(subsysArm, 0.0, true, 0.8, true));
+    ParallelCommandGroup driveAndDeliverCone =
+        new ParallelCommandGroup(
+            new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
+                driveSubSys, "vision2", false, false, Alliance.Red),
+            new SequentialCommandGroup(
+                new Cmd_SubSys_Arm_PosCmd(subsysArm, -90, true, 0, false).withTimeout(4),
+                new Cmd_SubSys_Arm_PosCmd(subsysArm, -158.0, true, 1.54, true).withTimeout(6)));
 
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
@@ -71,7 +84,22 @@ public class Auto_leftblueescape_1cone_Cmd extends SequentialCommandGroup {
             .withTimeout(4), // Lift arm to high position
         new WaitCommand(1.5), // Add buffer time
         new InstantCommand(subsysHand::CloseHand, subsysHand), // Open hand (reversed)
-        driveAndRetractArm, // Drive to end position
+        driveAndMoveToPickupPosition, // Drive to end position
+        new Cmd_NavigateToBestVisionTarget(
+                driveSubSys,
+                photonvision,
+                bling,
+                Const_Photonvision.Cameras.frontCamera,
+                Const_Photonvision.Pipelines.Cube,
+                true,
+                false,
+                true)
+            .withTimeout(2.5),
+        new Cmd_SubSys_Arm_PosCmd(subsysArm, 40, true, 0.8, true),
+        new InstantCommand(subsysHand::OpenHand, subsysHand), // Close hand (reversed)
+        driveAndDeliverCone,
+        new InstantCommand(subsysHand::CloseHand, subsysHand), // Open hand (reversed)
+        new Cmd_SubSys_Arm_PosCmd(subsysArm, 45, true, 0, true).withTimeout(4),
         new Cmd_SetBlingColorValue(
             blingSubSys,
             Const_Bling.Controllers.controller1,
