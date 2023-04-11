@@ -14,24 +14,15 @@ __          __           _                                      _          _    
 // WORKS - TESTED ON FIELD
 package frc.robot.ChargedUp.Commands;
 
-import edu.wpi.first.apriltag.AprilTagPoseEstimate;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.ChargedUp.Arm.Cmds_SubSys_Arm.Cmd_SubSys_Arm_PosCmd;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
-import frc.robot.ChargedUp.Bling.Cmd.Cmd_SetBlingColorValue;
-import frc.robot.ChargedUp.Bling.Const_Bling;
 import frc.robot.ChargedUp.Bling.SubSys_Bling;
-import frc.robot.ChargedUp.ChargeStation.Cmd_AutoBalance;
 import frc.robot.ChargedUp.Hand.SubSys_Hand;
 import frc.robot.ChargedUp.PhotonVision.Const_Photonvision;
 import frc.robot.ChargedUp.PhotonVision.SubSys_Photonvision;
-import frc.robot.Library.DriveTrains.Cmds_SubSys_DriveTrain.Cmds_PathPlanner.Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj;
 import frc.robot.Library.DriveTrains.SubSys_DriveTrain;
-import frc.robot.Library.DriveTrains.SubSys_DriveTrain_Constants;
 import frc.robot.Library.DriveTrains.SwerveDrive.*;
 import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
 
@@ -67,12 +58,21 @@ public class CmdGrp_TestVisionAuto extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        // new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "TestVisionAuto1", true, true, Alliance.Red),
+        // new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(driveSubSys, "TestVisionAuto1", true,
+        // true, Alliance.Red),
         new Cmd_SubSys_Arm_PosCmd(subsysArm, 0, true, 0.8, true).withTimeout(4),
-        new Cmd_NavigateToBestVisionTarget(driveSubSys, photonvision, bling, Const_Photonvision.Cameras.frontCamera, Const_Photonvision.Pipelines.Cube, true, false, true).withTimeout(3),
+        new Cmd_NavigateToBestVisionTarget(
+                driveSubSys,
+                photonvision,
+                bling,
+                Const_Photonvision.Cameras.frontCamera,
+                Const_Photonvision.Pipelines.Cube,
+                true,
+                false,
+                true)
+            .withTimeout(3),
         new Cmd_SubSys_Arm_PosCmd(subsysArm, 40, true, 0.8, true).withTimeout(4),
         new InstantCommand(subsysHand::OpenHand, subsysHand),
-        new Cmd_SubSys_Arm_PosCmd(subsysArm, 0, true, 0.8, true).withTimeout(4)
-        );
+        new Cmd_SubSys_Arm_PosCmd(subsysArm, 0, true, 0.8, true).withTimeout(4));
   }
 }
