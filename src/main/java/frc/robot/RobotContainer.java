@@ -393,11 +393,11 @@ public class RobotContainer {
 
     driverStationSubSys.HighSafePos.whileTrue(
         new Cmd_SubSys_Arm_PosCmd(armSubSys, -80.0, true, 0.8, true));
-    //Human Player Pos
+    // Human Player Pos
 
     driverStationSubSys.HumanPlayerPos.whileTrue(
         new Cmd_SubSys_Arm_PosCmd(armSubSys, -35.0, true, 1.65, true));
-    
+
     // CONE/CUBE SIGNALING
     driverStationSubSys.RequestConeButton.onTrue(
         new Cmd_SetBlingColorValue(

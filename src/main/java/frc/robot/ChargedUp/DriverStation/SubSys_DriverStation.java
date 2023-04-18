@@ -27,7 +27,7 @@ public class SubSys_DriverStation extends SubsystemBase {
   public JoystickButton HighConeDelivery = new JoystickButton(m_CoDriverController, 4);
   public JoystickButton MidConeDelivery = new JoystickButton(m_CoDriverController, 3);
   public JoystickButton HighSafePos = new JoystickButton(m_CoDriverController, 2);
-  //TODO Bind To Correct Button 
+  // TODO Bind To Correct Button
   public JoystickButton HumanPlayerPos = new JoystickButton(m_CoDriverController, 0);
   public JoystickButton RequestConeButton = new JoystickButton(m_CoDriverController, 6);
   public JoystickButton RequestCubeButton = new JoystickButton(m_CoDriverController, 5);
