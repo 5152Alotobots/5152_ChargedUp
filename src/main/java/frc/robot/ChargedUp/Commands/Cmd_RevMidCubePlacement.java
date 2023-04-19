@@ -27,7 +27,7 @@ public class Cmd_RevMidCubePlacement extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new Cmd_SubSys_Arm_Retract_RevDeliveryPrePos(subsysArm),  // Move to Rev Delivery Preposition
+      //new Cmd_SubSys_Arm_Retract_RevDeliveryPrePos(subsysArm),  // Move to Rev Delivery Preposition
       new Cmd_SubSys_Arm_PosCmd(subsysArm, -185.0, true, 1.54, true)
         .withTimeout(3), // Rotate and Extend to Mid Cube Deliver Position
       new WaitCommand(1), // Add Settling Time

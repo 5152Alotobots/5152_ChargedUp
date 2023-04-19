@@ -96,7 +96,7 @@ public class Auto_worlds_Blue extends SequentialCommandGroup {
         new Cmd_FwdGndCubePickup(subsysArm, subsysHand),
         driveAndDeliverMidCube,
         new Cmd_RevMidCubePlacement(subsysArm, subsysHand),
-        new Cmd_SubSys_Arm_Retract_0DegPos(subsysArm).withTimeout(4),
+        //new Cmd_SubSys_Arm_Retract_0DegPos(subsysArm).withTimeout(4),
         new Cmd_SetBlingColorValue(
             blingSubSys,
             Const_Bling.Controllers.controller1,
