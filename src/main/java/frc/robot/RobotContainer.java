@@ -377,7 +377,7 @@ public class RobotContainer {
 
     // Test Button
     driverStationSubSys.TestButton.whileTrue(
-        new Cmd_SubSys_Arm_PosCmd(armSubSys, -54.0, true, 0.8, true)
+        new Cmd_SubSys_Arm_PosCmd(armSubSys, -51.0, true, 0.8, true)
         //   new CmdGrp_TestVisionAuto(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys,
         // photonvisionSubSys)
         );
@@ -386,7 +386,7 @@ public class RobotContainer {
         new Cmd_SubSys_Arm_PosCmd(armSubSys, 45.0, true, 0.8, true));
 
     driverStationSubSys.HighConeDelivery.whileTrue(
-        new Cmd_SubSys_Arm_PosCmd(armSubSys, -35.0, true, 1.65, true));
+        new Cmd_SubSys_Arm_PosCmd(armSubSys, -35.0, true, 1.75, true));  // 1.65
 
     driverStationSubSys.MidConeDelivery.whileTrue(
         new Cmd_SubSys_Arm_PosCmd(armSubSys, -25.0, true, 1.00, true));
@@ -398,7 +398,7 @@ public class RobotContainer {
         new Cmd_SubSys_Arm_PosCmd(armSubSys, -80.0, true, 0.8, true));
     
     driverStationSubSys.HumanPlayerPickup.whileTrue(
-        new Cmd_SubSys_Arm_PosCmd(armSubSys, -54.0, true, 0.8, true));
+        new Cmd_SubSys_Arm_PosCmd(armSubSys, -51.0, true, 0.8, true));
 
         // CONE/CUBE SIGNALING
     driverStationSubSys.RequestConeButton.onTrue(
