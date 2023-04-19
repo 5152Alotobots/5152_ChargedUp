@@ -245,14 +245,14 @@ public class RobotContainer {
   private final Command Auto_1cone2cubestashHPRed_Cmd =
       new Auto_1cone2cubestashHPRed_Cmd(
           driveSubSys, gyroSubSys, handSubSys, armSubSys, photonvisionSubSys, blingSubSys);
-          
+
   private final Command Auto_worlds_Blue_Cmd =
-          new Auto_worlds_Blue(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys, photonvisionSubSys
-              );
+      new Auto_worlds_Blue(
+          driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys, photonvisionSubSys);
 
   private final Command Auto_worlds_Red_Cmd =
-              new Auto_worlds_Red(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys, photonvisionSubSys
-                  );
+      new Auto_worlds_Red(
+          driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys, photonvisionSubSys);
 
   /*
    * The container for the robot. Contains subsystems, OI devices, and commands.
