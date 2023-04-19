@@ -246,6 +246,14 @@ public class RobotContainer {
       new Auto_1cone2cubestashHPRed_Cmd(
           driveSubSys, gyroSubSys, handSubSys, armSubSys, photonvisionSubSys, blingSubSys);
 
+  private final Command Auto_worlds_Blue_Cmd =
+      new Auto_worlds_Blue(
+          driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys, photonvisionSubSys);
+
+  private final Command Auto_worlds_Red_Cmd =
+      new Auto_worlds_Red(
+          driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys, photonvisionSubSys);
+
   /*
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -334,6 +342,8 @@ public class RobotContainer {
     m_chooser.addOption("Statebestcharge - blue", Auto_Statebestcharge_blue_Cmd);
     m_chooser.addOption("[TRIPLE] 1 cone, 2 cube stash - Blue", Auto_1cone2cubestashHPBlue_Cmd);
     m_chooser.addOption("[TRIPLE] 1 cone, 2 cube stash - Red", Auto_1cone2cubestashHPRed_Cmd);
+    m_chooser.addOption("Auto_worlds_Blue", Auto_worlds_Blue_Cmd);
+    m_chooser.addOption("Auto_worlds_Red", Auto_worlds_Red_Cmd);
     m_chooser.addOption(
         "[TRIPLE] 1 cone, 2 cube Human Player Side - Blue", Auto_1cone2CubeHPBlue_Cmd);
     m_chooser.addOption(
