@@ -377,7 +377,7 @@ public class RobotContainer {
 
     // Test Button
     driverStationSubSys.TestButton.whileTrue(
-        new Cmd_SubSys_Arm_PosCmd(armSubSys, -145.0, true, 1.54, true)
+        new Cmd_SubSys_Arm_PosCmd(armSubSys, -135.0, true, 0.8, true)
         //   new CmdGrp_TestVisionAuto(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys,
         // photonvisionSubSys)
         );
@@ -394,7 +394,13 @@ public class RobotContainer {
     driverStationSubSys.HighSafePos.whileTrue(
         new Cmd_SubSys_Arm_PosCmd(armSubSys, -80.0, true, 0.8, true));
 
-    // CONE/CUBE SIGNALING
+    driverStationSubSys.HighSafePos.whileTrue(
+        new Cmd_SubSys_Arm_PosCmd(armSubSys, -80.0, true, 0.8, true));
+    
+    driverStationSubSys.HumanPlayerPickup.whileTrue(
+        new Cmd_SubSys_Arm_PosCmd(armSubSys, -135.0, true, 0.8, true));
+
+        // CONE/CUBE SIGNALING
     driverStationSubSys.RequestConeButton.onTrue(
         new Cmd_SetBlingColorValue(
             blingSubSys, Const_Bling.Controllers.controller1, Const_Bling.SolidColors.Yellow));

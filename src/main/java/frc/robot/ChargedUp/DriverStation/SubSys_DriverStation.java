@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public class SubSys_DriverStation extends SubsystemBase {
   /** Creates a new DriverStationSubSys. */
@@ -92,6 +93,9 @@ public class SubSys_DriverStation extends SubsystemBase {
   public double GetArmExtendAxis() {
     return -m_CoDriverController.getRawAxis(5);
   }
+
+  // HumanPlayerPickup
+  public Trigger HumanPlayerPickup = new Trigger(()-> m_CoDriverController.getRawAxis(2)>0.5);
 
   /*
   public double HandSensorBtn() {
