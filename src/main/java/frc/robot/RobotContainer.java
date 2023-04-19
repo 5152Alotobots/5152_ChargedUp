@@ -255,7 +255,13 @@ public class RobotContainer {
       new Auto_worlds_Red(
           driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys, photonvisionSubSys);
 
-  /*
+  private final Command Auto_worlds_vision_blue =
+      new Auto_worlds_vision_blue_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys, photonvisionSubSys);
+  
+  private final Command Auto_worlds_vision_red = 
+      new Auto_worlds_vision_red_Cmd(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys, photonvisionSubSys);
+
+          /*
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
@@ -350,6 +356,9 @@ public class RobotContainer {
     m_chooser.addOption(
         "[TRIPLE] 1 cone, 2 cube Human Player Side - Red", Auto_1cone2CubeHPRed_Cmd);
 
+    m_chooser.addOption("Auto_worlds_vision_blue", Auto_worlds_vision_blue);
+    m_chooser.addOption("Auto_worlds_vision_red", Auto_worlds_vision_red);
+    
     // DOUBLE ELEMENT COMMANDS
     /*
     m_chooser.addOption("[DOUBLE] leftbluecone", m_leftbluecone);
