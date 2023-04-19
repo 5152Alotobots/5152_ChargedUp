@@ -22,6 +22,7 @@ import frc.robot.ChargedUp.AutoCommands.SingleElement.Cone.*;
 import frc.robot.ChargedUp.AutoCommands.SingleElement.Cube.*;
 import frc.robot.ChargedUp.AutoCommands.TripleElement.*;
 import frc.robot.ChargedUp.Bling.Cmd.Cmd_SetBlingColorValue;
+import frc.robot.ChargedUp.Commands.Cmd_RevMidCubePlacement;
 import frc.robot.ChargedUp.Bling.Const_Bling;
 import frc.robot.ChargedUp.Bling.SubSys_Bling;
 import frc.robot.ChargedUp.DriverStation.SubSys_DriverStation;
@@ -387,7 +388,8 @@ public class RobotContainer {
 
     // Test Button
     driverStationSubSys.TestButton.whileTrue(
-        new Cmd_SubSys_Arm_PosCmd(armSubSys, -145.0, true, 1.54, true)
+        new Cmd_RevMidCubePlacement(armSubSys,handSubSys)
+        //new Cmd_SubSys_Arm_PosCmd(armSubSys, -145.0, true, 1.54, true)
         //   new CmdGrp_TestVisionAuto(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys,
         // photonvisionSubSys)
         );
@@ -405,8 +407,8 @@ public class RobotContainer {
         new Cmd_SubSys_Arm_PosCmd(armSubSys, -80.0, true, 0.8, true));
     // Human Player Pos
 
-    driverStationSubSys.HumanPlayerPos.whileTrue(
-        new Cmd_SubSys_Arm_PosCmd(armSubSys, -35.0, true, 1.65, true));
+    //driverStationSubSys.HumanPlayerPos.whileTrue(
+    //    new Cmd_SubSys_Arm_PosCmd(armSubSys, -35.0, true, 1.65, true));
 
     // CONE/CUBE SIGNALING
     driverStationSubSys.RequestConeButton.onTrue(

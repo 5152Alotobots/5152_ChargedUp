@@ -25,10 +25,10 @@ import frc.robot.ChargedUp.Arm.SubSys_Arm;
 import frc.robot.ChargedUp.Bling.Cmd.Cmd_SetBlingColorValue;
 import frc.robot.ChargedUp.Bling.Const_Bling;
 import frc.robot.ChargedUp.Bling.SubSys_Bling;
+import frc.robot.ChargedUp.Commands.Cmd_RevHighConePlacement;
+import frc.robot.ChargedUp.Commands.Cmd_RevHighCubePlacement;
 import frc.robot.ChargedUp.Commands.Cmd_FwdGndCubePickup;
 import frc.robot.ChargedUp.Commands.Cmd_NavigateToBestVisionTarget;
-import frc.robot.ChargedUp.Commands.Cmd_RevHighCubePlacement;
-import frc.robot.ChargedUp.Commands.Cmd_RevMidCubePlacement;
 import frc.robot.ChargedUp.Hand.SubSys_Hand;
 import frc.robot.ChargedUp.PhotonVision.Const_Photonvision;
 import frc.robot.ChargedUp.PhotonVision.SubSys_Photonvision;
@@ -41,7 +41,7 @@ import frc.robot.Library.Gyroscopes.Pigeon2.SubSys_PigeonGyro;
 // Link For PathPlaner
 // https://docs.google.com/presentation/d/1xjYSI4KpbmGBUY-ZMf1nAFrXIoJo1tl-HHNl8LLqa1I/edit#slide=id.g1e64fa08ff8_0_0
 
-public class Auto_worlds_Blue extends SequentialCommandGroup {
+public class Auto_worlds_vision_red_Cmd extends SequentialCommandGroup {
   private final SubSys_DriveTrain m_DriveTrain;
   private final SubSys_PigeonGyro m_pigeonGyro;
   private final SubSys_Arm subsysArm;
@@ -50,7 +50,7 @@ public class Auto_worlds_Blue extends SequentialCommandGroup {
   private final SubSys_Photonvision photonvision;
 
   /** Creates a new Auto_Challenge1_Cmd. */
-  public Auto_worlds_Blue(
+  public Auto_worlds_vision_red_Cmd(
       SubSys_DriveTrain driveSubSys,
       SubSys_Arm arm,
       SubSys_Hand hand,
@@ -70,19 +70,19 @@ public class Auto_worlds_Blue extends SequentialCommandGroup {
     ParallelCommandGroup driveAndMoveToPickupPosition =
         new ParallelCommandGroup(
             new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
-                driveSubSys, "world1", true, true, Alliance.Blue),
-            new Cmd_SubSys_Arm_Retract_0DegPos(subsysArm));
-    ParallelCommandGroup driveAndDeliverMidCube =
+                driveSubSys, "vision1", true, true, Alliance.Red),
+            new Cmd_SubSys_Arm_PosCmd(subsysArm, 0.0, true, 0.8, true));
+    ParallelCommandGroup driveAndDeliverHighCube =
         new ParallelCommandGroup(
             new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
-                driveSubSys, "world2", false, false, Alliance.Blue),
-            new Cmd_SubSys_Arm_Retract_RevDeliveryPrePos(subsysArm).withTimeout(4));
+                driveSubSys, "vision2", false, false, Alliance.Red),
+                new Cmd_SubSys_Arm_Retract_RevDeliveryPrePos(subsysArm).withTimeout(4));
 
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new Cmd_RevHighCubePlacement(subsysArm, subsysHand), // Place High Cube
-        driveAndMoveToPickupPosition, // Drive Cube
+        new Cmd_RevHighConePlacement(subsysArm, subsysHand), // Open hand (reversed)
+        driveAndMoveToPickupPosition, // Drive to end position
         new Cmd_NavigateToBestVisionTarget(
                 driveSubSys,
                 photonvision,
@@ -94,8 +94,8 @@ public class Auto_worlds_Blue extends SequentialCommandGroup {
                 true)
             .withTimeout(2.5),
         new Cmd_FwdGndCubePickup(subsysArm, subsysHand),
-        driveAndDeliverMidCube,
-        new Cmd_RevMidCubePlacement(subsysArm, subsysHand),
+        driveAndDeliverHighCube,
+        new Cmd_RevHighCubePlacement(subsysArm, subsysHand),
         new Cmd_SubSys_Arm_Retract_0DegPos(subsysArm).withTimeout(4),
         new Cmd_SetBlingColorValue(
             blingSubSys,

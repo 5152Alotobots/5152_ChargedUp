@@ -19,11 +19,16 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.ChargedUp.Arm.Cmds_SubSys_Arm.Cmd_SubSys_Arm_PosCmd;
+import frc.robot.ChargedUp.Arm.Cmds_SubSys_Arm.Cmd_SubSys_Arm_Retract_0DegPos;
+import frc.robot.ChargedUp.Arm.Cmds_SubSys_Arm.Cmd_SubSys_Arm_Retract_RevDeliveryPrePos;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
 import frc.robot.ChargedUp.Bling.Cmd.Cmd_SetBlingColorValue;
 import frc.robot.ChargedUp.Bling.Const_Bling;
 import frc.robot.ChargedUp.Bling.SubSys_Bling;
+import frc.robot.ChargedUp.Commands.Cmd_FwdGndCubePickup;
 import frc.robot.ChargedUp.Commands.Cmd_NavigateToBestVisionTarget;
+import frc.robot.ChargedUp.Commands.Cmd_RevHighCubePlacement;
+import frc.robot.ChargedUp.Commands.Cmd_RevMidCubePlacement;
 import frc.robot.ChargedUp.Hand.SubSys_Hand;
 import frc.robot.ChargedUp.PhotonVision.Const_Photonvision;
 import frc.robot.ChargedUp.PhotonVision.SubSys_Photonvision;
@@ -66,24 +71,17 @@ public class Auto_worlds_Red extends SequentialCommandGroup {
         new ParallelCommandGroup(
             new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
                 driveSubSys, "world1", true, true, Alliance.Red),
-            new Cmd_SubSys_Arm_PosCmd(subsysArm, 0.0, true, 0.8, true));
-    ParallelCommandGroup driveAndDeliverCone =
+            new Cmd_SubSys_Arm_Retract_0DegPos(subsysArm));
+    ParallelCommandGroup driveAndDeliverMidCube =
         new ParallelCommandGroup(
             new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
                 driveSubSys, "world2", false, false, Alliance.Red),
-            new SequentialCommandGroup(
-                new Cmd_SubSys_Arm_PosCmd(subsysArm, -168, true, 0, true).withTimeout(4),
-                new Cmd_SubSys_Arm_PosCmd(subsysArm, -168.0, true, 1.08, true).withTimeout(6)));
+            new Cmd_SubSys_Arm_Retract_RevDeliveryPrePos(subsysArm).withTimeout(4));
 
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new Cmd_SubSys_Arm_PosCmd(subsysArm, -100.0, true, .85, false)
-            .withTimeout(1.5), // Lift arm to high position
-        new Cmd_SubSys_Arm_PosCmd(subsysArm, -185.0, true, 1.54, true)
-            .withTimeout(3), // Lift arm to high position
-        new WaitCommand(1), // Add buffer time
-        new InstantCommand(subsysHand::CloseHand, subsysHand), // Open hand (reversed)
+        new Cmd_RevHighCubePlacement(subsysArm, subsysHand), // Place High Cube
         driveAndMoveToPickupPosition, // Drive to end position
         new Cmd_NavigateToBestVisionTarget(
                 driveSubSys,
@@ -95,11 +93,10 @@ public class Auto_worlds_Red extends SequentialCommandGroup {
                 false,
                 true)
             .withTimeout(2.5),
-        new Cmd_SubSys_Arm_PosCmd(subsysArm, 40, true, 0.8, true),
-        new InstantCommand(subsysHand::OpenHand, subsysHand), // Close hand (reversed)
-        driveAndDeliverCone,
-        new InstantCommand(subsysHand::CloseHand, subsysHand), // Open hand (reversed)
-        new Cmd_SubSys_Arm_PosCmd(subsysArm, 45, true, 0, true).withTimeout(4),
+        new Cmd_FwdGndCubePickup(subsysArm, subsysHand),
+        driveAndDeliverMidCube,
+        new Cmd_RevMidCubePlacement(subsysArm, subsysHand),
+        new Cmd_SubSys_Arm_Retract_0DegPos(subsysArm).withTimeout(4),
         new Cmd_SetBlingColorValue(
             blingSubSys,
             Const_Bling.Controllers.controller1,
