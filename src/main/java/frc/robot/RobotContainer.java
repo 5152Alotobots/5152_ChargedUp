@@ -397,7 +397,7 @@ public class RobotContainer {
 
     // Test Button
     driverStationSubSys.TestButton.whileTrue(
-        new Cmd_RevMidCubePlacement(armSubSys,handSubSys)
+        new Auto_worlds_Blue(driveSubSys, armSubSys, handSubSys, gyroSubSys, blingSubSys, photonvisionSubSys)
         //new Cmd_SubSys_Arm_PosCmd(armSubSys, -145.0, true, 1.54, true)
         //   new CmdGrp_TestVisionAuto(driveSubSys, gyroSubSys, armSubSys, handSubSys, blingSubSys,
         // photonvisionSubSys)

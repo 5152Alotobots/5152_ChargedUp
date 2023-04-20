@@ -24,9 +24,9 @@ public class Cmd_SubSys_Arm_Retract_RevDeliveryPrePos extends SequentialCommandG
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new Cmd_SubSys_Arm_PosCmd(subsysArm, subSys_Arm.getArmShoulderAngle().getDegrees(), false, 0.85, false)
+      new Cmd_SubSys_Arm_PosCmd(subsysArm, subSys_Arm.getArmShoulderAngle().getDegrees(), false, 0.81, false)
         .withTimeout(1.5), // Retract Arm
-      new Cmd_SubSys_Arm_PosCmd(subsysArm, -120.0, true, 0.85, true)
+      new Cmd_SubSys_Arm_PosCmd(subsysArm, -140.0, true, 0.81, true)
         .withTimeout(4)); // Lift arm to high position
   }
 }

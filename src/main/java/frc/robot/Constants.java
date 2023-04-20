@@ -72,11 +72,11 @@ public final class Constants {
         public static double ArmMaxRotSpd = 100 * Math.PI / 150; // rad/s    //150
         public static double ArmMaxRotAccel = 150 * Math.PI / 180; // rad/s/s
 
-        public static double ArmExtensionMaxSpd = 0.5; // m/s
-        public static double ArmExtensionMaxAccel = 0.5; // m/s/s
+        public static double ArmExtensionMaxSpd = 1.25; // m/s
+        public static double ArmExtensionMaxAccel = 1.0; // m/s/s
 
         public static double ArmExtendPosCtrlFastSpd = 0.8; // %
-        public static double ArmExtendPosCtrlSlowRange = 0.1; // m
+        public static double ArmExtendPosCtrlSlowRange = 0.13; // m
         public static double ArmExtendPosCtrlSlowSpd = 0.15; // %
         public static double ArmExtendPosCtrlAtPositionRange = 0.02; // m
 
@@ -102,7 +102,7 @@ public final class Constants {
         public static double ArmShoulderMaxRotSpd = 360 * Math.PI / 180; // rad/s
         public static double ArmShoulderMaxRotAccel = 360 * Math.PI / 180; // rad/s
 
-        public static double ArmExtensionMaxSpd = 1.0; // m/s
+        public static double ArmExtensionMaxSpd = 1.50; // m/s
         public static double ArmExtensionMaxAccel = 1.0; // m/s/s
       }
     }

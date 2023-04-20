@@ -5,6 +5,7 @@
 package frc.robot.ChargedUp.Commands;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.ChargedUp.Arm.Cmds_SubSys_Arm.Cmd_SubSys_Arm_PosCmd;
@@ -29,10 +30,13 @@ public class Cmd_RevHighConePlacement extends SequentialCommandGroup {
     addCommands(
       new Cmd_SubSys_Arm_Retract_RevDeliveryPrePos(subsysArm),  // Move to Rev Delivery Preposition
       new Cmd_SubSys_Arm_PosCmd(subsysArm, -145.0, true, 1.54, true)
-        .withTimeout(3), // Lift arm to high Cone position
-      new WaitCommand(1), // Add Settlijg time
+        .withTimeout(2), // Lift arm to high Cone position
+      new ParallelCommandGroup(
+          new Cmd_SubSys_Arm_PosCmd(subsysArm, -145.0, true, 1.54, true)
+          .withTimeout(0.1),
+          new WaitCommand(0.1)), // Add Settling Time
       new InstantCommand(subsysHand::CloseHand, subsysHand)); // Open hand (reversed)
-      new Cmd_SubSys_Arm_PosCmd(subsysArm, -125.0, true, 1.54, true)
-        .withTimeout(3); // Rotate up to Clear Grid
+      new Cmd_SubSys_Arm_PosCmd(subsysArm, -135.0, true, 1.54, true)
+        .withTimeout(1); // Rotate up to Clear Grid
   }
 }

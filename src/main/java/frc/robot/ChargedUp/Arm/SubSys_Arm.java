@@ -444,7 +444,7 @@ public class SubSys_Arm extends SubsystemBase {
     double armExtCmd = armExtensionCmd / Robot.MaxSpeeds.Arm.ArmExtensionMaxSpd;
 
     if (outsideBounds) {
-      armExtCmd = -0.3;
+      armExtCmd = -0.2;
     }
     // Check for Mechanical Extension Limits
     double maxExension =
