@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.ChargedUp.Arm.Cmds_SubSys_Arm.Cmd_SubSys_Arm_OpenLoop;
 import frc.robot.ChargedUp.Arm.Cmds_SubSys_Arm.Cmd_SubSys_Arm_PosCmd;
 import frc.robot.ChargedUp.Arm.SubSys_Arm;
 import frc.robot.ChargedUp.Bling.Cmd.Cmd_SetBlingColorValue;
@@ -66,25 +67,28 @@ public class Auto_vision_blue_Cmd extends SequentialCommandGroup {
         new ParallelCommandGroup(
             new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
                 driveSubSys, "vision1", true, true, Alliance.Blue),
-            new Cmd_SubSys_Arm_PosCmd(subsysArm, 0.0, true, 0.8, true));
+            new Cmd_SubSys_Arm_PosCmd(subsysArm, 0.0, true, 0.81, true));
     ParallelCommandGroup driveAndDeliverCone =
         new ParallelCommandGroup(
             new Cmd_SubSys_DriveTrain_FollowPathPlanner_Traj(
                 driveSubSys, "vision2", false, false, Alliance.Blue),
             new SequentialCommandGroup(
-                new Cmd_SubSys_Arm_PosCmd(subsysArm, -90, true, 0, false).withTimeout(4),
+                new Cmd_SubSys_Arm_PosCmd(subsysArm, -120, true, 0.81, true).withTimeout(4),
                 new Cmd_SubSys_Arm_PosCmd(subsysArm, -158.0, true, 1.54, true).withTimeout(6)));
 
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new Cmd_SubSys_Arm_PosCmd(subsysArm, -100.0, true, .85, false)
+        new Cmd_SubSys_Arm_PosCmd(subsysArm, -135.0, true, 0.81, false)
             .withTimeout(1.5), // Lift arm to high position
-        new Cmd_SubSys_Arm_PosCmd(subsysArm, -145.0, true, 1.54, true)
-            .withTimeout(3), // Lift arm to high position
-        new WaitCommand(1), // Add buffer time
+        new Cmd_SubSys_Arm_PosCmd(subsysArm, -145.0, true, 1.51, true)
+            .withTimeout(2), // Lift arm to high position
+        new Cmd_SubSys_Arm_OpenLoop(subsysArm, 1.0, 0.0).withTimeout(0.085),
+        new Cmd_SubSys_Arm_PosCmd(subsysArm, -145.0, true, 1.51, true)
+            .withTimeout(2), // Lift arm to high position
+        new WaitCommand(0.75), // Add buffer time
         new InstantCommand(subsysHand::CloseHand, subsysHand), // Open hand (reversed)
-        driveAndMoveToPickupPosition, // Drive to end position
+            driveAndMoveToPickupPosition, // Drive to end position
         new Cmd_NavigateToBestVisionTarget(
                 driveSubSys,
                 photonvision,
@@ -95,7 +99,7 @@ public class Auto_vision_blue_Cmd extends SequentialCommandGroup {
                 false,
                 true)
             .withTimeout(2.5),
-        new Cmd_SubSys_Arm_PosCmd(subsysArm, 40, true, 0.8, true),
+        new Cmd_SubSys_Arm_PosCmd(subsysArm, 40, true, 0.81, true),
         new InstantCommand(subsysHand::OpenHand, subsysHand), // Close hand (reversed)
         driveAndDeliverCone,
         new InstantCommand(subsysHand::CloseHand, subsysHand), // Open hand (reversed)

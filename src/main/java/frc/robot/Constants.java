@@ -40,7 +40,7 @@ public final class Constants {
         public static final class PerformanceMode_A {
           // Performance Mode A Speeds (Slow)
           public static double DriveTrainMaxPctOutput = 0.25; // 0-1
-          public static double DriveTrainMaxSpd = 2.0; // m/s
+          public static double DriveTrainMaxSpd = 0.75; // m/s
           public static double DriveTrainMaxAccel = 0.35; // m/s^2
           public static double DriveTrainMaxRotPctOutput = 0.6; // 0-1
           public static double DriveTrainMaxRotSpd = 100 * Math.PI / 180; // rad/s
