@@ -40,7 +40,9 @@ TODO:
   </p>
 </div>
 
+## Notice Of Archive  
 
+**This Repository is Archived and Read only. As this code is no longer in use.**
 
 <!-- TABLE OF CONTENTS -->
 <!--
@@ -77,11 +79,6 @@ TODO:
 ### Built With
 * [Wpilib](https://wpilib.org/)
 * [JDK 11](https://jdk.java.net/11/)
-
-<!-- GETTING STARTED -->
-## Getting Started
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/5152Alotobots/5152_ChargedUp/)
-
 
 ### Prerequisites
 
@@ -130,27 +127,6 @@ Use this space to show useful examples of how a project can be used. Additional 
 _For more examples, please refer to the [Documentation](https://example.com)_
 <p align="right">(<a href="#top">back to top</a>)</p>
 -->
-<!-- ROADMAP -->
-## Roadmap
-
-- [ ] Finish swerve drive code
-- [ ] Program hand
-- [ ] Program lift
-- [ ] Program computer vision/auton
-
-See the [open issues](https://github.com/5152Alotobots/5152_ChargedUp) for a full list of proposed features (and known issues).
-
-<!-- CONTRIBUTING -->
-## Contributing
-
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. IF you want to help, open a pull request with your changes. **Feel free to fork this project to suit your own needs if you wish.**
-
-<!-- LICENSE
-## License
-Distributed under the MIT License. See `LICENSE.txt` for more information.
-<p align="right">(<a href="#top">back to top</a>)</p>
--->
-
 
 <!-- CONTACT -->
 ## Contact
